@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/GameEditing_ycna.unity
+    guid: eba2f852bb7e5496bb6dffcd51852cec
   m_configObjects: {}
