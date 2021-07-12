@@ -22,7 +22,7 @@ public class CameraDrag : MonoBehaviour
         // Compute a fontSize based on the size of the screen width.
         GUI.skin.label.fontSize = (int)(Screen.width / 25.0f);
     
-        GUI.Label(new Rect(50, 50, width, height * 0.25f),
+        GUI.Label(new Rect(300, 50, width, height * 0.25f),
             "x = " + transform.position.x.ToString("f2") +
             ", y = " + transform.position.y.ToString("f2"));
     }
