@@ -22,7 +22,7 @@ public class CameraDrag : MonoBehaviour
         // Compute a fontSize based on the size of the screen width.
         GUI.skin.label.fontSize = (int)(Screen.width / 25.0f);
     
-        GUI.Label(new Rect(300, 50, width, height * 0.25f),
+        GUI.Label(new Rect(50, 50, width, height * 0.25f),
             "x = " + transform.position.x.ToString("f2") +
             ", y = " + transform.position.y.ToString("f2"));
     }
@@ -32,6 +32,7 @@ public class CameraDrag : MonoBehaviour
         // Handle screen touches.
         if (Input.touchCount > 0)
         {
+            Debug.Log("touch detected");
             Touch touch = Input.GetTouch(0);            
             if(touch.phase == TouchPhase.Began){
                 prevTouch = touch.position;
@@ -71,4 +72,6 @@ public class CameraDrag : MonoBehaviour
             }
         }
     }
+
+  
 }
