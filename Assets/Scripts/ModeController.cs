@@ -8,24 +8,12 @@ public class ModeController : MonoBehaviour
     public Button btnAdd;
     public Button btnDel;
     public Button btnMove;
-    enum Mode{
-        TileAdd,
-        TileDelete,
-        CameraMove
-    }
-    private Mode _mode;
-    // Start is called before the first frame update
+    public TouchControll camD;
 
-    public void onMoveMode(){
-        _mode = Mode.CameraMove;
-        Debug.Log("on Move mode");
-    }
-
-    void onTileDelete(){
-        _mode = Mode.TileDelete;
-    }
-    void onTileAdd(){
-        _mode = Mode.TileAdd;
+    void Start(){
+        btnMove.onClick.AddListener(() => camD.SetTouchMode(Enums.TouchMode.CameraDrag));
+        btnAdd.onClick.AddListener(() => camD.SetTouchMode(Enums.TouchMode.TileAdd));
+        btnDel.onClick.AddListener(() => camD.SetTouchMode(Enums.TouchMode.TileDel));
     }
 
 }
