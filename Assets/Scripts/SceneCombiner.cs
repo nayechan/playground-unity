@@ -6,12 +6,19 @@ using UnityEngine.SceneManagement;
 public class SceneCombiner : MonoBehaviour
 {
     // Start is called before the first frame update
+    List<string> scenePathList;
+    [SerializeField] private string initialScene;
+    private string currentOpenedScene;
+    private string sceneDir;
     void Start()
     {
+        scenePathList = new List<string>();
+        currentOpenedScene = initialScene;
+
         Scene currentScene = SceneManager.GetActiveScene();
         int sceneCount = SceneManager.sceneCountInBuildSettings;
 
-        string sceneDir = SceneUtility.GetScenePathByBuildIndex(
+        sceneDir = SceneUtility.GetScenePathByBuildIndex(
             currentScene.buildIndex
         );
 
@@ -35,7 +42,13 @@ public class SceneCombiner : MonoBehaviour
             == currentScene.name) continue;
 
             if(dir != sceneDir) continue;
-            StartCoroutine("CustomLoadSceneAsync", i);
+            scenePathList.Add(scenePath);
+
+            if(System.IO.Path.GetFileNameWithoutExtension(scenePath)
+            == initialScene)
+            {
+                StartCoroutine("CustomLoadSceneAsync", i);
+            }
         }
     }
 
@@ -50,12 +63,32 @@ public class SceneCombiner : MonoBehaviour
         }
 
         Destroy(GameObject.Find("EventSystem"));
+    }
 
-        // Scene scene = SceneManager.GetSceneByBuildIndex(sceneBuildIndex);
-        // GameObject[] gameObjects = scene.GetRootGameObjects();
-        // foreach(GameObject gameObject in gameObjects)
-        // {
-        //     gameObject
-        // }
+    IEnumerator CustomUnloadSceneAsync(int sceneBuildIndex)
+    {
+        AsyncOperation asyncOperation = 
+        SceneManager.UnloadSceneAsync(sceneBuildIndex);
+
+        while(!asyncOperation.isDone)
+        {
+            yield return null;
+        }
+    }
+
+    public void OpenScene(string sceneName){
+        int buildIndex;
+        
+        buildIndex = SceneUtility.GetBuildIndexByScenePath(
+            sceneDir+currentOpenedScene+".unity"
+        );
+        StartCoroutine("CustomUnloadSceneAsync",buildIndex);
+
+        buildIndex = SceneUtility.GetBuildIndexByScenePath(
+            sceneDir+sceneName+".unity"
+        );
+        
+        currentOpenedScene = sceneName;
+        StartCoroutine("CustomLoadSceneAsync",buildIndex);
     }
 }
