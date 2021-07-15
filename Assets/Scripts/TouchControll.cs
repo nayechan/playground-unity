@@ -79,14 +79,17 @@ public class TouchControll : MonoBehaviour
     }
 
     void AddTile(){
-        Debug.Log("AddTile");
+        // Debug.Log("AddTile");
         bool res = tileBuilder.GenerateTile(RoundCursor(_worldCursor));
-        if(res) Debug.Log("generated around" + _worldCursor.ToString());
+        if(res) Debug.Log("Tile generated around" + _worldCursor.ToString());
         else Debug.Log("Failed to Generate tile");
     }
 
     void DelTile(){
-        Debug.Log("DelTile");
+        // Debug.Log("DelTile");
+        bool res = tileBuilder.RemoveTile(RoundCursor(_worldCursor));
+        if(res) Debug.Log("Tile removed around" + _worldCursor.ToString());
+        else Debug.Log("Failed to remove tile");
     }
 
     public void SetTouchMode(Enums.TouchMode targetMode){

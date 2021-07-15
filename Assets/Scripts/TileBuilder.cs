@@ -29,4 +29,13 @@ public class TileBuilder : MonoBehaviour
         return true;
     }
     
+    public bool RemoveTile(Vector3 cursor){
+        KeyValuePair<float,float> pair = new KeyValuePair<float, float>(cursor.x, cursor.y);
+        if(!_tiles.ContainsKey(pair)){
+            return false;
+        }
+        Destroy(_tiles[pair]);
+        _tiles.Remove(pair);
+        return true;
+    }
 }
