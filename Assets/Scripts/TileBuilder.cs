@@ -6,17 +6,12 @@ using UnityEngine;
 public class TileBuilder : MonoBehaviour
 {
     private Dictionary<KeyValuePair<float,float>, GameObject> _tiles;
-    public GameObject tile;
+    public GameObject selectedTile;
+    public GameObject tiles;
     // Start is called before the first frame update
     void Start()
     {
         _tiles = new Dictionary<KeyValuePair<float, float>, GameObject>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public bool GenerateTile(Vector3 cursor){
@@ -24,7 +19,7 @@ public class TileBuilder : MonoBehaviour
         if(_tiles.ContainsKey(pair)){
             return false;
         }
-        GameObject obj = Instantiate(tile, cursor, Quaternion.identity);
+        GameObject obj = Instantiate(selectedTile, cursor, Quaternion.identity, tiles.transform);
         _tiles.Add(pair, obj);
         return true;
     }
@@ -37,5 +32,9 @@ public class TileBuilder : MonoBehaviour
         Destroy(_tiles[pair]);
         _tiles.Remove(pair);
         return true;
+    }
+
+    public void SelecteTile(GameObject _tile){
+        selectedTile = _tile;
     }
 }

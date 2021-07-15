@@ -8,7 +8,7 @@ public class TouchControll : MonoBehaviour
     private Vector2 _prevTouch;    
     private Vector3 _prevPosition;
     private Vector3 _worldCursor;
-    private Enums.TouchMode _mode;
+    private string _mode = "CameraMove";
     private Touch _touch;
     private float _deltaAfterAction = 0.0f;
     public float timeForCooling = 0.1f;
@@ -26,13 +26,13 @@ public class TouchControll : MonoBehaviour
             _touch = Input.GetTouch(0);
             _worldCursor = TouchToWorld();
             // Debug.Log("touch detected");
-            if(_mode == Enums.TouchMode.CameraDrag)
+            if(_mode == "CameraMove")
                 DragControll();
-            if(_mode == Enums.TouchMode.TileAdd && !IsAroundButton() && !IsOnCooling() ){
+            if(_mode == "AddTile" && !IsAroundButton() && !IsOnCooling() ){
                 AddTile();
                 StartCooling();
             }
-            if(_mode == Enums.TouchMode.TileDel && !IsAroundButton() && !IsOnCooling()){
+            if(_mode == "DelTile" && !IsAroundButton() && !IsOnCooling()){
                 DelTile();
                 StartCooling();
             }
@@ -91,9 +91,9 @@ public class TouchControll : MonoBehaviour
         else Debug.Log("Failed to remove tile");
     }
 
-    public void SetTouchMode(Enums.TouchMode targetMode){
-        Debug.Log("mode seted to : " + targetMode.ToString());
-        _mode = targetMode;
+    public void SetTouchMode(string touchMode){
+        Debug.Log("mode seted to : " + touchMode);
+        _mode = touchMode;
     }
 
     void OnGUI()
