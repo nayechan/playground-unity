@@ -8,12 +8,12 @@ public class ModeController : MonoBehaviour
     public Button btnAdd;
     public Button btnDel;
     public Button btnMove;
-    public TouchControll camD;
+    public TouchControll touchContorller;
 
     void Start(){
-        btnMove.onClick.AddListener(() => camD.SetTouchMode(Enums.TouchMode.CameraDrag));
-        btnAdd.onClick.AddListener(() => camD.SetTouchMode(Enums.TouchMode.TileAdd));
-        btnDel.onClick.AddListener(() => camD.SetTouchMode(Enums.TouchMode.TileDel));
+        btnMove.onClick.AddListener(() => touchContorller.SetTouchMode(Enums.TouchMode.CameraDrag));
+        btnAdd.onClick.AddListener(() => touchContorller.SetTouchMode(Enums.TouchMode.TileAdd));
+        btnDel.onClick.AddListener(() => touchContorller.SetTouchMode(Enums.TouchMode.TileDel));
     }
 
 }
