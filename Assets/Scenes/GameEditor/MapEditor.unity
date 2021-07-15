@@ -635,7 +635,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1283689168}
         m_TargetAssemblyTypeName: TileBuilder, Assembly-CSharp
-        m_MethodName: SelecteTile
+        m_MethodName: SelectTile
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 6479458795535256442, guid: 7797fcc442a764e54b0839917d459748, type: 3}
@@ -1533,7 +1533,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1283689168}
         m_TargetAssemblyTypeName: TileBuilder, Assembly-CSharp
-        m_MethodName: SelecteTile
+        m_MethodName: SelectTile
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 3642190592801799518, guid: 9a61c7e2b21228547bcbcf1bff694408, type: 3}
@@ -3081,7 +3081,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1283689168}
         m_TargetAssemblyTypeName: TileBuilder, Assembly-CSharp
-        m_MethodName: SelecteTile
+        m_MethodName: SelectTile
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 4135380082360356427, guid: 23349d9dc2fa54d4183525e10a76e9fa, type: 3}

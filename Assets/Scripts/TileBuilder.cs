@@ -34,7 +34,7 @@ public class TileBuilder : MonoBehaviour
         return true;
     }
 
-    public void SelecteTile(GameObject _tile){
+    public void SelectTile(GameObject _tile){
         selectedTile = _tile;
     }
 }
