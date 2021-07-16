@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Scripting;
 
 public class TouchControll : MonoBehaviour
@@ -15,8 +16,13 @@ public class TouchControll : MonoBehaviour
     public float sensitivity = 4.5f;
     public Camera cam;
     public TileBuilder tileBuilder; 
+    public UnityEvent m_CamMoved;
+    public GridGuider gridGuide;
 
-
+    void Start(){
+        m_CamMoved = new UnityEvent();
+        m_CamMoved.AddListener(gridGuide.WhenCamMoved);
+    }
     void Update()
     {
         // Handle screen touches.
@@ -51,8 +57,8 @@ public class TouchControll : MonoBehaviour
             Vector2 pos = _touch.position - _prevTouch;
             pos.x = pos.x / Screen.width * sensitivity;
             pos.y = pos.y / Screen.height * sensitivity;           
-                            
             cam.transform.position = _prevPosition + new Vector3(-pos.x, -pos.y, 0.0f);
+            m_CamMoved.Invoke();
         }
 
         if (_touch.phase == TouchPhase.Ended){
