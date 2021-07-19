@@ -62,4 +62,8 @@ public class GridGuider : MonoBehaviour
         xLineAxis.transform.position = new Vector3(cam.transform.position.x, 0, 0);
         yLineAxis.transform.position = new Vector3(0, cam.transform.position.y, 0);
     }
+
+    public void ToggleGrid(){
+        gridLines.SetActive(!gridLines.activeSelf);
+    }
 }
