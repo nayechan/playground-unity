@@ -48,39 +48,16 @@ public class TouchControll : MonoBehaviour
     void DragControll(){
 
         if(_touch.phase == TouchPhase.Began){
-            _prevTouch = _touch.position;
-            _prevPosition = cam.transform.position;
+            _prevPosition = _worldCursor;
         }
         // Move the cube if the screen has the finger moving.
         if (_touch.phase == TouchPhase.Moved)
         {
-            Vector2 pos = _touch.position - _prevTouch;
-            pos.x = pos.x / Screen.width * sensitivity;
-            pos.y = pos.y / Screen.height * sensitivity;           
-            cam.transform.position = _prevPosition + new Vector3(-pos.x, -pos.y, 0.0f);
+            cam.transform.Translate(_prevPosition - _worldCursor);
+            Debug.Log(_prevPosition - _worldCursor);
             m_CamMoved.Invoke();
         }
 
-        if (_touch.phase == TouchPhase.Ended){
-            _prevPosition = cam.transform.position;
-        }
-
-        // if (Input.touchCount == 2)
-        // {
-        //     touch = Input.GetTouch(1);
-
-        //     if (touch.phase == TouchPhase.Began)
-        //     {
-        //         // Halve the size of the cube.
-        //         transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
-        //     }
-
-        //     if (touch.phase == TouchPhase.Ended)
-        //     {
-        //         // Restore the regular size of the cube.
-        //         cam.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-        //     }
-        // }
     }
 
     void AddTile(){

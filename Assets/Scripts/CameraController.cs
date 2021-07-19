@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public float ZoomUnit = 1.0f;
+    public Camera cam;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void ZoomOut(){
+        cam.orthographicSize += ZoomUnit;
+    }
+    public void ZoomIn(){
+        if(cam.orthographicSize > 1)
+            cam.orthographicSize -= ZoomUnit;
     }
 }
