@@ -13,7 +13,6 @@ public class TouchControll : MonoBehaviour
     private Touch _touch;
     private float _deltaAfterAction = 0.0f;
     public float timeForCooling = 0.1f;
-    public float sensitivity = 4.5f;
     public Camera cam;
     public TileBuilder tileBuilder; 
     public UnityEvent m_CamMoved;
@@ -83,11 +82,6 @@ public class TouchControll : MonoBehaviour
     {
         // Compute a fontSize based on the size of the screen width.
         GUI.skin.label.fontSize = (int)(Screen.height / 20.0f);
-    
-        // GUI.Label(new Rect(50, 50, _width, _height * 0.25f),
-        //     "x = " + cam.transform.position.x.ToString("f2") +
-        //     ", y = " + cam.transform.position.y.ToString("f2"));
-
         GUI.Label(new Rect(50, 50, Screen.width * 0.4f, Screen.height * 0.25f),
             "x = " + _worldCursor.x +
             ", y = " + _worldCursor.y);
