@@ -51,7 +51,7 @@ public class ImageUploader : MonoBehaviour
                         0, 
                         texturePNG.width, 
                         texturePNG.height), 
-                        Vector2.zero, 
+                        new Vector2(texturePNG.width/2, texturePNG.height/2),
                         1f
                     );
                     sprites.Add(s);
@@ -65,7 +65,7 @@ public class ImageUploader : MonoBehaviour
             }
         }
 
-        imageStorage.GetSpriteList(sprites);
+        imageStorage.SetSpriteList(sprites);
     }
 
     private void OnDestroy() {

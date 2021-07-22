@@ -14,7 +14,7 @@ public class TouchController_obj : MonoBehaviour
     public float timeForCooling = 0.1f;
     public float sensitivity = 4.5f;
     public Camera cam;
-    public ObjectBuilder tileBuilder; 
+    public ObjectBuilder objectBuilder; 
     public UnityEvent m_CamMoved;
     public GridGuider gridGuide;
 
@@ -85,14 +85,14 @@ public class TouchController_obj : MonoBehaviour
 
     void AddTile(){
         // Debug.Log("AddTile");        
-        bool res = tileBuilder.GenerateObject(RoundCursor(_worldCursor));
+        bool res = objectBuilder.GenerateObject(RoundCursor(_worldCursor));
         if(res) Debug.Log("Tile generated around" + _worldCursor.ToString());
         else Debug.Log("Failed to Generate tile");
     }
 
     void DelTile(){
         // Debug.Log("DelTile");
-        bool res = tileBuilder.RemoveObject(RoundCursor(_worldCursor));
+        bool res = objectBuilder.RemoveObject(RoundCursor(_worldCursor));
         if(res) Debug.Log("Tile removed around" + _worldCursor.ToString());
         else Debug.Log("Failed to remove tile");
     }

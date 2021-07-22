@@ -5,7 +5,7 @@ using UnityEngine;
 public class ObjectBuilder : MonoBehaviour
 {
     private List<KeyValuePair<KeyValuePair<float,float>, GameObject>> _objects;
-    public GameObject selectedObject;
+    public GameObject currentObject;
     public GameObject objects;
     // Start is called before the first frame update
     void Start()
@@ -18,13 +18,16 @@ public class ObjectBuilder : MonoBehaviour
         KeyValuePair<float,float> pair = new KeyValuePair<float, float>(cursor.x, cursor.y);
         int objectIndex;
         GameObject gameObject = FindNearestObject(pair, out objectIndex, 0.1f);
-        if(gameObject != null || selectedObject == null) return false;
-        GameObject obj = Instantiate(selectedObject, cursor, Quaternion.identity, objects.transform);
+        if(gameObject != null || currentObject == null) return false;
+        GameObject obj = Instantiate(currentObject, cursor, Quaternion.identity, objects.transform);
+        Debug.Log(obj);
         _objects.Add(
             new KeyValuePair<
             KeyValuePair<float,float>,GameObject
             >(pair, obj)
         );
+        obj.SetActive(true);
+        obj.name = obj.GetComponent<ObjectInstanceController>().GetObjectName();
         return true;
     }
 
@@ -40,7 +43,7 @@ public class ObjectBuilder : MonoBehaviour
     }
 
     public void SelectObject(GameObject _object){
-        selectedObject = _object;
+        currentObject = _object;
     }
 
     public GameObject FindNearestObject

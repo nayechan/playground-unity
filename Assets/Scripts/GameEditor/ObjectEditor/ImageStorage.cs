@@ -13,13 +13,19 @@ public class ImageStorage : MonoBehaviour
 
     float defaultWidth, defaultHeight;
     private void Start() {
+        sprites = new List<Sprite>();
+        
         defaultWidth = 
         displayTarget.GetComponent<RectTransform>().rect.width;
         
         defaultHeight = 
         displayTarget.GetComponent<RectTransform>().rect.height;
     }
-    public void GetSpriteList(List<Sprite> sprites)
+    public List<Sprite> GetSpriteList()
+    {
+        return sprites;
+    }
+    public void SetSpriteList(List<Sprite> sprites)
     {
         if(sprites.Count > 0)
         {
@@ -66,5 +72,17 @@ public class ImageStorage : MonoBehaviour
         if(currentImageIndex < 0)
             currentImageIndex = 0;
         UpdateDisplay();
+    }
+    
+
+    public void ResetComponent()
+    {
+        sprites.Clear();
+        currentSprite = null;
+        currentImageIndex = -1;
+        displayTarget.GetComponent<RectTransform>().sizeDelta =
+        new Vector2(360, 360);
+        displayText.text = 
+        "Image\n"+(currentImageIndex+1)+"/"+sprites.Count;
     }
 }
