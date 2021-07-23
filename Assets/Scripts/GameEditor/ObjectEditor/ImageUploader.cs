@@ -51,14 +51,15 @@ public class ImageUploader : MonoBehaviour
                         0, 
                         texturePNG.width, 
                         texturePNG.height), 
-                        new Vector2(texturePNG.width/2, texturePNG.height/2),
+                        new Vector2(0.5f,0.5f),
                         1f
                     );
                     sprites.Add(s);
                 }
                 else
                 {
-                    Sprite s = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero, 1f);
+                    Sprite s = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f,0.5f), 1f);
+                    Debug.Log(s.pivot);
                     sprites.Add(s);
                 }
                 

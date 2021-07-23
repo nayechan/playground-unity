@@ -26,7 +26,14 @@ public class ObjectInstanceController : MonoBehaviour
         
     }
 
-    public void SetSprites(Sprite[] sprites){this.sprites = sprites;}
+    public void SetSprites(Sprite[] sprites){
+        this.sprites = sprites;
+        foreach(Sprite sprite in sprites)
+        {
+            Debug.Log(sprite.rect);
+            Debug.Log(sprite.pivot);
+        }
+    }
     public void SetObjectName(string name){objectName = name;}
     public void SetObjectType(string type){objectType = type;}
     public string GetObjectName(){return objectName;}
