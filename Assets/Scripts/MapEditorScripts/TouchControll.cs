@@ -28,7 +28,6 @@ public class TouchControll : MonoBehaviour
         if (Input.touchCount > 0)
         {
             Touch t1 = Input.GetTouch(0);
-            // Debug.Log("touch detected");
             if(_mode == "CameraMove")
                 DragControll(t1);
             if(_mode == "AddTile" && !IsAroundButton(t1) && !IsOnCooling() ){
@@ -42,21 +41,6 @@ public class TouchControll : MonoBehaviour
         }
     }
 
-    // void DragControll(){
-
-    //     if(_touch.phase == TouchPhase.Began){
-    //         _prevPosition = _worldCursor;
-    //     }
-    //     // Move the cube if the screen has the finger moving.
-    //     if (_touch.phase == TouchPhase.Moved){            
-    //         cam.transform.Translate(_prevPosition - _worldCursor);
-    //         Debug.Log(_prevPosition - _worldCursor);
-    //         m_CamMoved.Invoke();
-    //     }
-    //     if (_touch.phase == TouchPhase.Ended){
-    //         _prevPosition = Vector3.Scale(cam.transform.position, new Vector3(1, 1, 0));
-    //     }
-    // }
     void DragControll(Touch t1){
         if(Input.touchCount == 1){
             Vector3 worldCursor = TouchToWorld(t1);
@@ -64,23 +48,11 @@ public class TouchControll : MonoBehaviour
             }
             // Move the cube if the screen has the finger moving.
             if (t1.phase == TouchPhase.Moved){            
-                cam.transform.Translate(TouchToDelta(t1));
+                cam.transform.Translate(-TouchToDelta(t1), Space.World);
                 m_CamMoved.Invoke();
             }
-            // if (t1.phase == TouchPhase.Ended){
-            //     _prevPosition = Vector3.Scale(cam.transform.position, new Vector3(1, 1, 0));
-            // }
         }else if(Input.touchCount == 2){
             Touch t2 = Input.GetTouch(1);
-            // if(t2.phase == TouchPhase.Began){
-            //     _prevCamSize = cam.orthographicSize;
-            //     _prevDistance = (t1.position - t2.position).magnitude;
-            // }
-            // if(t1.phase == TouchPhase.Moved || t2.phase == TouchPhase.Moved){
-            // }
-            // if(t1.phase == TouchPhase.Ended || t2.phase == TouchPhase.Ended){
-            //     cam.orthographicSize = _prevCamSize * _prevDistance / (t1.position - t2.position).magnitude;
-            // }
             float prevDistance = (t1.position - t1.deltaPosition + t2.position - t2.deltaPosition).magnitude;
             float curDistance = (t1.position - t2.position).magnitude;
             cam.orthographicSize = Mathf.Clamp((prevDistance - curDistance) * 0.01f, 1f, 10f);
