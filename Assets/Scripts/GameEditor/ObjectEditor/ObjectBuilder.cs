@@ -4,28 +4,23 @@ using UnityEngine;
 
 public class ObjectBuilder : MonoBehaviour
 {
-    private List<KeyValuePair<KeyValuePair<float,float>, GameObject>> _objects;
+    private List<GameObject> _objects;
     public GameObject currentObject;
     public GameObject objects;
     // Start is called before the first frame update
     void Start()
     {
-        _objects = new List<KeyValuePair<KeyValuePair<float,float>, GameObject>>();
+        _objects = new List<GameObject>();
     }
 
     public bool GenerateObject(Vector3 cursor)
     {
-        KeyValuePair<float,float> pair = new KeyValuePair<float, float>(cursor.x, cursor.y);
         int objectIndex;
-        GameObject gameObject = FindNearestObject(pair, out objectIndex, 0.1f);
+        GameObject gameObject = FindNearestObject(cursor, out objectIndex, 0.1f);
         if(gameObject != null || currentObject == null) return false;
         GameObject obj = Instantiate(currentObject, cursor, Quaternion.identity, objects.transform);
         Debug.Log(obj);
-        _objects.Add(
-            new KeyValuePair<
-            KeyValuePair<float,float>,GameObject
-            >(pair, obj)
-        );
+        _objects.Add(obj);
         obj.SetActive(true);
         obj.name = obj.GetComponent<ObjectInstanceController>().GetObjectName();
         return true;
@@ -33,12 +28,25 @@ public class ObjectBuilder : MonoBehaviour
 
     public bool RemoveObject(Vector3 cursor)
     {
-        KeyValuePair<float,float> pair = new KeyValuePair<float, float>(cursor.x, cursor.y);
-        int objectIndex;
-        GameObject gameObject = FindNearestObject(pair, out objectIndex);
-        if(gameObject == null) return false;
-        _objects.RemoveAt(objectIndex);
-        Destroy(gameObject);
+        int index = 0;
+        List<int> objectsToRemove = new List<int>();
+        foreach(GameObject g in _objects)
+        {
+            Vector3 pos = g.transform.position;
+            Vector3 scale = g.GetComponent<ObjectInstanceController>().getDefaultSize();
+            if(
+                pos.x - scale.x/2 <= cursor.x && cursor.x <= pos.x + scale.x/2 &&
+                pos.y - scale.y/2 <= cursor.y && cursor.y <= pos.y + scale.y/2
+            )
+            {
+                objectsToRemove.Add(index);
+                Destroy(g);
+            }
+            ++index;
+        }
+        foreach(int i in objectsToRemove)
+            _objects.RemoveAt(i);
+        objectsToRemove.Clear();
         return true;
     }
 
@@ -46,30 +54,19 @@ public class ObjectBuilder : MonoBehaviour
         currentObject = _object;
     }
 
-    public GameObject FindNearestObject
-    (KeyValuePair<float,float> pos, out int index, float maxDist=0.4f)
+    public GameObject FindNearestObject(Vector3 pos, out int index, float maxDist=0.4f)
     {
         GameObject gameObject = null;
         int currentIndex = -1;
         index = currentIndex;
-        foreach(
-            KeyValuePair
-            <
-            KeyValuePair<float,float>, 
-            GameObject
-            > 
-            pair in _objects
-        )
+        foreach(GameObject g in _objects)
         {
-            ++currentIndex;
-            float distX = pair.Key.Key - pos.Key;
-            float distY = pair.Key.Value - pos.Value;
-            float distSquare = distX * distX + distY * distY;
+            float dist = Vector3.Distance(g.transform.position, pos);
 
-            if(maxDist*maxDist <= distSquare) continue;
+            if(maxDist <= dist) continue;
             else{
-                gameObject = pair.Value;
-                maxDist = Mathf.Sqrt(distSquare);
+                gameObject = g;
+                maxDist = Mathf.Sqrt(dist);
                 index = currentIndex;
             }
         }

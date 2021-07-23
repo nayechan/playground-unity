@@ -7,6 +7,7 @@ using System.IO;
 public class ImageUploader : MonoBehaviour
 {
     [SerializeField] private ImageStorage imageStorage;
+
     public void OnUploadButtonClicked()
     {
         if(Application.platform == RuntimePlatform.WebGLPlayer
@@ -51,14 +52,13 @@ public class ImageUploader : MonoBehaviour
                         0, 
                         texturePNG.width, 
                         texturePNG.height), 
-                        new Vector2(0.5f,0.5f),
-                        1f
+                        new Vector2(0.5f,0.5f)
                     );
                     sprites.Add(s);
                 }
                 else
                 {
-                    Sprite s = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f,0.5f), 1f);
+                    Sprite s = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f,0.5f));
                     Debug.Log(s.pivot);
                     sprites.Add(s);
                 }

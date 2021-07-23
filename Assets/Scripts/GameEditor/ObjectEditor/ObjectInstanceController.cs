@@ -5,12 +5,13 @@ using UnityEngine;
 public class ObjectInstanceController : MonoBehaviour
 {
     [SerializeField] private Sprite[] sprites;
+    private Vector3 defaultSize;
     int imgIndex = 0;
     string objectName, objectType;
     // Start is called before the first frame update
     void Start()
     {
-        transform.Find("pos").GetComponent<TextMesh>().text = "("+transform.position.x+","+transform.position.y+")";
+        defaultSize = transform.localScale;
     }
 
     // Update is called once per frame
@@ -19,6 +20,11 @@ public class ObjectInstanceController : MonoBehaviour
         if(sprites.Length > 0)
         {
             GetComponent<SpriteRenderer>().sprite = sprites[imgIndex];
+            transform.localScale = new Vector3(
+                sprites[imgIndex].pixelsPerUnit/sprites[imgIndex].texture.width * defaultSize.x,
+                sprites[imgIndex].pixelsPerUnit/sprites[imgIndex].texture.height * defaultSize.y,
+                defaultSize.z
+            );
             ++imgIndex;
             if(imgIndex >= sprites.Length)
                 imgIndex = 0;
@@ -34,6 +40,8 @@ public class ObjectInstanceController : MonoBehaviour
             Debug.Log(sprite.pivot);
         }
     }
+
+    public Vector3 getDefaultSize(){return defaultSize;}
     public void SetObjectName(string name){objectName = name;}
     public void SetObjectType(string type){objectType = type;}
     public string GetObjectName(){return objectName;}
