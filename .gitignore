@@ -69,3 +69,11 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# 태형 mod
+/Assets/Five Seamless Tileable Ground Textures
+/.vscode
+/.gitignore
+Assets/Five Seamless Tileable Ground Textures.meta
+Assets/Ignore.meta
+/Assets/Ignore
