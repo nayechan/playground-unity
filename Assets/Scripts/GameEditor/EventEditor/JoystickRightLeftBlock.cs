@@ -8,13 +8,11 @@ public class JoystickRightLeftBlock : BlockProperty
     private static int _inputNum = 0, _outputNum = 1;
     public StickScript stick;
 
-    JoystickRightLeftBlock() : base(_inputNum, _outputNum){
-
+    void Start(){
+        _inputs = new float[_inputNum];
+        _outputs = new float[_outputNum];
     }
-    // void Start(){
-    //     _inputs = new float[_inputNum];
-    //     _outputs = new float[_outputNum];
-    // }
+    
     override protected void BlockAction(){
         _outputs[0] = stick.GetInputVector().x;
     }

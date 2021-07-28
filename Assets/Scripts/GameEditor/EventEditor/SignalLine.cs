@@ -8,13 +8,6 @@ public class SignalLine : MonoBehaviour
     public int giverPort, reciverPort;
     private float _signal;
 
-    // SignalLine(BlockProperty _giver, int _giverPort, BlockProperty _reciver, int _reciverPort){
-    //     reciverPort = _reciverPort;
-    //     reciver = _reciver;
-    //     giverPort = _giverPort;
-    //     giver = _giver;
-    // }
-
     void Update()
     {
         ReciveSignal();

@@ -8,7 +8,10 @@ public class CharacterBlock : BlockProperty
     private static int _inputNum = 3, _outputNum = 0;
     public float speed = 1f;
     private int _action;
-    CharacterBlock() : base(_inputNum, _outputNum){
+
+    void Start(){
+        _inputs = new float[_inputNum];
+        _outputs = new float[_outputNum];
     }
 
     override protected void BlockAction(){
