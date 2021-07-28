@@ -34,6 +34,16 @@ public class ImageStorage : MonoBehaviour
             UpdateDisplay();
         }
     }
+    public Sprite GetCurrentSprite()
+    {
+        return currentSprite;
+    }
+    public void SetCurrentSprite(Sprite sprite)
+    {
+        currentSprite = sprite;
+        sprites[currentImageIndex] = currentSprite;
+    }
+
     public void UpdateDisplay()
     {
         currentSprite = sprites[currentImageIndex];
@@ -82,6 +92,7 @@ public class ImageStorage : MonoBehaviour
         currentImageIndex = -1;
         displayTarget.GetComponent<RectTransform>().sizeDelta =
         new Vector2(360, 360);
+        displayTarget.sprite = null;
         displayText.text = 
         "Image\n"+(currentImageIndex+1)+"/"+sprites.Count;
     }

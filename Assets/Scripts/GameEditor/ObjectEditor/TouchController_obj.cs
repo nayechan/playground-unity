@@ -2,21 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 public class TouchController_obj : MonoBehaviour
 {
-    private Vector2 _prevTouch;    
-    private Vector3 _prevPosition;
-    private Vector3 _worldCursor;
-    private string _mode = "CameraMove";
-    private Touch _touch;
-    private float _deltaAfterAction = 0.0f;
-    public float timeForCooling = 0.1f;
+    private Vector2 prevTouch;    
+    private Vector3 prevPosition, worldCursor;
+    private bool isOnCool = false, isSnap = false, isBlocked = false;
     public float sensitivity = 4.5f;
-    public Camera cam;
-    public ObjectBuilder objectBuilder; 
-    public UnityEvent m_CamMoved;
-    public GridGuider gridGuide;
+    private string _mode = "CameraMove";
+    private Touch touch;
+    private GameObject draggingObject = null;
+    [SerializeField] private Camera cam;
+    [SerializeField] private ObjectBuilder objectBuilder; 
+    [SerializeField] private UnityEvent m_CamMoved;
+    [SerializeField] private GridGuider gridGuide;
 
     void Start(){
         m_CamMoved = new UnityEvent();
@@ -25,76 +25,144 @@ public class TouchController_obj : MonoBehaviour
     void Update()
     {
         // Handle screen touches.
-        _deltaAfterAction += Time.deltaTime;
-        if (Input.touchCount == 1)
+        if (Input.touchCount >= 1)
         {
-            _touch = Input.GetTouch(0);
-            _worldCursor = TouchToWorld();
-            // Debug.Log("touch detected");
+            touch = Input.GetTouch(0);
+            worldCursor = TouchToWorld();
             if(_mode == "CameraMove")
-                DragControll();
-            if(_mode == "AddObject" && !IsAroundButton() && !IsOnCooling() 
-            && _touch.phase == TouchPhase.Began){
-                AddTile();
-                StartCooling();
+                ViewportDrag();
+            if(_mode == "AddObject" && !isOnCool){
+                AddObject();
             }
-            if(_mode == "DelObject" && !IsAroundButton() && !IsOnCooling()){
-                DelTile();
-                StartCooling();
+            if(_mode == "DelObject" && !isOnCool){
+                DelObject();
+                StartCoroutine("StartCooling", 0.1f);
             }
         }
     }
 
-    void DragControll(){
-
-        if(_touch.phase == TouchPhase.Began){
-            _prevTouch = _touch.position;
-            _prevPosition = cam.transform.position;
-        }
-        // Move the cube if the screen has the finger moving.
-        if (_touch.phase == TouchPhase.Moved)
+    void ViewportDrag()
+    {
+        switch(touch.phase)
         {
-            Vector2 pos = _touch.position - _prevTouch;
-            pos.x = pos.x / Screen.width * sensitivity;
-            pos.y = pos.y / Screen.height * sensitivity;           
-            cam.transform.position = _prevPosition + new Vector3(-pos.x, -pos.y, 0.0f);
-            m_CamMoved.Invoke();
+        case TouchPhase.Began:
+        
+            RaycastHit hit;
+
+            if(EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+            {
+                isBlocked = true;
+                prevPosition = cam.transform.position;
+                return;
+            }
+            else if(Physics.Raycast(worldCursor+new Vector3(0,0,-10), Vector3.forward, out hit, 100.0f))
+            {
+                Debug.Log(worldCursor);
+                if(hit.transform.tag == "Object")
+                {
+                    isBlocked = true;
+                    prevPosition = cam.transform.position;
+
+                    hit.transform.GetComponent<ObjectInstanceController>().OnTouchDown();
+                    draggingObject = hit.transform.gameObject;
+                    return;
+                }
+            }
+            else
+            {
+                prevTouch = touch.position;
+                prevPosition = cam.transform.position;   
+            }   
+
+            break;
+
+        case TouchPhase.Moved:
+
+            if(!isBlocked)
+            {
+                Vector2 pos = touch.position - prevTouch;
+                pos.x = pos.x / Screen.width * sensitivity;
+                pos.y = pos.y / Screen.height * sensitivity;           
+                cam.transform.position = prevPosition + new Vector3(-pos.x, -pos.y, 0.0f);
+                m_CamMoved.Invoke();
+            }
+            else if(draggingObject != null)
+            {
+                draggingObject.GetComponent<ObjectInstanceController>().OnTouch();
+            }
+
+            break;
+
+        case TouchPhase.Stationary:
+
+            break;
+
+        case TouchPhase.Ended:
+        case TouchPhase.Canceled:
+
+            if(!isBlocked)
+                prevPosition = cam.transform.position;
+            else if(draggingObject != null)
+            {
+                draggingObject.GetComponent<ObjectInstanceController>().OnTouchUp();
+                draggingObject = null;
+            }
+            isBlocked = false;
+
+            break;
+
         }
-
-        if (_touch.phase == TouchPhase.Ended){
-            _prevPosition = cam.transform.position;
-        }
-
-        // if (Input.touchCount == 2)
-        // {
-        //     touch = Input.GetTouch(1);
-
-        //     if (touch.phase == TouchPhase.Began)
-        //     {
-        //         // Halve the size of the cube.
-        //         transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
-        //     }
-
-        //     if (touch.phase == TouchPhase.Ended)
-        //     {
-        //         // Restore the regular size of the cube.
-        //         cam.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-        //     }
-        // }
     }
 
-    void AddTile(){
-        // Debug.Log("AddTile");        
-        bool res = objectBuilder.GenerateObject(RoundCursor(_worldCursor));
-        if(res) Debug.Log("Tile generated around" + _worldCursor.ToString());
-        else Debug.Log("Failed to Generate tile");
+    void AddObject(){
+        switch(touch.phase)
+        {
+        case TouchPhase.Began:
+
+            if(EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+                return;
+            bool res = objectBuilder.GenerateObject(RoundCursor(worldCursor));
+            if(res) Debug.Log("Tile generated around" + worldCursor.ToString());
+            else Debug.Log("Failed to Generate tile");
+
+            break;
+
+        case TouchPhase.Moved:
+        case TouchPhase.Stationary:
+        case TouchPhase.Ended:
+        case TouchPhase.Canceled:
+
+            break;
+
+        }
     }
 
-    void DelTile(){
-        // Debug.Log("DelTile");
-        bool res = objectBuilder.RemoveObject(RoundCursor(_worldCursor));
-        if(res) Debug.Log("Tile removed around" + _worldCursor.ToString());
-        else Debug.Log("Failed to remove tile");
+    void DelObject(){
+        switch(touch.phase)
+        {
+        case TouchPhase.Began:
+
+            break;
+
+        case TouchPhase.Moved:
+        case TouchPhase.Stationary:
+
+            if(EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+            {
+                return;
+            }
+            bool res = objectBuilder.RemoveObject(RoundCursor(worldCursor));
+            if(res) Debug.Log("Tile removed around" + worldCursor.ToString());
+            else Debug.Log("Failed to remove tile");
+
+            break;
+
+        case TouchPhase.Ended:
+        case TouchPhase.Canceled:
+
+            break;
+
+        }        
     }
 
     public void SetTouchMode(string touchMode){
@@ -103,7 +171,11 @@ public class TouchController_obj : MonoBehaviour
     }
     
     Vector3 TouchToWorld(){
-        return cam.ViewportToWorldPoint(new Vector3((float)_touch.position.x/Screen.width, (float)_touch.position.y/Screen.height, -cam.transform.position.z));    
+        return cam.ViewportToWorldPoint(new Vector3(
+            (float)touch.position.x/Screen.width, 
+            (float)touch.position.y/Screen.height, 
+            -cam.transform.position.z)
+        );    
     }
 
     Vector3 RoundCursor(Vector3 cursor){
@@ -117,24 +189,14 @@ public class TouchController_obj : MonoBehaviour
             return cursor;
     }
 
-    bool IsAroundButton(){
-        // if( (float)_touch.position.x / Screen.width > 0.7 && (float)_touch.position.y / Screen.height > 0.6 )
-        //     return true;
-        return false;
+    IEnumerator StartCooling(float seconds){
+        isOnCool = true;
+        yield return new WaitForSeconds(seconds);
+        isOnCool = false;
     }
 
-    bool IsOnCooling(){
-        if(_deltaAfterAction > timeForCooling){            
-            return false;
-        }
-        return true;
-    }
+    public void SetSnap(bool isSnap){this.isSnap = isSnap;}
+    public void ToggleSnap(){isSnap = !isSnap;}
 
-    void StartCooling(){
-        _deltaAfterAction = 0f;
-    }
-
-    bool isSnap = false;
-    public void setSnap(bool isSnap){this.isSnap = isSnap;}
-    public void toggleSnap(){isSnap = !isSnap;}
+    public bool GetIsSnap(){return isSnap;}
 }

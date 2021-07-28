@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class ObjectBuilder : MonoBehaviour
 {
-    private List<GameObject> _objects;
+    private List<GameObject> _objects, objectsToRemove;
     public GameObject currentObject;
     public GameObject objects;
     // Start is called before the first frame update
     void Start()
     {
         _objects = new List<GameObject>();
+        objectsToRemove = new List<GameObject>();
     }
 
     public bool GenerateObject(Vector3 cursor)
@@ -28,24 +29,25 @@ public class ObjectBuilder : MonoBehaviour
 
     public bool RemoveObject(Vector3 cursor)
     {
-        int index = 0;
-        List<int> objectsToRemove = new List<int>();
         foreach(GameObject g in _objects)
         {
             Vector3 pos = g.transform.position;
             Vector3 scale = g.GetComponent<ObjectInstanceController>().getDefaultSize();
             if(
-                pos.x - scale.x/2 <= cursor.x && cursor.x <= pos.x + scale.x/2 &&
-                pos.y - scale.y/2 <= cursor.y && cursor.y <= pos.y + scale.y/2
+                (pos.x - (scale.x/2)) <= cursor.x && cursor.x <= (pos.x + (scale.x/2)) &&
+                (pos.y - (scale.y/2)) <= cursor.y && cursor.y <= (pos.y + (scale.y/2))
             )
             {
-                objectsToRemove.Add(index);
-                Destroy(g);
+                Debug.Log(pos+" "+scale+" "+cursor);
+                objectsToRemove.Add(g);
             }
-            ++index;
         }
-        foreach(int i in objectsToRemove)
-            _objects.RemoveAt(i);
+        foreach(GameObject g in objectsToRemove)
+        {
+            _objects.Remove(g);
+            Destroy(g);
+        }
+        
         objectsToRemove.Clear();
         return true;
     }

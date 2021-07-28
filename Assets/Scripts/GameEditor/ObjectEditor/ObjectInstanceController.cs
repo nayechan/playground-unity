@@ -5,9 +5,11 @@ using UnityEngine;
 public class ObjectInstanceController : MonoBehaviour
 {
     [SerializeField] private Sprite[] sprites;
-    private Vector3 defaultSize;
-    int imgIndex = 0;
-    string objectName, objectType;
+    [SerializeField] TouchController_obj touchController;
+    private Vector3 defaultSize, prevPos;
+    private bool isOnTouch = false;
+    private int imgIndex = 0;
+    private string objectName, objectType;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,8 +30,7 @@ public class ObjectInstanceController : MonoBehaviour
             ++imgIndex;
             if(imgIndex >= sprites.Length)
                 imgIndex = 0;
-        }
-        
+        }        
     }
 
     public void SetSprites(Sprite[] sprites){
@@ -45,4 +46,48 @@ public class ObjectInstanceController : MonoBehaviour
     public void SetObjectName(string name){objectName = name;}
     public void SetObjectType(string type){objectType = type;}
     public string GetObjectName(){return objectName;}
+
+    public void OnTouchDown()
+    {
+        prevPos = transform.position;
+        Vector3 currentPos = Camera.main.ScreenToWorldPoint(
+                Input.GetTouch(0).position
+        );
+        currentPos.z = prevPos.z;
+        isOnTouch = true;
+    }
+
+    public void OnTouch()
+    {
+        if(Input.touchCount == 0)
+        {
+            OnTouchUp();
+            return;
+        }
+        Debug.Log("touch");
+        Vector3 currentPos = Camera.main.ScreenToWorldPoint(
+                Input.GetTouch(0).position
+        );
+        currentPos.z = prevPos.z;
+        transform.Translate(currentPos - prevPos);
+            prevPos = currentPos;
+    }
+
+    public void OnTouchUp()
+    {
+        if(isOnTouch)
+        {
+            if(touchController.GetIsSnap())
+            {
+                transform.position =
+                new Vector3(
+                    Mathf.Floor(transform.position.x)+0.5f, 
+                    Mathf.Floor(transform.position.y)+0.5f, 
+                    transform.position.z
+                );
+            }
+            prevPos = transform.position;
+        }
+        isOnTouch = false;
+    }
 }
