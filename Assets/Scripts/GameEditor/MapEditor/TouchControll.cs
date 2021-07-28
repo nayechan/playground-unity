@@ -64,7 +64,7 @@ public class TouchControll : MonoBehaviour
             }
             // Move the cube if the screen has the finger moving.
             if (t1.phase == TouchPhase.Moved){            
-                cam.transform.Translate(TouchToDelta(t1));
+                cam.transform.Translate(-TouchToDelta(t1), Space.World);
                 m_CamMoved.Invoke();
             }
             // if (t1.phase == TouchPhase.Ended){

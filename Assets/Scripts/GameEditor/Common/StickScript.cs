@@ -9,18 +9,18 @@ public class StickScript : MonoBehaviour, IDragHandler, IPointerUpHandler, IPoin
     private Image _bgImg;
     private Image _joystickImg;
     private Vector2 inputVector;
-
+    public SignalLine upDownLine, rightLeftLine;
     // Start is called before the first frame update
     void Start()
     {
         inputVector = Vector2.zero;
-        _bgImg = GetComponent<Image>();
-        _joystickImg = transform.GetChild(0).GetComponent<Image>();
+        _bgImg = transform.GetChild(0).GetComponent<Image>();
+        _joystickImg = transform.GetChild(0).GetChild(0).GetComponent<Image>();
     }
 
     public void OnDrag(PointerEventData ped){
         Vector2 pos;
-        if(RectTransformUtility.ScreenPointToLocalPointInRectangle(_bgImg.rectTransform,
+        if(RectTransformUtility.ScreenPointToLocalPointInRectangle(GetComponent<RectTransform>(),
         ped.position, ped.pressEventCamera,out pos)){            
             pos.x = (pos.x / _bgImg.rectTransform.sizeDelta.x);
             pos.y = (pos.y / _bgImg.rectTransform.sizeDelta.y);
@@ -40,9 +40,14 @@ public class StickScript : MonoBehaviour, IDragHandler, IPointerUpHandler, IPoin
     }
     public void OnPointerUp(PointerEventData ped){
         _joystickImg.rectTransform.anchoredPosition = Vector2.zero;
+        inputVector = Vector2.zero;
     }
 
     public float OutPutX(){
         return inputVector.x;
+    }
+
+    public Vector2 GetInputVector(){
+        return inputVector;
     }
 }

@@ -4,31 +4,26 @@ using UnityEngine;
 
 public class BlockProperty : MonoBehaviour
 {
-    private List<float> _inputs, _outputs;
-    private List<SignalLine> _inputLines, _outputLines;
-
-    public BlockProperty(int inputNum, int outputNum){
-        _inputs = new List<float>(inputNum);
-        _outputs = new List<float>(outputNum);
-        _inputLines = new List<SignalLine>(inputNum);
-        _outputLines = new List<SignalLine>(outputNum);
+    // protected GameObject _attachedObject;
+    public GameObject _attachedObject;
+    protected float[] _inputs, _outputs;
+    public BlockProperty(int inputNum, int outputNum, GameObject obj = null){
+        _inputs = new float[inputNum];
+        _outputs = new float[outputNum];
+        _attachedObject = obj;
     }
 
     public void Update(){
-        SendSignal();
+        BlockAction();
     }
 
     virtual protected void BlockAction(){}
-    
-    private void SendSignal(){
-        for(int i=0; i<_outputs.Count; i++){
-            if(_outputLines[i] == null)
-                continue;
-            _outputLines[i].ReciveSignal(_outputs[i]);
-        }
+
+    public float getOutput(int portNum){
+        return _outputs[portNum];
     }
 
-    public void ReciveSignal(int inputPort, float val){
-        _inputs[inputPort] = val;
+    public void setInput(float val, int portNum){
+        _inputs[portNum] = val;
     }
 }

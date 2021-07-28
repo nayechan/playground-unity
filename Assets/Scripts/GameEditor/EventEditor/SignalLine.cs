@@ -4,30 +4,28 @@ using UnityEngine;
 
 public class SignalLine : MonoBehaviour
 {
-    private BlockProperty _reciver;
-    private int _reciverPort;
-    private float _val;
-    // Start is called before the first frame update
+    public BlockProperty giver, reciver;
+    public int giverPort, reciverPort;
+    private float _signal;
 
-    SignalLine(BlockProperty reciver, int reciverPort){
-        _reciverPort = reciverPort;
-        _reciver = reciver;
-    }
+    // SignalLine(BlockProperty _giver, int _giverPort, BlockProperty _reciver, int _reciverPort){
+    //     reciverPort = _reciverPort;
+    //     reciver = _reciver;
+    //     giverPort = _giverPort;
+    //     giver = _giver;
+    // }
 
     void Update()
     {
+        ReciveSignal();
         SendSignal();
     }
 
-    public void ReciveSignal(float val){
-        _val = val;        
+    public void ReciveSignal(){
+        _signal = giver.getOutput(giverPort);
     }
 
     public void SendSignal(){
-        if(_reciver == null){
-            Debug.Log("reciver is not atteched");
-            return;
-        }
-        _reciver.ReciveSignal(_reciverPort, _val);
+        reciver.setInput(_signal, reciverPort);
     }
 }
