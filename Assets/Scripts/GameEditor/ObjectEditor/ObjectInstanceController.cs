@@ -27,6 +27,14 @@ public class ObjectInstanceController : MonoBehaviour
                 sprites[imgIndex].pixelsPerUnit/sprites[imgIndex].texture.height * defaultSize.y,
                 defaultSize.z
             );
+
+            GetComponent<BoxCollider>().size = new Vector3(
+                sprites[imgIndex].texture.width/sprites[imgIndex].pixelsPerUnit,
+                sprites[imgIndex].texture.height/sprites[imgIndex].pixelsPerUnit,
+                0
+            );
+
+
             ++imgIndex;
             if(imgIndex >= sprites.Length)
                 imgIndex = 0;
@@ -43,7 +51,10 @@ public class ObjectInstanceController : MonoBehaviour
     }
 
     public Vector3 getDefaultSize(){return defaultSize;}
-    public void SetObjectName(string name){objectName = name;}
+    public void SetObjectName(string name){
+        objectName = name;
+        gameObject.name = objectName;
+    }
     public void SetObjectType(string type){objectType = type;}
     public string GetObjectName(){return objectName;}
 
