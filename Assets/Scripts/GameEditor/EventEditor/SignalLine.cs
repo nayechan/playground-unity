@@ -21,4 +21,11 @@ public class SignalLine : MonoBehaviour
     public void SendSignal(){
         reciver.setInput(_signal, reciverPort);
     }
+
+    public void SetLine(BlockProperty _giver, int _giverPort, BlockProperty _reciver, int _reciverPort){
+        giver = _giver;
+        reciver = _reciver;
+        giverPort = _giverPort;
+        reciverPort = _reciverPort;
+    }
 }

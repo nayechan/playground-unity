@@ -27,7 +27,7 @@ public class StickScript : MonoBehaviour, IDragHandler, IPointerUpHandler, IPoin
 
             inputVector = new Vector2(pos.x*2, pos.y*2);
             inputVector = (inputVector.magnitude > 1.0f)?inputVector.normalized:inputVector;
-            Debug.Log(inputVector);
+            // Debug.Log(inputVector);
 
             _joystickImg.rectTransform.anchoredPosition = new Vector2(
                 inputVector.x * _bgImg.rectTransform.sizeDelta.x/3, 
