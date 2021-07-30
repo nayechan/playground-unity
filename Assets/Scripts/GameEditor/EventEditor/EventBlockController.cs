@@ -5,13 +5,12 @@ using UnityEngine;
 
 public class EventBlockController : MonoBehaviour
 {
-    private HashSet<GameObject> _objs;
-    private HashSet<GameObject> _blocks;
-    // private HashSet<GameObject> _signalLines;
-    private GameObject _selectedBlock;
+    private Dictionary<BlockProperty, List<SignalLine>> _blockToLines;
+    // private GameObject _selectedBlock;
     private BlockPort _selectedPort;
     private string _mode;
     public GameObject signalLines;
+    public GameObject blocks;
     public GameObject signalLineFab;
     public GameObject guideText;
 
@@ -53,12 +52,20 @@ public class EventBlockController : MonoBehaviour
         if(port != null && t1.phase != TouchPhase.Began){
             Debug.Log("hit");
             if(port.PortType == "Input" && _selectedPort !=null){
+                // 블럭간의 선을 잇는다. 선 객체를 만든다.
                 GameObject LineObj = Instantiate(signalLineFab, Vector3.zero, Quaternion.identity, signalLines.transform);
                 LineObj.transform.parent = signalLines.transform;
                 SignalLine signalLine = LineObj.AddComponent<SignalLine>();
                 LineObj.GetComponent<LineRenderer>().SetPosition(0, _selectedPort.transform.position);               signalLine.SetLine(_selectedPort.block, _selectedPort.PortNum, port.block, port.PortNum);
                 LineObj.GetComponent<LineRenderer>().SetPosition(1, port.transform.position);
                 Debug.Log("New SignalLine constructed");
+                // 라인을 블럭으로 인덱싱 한다. (블럭 파괴시 선도 없애기 위함)
+                // BlockProperty leftBlock = _selectedPort.GetComponentInParent<BlockProperty>();
+                // BlockProperty rightBlock = port.GetComponentInParent<BlockProperty>();
+                // if(!_blockToLines.ContainsKey(leftBlock)) 
+                // _blockToLines.Add(, signalLine);
+                // _blockToLines.Add(port.GetComponentInParent<BlockProperty>(), signalLine);
+                // 다음 라인 연결을 위한 초기화.
                 _selectedPort = null;
                 guideText.SetActive(false);
             }
@@ -70,33 +77,27 @@ public class EventBlockController : MonoBehaviour
         }
     }
 
-    public void UpdateNewObjs(List<GameObject> allObjs){
-        foreach(GameObject obj in allObjs){
-            if(_objs.Contains(obj))
-                continue;
-            // MakeNewBlock(obj);
-            _objs.Add(obj);
-        }
-    }
-
-    // private void MakeNewBlock(GameObject obj){
-    //     // obj의 타입을 얻는다.
-    //     string type = "objType";
-    //     //
-    // }
-
-    public void SelectBlock(GameObject block){
-        _selectedBlock = block;
-    }
-
     bool shotRay(Touch t1, out RaycastHit hit){
         Vector3 origin = Camera.main.ScreenToWorldPoint(new Vector3(t1.position.x, t1.position.y, 0f));
         bool isHit = Physics.Raycast(origin, Camera.main.transform.forward, out hit, 30f);
-        Debug.Log(hit.point);
+        if(isHit) Debug.Log("Hit! name is " + hit.transform.name);
         return isHit;
     }
 
     public void SetMode(string mode_){
         _mode = mode_;
+    }
+
+    public void GenerateBlockInstance(GameObject blockFab){
+        if(blockFab.GetComponent<BlockProperty>() == null ) return ;
+        Vector3 camPos = Camera.main.transform.position;
+        Instantiate(blockFab, camPos - camPos.z * Vector3.forward, Quaternion.identity, blocks.transform); 
+        return ;
+    }
+
+    public void DestroyBlock(GameObject block){
+        BlockProperty prop = block.GetComponent<BlockProperty>();
+        if(prop == null) return;
+
     }
 }

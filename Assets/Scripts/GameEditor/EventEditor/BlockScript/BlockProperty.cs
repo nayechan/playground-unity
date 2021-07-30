@@ -7,6 +7,7 @@ public class BlockProperty : MonoBehaviour
     // protected GameObject _attachedObject;
     public GameObject _attachedObject;
     protected float[] _inputs, _outputs;
+    private List<SignalLine> _connectedLines;
     
     public void Update(){
         BlockAction();
@@ -21,4 +22,11 @@ public class BlockProperty : MonoBehaviour
     public void setInput(float val, int portNum){
         _inputs[portNum] = val;
     }
+
+    void OnDestroy(){
+        foreach(var line in _connectedLines){
+            GameObject.Destroy(line.gameObject);
+        }
+    }
+    
 }
