@@ -8,6 +8,7 @@ public class ObjectPrimitiveData{
     private string objectName;
     private string objectType;
     private float width, height;
+    private System.Guid guid;
     public ObjectPrimitiveData(
         Sprite[] sprites,
         string objectName,
@@ -20,6 +21,9 @@ public class ObjectPrimitiveData{
         this.objectType = objectType;
         this.width = width;
         this.height = hegiht;
+
+        guid = System.Guid.NewGuid();
+
         Debug.Log(objectName+" "+objectType+" "+width+" "+height);
     }
     public string GetObjectName(){return objectName;}
@@ -27,4 +31,5 @@ public class ObjectPrimitiveData{
     public float GetWidth(){return width;}
     public float GetHeight(){return height;}
     public Sprite[] GetSprites(){return sprites;}
+    public System.Guid GetGuid(){return guid;}
 }

@@ -23,7 +23,7 @@ public class ObjectBuilder : MonoBehaviour
         Debug.Log(obj);
         _objects.Add(obj);
         obj.SetActive(true);
-        obj.name = obj.GetComponent<ObjectInstanceController>().GetObjectName();
+        obj.name = obj.GetComponent<ObjectInstanceController>().GetObjectPrimitiveData().GetObjectName();
         return true;
     }
 

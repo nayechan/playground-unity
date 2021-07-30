@@ -52,4 +52,9 @@ public class SelectObjectPanelController : MonoBehaviour
         objectPrimitiveDatas.Add(data);
         UIRefresh();
     }
+
+    public List<ObjectPrimitiveData> GetObjectPrimitiveDatas()
+    {
+        return objectPrimitiveDatas;
+    }
 }

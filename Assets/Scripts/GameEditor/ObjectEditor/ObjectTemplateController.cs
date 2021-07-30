@@ -53,17 +53,9 @@ public class ObjectTemplateController : MonoBehaviour
 
     public void SelectObject()
     {
-        currentObject.GetComponent<ObjectInstanceController>().SetSprites(
-            data.GetSprites()
-        );
+        currentObject.GetComponent<ObjectInstanceController>().SetObjectPrimitiveData(data);
         currentObject.transform.localScale = new Vector3(
             data.GetWidth(), data.GetHeight(), 1
-        );
-        currentObject.GetComponent<ObjectInstanceController>().SetObjectType(
-            data.GetObjectType()
-        );
-        currentObject.GetComponent<ObjectInstanceController>().SetObjectName(
-            data.GetObjectName()
         );
     }
 }

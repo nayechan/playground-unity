@@ -1172,7 +1172,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &319208556
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7667,7 +7667,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1c42386a19f5c942bafdf9b24c797a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprites: []
   touchController: {fileID: 1813981577}
 --- !u!65 &6106315318700574043
 BoxCollider:

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ObjectInstanceController : MonoBehaviour
 {
-    [SerializeField] private Sprite[] sprites;
     [SerializeField] TouchController_obj touchController;
+    private ObjectPrimitiveData primitiveData;
     private Vector3 defaultSize, prevPos;
     private bool isOnTouch = false;
     private int imgIndex = 0;
@@ -19,44 +19,30 @@ public class ObjectInstanceController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(sprites.Length > 0)
+        if(primitiveData.GetSprites().Length > 0)
         {
-            GetComponent<SpriteRenderer>().sprite = sprites[imgIndex];
+            Sprite sprite = primitiveData.GetSprites()[imgIndex];
+            GetComponent<SpriteRenderer>().sprite = sprite;
             transform.localScale = new Vector3(
-                sprites[imgIndex].pixelsPerUnit/sprites[imgIndex].texture.width * defaultSize.x,
-                sprites[imgIndex].pixelsPerUnit/sprites[imgIndex].texture.height * defaultSize.y,
+                sprite.pixelsPerUnit/sprite.texture.width * defaultSize.x,
+                sprite.pixelsPerUnit/sprite.texture.height * defaultSize.y,
                 defaultSize.z
             );
 
             GetComponent<BoxCollider>().size = new Vector3(
-                sprites[imgIndex].texture.width/sprites[imgIndex].pixelsPerUnit,
-                sprites[imgIndex].texture.height/sprites[imgIndex].pixelsPerUnit,
+                sprite.texture.width/sprite.pixelsPerUnit,
+                sprite.texture.height/sprite.pixelsPerUnit,
                 0
             );
 
 
             ++imgIndex;
-            if(imgIndex >= sprites.Length)
+            if(imgIndex >= primitiveData.GetSprites().Length)
                 imgIndex = 0;
         }        
     }
 
-    public void SetSprites(Sprite[] sprites){
-        this.sprites = sprites;
-        foreach(Sprite sprite in sprites)
-        {
-            Debug.Log(sprite.rect);
-            Debug.Log(sprite.pivot);
-        }
-    }
-
     public Vector3 getDefaultSize(){return defaultSize;}
-    public void SetObjectName(string name){
-        objectName = name;
-        gameObject.name = objectName;
-    }
-    public void SetObjectType(string type){objectType = type;}
-    public string GetObjectName(){return objectName;}
 
     public void OnTouchDown()
     {
@@ -100,5 +86,15 @@ public class ObjectInstanceController : MonoBehaviour
             prevPos = transform.position;
         }
         isOnTouch = false;
+    }
+
+    public void SetObjectPrimitiveData(ObjectPrimitiveData data)
+    {
+        primitiveData = data;
+    }
+
+    public ObjectPrimitiveData GetObjectPrimitiveData()
+    {
+        return primitiveData;
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameEditorMainUI : MonoBehaviour
 {
+    [SerializeField] private GameEditorMoveScene moveScene;
     List<string> scenePathList;
     private string sceneDir;
     void Awake()
@@ -42,11 +43,10 @@ public class GameEditorMainUI : MonoBehaviour
             scenePathList.Add(scenePath);
         }
     }
-    // Start is called before the first frame update
     public void SceneChange(string sceneName)
     {
+        moveScene.MoveTo(sceneName);
         if(!scenePathList.Contains(sceneDir + sceneName + ".unity"))
             Destroy(gameObject);
-        SceneManager.LoadSceneAsync(sceneName);
     }
 }
