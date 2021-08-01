@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameEditorMoveScene : MonoBehaviour
+public class GameEditorSceneManager : MonoBehaviour
 {
     [SerializeField] GameEditorDataManager.GameEditorDataManager dataManager;
     [SerializeField] private string currentScene;
