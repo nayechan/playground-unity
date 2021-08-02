@@ -24,9 +24,10 @@ public class BlockProperty : MonoBehaviour
     }
 
     void OnDestroy(){
-        foreach(var line in _connectedLines){
-            GameObject.Destroy(line.gameObject);
-        }
+        if(_connectedLines != null)
+            foreach(var line in _connectedLines){
+                GameObject.Destroy(line.gameObject);
+            }
     }
     
 }

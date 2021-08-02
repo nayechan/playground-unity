@@ -49,7 +49,7 @@ public class EventBlockController : MonoBehaviour
         if(!shotRay(t1, out hit)) return ;
         BlockPort port = hit.collider.GetComponent<BlockPort>();
         // 터치된 오브젝트가 Port 일경우.
-        if(port != null && t1.phase != TouchPhase.Began){
+        if(port != null && t1.phase == TouchPhase.Began){
             Debug.Log("hit");
             if(port.PortType == "Input" && _selectedPort !=null){
                 // 블럭간의 선을 잇는다. 선 객체를 만든다.

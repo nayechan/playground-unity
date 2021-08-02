@@ -9,7 +9,6 @@ public class StickScript : MonoBehaviour, IDragHandler, IPointerUpHandler, IPoin
     private Image _bgImg;
     private Image _joystickImg;
     private Vector2 inputVector;
-    public SignalLine upDownLine, rightLeftLine;
     // Start is called before the first frame update
     void Start()
     {
