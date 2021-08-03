@@ -9,7 +9,8 @@ public class CharacterBlock : BlockProperty
     public float speed = 1f;
     private int _action;
 
-    void Start(){
+    protected override void Start(){
+        base.Start();
         _inputs = new float[_inputNum];
         _outputs = new float[_outputNum];
     }

@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1122218623888200941}
-  - component: {fileID: 1122218623888200940}
   - component: {fileID: 1122218623888200942}
   m_Layer: 0
   m_Name: CharBlock
@@ -33,19 +32,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1122218623888200940
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1122218623888200943}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1.3, z: 0.01}
-  m_Center: {x: 0, y: 0.1, z: 0}
 --- !u!114 &1122218623888200942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,8 +167,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1122218624016612135}
   - component: {fileID: 1122218624016612134}
-  - component: {fileID: 1122218624016612133}
   - component: {fileID: 1122218624016612132}
+  - component: {fileID: 585108795324376930}
   m_Layer: 0
   m_Name: Input_1
   m_TagString: Untagged
@@ -257,21 +243,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1122218624016612133
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1122218624016612128}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b7c96e9ff4fde2468bc2d0c0977cf02, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  portType: Input
-  portNum: 1
-  block: {fileID: 1122218623888200942}
 --- !u!65 &1122218624016612132
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -285,6 +256,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 0.2}
   m_Center: {x: 0.00019216537, y: 0.00007414818, z: 0}
+--- !u!114 &585108795324376930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122218624016612128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52635d0129d9d435389cd045e57f9396, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  portType: Input
+  portNum: 1
+  body: {fileID: 1122218623888200942}
 --- !u!1 &1122218624566427791
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,8 +281,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1122218624566427790}
   - component: {fileID: 1122218624566427789}
-  - component: {fileID: 1122218624566427788}
   - component: {fileID: 1122218624566427779}
+  - component: {fileID: 7180572640662810673}
   m_Layer: 0
   m_Name: Input_2
   m_TagString: Untagged
@@ -371,21 +357,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1122218624566427788
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1122218624566427791}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b7c96e9ff4fde2468bc2d0c0977cf02, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  portType: Input
-  portNum: 2
-  block: {fileID: 1122218623888200942}
 --- !u!65 &1122218624566427779
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -399,6 +370,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 0.2}
   m_Center: {x: 0.00019216537, y: 0.00007414818, z: 0}
+--- !u!114 &7180572640662810673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122218624566427791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52635d0129d9d435389cd045e57f9396, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  portType: Input
+  portNum: 2
+  body: {fileID: 1122218623888200942}
 --- !u!1 &1122218624570829308
 GameObject:
   m_ObjectHideFlags: 0
@@ -604,6 +590,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1122218624952220435}
   - component: {fileID: 1122218624952220434}
+  - component: {fileID: 1905765829138446095}
+  - component: {fileID: 5209530453361255788}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -681,6 +669,31 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!65 &1905765829138446095
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122218624952220444}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.3, z: 0.01}
+  m_Center: {x: 0, y: 0.1, z: 0}
+--- !u!114 &5209530453361255788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122218624952220444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a633c54fc0b2a4902b9b8382fe4ce1af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1122218625793570212
 GameObject:
   m_ObjectHideFlags: 0
@@ -900,12 +913,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1122218625841819424}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b7c96e9ff4fde2468bc2d0c0977cf02, type: 3}
+  m_Script: {fileID: 11500000, guid: 52635d0129d9d435389cd045e57f9396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   portType: Input
   portNum: 0
-  block: {fileID: 1122218623888200942}
+  body: {fileID: 1122218623888200942}
 --- !u!1 &1122218625892500259
 GameObject:
   m_ObjectHideFlags: 0

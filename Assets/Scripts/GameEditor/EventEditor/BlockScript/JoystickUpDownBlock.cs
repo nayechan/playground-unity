@@ -8,7 +8,8 @@ public class JoystickUpDownBlock : BlockProperty
     private static int _inputNum = 0, _outputNum = 1;
     private UserInputController _userInput;
 
-    void Start(){
+    protected override void Start(){
+        base.Start();
         _inputs = new float[_inputNum];
         _outputs = new float[_outputNum];
         _userInput = GameObject.Find("/Scripts").GetComponent<UserInputController>();

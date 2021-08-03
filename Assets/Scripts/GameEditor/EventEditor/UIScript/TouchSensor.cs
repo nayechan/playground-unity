@@ -2,40 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class TouchSensor : MonoBehaviour
+public class TouchSensor : MonoBehaviour
 {
     protected int _lastFingerId;
-    protected bool _blockRay;
-
-    protected abstract void Start();
-
-    public virtual void Hit(Touch touch, out bool rayIsBlocked)
-    {
-        rayIsBlocked = _blockRay;
-        switch(touch.phase){
-            case TouchPhase.Began:
-            OnTouchBegan(touch);
-            break;
-            case TouchPhase.Moved:
-            OnTouchMoved(touch);
-            break;
-            case TouchPhase.Ended:
-            OnTouchEnded(touch);
-            break;
-            case TouchPhase.Canceled:
-            OnTouchCancled(touch);
-            break;
-            case TouchPhase.Stationary:
-            OnTouchStationary(touch);
-            break;
-        }
+    protected virtual void Start(){
+        _lastFingerId = -1;
     }
-    protected virtual void OnTouchBegan(Touch touch){
+    public virtual void OnTouchBegan(Touch touch, out bool isRayBlock){
         _lastFingerId = touch.fingerId;
+        isRayBlock = true;
     }
-    protected virtual void OnTouchEnded(Touch touch){}
-    protected virtual void OnTouchMoved(Touch touch){}
-    protected virtual void OnTouchCancled(Touch touch){}
-    protected virtual void OnTouchStationary(Touch touch){}
-
+    public virtual void OnTouchEnded(Touch touch, out bool isRayBlock){
+        if(touch.fingerId == _lastFingerId){
+            _lastFingerId = -1;
+        }
+        isRayBlock = false;
+    }
+    public virtual void OnTouchMoved(Touch touch, out bool isRayBlock){
+        isRayBlock = false;
+    }
+    public virtual void OnTouchCanceled(Touch touch, out bool isRayBlock){
+        if(touch.fingerId == _lastFingerId){
+            _lastFingerId = -1;
+        }
+        isRayBlock = false;
+    }
+    public virtual void OnTouchStationary(Touch touch, out bool isRayBlock){
+        isRayBlock = false;
+    }
 }

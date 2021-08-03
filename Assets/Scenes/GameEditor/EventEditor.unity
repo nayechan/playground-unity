@@ -1796,7 +1796,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &585248396
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3340,6 +3340,7 @@ GameObject:
   - component: {fileID: 1283689170}
   - component: {fileID: 1283689171}
   - component: {fileID: 1283689172}
+  - component: {fileID: 1283689173}
   m_Layer: 0
   m_Name: Scripts
   m_TagString: Untagged
@@ -3469,7 +3470,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stick_L: {fileID: 726858997}
-  inputUis: {fileID: 0}
+  inputUis: {fileID: 229713994}
+--- !u!114 &1283689173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1283689164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3051ccd3c3dc94ec7a39e990a41abc65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1505223033
 GameObject:
   m_ObjectHideFlags: 0
