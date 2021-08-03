@@ -2,11 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlockPort : MonoBehaviour
+public class BlockPort : TouchSensor
 {
     public string portType;
     public int portNum;
-    public BlockProperty block;
+    public BlockProperty body;
+    private EventBlockController _ebc;
+
+    protected override void OnTouchBegan(Touch touch)
+    {
+        base.OnTouchBegan(touch);
+        _ebc.portTouched(this);
+    }
+
+    protected override void Start() {
+        _ebc = FindObjectOfType<EventBlockController>();
+        body = GetComponentInParent<BlockProperty>();
+        _blockRay = true;
+    }
 
     public string PortType{
         get { return portType;}
@@ -14,10 +27,7 @@ public class BlockPort : MonoBehaviour
     public int PortNum{
         get { return portNum;}
     }
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public BlockProperty Body{
+        get { return body;}
     }
-
 }
