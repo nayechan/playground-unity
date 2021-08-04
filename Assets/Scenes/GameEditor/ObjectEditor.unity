@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -852,6 +852,50 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &211808584
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 211808585}
+  - component: {fileID: 211808586}
+  m_Layer: 0
+  m_Name: ObjectDataManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &211808585
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211808584}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &211808586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211808584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 671e652cb59634598a109f9c3498abaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectObjectPanel: {fileID: 1543639256}
 --- !u!1 &235579507
 GameObject:
   m_ObjectHideFlags: 0
@@ -1172,7 +1216,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &319208556
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5099,7 +5143,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   imageStorage: {fileID: 1090314353}
-  selectObjectPanel: {fileID: 1543639256}
+  objectDataManager: {fileID: 211808586}
   selectMain: {fileID: 319208559}
   nameInput: {fileID: 649219628}
   horizontalSizeInput: {fileID: 647997115}
@@ -5797,6 +5841,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27eb0c482d2c9f64d9661c304fd44a16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectDataManager: {fileID: 211808586}
   contentPanel: {fileID: 1158258638}
   objectExamplePrefab: {fileID: 6945548257725674848, guid: 2eb18cd1bd1574a42b7947bbcf941d81, type: 3}
 --- !u!1 &1591686954

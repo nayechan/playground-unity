@@ -20,6 +20,9 @@ public class ObjectBuilder : MonoBehaviour
         GameObject gameObject = FindNearestObject(cursor, out objectIndex, 0.1f);
         if(gameObject != null || currentObject == null) return false;
         GameObject obj = Instantiate(currentObject, cursor, Quaternion.identity, objects.transform);
+        obj.GetComponent<ObjectInstanceController>().SetObjectPrimitiveData(
+            currentObject.GetComponent<ObjectInstanceController>().GetObjectPrimitiveData()
+        );
         Debug.Log(obj);
         _objects.Add(obj);
         obj.SetActive(true);

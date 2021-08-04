@@ -8,12 +8,14 @@ public class ImageStorage : MonoBehaviour
     [SerializeField] Image displayTarget;
     [SerializeField] Text displayText;
     List<Sprite> sprites;
+    List<string> spritePaths;
     Sprite currentSprite;
     int currentImageIndex = -1;
 
     float defaultWidth, defaultHeight;
     private void Start() {
         sprites = new List<Sprite>();
+        spritePaths = new List<string>();
         
         defaultWidth = 
         displayTarget.GetComponent<RectTransform>().rect.width;
@@ -25,6 +27,10 @@ public class ImageStorage : MonoBehaviour
     {
         return sprites;
     }
+    public List<string> GetSpritePathList()
+    {
+        return spritePaths;
+    }
     public void SetSpriteList(List<Sprite> sprites)
     {
         if(sprites.Count > 0)
@@ -33,6 +39,10 @@ public class ImageStorage : MonoBehaviour
             currentImageIndex = 0;
             UpdateDisplay();
         }
+    }
+    public void SetSpritePathList(List<string> spritePaths)
+    {
+        this.spritePaths = spritePaths;
     }
     public Sprite GetCurrentSprite()
     {

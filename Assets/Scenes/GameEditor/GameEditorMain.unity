@@ -222,6 +222,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 43517840}
+  - component: {fileID: 43517841}
   m_Layer: 0
   m_Name: GameEditorBasicComponent
   m_TagString: Untagged
@@ -246,6 +247,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &43517841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43517839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 110fbe91672c3439481db4d3779cc70c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &119281982
 GameObject:
   m_ObjectHideFlags: 0
@@ -419,8 +432,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameEditorMoveScene, Assembly-CSharp
+      - m_Target: {fileID: 699836815}
+        m_TargetAssemblyTypeName: GameEditorSceneManager, Assembly-CSharp
         m_MethodName: MoveTo
         m_Mode: 5
         m_Arguments:
@@ -898,7 +911,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81768b160fb6d4b0ab15573b6e2bb831, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveScene: {fileID: 0}
 --- !u!1 &1361916571
 GameObject:
   m_ObjectHideFlags: 0
@@ -1339,8 +1351,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameEditorMoveScene, Assembly-CSharp
+      - m_Target: {fileID: 699836815}
+        m_TargetAssemblyTypeName: GameEditorSceneManager, Assembly-CSharp
         m_MethodName: MoveTo
         m_Mode: 5
         m_Arguments:

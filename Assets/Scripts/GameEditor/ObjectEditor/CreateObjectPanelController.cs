@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class CreateObjectPanelController : MonoBehaviour
 {
     [SerializeField] ImageStorage imageStorage;
-    [SerializeField] SelectObjectPanelController selectObjectPanel;
+    [SerializeField] ObjectDataManager objectDataManager;
     [SerializeField] SelectMainController selectMain;
     [SerializeField] InputField nameInput, horizontalSizeInput, verticalSizeInput;
     [SerializeField] Dropdown typeDropdown;
@@ -39,9 +39,11 @@ public class CreateObjectPanelController : MonoBehaviour
         if(ValidateForm())
         {
             Sprite[] sprites = imageStorage.GetSpriteList().ToArray();
-            selectObjectPanel.AddObject(
+            string[] spritePaths = imageStorage.GetSpritePathList().ToArray();
+            objectDataManager.AddObject(
                 new ObjectPrimitiveData(
                     sprites,
+                    spritePaths,
                     nameInput.text,
                     typeDropdown.options[typeDropdown.value].text,
                     float.Parse(horizontalSizeInput.text),    //width

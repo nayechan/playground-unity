@@ -4,21 +4,14 @@ using UnityEngine;
 
 public class SelectObjectPanelController : MonoBehaviour
 {
-    private List<ObjectPrimitiveData> objectPrimitiveDatas;
+    [SerializeField] private ObjectDataManager objectDataManager;
     [SerializeField] private Transform contentPanel;
     [SerializeField] private GameObject objectExamplePrefab;
-    void Awake()
-    {
-        objectPrimitiveDatas = new List<ObjectPrimitiveData>();
-    }
-
-    void Update()
-    {
-        
-    }
 
     public void UIRefresh()
     {
+
+        List<ObjectPrimitiveData> datas = objectDataManager.GetObjectPrimitiveDatas();
         foreach(Transform transform in contentPanel)
         {
             if(transform.gameObject.name != "AddObject")
@@ -28,8 +21,7 @@ public class SelectObjectPanelController : MonoBehaviour
         int row = 0;
         int col = 1;
 
-        
-        foreach(ObjectPrimitiveData data in objectPrimitiveDatas)
+        foreach(ObjectPrimitiveData data in datas)
         {
             GameObject gameObject = Instantiate(objectExamplePrefab,contentPanel);
             gameObject.GetComponent<RectTransform>().anchoredPosition =
@@ -45,16 +37,5 @@ public class SelectObjectPanelController : MonoBehaviour
             sizeX,
             400 + row*320
         );
-    }
-
-    public void AddObject(ObjectPrimitiveData data)
-    {
-        objectPrimitiveDatas.Add(data);
-        UIRefresh();
-    }
-
-    public List<ObjectPrimitiveData> GetObjectPrimitiveDatas()
-    {
-        return objectPrimitiveDatas;
     }
 }

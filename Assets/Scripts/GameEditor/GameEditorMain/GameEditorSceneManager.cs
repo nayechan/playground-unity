@@ -8,9 +8,6 @@ public class GameEditorSceneManager : MonoBehaviour
     [SerializeField] GameEditorDataManager.GameEditorDataManager dataManager;
     [SerializeField] private string currentScene;
 
-    private void Awake() {
-        DontDestroyOnLoad(gameObject);
-    }
     public void MoveTo(string scene)
     {
         string currentScene = SceneManager.GetActiveScene().name;
@@ -25,12 +22,22 @@ public class GameEditorSceneManager : MonoBehaviour
             GameEditorDataManager.ObjectEditorData data;
             data = new GameEditorDataManager.ObjectEditorData();
 
-            GameObject panelGameObject = GameObject.Find("SelectObject");
-            SelectObjectPanelController panel = panelGameObject.GetComponent<SelectObjectPanelController>();
+            GameObject panelGameObject = GameObject.Find("ObjectDataManager");
+            ObjectDataManager objectDataManager = panelGameObject.GetComponent<ObjectDataManager>();
+            List<ObjectPrimitiveData> datas = objectDataManager.GetObjectPrimitiveDatas();
 
-            foreach(ObjectPrimitiveData primitiveData in panel.GetObjectPrimitiveDatas())
+            foreach(ObjectPrimitiveData primitiveData in datas)
             {
-                data.AddObjectType(primitiveData);
+                data.AddObjectType(
+                    new GameEditorDataManager.ObjectEditorData.ObjectType(
+                        primitiveData.GetSpritePaths(),
+                        primitiveData.GetObjectName(),
+                        primitiveData.GetObjectType(),
+                        primitiveData.GetWidth(),
+                        primitiveData.GetHeight(),
+                        primitiveData.GetGuid()
+                    )
+                );
             }
 
             Transform objects = GameObject.Find("Objects").transform;

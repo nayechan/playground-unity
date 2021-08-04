@@ -39,6 +39,7 @@ public class ImageUploader : MonoBehaviour
     private void OnFileUploadedWebGL(UploadedFileInfo[] result)
     {
         List<Sprite> sprites = new List<Sprite>();
+        List<string> spritePaths = new List<string>();
         if(result.Length == 0) {
             Debug.Log("File upload Error!");
         }else{
@@ -57,17 +58,20 @@ public class ImageUploader : MonoBehaviour
                 texture.LoadImage(byteArray);
                 Sprite s = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f,0.5f));
                 Debug.Log(s.pivot);
+
                 sprites.Add(s);
-                
+                spritePaths.Add(file.filePath);
             }
         }
 
         imageStorage.SetSpriteList(sprites);
+        imageStorage.SetSpritePathList(spritePaths);
     }
 
     public void OnFileUploaded(string [] paths)
     {
         List<Sprite> sprites = new List<Sprite>();
+        List<string> spritePaths = new List<string>();
         if(paths.Length == 0) {
             Debug.Log("File upload Error!");
         }else{
@@ -89,12 +93,14 @@ public class ImageUploader : MonoBehaviour
                 
                 Sprite s = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f,0.5f));
                 Debug.Log(s.pivot);
-                sprites.Add(s);
                 
+                sprites.Add(s);
+                spritePaths.Add(file);
             }
         }
 
         imageStorage.SetSpriteList(sprites);
+        imageStorage.SetSpritePathList(spritePaths);
     }
 
     private void OnDestroy() {
