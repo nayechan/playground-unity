@@ -16,18 +16,25 @@ public class TouchSensor : MonoBehaviour
         if(touch.fingerId == _lastFingerId){
             _lastFingerId = -1;
         }
-        isRayBlock = false;
+        isRayBlock = true;
     }
     public virtual void OnTouchMoved(Touch touch, out bool isRayBlock){
-        isRayBlock = false;
+        if(touch.fingerId == _lastFingerId){
+        }
+        isRayBlock = true;
     }
     public virtual void OnTouchCanceled(Touch touch, out bool isRayBlock){
         if(touch.fingerId == _lastFingerId){
             _lastFingerId = -1;
         }
-        isRayBlock = false;
+        isRayBlock = true;
     }
     public virtual void OnTouchStationary(Touch touch, out bool isRayBlock){
-        isRayBlock = false;
+        if(touch.fingerId == _lastFingerId){
+        }
+        isRayBlock = true;
+    }
+
+    public virtual void CallBack(Touch touch){
     }
 }

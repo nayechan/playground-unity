@@ -4,17 +4,34 @@ using UnityEngine;
 using UnityEngine.Events;
 using System;
 
+public class TouchEvent : UnityEvent<Touch>{
+}
+
 public class TouchInputDeliverer : MonoBehaviour
 {
+    private static TouchInputDeliverer _tid;
     public static Camera cam;
-
+    private TouchEvent[] _touchAlarms; // 특정 fingerID의 터치 이벤트를 지속적으로 듣는 스크립트를 위한 이벤트.
     void Start() {
         cam = Camera.main;
+        _touchAlarms = new TouchEvent[10];
+        for(int i=0; i<10; ++i) { _touchAlarms[i] = new TouchEvent();}
+        _tid = this;
     }
 
-    // Update is called once per frame
     void Update() {
         Touch[] touches = Input.touches;
+        foreach(var t in touches) { Debug.Log(t.fingerId);}
+        AlarmAll(touches);
+        ShotRays(touches);
+        ResetOutdateAlarm(touches);
+    }
+
+    static public TouchInputDeliverer GetTID(){
+        return _tid;
+    }
+
+    void ShotRays(Touch[] touches){
         foreach(Touch touch in touches){
             // 각 터치에 대해 하나의 Raycast를 진행. Collider를 가진 객체를 검출한다.
             // 충돌한 객체를 가까운 거리순으로 정렬하고 TouchSensor 컴포넌트를 가지고 있는지 차례대로 확인한다.
@@ -49,6 +66,23 @@ public class TouchInputDeliverer : MonoBehaviour
         }
     }
 
+    public void AlarmMe(int fingerID, TouchSensor sensor){
+        _touchAlarms[fingerID].AddListener(sensor.CallBack);
+    }
 
-    
+    private void AlarmAll(Touch[] touches){
+        // Debug.Log("AlarmAll, touch[] : " + touches.Length);
+        foreach(var touch in touches){
+            _touchAlarms[touch.fingerId].Invoke(touch);
+        }
+    }
+
+    private void ResetOutdateAlarm(Touch[] touches){
+        foreach(var touch in touches){
+            if(touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled){
+                Debug.Log("deleted " + touch.fingerId.ToString());
+                _touchAlarms[touch.fingerId].RemoveAllListeners();
+            }
+        }
+    }
 }

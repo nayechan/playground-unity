@@ -6,9 +6,10 @@ using UnityEngine;
 public class EventBlockController : MonoBehaviour
 {
     /* 씬 안에 있는 Block들 및 SignalLine 들의 정보를 저장하고 관리하는 클래스입니다*/
-    private TouchSensor_BlockPort _selectedOutputPort;
-    public GameObject signalLines, blocks, signalLineFab, guideText;
+    public GameObject signalLineFab, guideText;
     private static EventBlockController _ebc;
+    private TouchSensor_BlockPort _selectedOutputPort;
+    private GameObject _signalLines, _blocks;
     private mode _mode;
     private enum mode{
         Editing,
@@ -18,6 +19,8 @@ public class EventBlockController : MonoBehaviour
     void Start(){
         _mode = mode.Editing;
         _ebc = this;
+        _signalLines = new GameObject("SignalLines");
+        _blocks = new GameObject("Blocks");
     }
 
     static public EventBlockController GetEBC(){
@@ -43,7 +46,7 @@ public class EventBlockController : MonoBehaviour
     
     public void ConnectLine(TouchSensor_BlockPort inputPort){
         // 선 객체를 만든다.
-        GameObject LineObj = Instantiate(signalLineFab, Vector3.zero, Quaternion.identity, signalLines.transform);
+        GameObject LineObj = Instantiate(signalLineFab, Vector3.zero, Quaternion.identity, _signalLines.transform);
         SignalLine signalLine = LineObj.AddComponent<SignalLine>();
         signalLine.SetLine(_selectedOutputPort.body, _selectedOutputPort.portNum, inputPort.body, inputPort.portNum);
         LineObj.GetComponent<LineRenderer>().SetPosition(0, _selectedOutputPort.transform.position); 
@@ -56,7 +59,7 @@ public class EventBlockController : MonoBehaviour
     public void GenerateBlockInstance(GameObject blockFab){
         if(blockFab.GetComponent<BlockProperty>() == null ) return ;
         Vector3 camPos = Camera.main.transform.position;
-        Instantiate(blockFab, camPos - camPos.z * Vector3.forward, Quaternion.identity, blocks.transform); 
+        Instantiate(blockFab, camPos - camPos.z * Vector3.forward, Quaternion.identity, _blocks.transform); 
     }
 
     public void DestroyBlock(BlockProperty block){

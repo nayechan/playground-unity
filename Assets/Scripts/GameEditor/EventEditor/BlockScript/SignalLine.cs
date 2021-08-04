@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SignalLine : MonoBehaviour
 {
-    public BlockProperty giver, reciver;
-    public int giverPort, reciverPort;
+    private BlockProperty _giver, _reciver;
+    private int _giverPort, _reciverPort;
     private float _signal;
 
     void Update()
@@ -15,17 +15,17 @@ public class SignalLine : MonoBehaviour
     }
 
     public void ReciveSignal(){
-        _signal = giver.getOutput(giverPort);
+        _signal = _giver.getOutput(_giverPort);
     }
 
     public void SendSignal(){
-        reciver.setInput(_signal, reciverPort);
+        _reciver.setInput(_signal, _reciverPort);
     }
 
     public void SetLine(BlockProperty _giver, int _giverPort, BlockProperty _reciver, int _reciverPort){
-        giver = _giver;
-        reciver = _reciver;
-        giverPort = _giverPort;
-        reciverPort = _reciverPort;
+        this._giver = _giver;
+        this._reciver = _reciver;
+        this._giverPort = _giverPort;
+        this._reciverPort = _reciverPort;
     }
 }

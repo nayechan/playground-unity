@@ -8,7 +8,6 @@ public class GridGuider : MonoBehaviour
     private Vector2[] direction = new Vector2[]{new Vector2(0,0),new Vector2(-1,0),new Vector2(1,0),new Vector2(0,-1),new Vector2(0,1)};
     public Camera cam;
     public GameObject gridLines, xLine, yLine, xLineAxis, yLineAxis;
-    public TouchControll touchControll; 
 
     void Start(){
         Vector3 camPos = cam.transform.position;
@@ -19,7 +18,8 @@ public class GridGuider : MonoBehaviour
             GameObject x = Instantiate<GameObject>(xLine, xPos, Quaternion.identity, gridLines.transform);
             GameObject y = Instantiate<GameObject>(yLine, yPos, Quaternion.identity, gridLines.transform);
         }
-        Debug.Log("innerHalfBoxLength"+_innerHalfBoxLength.ToString());
+        FindObjectOfType<TouchSensor_CameraBackground>().m_CameraMoved.AddListener(WhenCamMoved);
+
     }
 
     int DirOnOther(Vector2 objPos, Vector2 otherPos, float halfLengthOfBox){
@@ -48,12 +48,9 @@ public class GridGuider : MonoBehaviour
             GameObject child = gridLines.transform.GetChild(i).gameObject;
             int res = DirOnOther(child.transform.position, cam.transform.position, _outterHalfBoxLength);
             if(res != 0){
-                Debug.Log("moveOccuer");
-                Debug.Log("Before : " + child.transform.position.ToString());
                 Vector3 correction = direction[res] * _innerHalfBoxLength * -2.0f;
                 Debug.Log(correction);
                 child.transform.Translate(correction);
-                Debug.Log("After : " + child.transform.position.ToString());
             }
         }
     } 
