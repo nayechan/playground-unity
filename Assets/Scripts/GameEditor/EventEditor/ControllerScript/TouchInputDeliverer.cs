@@ -80,7 +80,6 @@ public class TouchInputDeliverer : MonoBehaviour
     private void ResetOutdateAlarm(Touch[] touches){
         foreach(var touch in touches){
             if(touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled){
-                Debug.Log("deleted " + touch.fingerId.ToString());
                 _touchAlarms[touch.fingerId].RemoveAllListeners();
             }
         }

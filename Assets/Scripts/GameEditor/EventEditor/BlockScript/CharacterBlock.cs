@@ -16,6 +16,7 @@ public class CharacterBlock : BlockProperty
     }
 
     override protected void BlockAction(){
+        if(_attachedObject == null) return;
         _attachedObject.transform.Translate(_inputs[1] * Time.deltaTime * speed, 0, 0, Space.World);
         _attachedObject.transform.Translate(0, _inputs[0] * Time.deltaTime * speed, 0, Space.World);
         CharacterAction();

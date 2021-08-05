@@ -14,7 +14,7 @@ public class BlockProperty : MonoBehaviour
         _connectedLines = new List<SignalLine>();
     }
 
-    public void Update(){
+    public virtual void Update(){
         BlockAction();
     }
 
