@@ -5,12 +5,12 @@ using UnityEngine;
 public class TouchSensor_BlockMoveButton : TouchSensor
 {
     private Camera cam;
-    private GameObject _targetObject;
+    private BlockProperty _block;
     // Update is called once per frame
     protected override void Start()
     {
         cam = GameObject.Find("Main Camera").GetComponent<Camera>();
-        _targetObject = GetComponentInParent<BlockProperty>().gameObject;
+        _block = GetComponentInParent<BlockProperty>();
     }
 
     public override void OnTouchBegan(Touch touch, out bool isRayBlock)
@@ -20,9 +20,9 @@ public class TouchSensor_BlockMoveButton : TouchSensor
     }
 
     public override void CallBack(Touch touch){
-        if(_targetObject !=null){
-            _targetObject.transform.position = 
-                Vector3.Scale(cam.ScreenToWorldPoint(touch.position), new Vector3(1,1,0));
+        if(_block !=null){
+            Vector3 newPos = Vector3.Scale(cam.ScreenToWorldPoint(touch.position), new Vector3(1,1,0));
+            _block.OnBodyMove(newPos);
         }
     }
 }

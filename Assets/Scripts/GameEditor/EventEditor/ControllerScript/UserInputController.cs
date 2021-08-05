@@ -12,7 +12,10 @@ public class UserInputController : MonoBehaviour
     }
     public Vector2 GetTouchInputViewPort(){
         if(Input.touchCount == 0) return Vector2.zero;
-        return Camera.main.ScreenToViewportPoint(Input.GetTouch(0).position);
+        Vector2 viewPort = Camera.main.ScreenToViewportPoint(Input.GetTouch(0).position);
+        viewPort -= new Vector2(0.5f, 0.5f);
+        viewPort.Scale(new Vector2(2f,2f));
+        return viewPort;
     }
     public void ToggleAll(){
         inputUis.SetActive(!inputUis.activeSelf);

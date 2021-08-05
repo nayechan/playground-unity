@@ -730,7 +730,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1728157361755308986}
-  m_Text: Joystick-RL
+  m_Text: TouchViewPort
   m_OffsetZ: 0
   m_CharacterSize: 0.1
   m_LineSpacing: 1
