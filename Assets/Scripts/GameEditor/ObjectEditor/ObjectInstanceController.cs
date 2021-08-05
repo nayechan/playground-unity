@@ -42,6 +42,12 @@ public class ObjectInstanceController : MonoBehaviour
         }        
     }
 
+
+    public void SetIsRaycastable(bool isRaycastable)
+    {
+        GetComponent<BoxCollider>().enabled = isRaycastable;
+    }
+
     public Vector3 getDefaultSize(){return defaultSize;}
 
     public void OnTouchDown()
@@ -96,5 +102,10 @@ public class ObjectInstanceController : MonoBehaviour
     public ObjectPrimitiveData GetObjectPrimitiveData()
     {
         return primitiveData;
+    }
+
+    public void setTouchController(TouchController_obj touchController)
+    {
+        this.touchController = touchController;
     }
 }

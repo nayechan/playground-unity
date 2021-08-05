@@ -40,16 +40,16 @@ public class CreateObjectPanelController : MonoBehaviour
         {
             Sprite[] sprites = imageStorage.GetSpriteList().ToArray();
             string[] spritePaths = imageStorage.GetSpritePathList().ToArray();
-            objectDataManager.AddObject(
-                new ObjectPrimitiveData(
-                    sprites,
-                    spritePaths,
-                    nameInput.text,
-                    typeDropdown.options[typeDropdown.value].text,
-                    float.Parse(horizontalSizeInput.text),    //width
-                    float.Parse(verticalSizeInput.text)       //height
-                )
+            ObjectPrimitiveData data = new ObjectPrimitiveData(
+                sprites,
+                spritePaths,
+                nameInput.text,
+                typeDropdown.options[typeDropdown.value].text,
+                float.Parse(horizontalSizeInput.text),    //width
+                float.Parse(verticalSizeInput.text)       //height
             );
+            objectDataManager.AddObject(data);
+            Debug.Log(data.GetObjectName());
             ResetComponent();
             selectMain.SetCurrentMode("Select");
         }

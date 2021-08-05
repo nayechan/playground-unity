@@ -122,8 +122,6 @@ public class TouchController_obj : MonoBehaviour
             if(EventSystem.current.IsPointerOverGameObject(touch.fingerId))
                 return;
             bool res = objectBuilder.GenerateObject(RoundCursor(worldCursor));
-            if(res) Debug.Log("Tile generated around" + worldCursor.ToString());
-            else Debug.Log("Failed to Generate tile");
 
             break;
 

@@ -11,15 +11,15 @@ namespace GameEditorDataManager
     {
         [SerializeField]
         private List<K> keys = new List<K>();
-        
+
         [SerializeField]
         private List<V> values = new List<V>();
-        
+
         public void OnBeforeSerialize()
         {
             keys.Clear();
             values.Clear();
-            foreach(KeyValuePair<K,V> pair in this)
+            foreach (KeyValuePair<K, V> pair in this)
             {
                 keys.Add(pair.Key);
                 values.Add(pair.Value);
@@ -29,14 +29,16 @@ namespace GameEditorDataManager
         public void OnAfterDeserialize()
         {
             this.Clear();
-            if(keys.Count != values.Count)
+            if (keys.Count != values.Count)
                 throw new System.Exception("Key or value is not supported type.");
-            for(int i=0;i<keys.Count;++i)
+            for (int i = 0; i < keys.Count; ++i)
                 this.Add(keys[i], values[i]);
         }
     }
-    public class MapEditorData{
-        public class TileType{
+    public class MapEditorData
+    {
+        public class TileType
+        {
             private string spritePath;
             private string name;
             TileType(string path, string name)
@@ -45,82 +47,100 @@ namespace GameEditorDataManager
                 this.name = name;
             }
         }
-        public class TileData{
+        public class TileData
+        {
             private Vector3 position;
-            private System.Guid tileGuid;
-            TileData(Vector3 position, System.Guid guid)
+            private string tileGuid;
+            TileData(Vector3 position, string guid)
             {
                 this.position = position;
                 tileGuid = guid;
             }
         }
-        SerializableDictionary<System.Guid, TileType> tileTypes;
+        SerializableDictionary<string, TileType> tileTypes;
         List<TileData> tileDatas;
     }
-    
-    [Serializable]
-    public class ObjectEditorData{
-        [Serializable]
-        public class ObjectType{
-            [SerializeField] private string[] sprites;
-            [SerializeField] private string objectName;
-            [SerializeField] private string objectType;
-            [SerializeField] private float width, height;
-            [SerializeField] private System.Guid guid;
-            public ObjectType(
-                string[] sprites, string objectName, string objectType,
-                float width, float height, System.Guid guid    
-            )
-            {
-                this.sprites = sprites;
-                this.objectName = objectName;
-                this.objectType = objectType;
-                this.width = width;
-                this.height = height;
-                this.guid = guid;
-            }
-            public string[] GetSprites(){return sprites;}
-            public string GetObjectName(){return objectName;}
-            public string GetObjectType(){return objectType;}
-            public float GetWidth(){return width;}
-            public float GetHeight(){return height;}
-            public System.Guid GetGuid(){return guid;}
-        }
 
-        [Serializable]
-        public class ObjectData{
-            [SerializeField] Vector3 _position;
-            [SerializeField] System.Guid _objectGuid;
-            public ObjectData(Vector3 position, System.Guid objectGuid)
-            {
-                _position = position;
-                _objectGuid = objectGuid;
-            }
-            public Vector3 GetPosition(){return _position;}
-            public Guid GetGuid(){return _objectGuid;}
+    [Serializable]
+    public class ObjectType
+    {
+        [SerializeField] private string[] sprites;
+        [SerializeField] private string objectName;
+        [SerializeField] private string objectType;
+        [SerializeField] private float width, height;
+        [SerializeField] private string guid;
+        public ObjectType(
+            string[] sprites, string objectName, string objectType,
+            float width, float height, string guid
+        )
+        {
+            this.sprites = sprites;
+            this.objectName = objectName;
+            this.objectType = objectType;
+            this.width = width;
+            this.height = height;
+            this.guid = guid;
         }
-        [SerializeField] SerializableDictionary<System.Guid, ObjectType> objectTypes;
+        public string[] GetSprites() { return sprites; }
+        public string GetObjectName() { return objectName; }
+        public string GetObjectType() { return objectType; }
+        public float GetWidth() { return width; }
+        public float GetHeight() { return height; }
+        public string GetGuid() { return guid; }
+    }
+
+    [Serializable]
+    public class ObjectData
+    {
+        [SerializeField] Vector3 _position;
+        [SerializeField] string  _objectGuid;
+        public ObjectData(Vector3 position, string objectGuid)
+        {
+            _position = position;
+            _objectGuid = objectGuid;
+        }
+        public Vector3 GetPosition() { return _position; }
+        public string GetGuid() { return _objectGuid; }
+    }
+
+    [Serializable]
+    public class ObjectEditorData
+    {
+        [SerializeField] SerializableDictionary<string, ObjectType> objectTypes;
         [SerializeField] List<ObjectData> objectDatas;
         public ObjectEditorData()
         {
-            objectTypes = new SerializableDictionary<Guid, ObjectType>();
+            objectTypes = new SerializableDictionary<string, ObjectType>();
             objectDatas = new List<ObjectData>();
         }
         public void AddObjectType(ObjectType data)
         {
-            objectTypes.Add(data.GetGuid(),data);
+            objectTypes.Add(data.GetGuid(), data);
+            Debug.Log(objectTypes.Count);
         }
         public void AddObjectData(ObjectData data)
         {
             objectDatas.Add(data);
+            Debug.Log(objectDatas.Count);
+        }
+        public SerializableDictionary<string, ObjectType> GetObjectTypes()
+        {
+            return objectTypes;
+        }
+
+        public List<ObjectData> GetObjectDatas()
+        {
+            return objectDatas;
         }
     }
-    public class EventEditorData{
+    public class EventEditorData
+    {
 
     }
-    
+
     [Serializable]
-    public class JsonData{
+    public class JsonData
+    {
         [SerializeField] MapEditorData mapEditorData;
         [SerializeField] ObjectEditorData objectEditorData;
         public void setMapEditorData(MapEditorData data)
@@ -131,30 +151,20 @@ namespace GameEditorDataManager
         {
             objectEditorData = data;
         }
-    }
-
-    public class A{
-        [SerializeField] int a;
-        [SerializeField] B _b;
-
-        public A(int a, int b, int c, int d)
+        public void printData()
         {
-            this.a = a;
-            _b = new B(b,c,d);
-        }
+            if(objectEditorData == null) return;
+            SerializableDictionary<string, ObjectType> type = objectEditorData.GetObjectTypes();
+            List<ObjectData> data = objectEditorData.GetObjectDatas();
 
-    }
-
-    [Serializable]
-    public class B{
-        [SerializeField] int b;
-        [SerializeField] Dictionary<int,int> c;
-        public B(int b, int c, int d)
-        {
-            this.b = b;
-            this.c = new Dictionary<int, int>();
-            this.c.Add(c,d);
-            this.c.Add(d,c);
+            foreach(KeyValuePair<string, ObjectType> pair in type)
+            {
+                Debug.Log("Object Type Pair : "+pair.Key+" "+JsonUtility.ToJson(pair.Value));
+            }
+            foreach(ObjectData od in data)
+            {
+                Debug.Log("Object Data : "+od.GetGuid()+" "+od.GetPosition());
+            }
         }
     }
 
@@ -162,13 +172,9 @@ namespace GameEditorDataManager
     {
         JsonData jsonData = new JsonData();
 
-        private void Start() {
-            Debug.Log(JsonUtility.ToJson(new A(1,2,3,4)));
-        }
-
         public void setMapEditorData(MapEditorData data)
         {
-           jsonData.setMapEditorData(data);
+            jsonData.setMapEditorData(data);
         }
 
         public void setObjectEditorData(ObjectEditorData data)
@@ -179,6 +185,7 @@ namespace GameEditorDataManager
         public void printJsonString()
         {
             Debug.Log(JsonUtility.ToJson(jsonData));
+            //jsonData.printData();
         }
     }
 }

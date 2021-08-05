@@ -5,8 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class GameEditorSceneManager : MonoBehaviour
 {
-    [SerializeField] GameEditorDataManager.GameEditorDataManager dataManager;
     [SerializeField] private string currentScene;
+    [SerializeField] private TemporaryGameEditorDataManager gameEditorDataManager;
+
+    private GameObject tiles, objects;
 
     public void MoveTo(string scene)
     {
@@ -16,55 +18,25 @@ public class GameEditorSceneManager : MonoBehaviour
             case "GameEditor":
             break;
             case "MapEditor":
+            GameObject tiles = GameObject.Find("Tiles");
+            gameEditorDataManager.AttachTheirTiles(tiles);
             break;
             case "ObjectEditor":
+            GameObject objects = GameObject.Find("Objects");
+            GameObject dataManager = GameObject.Find("ObjectDataManager");
 
-            GameEditorDataManager.ObjectEditorData data;
-            data = new GameEditorDataManager.ObjectEditorData();
+            gameEditorDataManager.LoadObjectTypes(
+                dataManager.GetComponent<ObjectDataManager>()
+            );
 
-            GameObject panelGameObject = GameObject.Find("ObjectDataManager");
-            ObjectDataManager objectDataManager = panelGameObject.GetComponent<ObjectDataManager>();
-            List<ObjectPrimitiveData> datas = objectDataManager.GetObjectPrimitiveDatas();
-
-            foreach(ObjectPrimitiveData primitiveData in datas)
-            {
-                data.AddObjectType(
-                    new GameEditorDataManager.ObjectEditorData.ObjectType(
-                        primitiveData.GetSpritePaths(),
-                        primitiveData.GetObjectName(),
-                        primitiveData.GetObjectType(),
-                        primitiveData.GetWidth(),
-                        primitiveData.GetHeight(),
-                        primitiveData.GetGuid()
-                    )
-                );
-            }
-
-            Transform objects = GameObject.Find("Objects").transform;
-            foreach(Transform transform in objects)
-            {
-                if(transform.name == "currentObject")
-                    continue;
-                data.AddObjectData(
-                    new GameEditorDataManager.ObjectEditorData.ObjectData(
-                        transform.position,
-                        transform.GetComponent<ObjectInstanceController>().GetObjectPrimitiveData().GetGuid()
-                    )
-                );
-            }
+            gameEditorDataManager.AttachTheirObjects(objects);
             break;
             case "EventEditor":
             break;
         }
 
-        StartCoroutine("WaitForSceneLoad", scene);
-    }
-    IEnumerator WaitForSceneLoad(string sceneName)
-    {
-        AsyncOperation op = SceneManager.LoadSceneAsync(sceneName);
-        while(!op.isDone)
-            yield return null;
-        AfterMovement(sceneName);
+        //if(scene == "MapEditor")
+            StartCoroutine("WaitForSceneLoad", scene);
     }
     void AfterMovement(string scene)
     {
@@ -73,12 +45,26 @@ public class GameEditorSceneManager : MonoBehaviour
             case "GameEditor":
             break;
             case "MapEditor":
-            dataManager.printJsonString();
+            GameObject tiles = GameObject.Find("Tiles");
+            gameEditorDataManager.FetchOurTiles(tiles);
             break;
             case "ObjectEditor":
+            GameObject objects = GameObject.Find("Objects");
+            GameObject dataManager = GameObject.Find("ObjectDataManager");
+            gameEditorDataManager.FetchOurObjects(objects);
+            gameEditorDataManager.RestoreObjectTypes(
+                dataManager.GetComponent<ObjectDataManager>()
+            );
             break;
             case "EventEditor":
             break;
         }
+    }
+    IEnumerator WaitForSceneLoad(string sceneName)
+    {
+        AsyncOperation op = SceneManager.LoadSceneAsync(sceneName);
+        while(!op.isDone)
+            yield return null;
+        AfterMovement(sceneName);
     }
 }
