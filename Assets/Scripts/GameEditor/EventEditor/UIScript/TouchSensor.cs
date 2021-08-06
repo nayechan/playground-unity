@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TouchSensor : MonoBehaviour
 {
+    public delegate void Del();
     protected int _lastFingerId;
     protected virtual void Start(){
         _lastFingerId = -1;

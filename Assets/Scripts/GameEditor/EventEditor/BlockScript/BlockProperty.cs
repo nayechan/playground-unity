@@ -44,7 +44,7 @@ public class BlockProperty : MonoBehaviour
 
     public virtual void GetMessage(string message){ }
 
-    public void OnBodyMove(Vector3 newPos){
+    public virtual void OnBodyMove(Vector3 newPos){
         transform.position = newPos;
         foreach(var line in _connectedLines){
             if(line == null) continue;

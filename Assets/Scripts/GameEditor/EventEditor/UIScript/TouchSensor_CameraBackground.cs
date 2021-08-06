@@ -31,4 +31,6 @@ public class TouchSensor_CameraBackground : TouchSensor
         cam.transform.position = _camBeginPosition - deltaVector;
         m_CameraMoved.Invoke();
     }
+
+    
 }
