@@ -13,7 +13,7 @@ TagManager:
   - Grid
   - Water
   - UI
-  - 
+  - Block
   - 
   - 
   - 
@@ -42,4 +42,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Block
+    uniqueID: 2690790093
     locked: 0
