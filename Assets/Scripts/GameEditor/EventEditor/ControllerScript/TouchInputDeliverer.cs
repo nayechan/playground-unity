@@ -21,7 +21,6 @@ public class TouchInputDeliverer : MonoBehaviour
 
     void Update() {
         Touch[] touches = Input.touches;
-        foreach(var t in touches) { Debug.Log(t.fingerId);}
         AlarmAll(touches);
         ShotRays(touches);
         ResetOutdateAlarm(touches);
@@ -71,8 +70,8 @@ public class TouchInputDeliverer : MonoBehaviour
     }
 
     private void AlarmAll(Touch[] touches){
-        // Debug.Log("AlarmAll, touch[] : " + touches.Length);
         foreach(var touch in touches){
+            Debug.Log(_touchAlarms[touch.fingerId]);
             _touchAlarms[touch.fingerId].Invoke(touch);
         }
     }
@@ -80,7 +79,6 @@ public class TouchInputDeliverer : MonoBehaviour
     private void ResetOutdateAlarm(Touch[] touches){
         foreach(var touch in touches){
             if(touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled){
-                Debug.Log("deleted " + touch.fingerId.ToString());
                 _touchAlarms[touch.fingerId].RemoveAllListeners();
             }
         }

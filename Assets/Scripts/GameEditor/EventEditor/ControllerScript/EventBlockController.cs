@@ -48,9 +48,8 @@ public class EventBlockController : MonoBehaviour
         // 선 객체를 만든다.
         GameObject LineObj = Instantiate(signalLineFab, Vector3.zero, Quaternion.identity, _signalLines.transform);
         SignalLine signalLine = LineObj.AddComponent<SignalLine>();
-        signalLine.SetLine(_selectedOutputPort.body, _selectedOutputPort.portNum, inputPort.body, inputPort.portNum);
-        LineObj.GetComponent<LineRenderer>().SetPosition(0, _selectedOutputPort.transform.position); 
-        LineObj.GetComponent<LineRenderer>().SetPosition(1, inputPort.transform.position);
+        signalLine.SetLine(_selectedOutputPort, inputPort);
+        signalLine.ReRendering();
         _selectedOutputPort.body.AddLine(signalLine);
         inputPort.body.AddLine(signalLine);
         Debug.Log("New SignalLine constructed");

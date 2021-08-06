@@ -9,12 +9,14 @@ public class BlockProperty : MonoBehaviour
     protected float[] _inputs, _outputs;
     private int _lastFingerId;
     private List<SignalLine> _connectedLines;
+    private TouchSensor_BlockPort[] _ports;
     
     protected virtual void Start(){
         _connectedLines = new List<SignalLine>();
+        _ports = GetComponentsInChildren<TouchSensor_BlockPort>();
     }
 
-    public void Update(){
+    public virtual void Update(){
         BlockAction();
     }
 
@@ -40,4 +42,13 @@ public class BlockProperty : MonoBehaviour
         _inputs[portNum] = val;
     }
 
+    public virtual void GetMessage(string message){ }
+
+    public void OnBodyMove(Vector3 newPos){
+        transform.position = newPos;
+        foreach(var line in _connectedLines){
+            if(line == null) continue;
+            line.ReRendering();
+        }
+    }
 }
