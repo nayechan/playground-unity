@@ -32,11 +32,14 @@ public class GameEditorSceneManager : MonoBehaviour
             gameEditorDataManager.AttachTheirObjects(objects);
             break;
             case "EventEditor":
+            GameObject blocks = GameObject.Find("Blocks");
+            gameEditorDataManager.AttachTheirBlocks(blocks);
+            break;
+            case "GamePlayPreview":
             break;
         }
 
-        //if(scene == "MapEditor")
-            StartCoroutine("WaitForSceneLoad", scene);
+        StartCoroutine("WaitForSceneLoad", scene);
     }
     void AfterMovement(string scene)
     {
@@ -57,6 +60,10 @@ public class GameEditorSceneManager : MonoBehaviour
             );
             break;
             case "EventEditor":
+            GameObject blocks = GameObject.Find("Blocks");
+            gameEditorDataManager.FetchOurBlocks(blocks);
+            break;
+            case "GamePlayPreview":
             break;
         }
     }
