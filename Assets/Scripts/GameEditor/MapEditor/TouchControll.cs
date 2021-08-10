@@ -23,57 +23,25 @@ public class TouchControll : MonoBehaviour
     }
     void Update()
     {
-        // Handle screen touches.
         _deltaAfterAction += Time.deltaTime;
-        if (Input.touchCount > 0)
-        {
-            Touch t1 = Input.GetTouch(0);
-            // Debug.Log("touch detected");
-            // if(_mode == "Cameramove")
-            //     DragControll(t1);
-            if(_mode == "Addtile" && !IsAroundButton(t1) && !IsOnCooling() ){
-                AddTile(t1);
-                StartCooling();
-            }
-            if(_mode == "DelTile" && !IsAroundButton(t1) && !IsOnCooling()){
-                DelTile(t1);
-                StartCooling();
-            }
-        }
     }
 
-    // void DragControll(Touch t1){
-    //     if(Input.touchCount == 1){
-    //         Vector3 worldCursor = TouchToWorld(t1);
-    //         if(t1.phase == TouchPhase.Began){
-    //         }
-    //         if (t1.phase == TouchPhase.Moved){            
-    //             cam.transform.position -= TouchToDelta(t1);
-    //             m_CamMoved.Invoke();
-    //         }
-    //     }else if(Input.touchCount == 2){
-    //         Touch t2 = Input.GetTouch(1);
-    //         float prevDistance = (t1.position - t1.deltaPosition + t2.position - t2.deltaPosition).magnitude;
-    //         float curDistance = (t1.position - t2.position).magnitude;
-    //         cam.orthographicSize = Mathf.Clamp((prevDistance - curDistance) * 0.01f, 1f, 10f);
-    //     }
-    // }
-    // TouchSensor, TouchInputDeliverer, 카메라 Collider 이용한 메커니즘으로 분리됨.
-
-    void AddTile(Touch t1){
-        // Debug.Log("AddTile");        
+    public void AddTile(Touch t1){
+        if(IsOnCooling()) return;
         Vector3 worldCursor = TouchToWorld(t1);
         bool res = tileBuilder.GenerateTile(RoundCursor(worldCursor));
         if(res) Debug.Log("Tile generated around" + worldCursor.ToString());
         else Debug.Log("Failed to Generate tile");
+        StartCooling();
     }
 
-    void DelTile(Touch t1){
-        // Debug.Log("DelTile");
+    public void DelTile(Touch t1){
+        if(IsOnCooling()) return;
         Vector3 worldCursor = TouchToWorld(t1);
         bool res = tileBuilder.RemoveTile(RoundCursor(worldCursor));
         if(res) Debug.Log("Tile removed around" + worldCursor.ToString());
         else Debug.Log("Failed to remove tile");
+        StartCooling();
     }
 
     public void SetTouchMode(string touchMode){
@@ -81,6 +49,10 @@ public class TouchControll : MonoBehaviour
         _mode = touchMode;
     }
 
+    public string GetTouchMode(){
+        return _mode;
+    }
+    
     Vector3 TouchToWorld(Touch t1){
         return cam.ScreenToWorldPoint(new Vector3(t1.position.x, t1.position.y, -cam.transform.position.z));    
     }
