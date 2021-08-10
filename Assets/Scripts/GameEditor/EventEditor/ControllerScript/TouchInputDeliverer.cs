@@ -71,7 +71,6 @@ public class TouchInputDeliverer : MonoBehaviour
 
     private void AlarmAll(Touch[] touches){
         foreach(var touch in touches){
-            Debug.Log(_touchAlarms[touch.fingerId]);
             _touchAlarms[touch.fingerId].Invoke(touch);
         }
     }

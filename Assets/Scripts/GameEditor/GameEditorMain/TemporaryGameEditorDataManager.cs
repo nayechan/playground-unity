@@ -92,5 +92,7 @@ public class TemporaryGameEditorDataManager : MonoBehaviour
             t.parent = theirBlockRoot.transform;
             t.gameObject.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1);
         }
+        EventEditorDeplomat edd = EventEditorDeplomat.GetEED();
+        edd.RefreshObjects(ourObjectRoot);
     }
 }
