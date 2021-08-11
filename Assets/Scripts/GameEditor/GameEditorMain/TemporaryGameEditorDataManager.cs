@@ -42,7 +42,8 @@ public class TemporaryGameEditorDataManager : MonoBehaviour
         foreach(Transform t in theirBlockRoot.transform.Cast<Transform>().ToList())
         {
             t.parent = ourBlockRoot.transform;
-            t.gameObject.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0);
+            // t.gameObject.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0);
+            // block 객체에 SpriteRenderer가 없어서 보이지 않게 하는 다른 방법을 사용해야 할 듯.
         }
     }
 

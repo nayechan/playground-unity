@@ -13,7 +13,8 @@ public class EventBlockController : MonoBehaviour
     private mode _mode;
     private enum mode{
         Editing,
-        LineConnecting
+        SignalLineConnecting,
+        ComponentLineConnecting
     };
 
     void Start(){
@@ -31,12 +32,23 @@ public class EventBlockController : MonoBehaviour
         // 연결작업이 진행되었을 시 true 반환. 에디터 모드를 LineConnecting으로 변경.
         if(port.portType == "Output" && _mode == mode.Editing){
             _selectedOutputPort = port;
-            _mode = mode.LineConnecting;
+            _mode = mode.SignalLineConnecting;
             guideText.SetActive(true);
             return true;
         }
-        if(port.portType == "Input" && _mode == mode.LineConnecting){
-            ConnectLine(port);
+        if(port.portType == "Input" && _mode == mode.SignalLineConnecting){
+            ConnectLine(port,"Signal");
+            _mode = mode.Editing;
+            guideText.SetActive(false);
+            return true;
+        }
+        if(port.portType == "PropertyOutput" && _mode == mode.Editing){
+            _selectedOutputPort = port;
+            _mode = mode.ComponentLineConnecting;
+            guideText.SetActive(true);
+        }
+        if(port.portType == "PropertyInput" && _mode == mode.ComponentLineConnecting){
+            ConnectLine(port,"Component");
             _mode = mode.Editing;
             guideText.SetActive(false);
             return true;
@@ -44,10 +56,12 @@ public class EventBlockController : MonoBehaviour
         return false;
     }
     
-    public void ConnectLine(TouchSensor_BlockPort inputPort){
+    public void ConnectLine(TouchSensor_BlockPort inputPort, string type){
         // 선 객체를 만든다.
         GameObject LineObj = Instantiate(signalLineFab, Vector3.zero, Quaternion.identity, _signalLines.transform);
-        SignalLine signalLine = LineObj.AddComponent<SignalLine>();
+        SignalLine signalLine;
+        if(type == "Signal") signalLine = LineObj.AddComponent<SignalLine>();
+        else signalLine = LineObj.AddComponent<ComponentLine>();
         signalLine.SetLine(_selectedOutputPort, inputPort);
         signalLine.ReRendering();
         _selectedOutputPort.body.AddLine(signalLine);
@@ -56,7 +70,6 @@ public class EventBlockController : MonoBehaviour
     }
 
     public void GenerateBlockInstance(GameObject blockFab){
-        if(blockFab.GetComponent<BlockProperty>() == null ) return ;
         Vector3 camPos = Camera.main.transform.position;
         Instantiate(blockFab, camPos - camPos.z * Vector3.forward, Quaternion.identity, _blocks.transform); 
     }
@@ -69,5 +82,14 @@ public class EventBlockController : MonoBehaviour
         _mode = mode.Editing;
         guideText.SetActive(false);
         _selectedOutputPort = null;
+    }
+
+    public void PlaySart(){
+        // 시작 초기 환경관련. 추후 다른 컴포넌트서 설정 가능
+        Physics2D.gravity = Vector2.zero;
+        //
+        foreach(Transform line in _signalLines.GetComponentInChildren<Transform>()){
+            line.GetComponent<SignalLine>().PlayStart();
+        }
     }
 }

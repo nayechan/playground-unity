@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class BlockProperty : MonoBehaviour
 {
+    public delegate void MyDelegate(GameObject obj);
     // protected GameObject _attachedObject;
     public GameObject _attachedObject;
     protected float[] _inputs, _outputs;
-    private int _lastFingerId;
+    protected MyDelegate _AddComponentMethod;
     private List<SignalLine> _connectedLines;
     private TouchSensor_BlockPort[] _ports;
     
@@ -36,6 +37,19 @@ public class BlockProperty : MonoBehaviour
 
     public float getOutput(int portNum){
         return _outputs[portNum];
+    }
+
+    public MyDelegate GetAddComponentMethod(){
+        return _AddComponentMethod;
+    }
+
+    public virtual void RunAddComponentMethod(){
+        if(_AddComponentMethod == null) return;
+        _AddComponentMethod(_attachedObject);
+    }
+
+    public virtual void SetAddComponentMethod(MyDelegate Method){
+        _AddComponentMethod = Method;
     }
 
     public void setInput(float val, int portNum){
