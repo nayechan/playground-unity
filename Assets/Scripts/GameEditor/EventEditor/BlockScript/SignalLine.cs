@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class SignalLine : MonoBehaviour
 {
-    private BlockProperty _giver, _reciver;
+    protected delegate void Runer();
+    protected BlockProperty _giver, _reciver;
+    protected Runer _Run;
     private int _giverPort, _reciverPort;
     private float _signal;
     private TouchSensor_BlockPort[] _ports;
 
     void Start(){
+        _Run = ()=>{};
     }
     void Update()
     {
-        ReciveSignal();
-        SendSignal();
+        _Run();
     }
 
     public void ReciveSignal(){
@@ -25,7 +27,7 @@ public class SignalLine : MonoBehaviour
         _reciver.setInput(_signal, _reciverPort);
     }
 
-    public void SetLine(TouchSensor_BlockPort giver, TouchSensor_BlockPort reciver){
+    public virtual void SetLine(TouchSensor_BlockPort giver, TouchSensor_BlockPort reciver){
         _ports = new TouchSensor_BlockPort[2];
         this._giver = giver.body;
         this._reciver = reciver.body;
@@ -40,5 +42,14 @@ public class SignalLine : MonoBehaviour
         LineRenderer rend = GetComponent<LineRenderer>();
         rend.SetPosition(0, _ports[0].transform.position);
         rend.SetPosition(1, _ports[1].transform.position);
+    }
+
+    void OnDestroy(){
+        _reciver.setInput(0f, _reciverPort);
+    }
+
+    public virtual void PlayStart(){
+        _Run += ReciveSignal;
+        _Run += SendSignal;
     }
 }

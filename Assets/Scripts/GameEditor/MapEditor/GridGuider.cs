@@ -18,7 +18,7 @@ public class GridGuider : MonoBehaviour
             GameObject x = Instantiate<GameObject>(xLine, xPos, Quaternion.identity, gridLines.transform);
             GameObject y = Instantiate<GameObject>(yLine, yPos, Quaternion.identity, gridLines.transform);
         }
-        FindObjectOfType<TouchSensor_CameraBackground>().m_CameraMoved.AddListener(WhenCamMoved);
+        // FindObjectOfType<TouchSensor_CameraBackground>().m_CameraMoved.AddListener(WhenCamMoved);
 
     }
 
