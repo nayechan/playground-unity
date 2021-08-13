@@ -49,7 +49,6 @@ public class CompareBlock : BlockProperty
             _outputs[0] = (_inputs[0] != _inputs[1]) ? 1 : 0;
             break;
         }
-        Debug.Log(_inputs[0]+" "+currentComparator+" "+_inputs[1]+" = "+_outputs[0]);
     }
 
     public override void GetMessage(string message)
