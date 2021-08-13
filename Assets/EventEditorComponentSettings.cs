@@ -37,7 +37,9 @@ public class EventEditorComponentSettings : MonoBehaviour
 
     public void ApplySetting()
     {
-        currentBlock.GetMessage("");
+        string value = 
+        ComponentObject[currentComponentType].GetComponent<EventEditorComponentPanelController>().GetValue();
+        currentBlock.GetMessage(value);
         CloseWindow();
     }
 

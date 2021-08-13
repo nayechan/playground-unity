@@ -53,6 +53,7 @@ public class CompareBlock : BlockProperty
 
     public override void GetMessage(string message)
     {
+        Debug.Log(message);
         switch(message)
         {
             case "isLesserThan":
