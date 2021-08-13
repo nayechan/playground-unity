@@ -10,7 +10,8 @@ public class TemporaryGameEditorDataManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        // 이벤트에디터씬에서 Play를 수행하기 위해 root 오브젝트로의 접근이 필요합니다.
+        EventBlockController.GetEBC().SetRoots(ourBlockRoot, ourTileRoot);
     }
 
     // Update is called once per frame
@@ -94,6 +95,7 @@ public class TemporaryGameEditorDataManager : MonoBehaviour
             t.gameObject.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1);
         }
         EventEditorDeplomat edd = EventEditorDeplomat.GetEED();
-        edd.RefreshObjects(ourObjectRoot);
+        edd.RefreshObjects(ourObjectRoot, ourTileRoot);
+        EventBlockController.GetEBC().SetRoots(ourObjectRoot,ourTileRoot);
     }
 }

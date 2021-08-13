@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BlockProperty : MonoBehaviour
 {
+    protected delegate void MyListener();
     public delegate void MyDelegate(GameObject obj);
     // protected GameObject _attachedObject;
     public GameObject _attachedObject;
@@ -65,4 +66,6 @@ public class BlockProperty : MonoBehaviour
             line.ReRendering();
         }
     }
+
+    public virtual void PlayStart(){ }
 }

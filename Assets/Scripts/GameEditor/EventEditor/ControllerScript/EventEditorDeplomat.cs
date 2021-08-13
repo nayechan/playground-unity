@@ -5,21 +5,23 @@ using UnityEngine;
 public class EventEditorDeplomat : MonoBehaviour
 {
     static EventEditorDeplomat _eed;
-    private HashSet<GameObject> _objects;
+    private HashSet<GameObject> _objectsSet;
     public GameObject characterBlock, blockBlock, otherBlock;
+    // private GameObject _objects, _tiles;
 
     void Start(){
         _eed = this;
+        _objectsSet = new HashSet<GameObject>();
     }
 
     static public EventEditorDeplomat GetEED(){
         return _eed;
     }
 
-    public void RefreshObjects(GameObject MovedObjects){
-        Debug.Log(MovedObjects);
+    public void RefreshObjects(GameObject MovedObjects, GameObject MovedTiles){
+        // _objects = MovedObjects; MovedTiles = _tiles;
         foreach(Transform t in MovedObjects.transform){
-            if(!_objects.Contains(t.gameObject)){
+            if(!_objectsSet.Contains(t.gameObject)){
                 ObjectInstanceController oic = t.GetComponent<ObjectInstanceController>();
                 if(!oic) continue;
                 CreateObjectBlock(t.gameObject);
@@ -34,13 +36,16 @@ public class EventEditorDeplomat : MonoBehaviour
         ObjectPrimitiveData pt = oic.GetObjectPrimitiveData();
         string objectType = pt.GetObjectType();
         if(objectType == "Character"){
-
+            EventBlockController ebc = EventBlockController.GetEBC();
+            ebc.GenerateBlockInstance(characterBlock, targetObject.transform.position, targetObject);
         }
         if(objectType == "Block"){
-    
+            EventBlockController ebc = EventBlockController.GetEBC();
+            ebc.GenerateBlockInstance(blockBlock, targetObject.transform.position, targetObject);
         }
         if(objectType == "Other"){
-    
+            EventBlockController ebc = EventBlockController.GetEBC();
+            ebc.GenerateBlockInstance(otherBlock, targetObject.transform.position, targetObject);
         }
     
     }

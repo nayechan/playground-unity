@@ -9,7 +9,7 @@ public class EventBlockController : MonoBehaviour
     public GameObject signalLineFab, guideText;
     private static EventBlockController _ebc;
     private TouchSensor_BlockPort _selectedOutputPort;
-    private GameObject _signalLines, _blocks;
+    private GameObject _signalLines, _blocks, _objects, _tiles;
     private mode _mode;
     private enum mode{
         Editing,
@@ -71,9 +71,17 @@ public class EventBlockController : MonoBehaviour
 
     public void GenerateBlockInstance(GameObject blockFab){
         Vector3 camPos = Camera.main.transform.position;
-        Instantiate(blockFab, camPos - camPos.z * Vector3.forward, Quaternion.identity, _blocks.transform); 
+        GenerateBlockInstance(blockFab, camPos);
     }
 
+    public void GenerateBlockInstance(GameObject blockFab, Vector3 pos){
+        GenerateBlockInstance(blockFab, pos, null);
+    }
+
+    public void GenerateBlockInstance(GameObject blockFab, Vector3 pos, GameObject attached){
+        GameObject ins = Instantiate(blockFab, pos - pos.z * Vector3.forward, Quaternion.identity, _blocks.transform); 
+        ins.GetComponent<BlockProperty>()._attachedObject = attached;
+    }
     public void DestroyBlock(BlockProperty block){
         Destroy(block.gameObject);
     }
@@ -87,9 +95,45 @@ public class EventBlockController : MonoBehaviour
     public void PlaySart(){
         // 시작 초기 환경관련. 추후 다른 컴포넌트서 설정 가능
         Physics2D.gravity = Vector2.zero;
-        //
+        // 모든 SignalLine 컴포넌트를 활성화
         foreach(Transform line in _signalLines.GetComponentInChildren<Transform>()){
             line.GetComponent<SignalLine>().PlayStart();
         }
+        // 모든 Tile 오브젝트에 컴포넌트(collider, rigidBody 추가)
+        if(_tiles){
+        foreach(Transform t in _tiles.GetComponentsInChildren<Transform>()){
+            GameObject obj = t.gameObject;
+            Rigidbody2D body = obj.AddComponent<Rigidbody2D>();
+            body.bodyType = RigidbodyType2D.Dynamic;
+            Collider2D col = obj.GetComponent<BoxCollider2D>();
+            if(col == null) {col = obj.AddComponent<BoxCollider2D>();}
+            PhysicsMaterial2D mat = new PhysicsMaterial2D("Bouncer");
+            mat.bounciness = 1f;
+            mat.friction = 0f;
+            col.sharedMaterial = mat;
+        }
+        }
+        // 모든 시작시 동작하는 블럭 효과를 수행 (모든 BlockProperty 블록의 특정함수 수행) (예를 들면 컴포넌트를 부여)
+        foreach(BlockProperty bp in GameObject.FindObjectsOfType<BlockProperty>()){
+            bp.PlayStart();
+            foreach(Transform childT in bp.transform){
+                childT.gameObject.SetActive(false);
+            }
+        }
+        // 타일의 알파값, 오브젝트 알파값 재조정
+        TemporaryGameEditorDataManager tge = GameObject.FindObjectOfType<TemporaryGameEditorDataManager>();
+        if(tge){
+            tge.FetchOurBlocks(new GameObject("_objs"));
+            tge.FetchOurTiles(new GameObject("_tiles"));
+        }
+        // 인풋 카메라 재조정
+        UserInputController.GetUserInputController().ResetCamera();
+        // 툴 바 disable
+        GameObject.Find("Canvas").SetActive(false);
+    }
+
+    public void SetRoots(GameObject objs, GameObject tiles){
+        _objects = objs;
+        _tiles = tiles;
     }
 }

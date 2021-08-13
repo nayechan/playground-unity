@@ -5,14 +5,14 @@ using UnityEngine;
 public class GameDisplayBlock: BlockProperty
 {
     /* 입력 1 : 상하, 입력 2 : 좌우, 입력 3 : 지정된 액션 */
-    private static int _inputNum = 0, _outputNum = 0;
     private Camera _cam;
     private GameObject _area;
 
     void Awake(){
-        GameObject obj = new GameObject("PlayerDisplay", typeof(Camera));
-        obj.transform.parent = this.gameObject.transform;
-        _cam = obj.GetComponent<Camera>();
+        // GameObject obj = new GameObject("PlayerDisplay", typeof(Camera));
+        // obj.transform.parent = this.gameObject.transform;
+        // _cam = obj.GetComponent<Camera>();
+        _cam = this.gameObject.AddComponent<Camera>();
     }
     protected override void Start(){
         base.Start();
@@ -41,5 +41,10 @@ public class GameDisplayBlock: BlockProperty
     private void Resize(float height){
         _cam.orthographicSize = height;
         _area.transform.localScale = new Vector3(2f*(_cam.aspect*height),2f*height,1f);
+    }
+
+    public override void PlayStart()
+    {
+        Destroy(Camera.main);
     }
 }
