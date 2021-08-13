@@ -8,6 +8,8 @@ public class EventEditorComponentSettings : MonoBehaviour
     Dictionary<ComponentType, GameObject> ComponentObject;
     [SerializeField] GameObject _basicIncrementation, _compareBlock, _calculationBlock;
     private ComponentType currentComponentType;
+
+    private BlockProperty currentBlock;
     
     [Serializable]
     public enum ComponentType{
@@ -24,12 +26,19 @@ public class EventEditorComponentSettings : MonoBehaviour
         ComponentObject[ComponentType.CalculationBlock] = _calculationBlock;
     }    
     
-    public void ActivateWindow(ComponentType componentType)
+    public void ActivateWindow(ComponentType componentType, BlockProperty block)
     {
+        currentBlock = block;
         gameObject.SetActive(true);
         ComponentType prevComponentType = currentComponentType;
         currentComponentType = componentType;
         RefreshGUI(prevComponentType, currentComponentType);
+    }
+
+    public void ApplySetting()
+    {
+        currentBlock.GetMessage("");
+        CloseWindow();
     }
 
     public void CloseWindow()
