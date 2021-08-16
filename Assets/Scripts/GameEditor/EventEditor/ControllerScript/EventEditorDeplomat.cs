@@ -35,16 +35,14 @@ public class EventEditorDeplomat : MonoBehaviour
         ObjectInstanceController oic = targetObject.GetComponent<ObjectInstanceController>();
         ObjectPrimitiveData pt = oic.GetObjectPrimitiveData();
         string objectType = pt.GetObjectType();
+        EventBlockController ebc = EventBlockController.GetEBC();
         if(objectType == "Character"){
-            EventBlockController ebc = EventBlockController.GetEBC();
             ebc.GenerateBlockInstance(characterBlock, targetObject.transform.position, targetObject);
         }
         if(objectType == "Block"){
-            EventBlockController ebc = EventBlockController.GetEBC();
             ebc.GenerateBlockInstance(blockBlock, targetObject.transform.position, targetObject);
         }
         if(objectType == "Other"){
-            EventBlockController ebc = EventBlockController.GetEBC();
             ebc.GenerateBlockInstance(otherBlock, targetObject.transform.position, targetObject);
         }
     

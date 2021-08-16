@@ -22,7 +22,6 @@ public class GameDisplayBlock: BlockProperty
         if(!_area) Debug.Log("ERROR! _AREA is NULL");
         _cam.orthographic = true;
         _cam.depth = -3f; // 다른 씬들의 카메라가 Deactivated 되면 자동으로 카메라가 켜짐.
-        _cam.transform.position = this.gameObject.transform.position + new Vector3(0, 0, -10f);
         Resize(3f);
     }
 
@@ -45,6 +44,8 @@ public class GameDisplayBlock: BlockProperty
 
     public override void PlayStart()
     {
+        base.PlayStart();
         Destroy(Camera.main);
+        _cam.transform.position = this.gameObject.transform.position + new Vector3(0, 0, -10f);
     }
 }

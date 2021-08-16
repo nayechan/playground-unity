@@ -49,7 +49,7 @@ public class CreateObjectPanelController : MonoBehaviour
                 float.Parse(verticalSizeInput.text)       //height
             );
             objectDataManager.AddObject(data);
-            Debug.Log(data.GetObjectName());
+            // Debug.Log(data.GetObjectName());
             ResetComponent();
             selectMain.SetCurrentMode("Select");
         }

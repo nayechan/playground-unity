@@ -51,5 +51,7 @@ public class SignalLine : MonoBehaviour
     public virtual void PlayStart(){
         _Run += ReciveSignal;
         _Run += SendSignal;
+        LineRenderer lr = GetComponent<LineRenderer>();
+        if(lr != null) lr.enabled = false;
     }
 }

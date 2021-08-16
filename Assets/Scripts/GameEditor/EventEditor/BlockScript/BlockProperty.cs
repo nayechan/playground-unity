@@ -67,5 +67,8 @@ public class BlockProperty : MonoBehaviour
         }
     }
 
-    public virtual void PlayStart(){ }
+    public virtual void PlayStart(){ 
+        transform.Translate(Vector3.back * 100f);
+    }
+
 }

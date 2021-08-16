@@ -6,6 +6,7 @@ public class TouchViewPortPointBlock : BlockProperty
 {
     private static int _inputNum = 0, _outputNum = 2;
     private UserInputController _userInput;
+    private Camera cam;
 
     protected override void Start(){
         base.Start();
@@ -14,7 +15,9 @@ public class TouchViewPortPointBlock : BlockProperty
         _userInput = GameObject.FindObjectOfType<UserInputController>();
     }
     override protected void BlockAction(){
-        _outputs[0] = _userInput.GetTouchInputViewPort().x;
-        _outputs[1] = _userInput.GetTouchInputViewPort().y;
+        Camera cam = GameObject.FindObjectOfType<GameDisplayBlock>().GetComponent<Camera>();
+        if(cam == null) return;
+        _outputs[0] = _userInput.GetTouchInputViewPort(cam).x;
+        _outputs[1] = _userInput.GetTouchInputViewPort(cam).y;
     }
 }

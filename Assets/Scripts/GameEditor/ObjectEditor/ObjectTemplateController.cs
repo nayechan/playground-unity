@@ -13,8 +13,6 @@ public class ObjectTemplateController : MonoBehaviour
     void Awake() {
         currentObject = 
         GameObject.Find("Objects").transform.Find("currentObject").gameObject;
-        
-        Debug.Log(currentObject);
     }
 
     void UIRefresh()

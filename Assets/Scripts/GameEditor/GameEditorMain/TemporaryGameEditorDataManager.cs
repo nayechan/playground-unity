@@ -6,8 +6,13 @@ using UnityEngine;
 public class TemporaryGameEditorDataManager : MonoBehaviour
 {
     [SerializeField] private GameObject ourObjectRoot, ourTileRoot, ourBlockRoot;
+    private static TemporaryGameEditorDataManager _dm;
     private List<ObjectPrimitiveData> datas;
     // Start is called before the first frame update
+
+    void Awake(){
+        _dm = this;
+    }
     void Start()
     {
         // 이벤트에디터씬에서 Play를 수행하기 위해 root 오브젝트로의 접근이 필요합니다.
@@ -24,6 +29,7 @@ public class TemporaryGameEditorDataManager : MonoBehaviour
     {
         foreach(Transform t in theirObjectRoot.transform.Cast<Transform>().ToList())
         {
+            if(t.name == "currentObject") continue;
             t.parent = ourObjectRoot.transform;
             t.gameObject.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.0f);
         }
@@ -60,8 +66,7 @@ public class TemporaryGameEditorDataManager : MonoBehaviour
 
     public void FetchOurObjects(GameObject theirObjectRoot)
     {
-        TouchController_obj touchController = 
-        GameObject.Find("TouchController").GetComponent<TouchController_obj>();
+        TouchController_obj touchController = GameObject.FindObjectOfType<TouchController_obj>();
 
         foreach(Transform t in ourObjectRoot.transform.Cast<Transform>().ToList())
         {
@@ -69,11 +74,12 @@ public class TemporaryGameEditorDataManager : MonoBehaviour
             {
                 t.parent = theirObjectRoot.transform;
                 t.gameObject.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1);
+            }
+            if(touchController != null){
                 t.gameObject.GetComponent<ObjectInstanceController>().setTouchController(
                     touchController
                 );
             }
-
         }
     }
 
@@ -92,10 +98,13 @@ public class TemporaryGameEditorDataManager : MonoBehaviour
         foreach(Transform t in ourBlockRoot.transform.Cast<Transform>().ToList())
         {
             t.parent = theirBlockRoot.transform;
-            t.gameObject.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1);
         }
         EventEditorDeplomat edd = EventEditorDeplomat.GetEED();
         edd.RefreshObjects(ourObjectRoot, ourTileRoot);
         EventBlockController.GetEBC().SetRoots(ourObjectRoot,ourTileRoot);
+    }
+
+    static public TemporaryGameEditorDataManager GetDM(){
+        return _dm;
     }
 }
