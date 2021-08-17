@@ -29,11 +29,11 @@ public class ObjectInstanceController : MonoBehaviour
                 defaultSize.z
             );
 
-            GetComponent<BoxCollider>().size = new Vector3(
-                sprite.texture.width/sprite.pixelsPerUnit,
-                sprite.texture.height/sprite.pixelsPerUnit,
-                0
-            );
+            // GetComponent<BoxCollider>().size = new Vector3(
+            //     sprite.texture.width/sprite.pixelsPerUnit,
+            //     sprite.texture.height/sprite.pixelsPerUnit,
+            //     0
+            // );
 
 
             ++imgIndex;

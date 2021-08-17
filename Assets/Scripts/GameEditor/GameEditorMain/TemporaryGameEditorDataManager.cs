@@ -13,12 +13,6 @@ public class TemporaryGameEditorDataManager : MonoBehaviour
     void Awake(){
         _dm = this;
     }
-    void Start()
-    {
-        // 이벤트에디터씬에서 Play를 수행하기 위해 root 오브젝트로의 접근이 필요합니다.
-        EventBlockController.GetEBC().SetRoots(ourBlockRoot, ourTileRoot);
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -32,6 +26,8 @@ public class TemporaryGameEditorDataManager : MonoBehaviour
             if(t.name == "currentObject") continue;
             t.parent = ourObjectRoot.transform;
             t.gameObject.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.0f);
+            Component com = t.GetComponent<Collider>();
+            if(com) Destroy(com);
         }
     }
 

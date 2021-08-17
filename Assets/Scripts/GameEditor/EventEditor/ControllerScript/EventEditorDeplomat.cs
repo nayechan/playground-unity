@@ -22,8 +22,6 @@ public class EventEditorDeplomat : MonoBehaviour
         // _objects = MovedObjects; MovedTiles = _tiles;
         foreach(Transform t in MovedObjects.transform){
             if(!_objectsSet.Contains(t.gameObject)){
-                ObjectInstanceController oic = t.GetComponent<ObjectInstanceController>();
-                if(!oic) continue;
                 CreateObjectBlock(t.gameObject);
             }
         }

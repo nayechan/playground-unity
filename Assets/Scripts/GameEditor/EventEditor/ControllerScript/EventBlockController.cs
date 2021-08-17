@@ -18,10 +18,13 @@ public class EventBlockController : MonoBehaviour
         ComponentLineConnecting
     };
 
+    void Awake(){
+        _ebc = this;
+    }
+
     void Start()
     {
         _mode = mode.Editing;
-        _ebc = this;
         _signalLines = new GameObject("SignalLines");
         _blocks = new GameObject("Blocks");
     }
@@ -118,7 +121,7 @@ public class EventBlockController : MonoBehaviour
         // 모든 Tile 오브젝트에 컴포넌트(collider, rigidBody 추가)
         if (_tiles)
         {
-            foreach (Transform t in _tiles.GetComponentsInChildren<Transform>())
+            foreach (Transform t in _tiles.transform)
             {
                 GameObject obj = t.gameObject;
                 Rigidbody2D body = obj.AddComponent<Rigidbody2D>();
@@ -141,7 +144,8 @@ public class EventBlockController : MonoBehaviour
             }
         }
         // 타일의 알파값, 오브젝트 알파값 재조정
-        TemporaryGameEditorDataManager tge = TemporaryGameEditorDataManager.GetDM();
+        GameEditorBasicComponent _gebc = GameEditorBasicComponent.GetGEBC();
+        TemporaryGameEditorDataManager tge = _gebc.GetComponentInChildren<TemporaryGameEditorDataManager>();
         if (tge)
         {
             tge.FetchOurObjects(new GameObject("_objs"));

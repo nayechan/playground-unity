@@ -15,6 +15,8 @@ public class ComponentLine : SignalLine
 
     public override void PlayStart()
     {
+        LineRenderer lr = GetComponent<LineRenderer>();
+        if(lr != null) lr.enabled = false;
         _reciver.RunAddComponentMethod();
     }
 }

@@ -16,7 +16,7 @@ public class ObjectComponentBlock : BlockProperty
             case "Block":
             md = (GameObject obj) => {
                 Rigidbody2D body = obj.AddComponent<Rigidbody2D>();
-                body.bodyType = RigidbodyType2D.Dynamic;
+                body.bodyType = RigidbodyType2D.Kinematic;
                 Collider2D col = obj.GetComponent<BoxCollider2D>();
                 if(col == null) {col = obj.AddComponent<BoxCollider2D>();}
                 PhysicsMaterial2D mat = new PhysicsMaterial2D("Bouncer");
@@ -29,10 +29,10 @@ public class ObjectComponentBlock : BlockProperty
             case "Ball":
             md = (GameObject obj) => {
                 Rigidbody2D body = obj.AddComponent<Rigidbody2D>();
-                Debug.Log("body : " + body.ToString());
                 body.bodyType = RigidbodyType2D.Dynamic;
-                Collider2D col = obj.GetComponent<CircleCollider2D>();
+                CircleCollider2D col = obj.GetComponent<CircleCollider2D>();
                 if(col == null) {col = obj.AddComponent<CircleCollider2D>();}
+                col.radius *= 1.05f;
                 PhysicsMaterial2D mat = new PhysicsMaterial2D("Bouncer");
                 mat.bounciness = 1f;
                 mat.friction = 0f;

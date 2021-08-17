@@ -22,6 +22,12 @@ public class BlockBlock : BlockProperty
         if(_attachedObject == null) return;
         _attachedObject.transform.Translate(_inputs[1] * Time.deltaTime * speed, 0, 0, Space.World);
         _attachedObject.transform.Translate(0, _inputs[0] * Time.deltaTime * speed, 0, Space.World);
+        Collider2D col = _attachedObject.GetComponent<Collider2D>();
+        if(col){
+            List<Collider2D> _ = new List<Collider2D>();
+            int num = col.OverlapCollider(new ContactFilter2D().NoFilter(), _);
+            if(num > 0 ) OnTriggerEnter2d(col);
+        }
     }
     public override void PlayStart()
     {
@@ -30,11 +36,12 @@ public class BlockBlock : BlockProperty
 
     void OnTriggerEnter2d(Collider2D col){
         if(_onPlay){
-            StartCoroutine("DestroyBlock", 0.1f);
+            StartCoroutine("DestroyBlock");
         }
     }
 
-    void DestroyBlock(){
-        Destroy(gameObject);
+    IEnumerator DestroyBlock(){
+        yield return new WaitForSeconds(0.1f);
+        Destroy(_attachedObject.gameObject);
     }
 }

@@ -13,6 +13,8 @@ public class GameDisplayBlock: BlockProperty
         // obj.transform.parent = this.gameObject.transform;
         // _cam = obj.GetComponent<Camera>();
         _cam = this.gameObject.AddComponent<Camera>();
+        _cam.backgroundColor = Color.black;
+        _cam.clearFlags = CameraClearFlags.SolidColor;
     }
     protected override void Start(){
         base.Start();
