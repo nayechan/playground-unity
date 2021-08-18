@@ -130,7 +130,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1122218624013273202}
-  m_Text: "\uC561\uC158"
+  m_Text: Action
   m_OffsetZ: 0
   m_CharacterSize: 0.075
   m_LineSpacing: 1
@@ -497,7 +497,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1122218624666629611}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.5, y: 0, z: 0}
+  m_LocalPosition: {x: 1.78, y: 0, z: 0}
   m_LocalScale: {x: 5.3218813, y: 5.3218813, z: 5.3218813}
   m_Children: []
   m_Father: {fileID: 1122218624016612135}
@@ -553,7 +553,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1122218624666629611}
-  m_Text: "\uC88C\uC6B0"
+  m_Text: Left/Right
   m_OffsetZ: 0
   m_CharacterSize: 0.075
   m_LineSpacing: 1
@@ -779,7 +779,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1122218625793570212}
-  m_Text: "\uC0C1\uD558"
+  m_Text: UpDown
   m_OffsetZ: 0
   m_CharacterSize: 0.075
   m_LineSpacing: 1
@@ -1115,7 +1115,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1221415402248364277}
-  m_Text: "\uC18D\uC131"
+  m_Text: Property
   m_OffsetZ: 0
   m_CharacterSize: 0.075
   m_LineSpacing: 1

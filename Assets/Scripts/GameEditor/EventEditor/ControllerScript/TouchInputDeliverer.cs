@@ -11,11 +11,10 @@ public class TouchInputDeliverer : MonoBehaviour
 {
     private static TouchInputDeliverer _tid;
     public static Camera cam;
-    private TouchEvent[] _touchAlarms; // 특정 fingerID의 터치 이벤트를 지속적으로 듣는 스크립트를 위한 이벤트.
+    private Dictionary<int, TouchEvent> _touchAlarms; // 특정 fingerID의 터치 이벤트를 지속적으로 듣는 스크립트를 위한 이벤트.
     void Start() {
         cam = Camera.main;
-        _touchAlarms = new TouchEvent[10];
-        for(int i=0; i<10; ++i) { _touchAlarms[i] = new TouchEvent();}
+        _touchAlarms = new Dictionary<int, TouchEvent>();
         _tid = this;
     }
 
@@ -69,8 +68,12 @@ public class TouchInputDeliverer : MonoBehaviour
         _touchAlarms[fingerID].AddListener(sensor.CallBack);
     }
 
-    private void AlarmAll(Touch[] touches){
+    private void AlarmAll(Touch[] touches){        
         foreach(var touch in touches){
+            if(!_touchAlarms.ContainsKey(touch.fingerId)){ //처음 들어오는 입력일 경우
+                _touchAlarms.Add(touch.fingerId, new TouchEvent());
+                continue;
+            }
             _touchAlarms[touch.fingerId].Invoke(touch);
         }
     }
@@ -79,6 +82,7 @@ public class TouchInputDeliverer : MonoBehaviour
         foreach(var touch in touches){
             if(touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled){
                 _touchAlarms[touch.fingerId].RemoveAllListeners();
+                _touchAlarms.Remove(touch.fingerId);
             }
         }
     }
