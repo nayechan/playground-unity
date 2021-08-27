@@ -12,8 +12,8 @@ EditorBuildSettings:
     path: Assets/Scenes/GameEditor/MapEditor.unity
     guid: 675baa422738d1a4ca72cd94292691eb
   - enabled: 1
-    path: Assets/Scenes/GameEditor/backup/ObjectEditor.unity
-    guid: b6a562eb694244443ba5231de7419f44
+    path: Assets/Scenes/GameEditor/ObjectEditor.unity
+    guid: 2e1bc17ecf9a4b64d994dacc8c4d248e
   - enabled: 1
     path: Assets/Scenes/GameEditor/EventEditor.unity
     guid: 607e0584204ce1b42977e7f0a9d2780c
