@@ -18,7 +18,7 @@ public class GridGuider : MonoBehaviour
             GameObject x = Instantiate<GameObject>(xLine, xPos, Quaternion.identity, gridLines.transform);
             GameObject y = Instantiate<GameObject>(yLine, yPos, Quaternion.identity, gridLines.transform);
         }
-        // FindObjectOfType<TouchSensor_CameraBackground>().m_CameraMoved.AddListener(WhenCamMoved);
+        FindObjectOfType<CameraBackground>().m_CameraMoved.AddListener(WhenCamMoved);
 
     }
 
@@ -49,7 +49,6 @@ public class GridGuider : MonoBehaviour
             int res = DirOnOther(child.transform.position, cam.transform.position, _outterHalfBoxLength);
             if(res != 0){
                 Vector3 correction = direction[res] * _innerHalfBoxLength * -2.0f;
-                Debug.Log(correction);
                 child.transform.Translate(correction);
             }
         }
