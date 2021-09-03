@@ -3,22 +3,51 @@ using UnityEngine.Events;
 
 namespace GameEditor
 {
-    public enum Type
+    public enum ObjectType
     {
+        // 일반 오브젝트
         General,
-        Block,
+        // 기능성 블럭
+        Mover,
         Zone
+    }
+
+    public enum ColliderType
+    {
+        Box,
+        Circle
     }
 
     [System.Serializable]
     public class ObjectInfo
     {
-        public Type type;
-        public Vector3 _position, _rotation, _scale;
-        public Transform _trans;
-        // private bool _movable, _collidable, _hidden, _isTrigger;
-        // private float _weight;
-
+        //Transform
+        public Vector3 position, rotation, scale;
+        //General Settings
+        public bool movable, collidable;
+        //Physics Material
+        public float friction, bounciness;
+        //SpriteRenderer
+        public string texturePath;
+        public Color color;
+        public float pixelsPerUnit;
+        public bool visible;
+        //Collider
+        public ColliderType colType;
+        public float colRadius;
+        public Vector2 colSize;
+        public bool isTrigger;
+        //RigidBody
+        public float weight, gravity;
+        // 기본 설정값
+        public ObjectInfo()
+        {
+            position = rotation = Vector3.zero;
+            scale = Vector3.one;
+            movable = false; collidable = true; visible = true; isTrigger = false;
+            color = new Color(1f, 1f, 1f, 1f);
+            weight = gravity = 1f;    
+        }
     }
     
     /* Transform
