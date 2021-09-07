@@ -71,13 +71,13 @@ public class EventBlockController : MonoBehaviour
     {
         // 선 객체를 만든다.
         GameObject LineObj = Instantiate(signalLineFab, Vector3.zero, Quaternion.identity, _signalLines.transform);
-        ValueWire valueWire;
-        if (type == "Signal") valueWire = LineObj.AddComponent<ValueWire>();
-        else valueWire = LineObj.AddComponent<ComponentWire>();
-        valueWire.SetLine(_selectedOutputPort, inputPort);
-        valueWire.ReRendering();
-        _selectedOutputPort.body.AddLine(valueWire);
-        inputPort.body.AddLine(valueWire);
+        ValueLine valueLine;
+        if (type == "Signal") valueLine = LineObj.AddComponent<ValueLine>();
+        else valueLine = LineObj.AddComponent<ComponentLine>();
+        valueLine.SetLine(_selectedOutputPort, inputPort);
+        valueLine.ReRendering();
+        _selectedOutputPort.body.AddLine(valueLine);
+        inputPort.body.AddLine(valueLine);
         Debug.Log("New SignalLine constructed");
     }
 
@@ -116,7 +116,7 @@ public class EventBlockController : MonoBehaviour
         // 모든 SignalLine 컴포넌트를 활성화
         foreach (Transform line in _signalLines.GetComponentInChildren<Transform>())
         {
-            line.GetComponent<ValueWire>().PlayStart();
+            line.GetComponent<ValueLine>().PlayStart();
         }
         // 모든 Tile 오브젝트에 컴포넌트(collider, rigidBody 추가)
         if (_tiles)
@@ -155,7 +155,7 @@ public class EventBlockController : MonoBehaviour
         // UserInputController.GetUserInputController().ResetCamera();
         // 툴 바, Raycasting disable, 그리드 disable
         GameObject.Find("Canvas").SetActive(false);
-        GameObject.FindObjectOfType<TouchManager>().enabled = false;
+        GameObject.FindObjectOfType<TouchController>().enabled = false;
         GameObject.Find("Grid").SetActive(false);
     }
 

@@ -15,7 +15,7 @@ public class BlockMoveButton : AbstractSensor
 
     public override void OnTouchBegan(Touch touch, out bool isRayBlock)
     {
-        TouchManager.GetTID().AlarmMe(touch.fingerId, this);
+        TouchController.GetTID().AlarmMe(touch.fingerId, this);
         isRayBlock = true;
     }
 

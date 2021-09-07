@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectComponent : AbstractBlock
+public class ToyComponent : AbstractBlock
 {
     protected override void Start(){
         base.Start();

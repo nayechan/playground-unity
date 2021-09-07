@@ -10,11 +10,11 @@ public class AbstractBlock : MonoBehaviour
     public GameObject _attachedObject;
     protected float[] _inputs, _outputs;
     protected MyDelegate _AddComponentMethod;
-    private List<ValueWire> _connectedLines;
+    private List<ValueLine> _connectedLines;
     private BlockPort[] _ports;
     
     protected virtual void Start(){
-        _connectedLines = new List<ValueWire>();
+        _connectedLines = new List<ValueLine>();
         _ports = GetComponentsInChildren<BlockPort>();
     }
 
@@ -32,7 +32,7 @@ public class AbstractBlock : MonoBehaviour
         }
     }
 
-    public void AddLine(ValueWire line){
+    public void AddLine(ValueLine line){
         _connectedLines.Add(line);
     }
 

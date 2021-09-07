@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ComponentWire : ValueWire
+public class ComponentLine : ValueLine
 {
     public override void SetLine(BlockPort giver, BlockPort reciver){
         base.SetLine(giver, reciver);

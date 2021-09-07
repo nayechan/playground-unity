@@ -11,15 +11,21 @@ namespace GameEditor
         1. 오브젝트 생성, 삭제, 속성 편집
         2. 오브젝트 정보 기록
         */
+        public static ObjectManager om;
+        public ObjectInfo selectedObjectInfo;
 
         void Start(){
-            ObjectInfo info = new ObjectInfo();
-            info.texturePath = "Common/Brown Stony";
-            info.movable = true;
-            info.position = transform.position;
-            info.pixelsPerUnit = 512f;
-            info.colSize = Vector2.one;
-            CreateObject(info);
+            if(!om)
+            {
+                om = this;
+            }
+            selectedObjectInfo = new ObjectInfo();
+            // info.texturePath = "Common/Brown Stony";
+            // info.movable = true;
+            // info.position = transform.position;
+            // info.pixelsPerUnit = 512f;
+            // info.colSize = Vector2.one;
+            // CreateObject(info);
         }
 
         GameObject CreateObject(ObjectInfo info){
@@ -83,6 +89,11 @@ namespace GameEditor
             pm2d.friction = info.friction;
             pm2d.bounciness = info.bounciness;
             rb2d.sharedMaterial = pm2d;
+        }
+
+        static public ObjectManager GetOM()
+        {
+            return om;
         }
     }
 }

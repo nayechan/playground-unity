@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/**
+ * 
+ */
 public class GameEditorSceneManager : MonoBehaviour
 {
     [SerializeField] private string currentScene;

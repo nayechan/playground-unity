@@ -1,15 +1,21 @@
 using UnityEngine;
 using UnityEngine.Events;
 
+
+/*
+Toy, Block, Line 의 정보를 일괄 관리하는 스크립트입니다.
+*/
 namespace GameEditor
 {
     public enum ObjectType
     {
         // 일반 오브젝트
-        General,
+        Toy,
         // 기능성 블럭
         Mover,
-        Zone
+        Zone,
+        // Line
+        Line
     }
 
     public enum ColliderType
@@ -21,32 +27,34 @@ namespace GameEditor
     [System.Serializable]
     public class ObjectInfo
     {
-        //Transform
-        public Vector3 position, rotation, scale;
-        //General Settings
-        public bool movable, collidable;
-        //Physics Material
-        public float friction, bounciness;
-        //SpriteRenderer
-        public string texturePath;
-        public Color color;
-        public float pixelsPerUnit;
-        public bool visible;
-        //Collider
-        public ColliderType colType;
-        public float colRadius;
-        public Vector2 colSize;
-        public bool isTrigger;
-        //RigidBody
-        public float weight, gravity;
         // 기본 설정값
-        public ObjectInfo()
+        //Transform
+        public Vector3 position = Vector3.zero, rotation = Vector3.zero, scale = Vector3.one;
+        //General Settings
+        public bool movable = false, collidable = true;
+        //Physics Material
+        public float friction = 0.4f, bounciness = 0f;
+        //SpriteRenderer
+        public string texturePath = "Common/Brown Stony";
+        public Color color = Color.white;
+        public float pixelsPerUnit = 100f;
+        public bool visible = true;
+        //Collider
+        public ColliderType colType = ColliderType.Box;
+        public float colRadius = 0.5f;
+        public Vector2 colSize = Vector2.one;
+        public bool isTrigger = false;
+        //RigidBody
+        public float weight = 1f, gravity = 1f;
+        
+        string ToJson()
         {
-            position = rotation = Vector3.zero;
-            scale = Vector3.one;
-            movable = false; collidable = true; visible = true; isTrigger = false;
-            color = new Color(1f, 1f, 1f, 1f);
-            weight = gravity = 1f;    
+            return JsonUtility.ToJson(this);
+        }
+
+        ObjectInfo FromJson(string json)
+        {
+            return JsonUtility.FromJson<ObjectInfo>(json);
         }
     }
     

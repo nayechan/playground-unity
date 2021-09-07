@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ValueWire : MonoBehaviour
+public class ValueLine : MonoBehaviour
 {
     protected delegate void Runer();
     protected AbstractBlock _giver, _reciver;
