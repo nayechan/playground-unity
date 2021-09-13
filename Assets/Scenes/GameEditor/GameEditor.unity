@@ -2991,6 +2991,41 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &334288544
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 334288545}
+  m_Layer: 5
+  m_Name: Content
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &334288545
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 334288544}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1968850011}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 7500}
+  m_Pivot: {x: 0, y: 1}
 --- !u!1 &337140159
 GameObject:
   m_ObjectHideFlags: 0
@@ -4022,7 +4057,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bbe8089de9117640b5290313667793c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TileCanvas: {fileID: 0}
+  TileCanvas: {fileID: 334288544}
 --- !u!114 &410378882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4048,6 +4083,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4de8ac8f5ecb84955b9c5d5f8737bd57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedObjectInfo:
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    movable: 0
+    collidable: 1
+    friction: 0.4
+    bounciness: 0
+    texturePath: Common/Brown Stony
+    color: {r: 1, g: 1, b: 1, a: 1}
+    pixelsPerUnit: 100
+    visible: 1
+    colType: 0
+    colRadius: 0.5
+    colSize: {x: 1, y: 1}
+    isTrigger: 0
+    weight: 1
+    gravity: 1
 --- !u!114 &410378884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4876,6 +4929,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4de8ac8f5ecb84955b9c5d5f8737bd57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedObjectInfo:
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    movable: 0
+    collidable: 1
+    friction: 0.4
+    bounciness: 0
+    texturePath: Common/Brown Stony
+    color: {r: 1, g: 1, b: 1, a: 1}
+    pixelsPerUnit: 100
+    visible: 1
+    colType: 0
+    colRadius: 0.5
+    colSize: {x: 1, y: 1}
+    isTrigger: 0
+    weight: 1
+    gravity: 1
 --- !u!4 &519978044
 Transform:
   m_ObjectHideFlags: 0
@@ -7753,7 +7824,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Content: {fileID: 1875271949}
+  m_Content: {fileID: 334288545}
   m_Horizontal: 1
   m_Vertical: 1
   m_MovementType: 1
@@ -16770,12 +16841,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1875271949}
   m_Layer: 5
-  m_Name: Content
+  m_Name: Content_
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1875271949
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17888,6 +17959,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1875271949}
+  - {fileID: 334288545}
   m_Father: {fileID: 794686026}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -18348,7 +18420,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2016506869
 RectTransform:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using GameEditor.Info;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -16,6 +17,7 @@ namespace GameEditor.EventEditor.UI.Sensor{
         {
             cam = GetComponent<Camera>();
             m_CameraMoved = new UnityEvent();
+            Collider2D col = new BoxCollider2D();
         }
 
         public override void OnTouchBegan(Touch touch, out bool isRayBlock)
@@ -24,7 +26,7 @@ namespace GameEditor.EventEditor.UI.Sensor{
             if(tc.mode == TouchController.TouchMode.CreateObject)
             {
                 ObjectManager om =  ObjectManager.GetOM();
-                ObjectInfo info = new ObjectInfo();
+                ObjectData info = new ObjectData();
                 // info.texturePath = 
             }
             if(tc.mode == TouchController.TouchMode.CamMove)

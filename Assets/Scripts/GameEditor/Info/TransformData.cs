@@ -3,7 +3,7 @@
 namespace GameEditor.Info
 {
     [System.Serializable]
-    public class IFTransform
+    public class TransformData
     {
         public Vector3 position = Vector3.zero, rotation = Vector3.zero, scale = Vector3.one;
         

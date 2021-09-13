@@ -25,33 +25,33 @@ namespace GameEditor.Info
     }
 
     [System.Serializable]
-    public class IFObject
+    public class ObjectData
     {
         // 기본 설정값
         //Transform
-        public IFTransform ifTf;
-        public IFCollider ifCol;
-        public IFRigidBody ifRb;
-        public IFSpriteRenderer ifSr;
-        public IFPhysicsMaterial ifPm;
+        public TransformData tf;
+        public ColliderData col;
+        public RigidBodyData rb;
+        public SpriteRendererData srData;
+        public PhysicsMaterialData pm;
         // Exp
 
-        public IFObject()
+        public ObjectData()
         {
-            ifTf = new IFTransform();
-            ifCol = new IFCollider();
-            ifRb = new IFRigidBody();
-            ifSr = new IFSpriteRenderer();
-            ifPm = new IFPhysicsMaterial();
+            tf = new TransformData();
+            col = new ColliderData();
+            rb = new RigidBodyData();
+            srData = new SpriteRendererData();
+            pm = new PhysicsMaterialData();
         }
         public string ToJson()
         {
             return JsonUtility.ToJson(this);
         }
 
-        static public IFObject FromJson(string json)
+        static public ObjectData FromJson(string json)
         {
-            return JsonUtility.FromJson<IFObject>(json);
+            return JsonUtility.FromJson<ObjectData>(json);
         }
     }
     

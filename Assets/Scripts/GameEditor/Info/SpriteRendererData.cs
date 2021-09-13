@@ -4,7 +4,7 @@ using UnityEditor;
 namespace GameEditor.Info
 {
     [System.Serializable]
-    public class IFSpriteRenderer
+    public class SpriteRendererData
     {
         
         public string texturePath = "Common/Brown Stony";
@@ -27,7 +27,7 @@ namespace GameEditor.Info
              if(visible) sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0f);
          }   
          
-         public static bool GetInfo(GameObject obj, IFSpriteRenderer ifSr)
+         public static bool GetData(GameObject obj, SpriteRendererData srData)
          {
              SpriteRenderer sr = obj.GetComponent<SpriteRenderer>();
              if (sr is null)
@@ -36,7 +36,7 @@ namespace GameEditor.Info
                  return false;
              }
 
-             ifSr.texturePath = AssetDatabase.GetAssetPath(sr);
+             srData.texturePath = AssetDatabase.GetAssetPath(sr);
              return true;
          }
     }

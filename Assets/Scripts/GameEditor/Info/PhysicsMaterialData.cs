@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 namespace GameEditor.Info
 {
     [System.Serializable]
-    public class IFPhysicsMaterial
+    public class PhysicsMaterialData
     {
         public float friction = 0.4f;
         public float bounciness = 0f;

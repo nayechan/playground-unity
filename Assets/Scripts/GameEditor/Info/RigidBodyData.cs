@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 namespace GameEditor.Info
 {
     [System.Serializable]
-    public class IFRigidBody
+    public class RigidBodyData
     {
         public bool movable = false;
         public float mass = 1f;

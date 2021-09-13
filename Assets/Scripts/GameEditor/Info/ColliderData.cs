@@ -5,7 +5,7 @@ using UnityEngine;
 namespace GameEditor.Info
 {
     [System.Serializable]
-    public class IFCollider
+    public class ColliderData
     {
         public ColliderType colType = ColliderType.Box;
         public bool collidable = true, isTrigger = false;
@@ -35,28 +35,28 @@ namespace GameEditor.Info
         }
 
         // 오브젝트의 Collider2D를 ifCol 인자에 복사해 넣는 함수입니다.
-        public static bool GetInfo(GameObject obj, IFCollider ifCol)
+        public static bool GetData(GameObject obj, ColliderData col)
         {
             Collider2D col2d = obj.GetComponent<Collider2D>();
             if (col2d is BoxCollider2D)
             {
-                ifCol.colType = ColliderType.Box;
+                col.colType = ColliderType.Box;
                 BoxCollider2D box2d = (BoxCollider2D)col2d;
-                ifCol.colSize = box2d.size;
+                col.colSize = box2d.size;
             }
             else if (col2d is CircleCollider2D)
             {
-                ifCol.colType = ColliderType.Circle;
+                col.colType = ColliderType.Circle;
                 CircleCollider2D cir2d = (CircleCollider2D) col2d;
-                ifCol.colRadius = cir2d.radius;
+                col.colRadius = cir2d.radius;
             }
             else
             {
                 Debug.Log("Not Supported Collider Type");
                 return false;
             }
-            ifCol.collidable = col2d.enabled;
-            ifCol.isTrigger = col2d.isTrigger;
+            col.collidable = col2d.enabled;
+            col.isTrigger = col2d.isTrigger;
             return true;
         }
     }
