@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using GameEditor.Info;
+using GameEditor.Data;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -25,16 +25,13 @@ namespace GameEditor
                 om = this;
             }
         }
-        
-        // GameObject CreateObject(IFObject info)
-        // {
-            // SetTransform(obj.transform, info);
-            // SetSprite(sr, info);
-            // SetCollider(obj, info);
-            // SetRigidBody(rb2d, info);
-        
-            // return obj;
-        // }
+
+        public GameObject CreateObject(ObjectData data)
+        {
+            var obj = new GameObject();
+            
+            return obj;
+        }
 
         // void SetTransform(Transform trans, IFObject info)
         // {

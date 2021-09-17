@@ -1,6 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using GameEditor.Info;
+using GameEditor.Data;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -22,19 +23,29 @@ namespace GameEditor.EventEditor.UI.Sensor{
 
         public override void OnTouchBegan(Touch touch, out bool isRayBlock)
         {
-            TouchController tc = TouchController.GetTID();
-            if(tc.mode == TouchController.TouchMode.CreateObject)
+            var tc = TouchController.GetTID();
+            switch (tc.mode)
             {
-                ObjectManager om =  ObjectManager.GetOM();
-                ObjectData info = new ObjectData();
-                // info.texturePath = 
+                case TouchController.TouchMode.CreateObject:
+                {
+                    // var om =  ObjectManager.GetOM();
+                    // var data = new ObjectData();
+                    // info.texturePath = 
+                    break;
+                }
+                case TouchController.TouchMode.CamMove:
+                    tc.AlarmMe(touch.fingerId, this);
+                    _touchBeginPosition = touch.position;
+                    _camBeginPosition = cam.transform.position;
+                    break;
+                case TouchController.TouchMode.DeleteObject:
+                    break;
+                case TouchController.TouchMode.MoveObject:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
-            if(tc.mode == TouchController.TouchMode.CamMove)
-            {
-                tc.AlarmMe(touch.fingerId, this);
-                _touchBeginPosition = touch.position;
-                _camBeginPosition = cam.transform.position;
-            }
+
             isRayBlock = true;
         }
 
