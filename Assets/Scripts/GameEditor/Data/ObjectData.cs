@@ -13,7 +13,7 @@ namespace GameEditor.Data
         {
             name = obj.name;
             id = obj.GetInstanceID();
-            tfd = new TransformData(obj);
+            // tfd = new TransformData(obj);
         }
     }
 }

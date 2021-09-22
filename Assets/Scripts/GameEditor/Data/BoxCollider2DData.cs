@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Serialization;
@@ -13,45 +14,50 @@ namespace GameEditor.Data
         public Vector2 offset;
         public PhysicsMaterial2DData pm2dd;
 
-        public void SetComponent(GameObject obj)
+        // 인자로 받은 Component의 설정을 본 class의 Data로 설정한다.
+        public override void SetComponent(Component comp)
         {
-            var cd2d = obj.GetComponent<BoxCollider2D>();
-            SetComponent(cd2d);
-        }
-
-        public void SetComponent(BoxCollider2D box2d)
-        {
+            Assert.IsTrue(IsCorrectType(comp));
+            var box2d = (BoxCollider2D) comp;
             box2d.size = size;
             box2d.offset = offset;
             box2d.enabled = collidable;
             pm2dd.SetComponent(box2d.sharedMaterial); 
         }
 
-        public Component AddComponent(GameObject obj)
+        // Component의 값을 갖는 BoxCollider2DData 클래스를 생성한다.
+        public BoxCollider2DData(Component comp)
+        {
+            SetData(comp);
+        }
+
+        // 인자로 받은 GameObject에 BoxCollider2D 컴포넌트를 추가하고
+        //해당 컴포넌트를 반환한다.
+        public override Component AddComponent(GameObject obj)
         {
             var box2d = obj.AddComponent<BoxCollider2D>();
             box2d.sharedMaterial = new PhysicsMaterial2D();
             return box2d;
         }
-
-        public BoxCollider2DData(GameObject obj)
+        
+        // 본 Class의 data를 받은 Component의 설정값으로 바꾼다.
+        public sealed override void SetData(Component comp)
         {
-            SetData(obj);
-        }
-
-        public void SetData(GameObject obj)
-        {
-            var box2d = obj.GetComponent<BoxCollider2D>();
-            SetData(box2d);
-        }
-
-        public void SetData(BoxCollider2D box2d)
-        {
+            Assert.IsTrue(IsCorrectType(comp));
+            var box2d = (BoxCollider2D)comp;
             size = box2d.size;
             collidable = box2d.enabled;
             isTrigger = box2d.isTrigger;
             offset = box2d.offset;
             pm2dd = new PhysicsMaterial2DData(box2d.sharedMaterial);
         }
+
+        // 인자로 받은 Component의 derived 타입이 본 클래스가 담당하는
+        //Component타입과 일치하는지 확인한다.
+        public override bool IsCorrectType(Component comp)
+        {
+            return comp is BoxCollider2D;
+        }
+
     }
 }

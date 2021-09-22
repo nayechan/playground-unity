@@ -15,21 +15,11 @@ namespace GameEditor.Data
         public bool visible;
         public int orderInLayer;
         
-         public void SetComponent(GameObject obj)
+        // 인자로 받은 Component의 설정을 본 class의 Data로 설정한다.
+         public override void SetComponent(Component comp)
          {
-             var sr = obj.GetComponent<SpriteRenderer>();
-             Assert.IsNotNull(sr);
-             SetComponent(sr);
-         }
-
-         public Component AddComponent(GameObject obj)
-         {
-             var sr = obj.GetComponent<SpriteRenderer>();
-             return sr;
-         }
-         
-         public void SetComponent(SpriteRenderer sr)
-         {
+             Assert.IsTrue(IsCorrectType(comp));
+             var sr = (SpriteRenderer)comp;
              sr.color = color;
              var tex = Resources.Load<Texture2D>(texturePath);
              if (tex == null)
@@ -42,29 +32,42 @@ namespace GameEditor.Data
              sr.sortingOrder = orderInLayer;
              sr.enabled = visible ? true : false;
          }
-         
-         public SpriteRendererData(GameObject obj, string tp)
+
+        // 인자로 받은 GameObject에 SpriteRenderer 컴포넌트를 추가하고
+        //해당 컴포넌트를 반환한다.
+         public override Component AddComponent(GameObject obj)
          {
-             SetData(obj);
+             var sr = obj.GetComponent<SpriteRenderer>();
+             return sr;
+         }
+         
+        // Component의 값을 갖는 SpriteRendererData 클래스를 생성한다.
+         public SpriteRendererData(Component comp, string tp)
+         {
+             SetData(comp);
              SetTexturePath(tp);
          }
 
-         public void SetData(GameObject obj)
+        // 본 Class의 data를 받은 Component의 설정값으로 바꾼다.
+         public sealed override void SetData(Component comp)
          {
-             var sr = obj.GetComponent<SpriteRenderer>();
-             SetData(sr);
-         }
-
-         public void SetData(SpriteRenderer sr)
-         {
+             var sr = (SpriteRenderer)comp;
              color = sr.color;
              orderInLayer = sr.sortingOrder;
              visible = sr.enabled ? true : false;
          }
 
+         // texturePath를 인자의 값으로 Set 한다.
          public void SetTexturePath(string tp)
          {
              this.texturePath = tp;
          }
+         
+        // 인자로 받은 Component의 derived 타입이 본 클래스가 담당하는
+        //Component타입과 일치하는지 확인한다.
+        public override bool IsCorrectType(Component comp)
+        {
+            return comp is SpriteRenderer;
+        }
     }
 }
