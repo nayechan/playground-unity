@@ -7,24 +7,23 @@ namespace GameEditor.Data
     [System.Serializable]
     public class SpriteRendererData : ComponentData
     {
-        // Resources 폴더를 Root로 하는 경로 입력.
-        // 예를들어 /Asset/Resources/Common/ABC.png 의 경우
-        // "Common/ABC" 를 값으로 가진다.
-        public string texturePath;
+        public ImageData ImageData;
         public Color color;
         public bool visible;
         public int orderInLayer;
         
+        public override string Type => _Type;
+        public const string _Type = "SpriteRendererData";
         // 인자로 받은 Component의 설정을 본 class의 Data로 설정한다.
          public override void SetComponent(Component comp)
          {
              Assert.IsTrue(IsCorrectType(comp));
              var sr = (SpriteRenderer)comp;
              sr.color = color;
-             var tex = Resources.Load<Texture2D>(texturePath);
+             var tex = Resources.Load<Texture2D>(ImageData.TexturePath);
              if (tex == null)
              {
-                 Debug.Log("Can't find texture : " + texturePath);
+                 Debug.Log("Can't find texture : " + ImageData.TexturePath);
                  return;
              }
              sr.sprite = Sprite.Create(tex, new Rect(0f, 0f , tex.width, tex.height),
@@ -42,10 +41,10 @@ namespace GameEditor.Data
          }
          
         // Component의 값을 갖는 SpriteRendererData 클래스를 생성한다.
-         public SpriteRendererData(Component comp, string tp)
+         public SpriteRendererData(Component comp, ImageData imgData)
          {
              SetData(comp);
-             SetTexturePath(tp);
+             SetImageData(imgData);
          }
 
         // 본 Class의 data를 받은 Component의 설정값으로 바꾼다.
@@ -58,9 +57,9 @@ namespace GameEditor.Data
          }
 
          // texturePath를 인자의 값으로 Set 한다.
-         public void SetTexturePath(string tp)
+         public void SetImageData(ImageData imgData)
          {
-             this.texturePath = tp;
+             this.ImageData = imgData;
          }
          
         // 인자로 받은 Component의 derived 타입이 본 클래스가 담당하는

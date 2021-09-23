@@ -14,6 +14,9 @@ namespace GameEditor.Data
         public float angularDrag;
         public PhysicsMaterial2DData pm2dd;
         
+        public override string Type => _Type;
+        public const string _Type = "Rigidbody2DData";
+        
         // 인자로 받은 Component의 설정을 본 class의 Data로 설정한다.
         public override void SetComponent(Component comp)
         {

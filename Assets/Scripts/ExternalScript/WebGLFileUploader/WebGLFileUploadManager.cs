@@ -42,6 +42,8 @@ namespace WebGLFileUploader
             #endif
         }
 
+        #pragma warning restore 0067
+        
         /// <summary>
         /// Popup the file upload dialog UI.
         /// </summary>

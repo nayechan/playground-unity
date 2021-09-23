@@ -11,6 +11,8 @@ namespace GameEditor.Data
         public Vector3 rotation;
         public Vector3 scale;
         
+        public override string Type => _Type;
+        public const string _Type = "TransformData";
         // 인자로 받은 Component의 설정을 본 class의 Data로 설정한다.
         public override void SetComponent(Component comp)
         {
@@ -21,10 +23,11 @@ namespace GameEditor.Data
             tf.localScale = scale;
         }
 
-        // Transform은 모든 오브젝트에 자동 생성되므로 해당 오브젝트
-        //의 Transform만 반환한다.
+        // Transform은 모든 오브젝트에 자동 생성되므로 Transform의 값을 
+        // 본 클래스의 값으로 Set 한 뒤 Transform를 반환한다.
         public override Component AddComponent(GameObject obj)
         {
+            SetComponent(obj.transform);
             return obj.transform;
         }
         

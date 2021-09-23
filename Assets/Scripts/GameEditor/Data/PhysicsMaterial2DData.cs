@@ -30,9 +30,16 @@ namespace GameEditor.Data
         }
         public PhysicsMaterial2DData(PhysicsMaterial2D pm2d)
         {
-            Assert.IsNotNull(pm2d);
-            friction = pm2d.friction;
-            bounciness = pm2d.bounciness;
+            if (pm2d == null)
+            {
+                friction = 0.4f;
+                bounciness = 0f;
+            }
+            else
+            {
+                friction = pm2d.friction;
+                bounciness = pm2d.bounciness;
+            }
         }
     }
     

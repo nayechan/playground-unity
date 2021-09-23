@@ -12,6 +12,9 @@ namespace GameEditor.Data
         public Vector2 offset;
         public PhysicsMaterial2DData pm2dd;
         
+        public override string Type => _Type;
+        public const string _Type = "CircleCollider2DData";
+        
         // 인자로 받은 Component의 설정을 본 class의 Data로 설정한다.
         public override void SetComponent(Component comp)
         {
