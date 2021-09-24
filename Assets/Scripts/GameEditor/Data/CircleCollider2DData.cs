@@ -4,7 +4,7 @@ using UnityEngine.Assertions;
 
 namespace GameEditor.Data
 {
-    [System.Serializable]
+    [Serializable]
     public class CircleCollider2DData : ComponentData
     {
         public bool collidable, isTrigger;

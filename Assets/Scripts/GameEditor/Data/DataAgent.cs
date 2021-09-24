@@ -30,13 +30,14 @@ namespace GameEditor.Data
                 // 이미 ComponentDatas 에 있다면, 값을 업데이트합니다.
                 if (ComponentDatas.ContainsKey(component))
                 {
-                    ComponentDatas[component].SetComponent(component);
+                    ComponentDatas[component].SetData(component);
                 }
                 // GameObject의 컴포넌트를 ComponentData타입으로 저장하여 ComponentDatas 필드에 추가합니다.
                 // 유효한 Data 타입이 없는경우 기록에서 생략합니다.
                 else
                 {
-                    var cd = ComponentData.CreateComponentData(component, ResourceDatas);
+                    ResourceDatas.TryGetValue(component, out var rd);
+                    var cd = ComponentData.CreateComponentData(component, rd);
                     if (cd != null)
                     {
                         ComponentDatas.Add(component, cd);
@@ -44,8 +45,23 @@ namespace GameEditor.Data
                 }
             }
         }
+
+        public static void UpdateComponentDataAll(GameObject obj)
+        {
+            var da = obj.GetComponent<DataAgent>();
+            if (da != null)
+            {
+                da.UpdateComponentData();
+            }
+
+            foreach (Transform tp in obj.transform)
+            {
+                UpdateComponentDataAll(tp.GameObject());
+            }
+        }
         
         // 인자로 받은 컴포넌트의 ResourceData를 ResourceDatas 필드에 추가합니다.
+        // 게임 제작에서 resourceData가 필요한 컴포넌트를 추가하는 경우 꼭 호출해줍니다.
         public void AddResourceData(Component component, ResourceData resourceData)
         {
             // 타입이 맞는지 확인합니다.
@@ -83,7 +99,7 @@ namespace GameEditor.Data
         }
 
         // gameObject 를 포함한 모든 자식 gameObject의 정보를 JObject형태로 반환합니다.
-        public JObject GetJObjectFromChildren()
+        public JObject GetJObjectFromAll()
         {
             var jObj = GetJObject();
             var jArray = new JArray();
@@ -92,7 +108,7 @@ namespace GameEditor.Data
                 var da = tp.GetComponent<DataAgent>();
                 if (da != null)
                 {
-                    jArray.Add(da.GetJObjectFromChildren());
+                    jArray.Add(da.GetJObjectFromAll());
                 }
             }
             jObj.Add(new JProperty("Children", jArray));
@@ -100,4 +116,5 @@ namespace GameEditor.Data
         }
 
     }
+    
 }

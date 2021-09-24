@@ -1,5 +1,8 @@
-﻿namespace GameEditor.Data
+﻿using System;
+
+namespace GameEditor.Data
 {
+    [Serializable]
     public class ImageData : ResourceData
     {
         // Resources 폴더를 Root로 하는 경로 입력.

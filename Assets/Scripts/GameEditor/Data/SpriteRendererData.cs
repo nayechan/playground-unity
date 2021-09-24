@@ -68,5 +68,10 @@ namespace GameEditor.Data
         {
             return comp is SpriteRenderer;
         }
+        
+        public override void SetResourceData(ResourceData rd)
+        {
+            ImageData = (ImageData)rd;
+        }
     }
 }
