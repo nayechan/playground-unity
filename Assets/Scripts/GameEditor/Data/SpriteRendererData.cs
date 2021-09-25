@@ -36,7 +36,7 @@ namespace GameEditor.Data
         //해당 컴포넌트를 반환한다.
          public override Component AddComponent(GameObject obj)
          {
-             var sr = obj.GetComponent<SpriteRenderer>();
+             var sr = obj.AddComponent<SpriteRenderer>();
              return sr;
          }
          

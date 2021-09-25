@@ -35,6 +35,11 @@ namespace GameEditor.Data
                         cds.Add(JsonUtility.FromJson<Rigidbody2DData>((string)pair.Value));
                         break;
                     }
+                    case SpriteRendererData._Type:
+                    {
+                        cds.Add(JsonUtility.FromJson<SpriteRendererData>((string)pair.Value));
+                        break;
+                    }
                 }
             }
 
@@ -48,20 +53,20 @@ namespace GameEditor.Data
             var dict = new Dictionary<int, GameObject>();
             // 오브젝트 구조 먼저 생성, DataAgent 먼저 생성한다.
             var obj = new GameObject();
-            var jgObjectPair = new List<Tuple<JObject, GameObject>>();
-            CreateGameObjectRecursively(obj, jObj, dict, jgObjectPair);
+            var jaObjectPair = new List<Tuple<JObject, DataAgent>>();
+            CreateGameObjectRecursively(obj, jObj, dict, jaObjectPair);
             // 오브젝트에 컴포넌트 추가.
-            CreateComponentAll(jgObjectPair);
+            CreateComponentAll(jaObjectPair);
             return obj;
         }
 
         // JObject내용을 토대로 GameObject를 만들고 DataAgent를 추가한다.
         private static void CreateGameObjectRecursively
             (GameObject obj, JObject jObj, IDictionary<int, GameObject> dict,
-               ICollection<Tuple<JObject, GameObject>> jgObjectPair )
+               ICollection<Tuple<JObject, DataAgent>> jaObjectPair )
         {
-            jgObjectPair.Add(new Tuple<JObject, GameObject>(jObj, obj));
             var da = obj.AddComponent<DataAgent>();
+            jaObjectPair.Add(new Tuple<JObject, DataAgent>(jObj, da));
             var od = da.od = JsonUtility.FromJson<ObjectData>((string)jObj["ObjectData"]);
             obj.name = od.name;
             dict.Add(od.id, obj);
@@ -74,20 +79,19 @@ namespace GameEditor.Data
                         parent = obj.transform
                     }
                 };
-                CreateGameObjectRecursively(nObj, childJObj, dict, jgObjectPair);
+                CreateGameObjectRecursively(nObj, childJObj, dict, jaObjectPair);
             }
         }
 
         private static void CreateComponentAll
-            (IEnumerable<Tuple<JObject, GameObject>> jgObjectPair)
+            (IEnumerable<Tuple<JObject, DataAgent>> jaObjectPair)
         {
-            foreach (var (jObj, obj) in jgObjectPair)
+            foreach (var (jObj, da) in jaObjectPair)
             {
                 var cds = JObjectToComponentDatas(jObj);
                 foreach (var cd in cds)
                 {
-                    var comp = cd.AddComponent(obj);
-                    cd.SetComponent(comp);  
+                    da.AddComponentFromData(cd);
                 }
             }
         }

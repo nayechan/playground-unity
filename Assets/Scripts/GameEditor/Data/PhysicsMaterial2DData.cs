@@ -25,11 +25,6 @@ namespace GameEditor.Data
 
         public void SetComponent(PhysicsMaterial2D pm2d)
         {
-            pm2d.friction = friction;
-            pm2d.bounciness = bounciness;
-        }
-        public PhysicsMaterial2DData(PhysicsMaterial2D pm2d)
-        {
             if (pm2d == null)
             {
                 friction = 0.4f;
@@ -40,6 +35,10 @@ namespace GameEditor.Data
                 friction = pm2d.friction;
                 bounciness = pm2d.bounciness;
             }
+        }
+        public PhysicsMaterial2DData(PhysicsMaterial2D pm2d)
+        {
+            SetComponent(pm2d);
         }
     }
     

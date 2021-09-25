@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Unity.VisualScripting;
@@ -24,6 +25,13 @@ namespace GameEditor.Data
         {
             od.name = name;
             od.id = GetInstanceID();
+            // 삭제된 Component를 확인하고 해당하는 Data를 삭제합니다.
+            foreach (var pair in ComponentDatas.Where(pair => pair.Key == null))
+            {
+                ComponentDatas.Remove(pair.Key);
+                ResourceDatas.Remove(pair.Key);
+            }
+            // 새 Data를 추가하거나 업데이트 합니다.
             var components = GetComponents<Component>();
             foreach (var component in components)
             {
@@ -44,9 +52,15 @@ namespace GameEditor.Data
                     }
                 }
             }
+            // ResourceData를 업데이트합니다.
+            foreach (var pair in ResourceDatas)
+            {
+                   
+            }
         }
 
-        public static void UpdateComponentDataAll(GameObject obj)
+        // 인자로 받은 오브젝트와 그 하위 오브젝트의 Data를 모두 업데이트 합니다.
+        public static void UpdateComponentFromDataAll(GameObject obj)
         {
             var da = obj.GetComponent<DataAgent>();
             if (da != null)
@@ -56,7 +70,7 @@ namespace GameEditor.Data
 
             foreach (Transform tp in obj.transform)
             {
-                UpdateComponentDataAll(tp.GameObject());
+                UpdateComponentFromDataAll(tp.GameObject());
             }
         }
         
@@ -81,6 +95,38 @@ namespace GameEditor.Data
             ResourceDatas.Add(component, resourceData);
         }
 
+        // ResoruceData를 삭제합니다.
+        public bool DelResourceData(Component component)
+        {
+            return ResourceDatas.Remove(component);
+        }
+
+        // 갖고 있는 Data 상태로 Component를 Set 합니다.
+        public void SetComponentFromData()
+        {
+            foreach (var pair in ComponentDatas)
+            {
+                pair.Value.SetComponent(pair.Key);
+            }
+        }
+        
+        // 인자로 받은 오브젝트와 하위 오브젝트 모두 갖고있는 Data상태로 Component를
+        // Set 합니다.
+        public static void SetComponentFromDataAll(GameObject obj)
+        {
+            var da = obj.GetComponent<DataAgent>();
+            if (da != null)
+            {
+                da.SetComponentFromData();
+            }
+
+            foreach (Transform tp in obj.transform)
+            {
+                SetComponentFromDataAll(tp.GameObject());
+            }
+        }
+        
+
         // 기록하고 있는 Datas를 JObject형식으로 반환합니다.
         public JObject GetJObject()
         {
@@ -98,6 +144,15 @@ namespace GameEditor.Data
             return jObj;
         }
 
+        // ComponentData에 해당하는 Component를 오브젝트에 추가하고 해당 값으로 Set 합니다.
+        public Component AddComponentFromData(ComponentData cd)
+        {
+            var comp = cd.AddComponent(gameObject);
+            ComponentDatas.Add(comp, cd);
+            cd.SetComponent(comp);
+            return comp;
+        }
+        
         // gameObject 를 포함한 모든 자식 gameObject의 정보를 JObject형태로 반환합니다.
         public JObject GetJObjectFromAll()
         {
@@ -114,6 +169,8 @@ namespace GameEditor.Data
             jObj.Add(new JProperty("Children", jArray));
             return jObj;
         }
+        
+        
 
     }
     
