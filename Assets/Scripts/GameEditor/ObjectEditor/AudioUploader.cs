@@ -1,11 +1,11 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using WebGLFileUploader;
 using System.IO;
+using System.Runtime.InteropServices;
+using UnityEngine.UI;
 using UnityEngine.Networking;
-using UnityEngine.Serialization;
 
 /*
 AudioUploader
@@ -24,21 +24,9 @@ SimpleFileBrowser
 public class AudioUploader : MonoBehaviour
 {
     [SerializeField] private AudioStorage _audioStorage;
+    [SerializeField] private Text _fileStatusInputField;
 
-    //Audio Clip 생성을 위해 Byte 배열을 Float 배열로 변경
-    private float[] ConvertByteToFloat(byte[] array)
-    {
-        float[] floatArr = new float[array.Length / 4];
-        for (int i = 0; i < floatArr.Length; i++)
-        {
-            if (BitConverter.IsLittleEndian)
-            {
-                Array.Reverse(array, i * 4, 4);
-            }
-            floatArr[i] = BitConverter.ToSingle(array, i * 4) / 0x80000000;
-        }
-        return floatArr;
-    }
+    private string _currentPath;
 
     //클릭시
     public void OnUploadButtonClicked()
@@ -108,7 +96,8 @@ public class AudioUploader : MonoBehaviour
                 debugString += (" exists:" + File.Exists(file.filePath));
                 Debug.Log(debugString);
                 
-                StartCoroutine(GetAudioClip(file.filePath));
+                
+                UpdatePath(file.filePath);
             }
             else
             {
@@ -139,8 +128,8 @@ public class AudioUploader : MonoBehaviour
             debugString += ("file: " + file);
             debugString += (" exists:" + File.Exists(file));
             Debug.Log(debugString);
-            
-            StartCoroutine(GetAudioClip(file));
+
+            UpdatePath(file);
         }
     }
 
@@ -152,50 +141,14 @@ public class AudioUploader : MonoBehaviour
         }
     }
 
-    IEnumerator GetAudioClip(string path)
+    private void UpdatePath(string path)
     {
-        AudioClip audioClip = null;
-        string fileExtension = Path.GetExtension(path);
-        if (fileExtension == ".wav")
-        {
-            Debug.Log(new System.Uri(path).AbsoluteUri);
-            using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(
-                new System.Uri(path).AbsoluteUri, AudioType.WAV
-            ))
-            {
-                yield return www.SendWebRequest();
-                if (www.result != UnityWebRequest.Result.Success)
-                {
-                    Debug.Log("Error Occured : "+www.result);
-                }
-                else
-                {
-                    audioClip = DownloadHandlerAudioClip.GetContent(www);
-                }
-            }
-        }
-        else if (fileExtension == ".mp3")
-        {
-            using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(
-                new System.Uri(path).AbsoluteUri, AudioType.MPEG
-            ))
-            {
-                yield return www.SendWebRequest();
-                if (www.result != UnityWebRequest.Result.Success)
-                {
-                    Debug.Log("Error Occured : "+www.result);
-                }
-                else
-                {
-                    audioClip = DownloadHandlerAudioClip.GetContent(www);
-                }
-            }
-        }
+        _currentPath = path;
+        _fileStatusInputField.text = path;
+    }
 
-        if (audioClip != null)
-        {
-            audioClip.name = Path.GetFileName(path);
-            _audioStorage.SetAudioClip(audioClip);
-        }
+    public void OnConfirmButtonClicked()
+    {
+        _audioStorage.AddAudioData(new AudioData(_currentPath));
     }
 }
