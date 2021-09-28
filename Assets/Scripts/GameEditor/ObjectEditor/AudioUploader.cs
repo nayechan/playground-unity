@@ -24,6 +24,8 @@ SimpleFileBrowser
 public class AudioUploader : MonoBehaviour
 {
     [SerializeField] private AudioStorage _audioStorage;
+
+    [SerializeField] private Dropdown _typeDropdown;
     [SerializeField] private Text _fileStatusInputField;
 
     private string _currentPath;
@@ -149,6 +151,7 @@ public class AudioUploader : MonoBehaviour
 
     public void OnConfirmButtonClicked()
     {
-        _audioStorage.AddAudioData(new AudioData(_currentPath));
+        string audioType = _typeDropdown.options[_typeDropdown.value].text;
+        _audioStorage.AddAudioData(new AudioData(_currentPath, audioType));
     }
 }
