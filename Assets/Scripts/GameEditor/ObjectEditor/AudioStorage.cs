@@ -1,38 +1,24 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.UI;
-
-public class AudioData
-{
-    private string _path;
-    public AudioData(string path)
-    {
-        _path = path;
-    }
-
-    public string getPath()
-    {
-        return _path;
-    }
-}
 
 public class AudioStorage : MonoBehaviour
 {
-    [SerializeField] private List<AudioClip> _audioClips;
+    [SerializeField] private List<AudioData> _audioDatas;
     [SerializeField] private AudioEditorController _audioEditorController;
 
     private void Awake()
     {
-        _audioClips = new List<AudioClip>();
+        _audioDatas = new List<AudioData>();
     }
 
-    public IEnumerator GetAudioClip(AudioData data)
+    public IEnumerator LoadAudioClip(AudioData data)
     {
-        string path = data.getPath();
+        CopyAudioData(data);
+
+        string path = data.GetPath();
         string fileExtension = Path.GetExtension(path);
         AudioClip audioClip = null;
         
@@ -74,14 +60,29 @@ public class AudioStorage : MonoBehaviour
 
         if (audioClip != null)
         {
+            Debug.Log("pass");
             audioClip.name = Path.GetFileName(path);
-            _audioClips.Add(audioClip);
+            data.SetAudioClip(audioClip);
+            _audioDatas.Add(data);
+            _audioEditorController.RefreshUI(_audioDatas);
         }
+    }
+
+    // 오디오 데이터를 앱 내부 데이터 폴더로 복사합니다.
+    public void CopyAudioData(AudioData data)
+    {
+        string newPath = Application.persistentDataPath;
+        newPath += ("/" + System.IO.Path.GetFileName(data.GetPath()));
+
+        Debug.Log(newPath);
+
+        System.IO.File.Copy(data.GetPath(), newPath, true);
+        data.SetPath(newPath);
     }
 
     public void AddAudioData(AudioData data)
     {
         Debug.Log("test");
-        StartCoroutine(GetAudioClip(data));
+        StartCoroutine(LoadAudioClip(data));
     }
 }
