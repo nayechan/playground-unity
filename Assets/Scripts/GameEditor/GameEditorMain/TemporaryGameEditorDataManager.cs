@@ -52,7 +52,7 @@ public class TemporaryGameEditorDataManager : MonoBehaviour
 
     public void LoadObjectTypes(ObjectDataManager dataManager)
     {
-        datas = dataManager.GetDatas();
+        datas = dataManager.GetObjectPrimitiveDatas();
     }
 
     public void RestoreObjectTypes(ObjectDataManager dataManager)

@@ -45,7 +45,7 @@ namespace GameEditor.Data
                     return new TransformData(comp);
                 }
                 case SpriteRenderer sp:
-                    return new SpriteRendererData(comp, (ImageData) rd);
+                    return new SpriteRendererData(comp, (SpriteData) rd);
                 case DataAgent oda:
                     return null;
                 default:

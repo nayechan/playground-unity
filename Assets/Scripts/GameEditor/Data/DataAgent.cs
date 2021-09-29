@@ -83,7 +83,7 @@ namespace GameEditor.Data
             {
                 // SpriteRenderer 는 이미지 경로를 저장하고 있는 ImageData 클래스와 함께 Called 하였는지 확인합니다.
                 case SpriteRenderer sr:
-                    if (resourceData is ImageData)
+                    if (resourceData is SpriteData)
                     {
                         break;
                     }

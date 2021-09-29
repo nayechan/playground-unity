@@ -7,7 +7,7 @@ namespace GameEditor.Data
     [System.Serializable]
     public class SpriteRendererData : ComponentData
     {
-        public ImageData ImageData;
+        public SpriteData spriteData;
         public Color color;
         public bool visible;
         public int orderInLayer;
@@ -20,14 +20,14 @@ namespace GameEditor.Data
              Assert.IsTrue(IsCorrectType(comp));
              var sr = (SpriteRenderer)comp;
              sr.color = color;
-             var tex = Resources.Load<Texture2D>(ImageData.TexturePath);
-             if (tex == null)
-             {
-                 Debug.Log("Can't find texture : " + ImageData.TexturePath);
-                 return;
-             }
-             sr.sprite = Sprite.Create(tex, new Rect(0f, 0f , tex.width, tex.height),
-                 new Vector2(0.5f, 0.5f), tex.width);
+             // var tex = Resources.Load<Texture2D>(spriteData.TexturePath);
+             // if (tex == null)
+             // {
+             //     Debug.Log("Can't find texture : " + spriteData.TexturePath);
+             //     return;
+             // }
+             // sr.sprite = Sprite.Create(tex, new Rect(0f, 0f , tex.width, tex.height),
+             //     new Vector2(0.5f, 0.5f), tex.width);
              sr.sortingOrder = orderInLayer;
              sr.enabled = visible ? true : false;
          }
@@ -41,7 +41,7 @@ namespace GameEditor.Data
          }
          
         // Component의 값을 갖는 SpriteRendererData 클래스를 생성한다.
-         public SpriteRendererData(Component comp, ImageData imgData)
+         public SpriteRendererData(Component comp, SpriteData imgData)
          {
              SetData(comp);
              SetImageData(imgData);
@@ -57,9 +57,9 @@ namespace GameEditor.Data
          }
 
          // texturePath를 인자의 값으로 Set 한다.
-         public void SetImageData(ImageData imgData)
+         public void SetImageData(SpriteData imgData)
          {
-             this.ImageData = imgData;
+             this.spriteData = imgData;
          }
          
         // 인자로 받은 Component의 derived 타입이 본 클래스가 담당하는
@@ -71,7 +71,7 @@ namespace GameEditor.Data
         
         public override void SetResourceData(ResourceData rd)
         {
-            ImageData = (ImageData)rd;
+            spriteData = (SpriteData)rd;
         }
     }
 }
