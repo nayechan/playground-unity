@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioEditorController : MonoBehaviour
+public class ImageEditorController : MonoBehaviour
 {
-    [SerializeField] GameObject audioItemPrefab;
+    [SerializeField] GameObject imageItemPrefab;
     [SerializeField] Transform contentPanel;
 
     // Start is called before the first frame update
@@ -18,7 +18,7 @@ public class AudioEditorController : MonoBehaviour
         
     }
 
-    public void RefreshUI(List<AudioData> audioDatas)
+    public void RefreshUI(List<ImageData> imageDatas)
     {
         foreach(Transform transform in contentPanel)
         {
@@ -29,13 +29,13 @@ public class AudioEditorController : MonoBehaviour
         int row = 0;
         int col = 1;
 
-        foreach(AudioData data in audioDatas)
+        foreach(ImageData data in imageDatas)
         {
-            GameObject gameObject = Instantiate(audioItemPrefab,contentPanel);
+            GameObject gameObject = Instantiate(imageItemPrefab,contentPanel);
             gameObject.GetComponent<RectTransform>().anchoredPosition =
             new Vector2(70+340*col, -80-320*row);
 
-            gameObject.GetComponent<AudioItemController>().SetAudioData(data);
+            gameObject.GetComponent<ImageItemController>().SetImageData(data);
 
             ++col;
             if(col>=4) {col=0; ++row;}
