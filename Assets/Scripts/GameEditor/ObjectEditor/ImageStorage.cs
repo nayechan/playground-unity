@@ -16,33 +16,42 @@ public class ImageStorage : MonoBehaviour
 
     public void AddImageData(ImageData data)
     {
-
-        List<Sprite> spriteList = new List<Sprite>();
-
-        int imagePathLength = data.GetImagePaths().Count;
-
-        MoveImagePath(data);
-
-        for(int i=0;i<imagePathLength;++i)
+        if(data!=null)
         {
+            List<Sprite> spriteList = new List<Sprite>();
 
-            Texture2D texture = new Texture2D(2, 2, TextureFormat.RGBA32, false);
-            byte[] byteArray = File.ReadAllBytes(data.GetImagePaths()[i]);
-            texture.LoadImage(byteArray);
+            int imagePathLength = data.GetImagePaths().Count;
 
-            Sprite s = Sprite.Create(
-                texture, new Rect(0, 0, texture.width, texture.height), 
-                new Vector2(0.5f,0.5f)
-            );
-            Debug.Log(s.pivot);
-            spriteList.Add(s);
+            MoveImagePath(data);
+
+            for(int i=0;i<imagePathLength;++i)
+            {
+
+                Texture2D texture = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+                if(data.GetImagePaths()[i] != "")
+                {
+                    byte[] byteArray = File.ReadAllBytes(data.GetImagePaths()[i]);
+                    texture.LoadImage(byteArray);
+
+                    Sprite s = Sprite.Create(
+                        texture, new Rect(0, 0, texture.width, texture.height), 
+                        new Vector2(0.5f,0.5f)
+                    );
+                    Debug.Log(s.pivot);
+                    spriteList.Add(s);
+                }
+                else
+                {
+                    spriteList.Add(null);
+                }
+            }
+            
+            data.SetSprites(spriteList);
+
+            _imageDatas.Add(data);
         }
         
-        data.SetSprites(spriteList);
-
-        _imageDatas.Add(data);
-        
-        //_imageViewerController.RefreshUI(_imageDatas);
+        _imageViewerController.RefreshUI(_imageDatas, false);
     }
 
     // 이미지 데이터를 앱 내부 데이터 폴더로 복사합니다.
@@ -53,13 +62,20 @@ public class ImageStorage : MonoBehaviour
 
         foreach(string path in paths)
         {
-            string newPath = Application.persistentDataPath;
-            newPath += ("/" + System.IO.Path.GetFileName(path));
+            if(path != "")
+            {
+                string newPath = Application.persistentDataPath;
+                newPath += ("/" + System.IO.Path.GetFileName(path));
 
-            Debug.Log(newPath);
-
-            System.IO.File.Copy(path, newPath, true);
-            newPaths.Add(newPath);
+                Debug.Log(newPath);
+                System.IO.File.Copy(path, newPath, true);
+                
+                newPaths.Add(newPath);
+            }
+            else
+            {
+                newPaths.Add("");
+            }
         }
 
         data.SetImagePaths(newPaths);

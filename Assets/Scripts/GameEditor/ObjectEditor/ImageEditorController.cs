@@ -77,9 +77,6 @@ public class ImageEditorController : MonoBehaviour
             }
         }
 
-        
-        Debug.Log("raw w/h : "+w+"/"+h);
-
         if(h > w)
         {
             w = (w/h) * defaultWidth;
@@ -176,7 +173,20 @@ public class ImageEditorController : MonoBehaviour
 
     public ImageData GenerateImageData()
     {
-        ImageData imageData = new ImageData(isSingleMode, isRelativeSize, h, w);
+        Debug.Log("isRelativeSize : "+isRelativeSize);
+        h = 1;
+        w = 1;
+
+        try{
+            w = float.Parse(hSizeInputField.text);
+            h = float.Parse(vSizeInputField.text);
+        }
+        catch(Exception e)
+        {
+
+        }
+        ImageData imageData = 
+        new ImageData(isSingleMode, isRelativeSize, h, w, nameInputField.text);
 
         imageData.SetImagePaths(spritePaths);
 

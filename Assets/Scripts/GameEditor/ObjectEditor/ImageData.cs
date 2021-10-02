@@ -11,13 +11,14 @@ public class ImageData
     private float _hSize, _vSize;
     private string  _title;
 
-    public ImageData(bool imageMode, bool sizeMode, float hSize, float vSize)
+    public ImageData(bool imageMode, bool sizeMode, float hSize, float vSize, string title)
     {
         _imageMode = imageMode;
         _sizeMode = sizeMode;
         _hSize = hSize;
         _vSize = vSize;
         _imagePaths = new List<string>();
+        _title = title;
     }
 
     public List<string> GetImagePaths()
@@ -40,9 +41,34 @@ public class ImageData
         _sprites = sprites;
     }
 
+    public List<Sprite> GetSprites()
+    {
+        return _sprites;
+    }
+
     public string GetTitle()
     {
         return _title;
     }
+
+    public bool GetSizeMode()
+    {
+        return _sizeMode;
+    }
+
+    public bool GetImageMode()
+    {
+        return _imageMode;
+    }
+
+    public float GetHSize()
+    {
+        return _hSize;
+    }
     
+    public float GetVSize()
+    {
+        return _vSize;
+    }
+
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ImageViewerController : MonoBehaviour
 {
-    [SerializeField] GameObject imageItemPrefab;
+    [SerializeField] GameObject imageItemPrefab, addImageButtonPrefab;
     [SerializeField] Transform contentPanel;
 
     // Start is called before the first frame update
@@ -18,16 +18,29 @@ public class ImageViewerController : MonoBehaviour
         
     }
 
-    public void RefreshUI(List<ImageData> imageDatas)
+    public void RefreshUI(List<ImageData> imageDatas, bool isSelectMode)
     {
         foreach(Transform transform in contentPanel)
         {
-            if(transform.gameObject.name != "AddObject")
-                Destroy(transform.gameObject);
+            Destroy(transform.gameObject);
         }
 
         int row = 0;
-        int col = 1;
+        int col = 0;
+
+        
+        if(!isSelectMode)
+        {
+            GameObject addImageButtonObject =
+            GameObject.Instantiate(addImageButtonPrefab, contentPanel);
+            
+            addImageButtonObject.GetComponent<RectTransform>().anchoredPosition =
+            new Vector2(70+340*col, -80-320*row);
+
+            ++col;
+            if(col>=4) {col=0; ++row;}
+        }
+        
 
         foreach(ImageData data in imageDatas)
         {
