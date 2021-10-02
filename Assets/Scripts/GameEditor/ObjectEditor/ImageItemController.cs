@@ -3,7 +3,6 @@ using UnityEngine.UI;
 
 public class ImageItemController : MonoBehaviour {
 
-    [SerializeField] private Text typeText;
     [SerializeField] private Text titleText;
 
     ImageData _imageData;
@@ -14,7 +13,6 @@ public class ImageItemController : MonoBehaviour {
     }  
     public void RefreshUI()
     {
-        typeText.text = _imageData.GetType();
         titleText.text = _imageData.GetTitle();
     }
 }

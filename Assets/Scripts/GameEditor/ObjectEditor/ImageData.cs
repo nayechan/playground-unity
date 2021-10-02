@@ -5,40 +5,44 @@ using System.Collections.Generic;
 public class ImageData
 {
     //private string uuid;
-    private List<string> imagePaths;
-    private List<Sprite> spritePaths;
-    private string _type, _title;
+    private List<string> _imagePaths;
+    private List<Sprite> _sprites;
+    private bool _imageMode, _sizeMode;
+    private float _hSize, _vSize;
+    private string  _title;
 
-    public ImageData(string type)
+    public ImageData(bool imageMode, bool sizeMode, float hSize, float vSize)
     {
-        imagePaths = new List<string>();
-        spritePaths = new List<Sprite>();
-        _type = type;
+        _imageMode = imageMode;
+        _sizeMode = sizeMode;
+        _hSize = hSize;
+        _vSize = vSize;
+        _imagePaths = new List<string>();
     }
 
     public List<string> GetImagePaths()
     {
-        return imagePaths;
+        return _imagePaths;
     }
 
-    public void SetImagePathAtIndex(string path, int i)
+    public void AddImagePath(string path)
     {
-        imagePaths[i] = path;
+        _imagePaths.Add(path);
+    }
+
+    public void SetImagePaths(List<string> imagePaths)
+    {
+        _imagePaths = imagePaths;
     }
 
     public void SetSprites(List<Sprite> sprites)
     {
-        spritePaths = sprites;
-    }
-
-
-    public string GetType()
-    {
-        return _type;
+        _sprites = sprites;
     }
 
     public string GetTitle()
     {
         return _title;
     }
+    
 }
