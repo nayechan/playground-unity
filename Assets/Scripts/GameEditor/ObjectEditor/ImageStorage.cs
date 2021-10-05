@@ -8,58 +8,77 @@ using UnityEngine.UI;
 public class ImageStorage : MonoBehaviour
 {
     [SerializeField] private List<ImageData> _imageDatas;
-    [SerializeField] private ImageEditorController _imageEditorController;
+    [SerializeField] private ImageViewerController _imageViewerController;
     private void Awake()
     {
         _imageDatas = new List<ImageData>();
     }
 
-    public void LoadSprites(ImageData data)
+    public void AddImageData(ImageData data)
     {
-
-        List<Sprite> spriteList = new List<Sprite>();
-
-        int imagePathLength = data.GetImagePaths().Count;
-
-        for(int i=0;i<imagePathLength;++i)
+        if(data!=null)
         {
-            CopyImageDataAtIndex(data, i);
+            List<Sprite> spriteList = new List<Sprite>();
 
-            Texture2D texture = new Texture2D(2, 2, TextureFormat.RGBA32, false);
-            byte[] byteArray = File.ReadAllBytes(data.GetImagePaths()[i]);
-            texture.LoadImage(byteArray);
+            int imagePathLength = data.GetImagePaths().Count;
 
-            Sprite s = Sprite.Create(
-                texture, new Rect(0, 0, texture.width, texture.height), 
-                new Vector2(0.5f,0.5f)
-            );
-            Debug.Log(s.pivot);
-            spriteList.Add(s);
+            MoveImagePath(data);
+
+            for(int i=0;i<imagePathLength;++i)
+            {
+
+                Texture2D texture = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+                if(data.GetImagePaths()[i] != "")
+                {
+                    byte[] byteArray = File.ReadAllBytes(data.GetImagePaths()[i]);
+                    texture.LoadImage(byteArray);
+
+                    Sprite s = Sprite.Create(
+                        texture, new Rect(0, 0, texture.width, texture.height), 
+                        new Vector2(0.5f,0.5f)
+                    );
+                    Debug.Log(s.pivot);
+                    spriteList.Add(s);
+                }
+                else
+                {
+                    spriteList.Add(null);
+                }
+            }
+            
+            data.SetSprites(spriteList);
+
+            _imageDatas.Add(data);
         }
         
-        data.SetSprites(spriteList);
-
-        _imageDatas.Add(data);
-        
-        _imageEditorController.RefreshUI(_imageDatas);
+        _imageViewerController.RefreshUI(_imageDatas, false);
     }
 
     // 이미지 데이터를 앱 내부 데이터 폴더로 복사합니다.
-    public void CopyImageDataAtIndex(ImageData data, int i)
+    public void MoveImagePath(ImageData data)
     {
-        string newPath = Application.persistentDataPath;
-        newPath += ("/" + System.IO.Path.GetFileName(data.GetImagePaths()[i]));
+        List<string> paths = data.GetImagePaths();
+        List<string> newPaths = new List<string>();
 
-        Debug.Log(newPath);
+        foreach(string path in paths)
+        {
+            if(path != "")
+            {
+                string newPath = Application.persistentDataPath;
+                newPath += ("/" + System.IO.Path.GetFileName(path));
 
-        System.IO.File.Copy(data.GetImagePaths()[i], newPath, true);
-        data.SetImagePathAtIndex(newPath, i);
-    }
+                Debug.Log(newPath);
+                System.IO.File.Copy(path, newPath, true);
+                
+                newPaths.Add(newPath);
+            }
+            else
+            {
+                newPaths.Add("");
+            }
+        }
 
-    public void AddImageData(ImageData data)
-    {
-        Debug.Log("test");
-        LoadSprites(data);
+        data.SetImagePaths(newPaths);
     }
 }
 

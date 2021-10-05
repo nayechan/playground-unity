@@ -2,10 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/*
- *  애니메이션? 을 구성하는 클래스..
- */
-
 public class ObjectInstanceController : MonoBehaviour
 {
     [SerializeField] TouchController_obj touchController;

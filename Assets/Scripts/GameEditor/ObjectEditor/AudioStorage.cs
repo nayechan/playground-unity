@@ -85,4 +85,10 @@ public class AudioStorage : MonoBehaviour
         Debug.Log("test");
         StartCoroutine(LoadAudioClip(data));
     }
+
+    public void Test()
+    {
+        AudioSource audioSource;
+        
+    }
 }

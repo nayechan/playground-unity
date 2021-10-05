@@ -17,10 +17,8 @@ namespace WebGLFileUploader
         /// <summary>
         /// Occurs when on file uploaded.
         /// </summary>
-        #pragma warning disable 0067
         public static event Action<UploadedFileInfo[]> onFileUploaded;
-        #pragma warning restore 0067
-        
+
         /// <summary>
         /// Shows the file upload UI.
         /// </summary>
@@ -42,8 +40,6 @@ namespace WebGLFileUploader
             #endif
         }
 
-        #pragma warning restore 0067
-        
         /// <summary>
         /// Popup the file upload dialog UI.
         /// </summary>

@@ -10,7 +10,7 @@ using UnityEngine.Networking;
 
 public class ImageUploader : MonoBehaviour
 {
-    [SerializeField] private ImageStorage _imageStorage;
+    [SerializeField] private ImageEditorController _imageEditorController;
 
     private string _currentPath;
 
@@ -22,7 +22,7 @@ public class ImageUploader : MonoBehaviour
         {
 
             // 선택 가능한 파일 형식을 지정합니다.
-            WebGLFileUploadManager.SetAllowedFileName("\\.(jpg|png)$");
+            WebGLFileUploadManager.SetAllowedFileName("\\.(png|jpe?g)$");
 
             // 파일의 인코딩여부를 지정합니다. (이미지가 아니기때문에 false)
             WebGLFileUploadManager.SetImageEncodeSetting(false);
@@ -81,7 +81,7 @@ public class ImageUploader : MonoBehaviour
                 Debug.Log(debugString);
                 
                 
-                UpdatePath(file.filePath);
+                OnSelectFileFinished(file.filePath);
             }
             else
             {
@@ -111,7 +111,7 @@ public class ImageUploader : MonoBehaviour
             debugString += (" exists:" + File.Exists(file));
             Debug.Log(debugString);
 
-            UpdatePath(file);
+            OnSelectFileFinished(file);
         }
     }
 
@@ -123,14 +123,9 @@ public class ImageUploader : MonoBehaviour
         }
     }
 
-    private void UpdatePath(string path)
+    //선택 후 동작을 공통으로 정합니다.
+    private void OnSelectFileFinished(string path)
     {
-        _currentPath = path;
-    }
-
-    public void OnConfirmButtonClicked()
-    {
-        string imageType = "test";
-        _imageStorage.AddImageData(new ImageData(imageType));
+        _imageEditorController.SetCurrentImage(path);
     }
 }
