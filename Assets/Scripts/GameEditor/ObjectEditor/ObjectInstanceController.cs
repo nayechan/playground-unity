@@ -19,27 +19,7 @@ public class ObjectInstanceController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(primitiveData.GetSprites().Length > 0)
-        {
-            Sprite sprite = primitiveData.GetSprites()[imgIndex];
-            GetComponent<SpriteRenderer>().sprite = sprite;
-            transform.localScale = new Vector3(
-                sprite.pixelsPerUnit/sprite.texture.width * defaultSize.x,
-                sprite.pixelsPerUnit/sprite.texture.height * defaultSize.y,
-                defaultSize.z
-            );
-
-            // GetComponent<BoxCollider>().size = new Vector3(
-            //     sprite.texture.width/sprite.pixelsPerUnit,
-            //     sprite.texture.height/sprite.pixelsPerUnit,
-            //     0
-            // );
-
-
-            ++imgIndex;
-            if(imgIndex >= primitiveData.GetSprites().Length)
-                imgIndex = 0;
-        }        
+        
     }
 
 

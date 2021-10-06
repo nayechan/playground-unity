@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class CreateObjectPanelController : MonoBehaviour
 {
     [SerializeField] ImageStorage imageStorage;
-    [SerializeField] ObjectDataManager objectDataManager;
     [SerializeField] SelectMainController selectMain;
     [SerializeField] InputField nameInput, horizontalSizeInput, verticalSizeInput;
     [SerializeField] Dropdown typeDropdown;

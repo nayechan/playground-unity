@@ -145,12 +145,12 @@ public class EventBlockController : MonoBehaviour
         }
         // 타일의 알파값, 오브젝트 알파값 재조정
         GameEditorBasicComponent _gebc = GameEditorBasicComponent.GetGEBC();
-        TemporaryGameEditorDataManager tge = _gebc.GetComponentInChildren<TemporaryGameEditorDataManager>();
-        if (tge)
-        {
-            tge.FetchOurObjects(new GameObject("_objs"));
-            tge.FetchOurTiles(new GameObject("_tiles"));
-        }
+        // TemporaryGameEditorDataManager tge = _gebc.GetComponentInChildren<TemporaryGameEditorDataManager>();
+        // if (tge)
+        // {
+        //     tge.FetchOurObjects(new GameObject("_objs"));
+        //     tge.FetchOurTiles(new GameObject("_tiles"));
+        // }
         // 인풋 카메라 재조정
         // UserInputController.GetUserInputController().ResetCamera();
         // 툴 바, Raycasting disable, 그리드 disable
