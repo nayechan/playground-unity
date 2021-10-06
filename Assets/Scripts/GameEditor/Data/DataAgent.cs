@@ -23,8 +23,8 @@ namespace GameEditor.Data
         // DataAgent가 속한 GameObject의 ComponentData를 업데이트합니다.
         public void UpdateComponentData()
         {
-            od.name = name;
-            od.id = GetInstanceID();
+            od.Name = name;
+            od.Id = GetInstanceID();
             // 삭제된 Component를 확인하고 해당하는 Data를 삭제합니다.
             foreach (var pair in ComponentDatas.Where(pair => pair.Key == null))
             {

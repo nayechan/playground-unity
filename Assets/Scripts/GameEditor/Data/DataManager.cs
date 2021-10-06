@@ -68,8 +68,8 @@ namespace GameEditor.Data
             var da = obj.AddComponent<DataAgent>();
             jaObjectPair.Add(new Tuple<JObject, DataAgent>(jObj, da));
             var od = da.od = JsonUtility.FromJson<ObjectData>((string)jObj["ObjectData"]);
-            obj.name = od.name;
-            dict.Add(od.id, obj);
+            obj.name = od.Name;
+            dict.Add(od.Id, obj);
             foreach (JObject childJObj in jObj["Children"])
             {
                 var nObj = new GameObject
@@ -95,5 +95,9 @@ namespace GameEditor.Data
                 }
             }
         }
+
+        // pubilc DataAgent CreateAgent()
+        // {
+        // } 
     }
 }
