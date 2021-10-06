@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ImagePanelController : MonoBehaviour
+public class PanelSwitcher : MonoBehaviour
 {   
+    [SerializeField] List<Transform> panelToIgnore;
     public void OpenPanel(Transform panel)
     {
         ResetPanel();
@@ -14,11 +15,11 @@ public class ImagePanelController : MonoBehaviour
     {
         foreach(Transform _transform in transform)
         {
-            Debug.Log(_transform.name);
-            if(_transform.name != "Title" && _transform.name != "Close Button")
+            if(panelToIgnore.Contains(_transform))
             {
-                _transform.gameObject.SetActive(false);
+                continue;
             }
+            _transform.gameObject.SetActive(false);
         }
     }
 }

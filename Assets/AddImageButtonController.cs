@@ -13,6 +13,6 @@ public class AddImageButtonController : MonoBehaviour
     
     public void OnButton()
     {
-        imagePanel.GetComponent<ImagePanelController>().OpenPanel(imagePanel.Find(target));
+        imagePanel.GetComponent<PanelSwitcher>().OpenPanel(imagePanel.Find(target));
     }
 }
