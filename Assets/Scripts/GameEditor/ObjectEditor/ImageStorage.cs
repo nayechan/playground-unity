@@ -4,6 +4,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using GameEditor;
 
 public class ImageStorage : MonoBehaviour
 {
@@ -57,27 +58,28 @@ public class ImageStorage : MonoBehaviour
     // 이미지 데이터를 앱 내부 데이터 폴더로 복사합니다.
     public void MoveImagePath(ImageData data)
     {
-        List<string> paths = data.GetImagePaths();
+        List<string> originalPaths = data.GetImagePaths();
         List<string> newPaths = new List<string>();
 
-        foreach(string path in paths)
+        foreach(string originalPath in originalPaths)
         {
-            if(path != "")
+            if(originalPath != "")
             {
-                string newPath = Application.persistentDataPath;
-                newPath += ("/" + System.IO.Path.GetFileName(path));
-
-                Debug.Log(newPath);
-                System.IO.File.Copy(path, newPath, true);
+                // 프로젝트 경로에 저장이 되도록 일부 수정하였습니다. ** 태형 **
+                string sandboxPath = OnBroadSandbox.GetOSB().SandboxPath;
+                string reletivePath = System.IO.Path.GetFileName(originalPath);
+                string fullPath = Path.Combine(sandboxPath, reletivePath);
+                Debug.Log(fullPath);
+                System.IO.File.Copy(originalPath, fullPath, true);
                 
-                newPaths.Add(newPath);
+                newPaths.Add(reletivePath);
             }
             else
             {
                 newPaths.Add("");
             }
         }
-
+        // 저장되는 경로는 프로젝트 경로를 root로 하는 상대경로로 저장합니다.
         data.SetImagePaths(newPaths);
     }
 }

@@ -20,22 +20,22 @@ namespace GameEditor.Data
     [System.Serializable]
     public class ObjectData 
     {
-        public string Name {get; set;}
-        public int Id{get; set;}
-        public ToyType ToyType{get; set;}
-        public ColliderType ColliderType{get; set;}
+        public string name;
+        public int id;
+        public ToyType toyType;
+        public ColliderType colliderType;
+        public bool isFixed;
         public ObjectData()
         {
-            Name = "NoNamed";
-            Id = 0;
-            ColliderType = ColliderType.None;
-            ToyType = ToyType.Friend;
+            name = "NoNamed";
+            id = 0;
+            colliderType = ColliderType.None;
+            toyType = ToyType.Friend;
         }
 
-        public void SetData(GameObject obj)
+        public void SetGameObject(ref GameObject gameObject)
         {
-            obj.name = Name;
+            gameObject.name = name;
         }
-
     }
 }

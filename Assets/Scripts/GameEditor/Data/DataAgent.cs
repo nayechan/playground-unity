@@ -10,26 +10,33 @@ namespace GameEditor.Data
 {
     public class DataAgent : MonoBehaviour
     {
-        public ObjectData od;
+        public ObjectData objectData;
+        public ImageData imageData;
         private Dictionary<Component, ComponentData> ComponentDatas;
-        private Dictionary<Component, ResourceData> ResourceDatas;
+        // private Dictionary<Component, ResourceData> ResourceDatas;
         
         private void Awake()
         {
-            od = new ObjectData();
+            objectData = new ObjectData();
             ComponentDatas = new Dictionary<Component, ComponentData>();
-            ResourceDatas = new Dictionary<Component, ResourceData>();
+            // ResourceDatas = new Dictionary<Component, ResourceData>();
         }
+        
+        public void SetDataAgentResource(ObjectData objectData, ImageData imageData)
+        {
+            this.objectData = objectData;
+            this.imageData = imageData;
+        } 
         // DataAgent가 속한 GameObject의 ComponentData를 업데이트합니다.
         public void UpdateComponentData()
         {
-            od.Name = name;
-            od.Id = GetInstanceID();
+            objectData.name = name;
+            objectData.id = GetInstanceID();
             // 삭제된 Component를 확인하고 해당하는 Data를 삭제합니다.
             foreach (var pair in ComponentDatas.Where(pair => pair.Key == null))
             {
                 ComponentDatas.Remove(pair.Key);
-                ResourceDatas.Remove(pair.Key);
+                // ResourceDatas.Remove(pair.Key);
             }
             // 새 Data를 추가하거나 업데이트 합니다.
             var components = GetComponents<Component>();
@@ -44,18 +51,13 @@ namespace GameEditor.Data
                 // 유효한 Data 타입이 없는경우 기록에서 생략합니다.
                 else
                 {
-                    ResourceDatas.TryGetValue(component, out var rd);
-                    var cd = ComponentData.CreateComponentData(component, rd);
-                    if (cd != null)
+                    // ResourceDatas.TryGetValue(component, out var rd);
+                    var componentData = ComponentData.CreateComponentData(component);
+                    if (componentData != null)
                     {
-                        ComponentDatas.Add(component, cd);
+                        ComponentDatas.Add(component, componentData);
                     }
                 }
-            }
-            // ResourceData를 업데이트합니다.
-            foreach (var pair in ResourceDatas)
-            {
-                   
             }
         }
 
@@ -76,30 +78,30 @@ namespace GameEditor.Data
         
         // 인자로 받은 컴포넌트의 ResourceData를 ResourceDatas 필드에 추가합니다.
         // 게임 제작에서 resourceData가 필요한 컴포넌트를 추가하는 경우 꼭 호출해줍니다.
-        public void AddResourceData(Component component, ResourceData resourceData)
-        {
-            // 타입이 맞는지 확인합니다.
-            switch (component)
-            {
-                // SpriteRenderer 는 이미지 경로를 저장하고 있는 ImageData 클래스와 함께 Called 하였는지 확인합니다.
-                case SpriteRenderer sr:
-                    if (resourceData is SpriteData)
-                    {
-                        break;
-                    }
-                    goto default;
-                default:
-                    Debug.Log("Unsupported ComponentType.");
-                    return;
-            }
-            ResourceDatas.Add(component, resourceData);
-        }
+        // public void AddResourceData(Component component, ResourceData resourceData)
+        // {
+        //     // 타입이 맞는지 확인합니다.
+        //     switch (component)
+        //     {
+        //         // SpriteRenderer 는 이미지 경로를 저장하고 있는 ImageData 클래스와 함께 Called 하였는지 확인합니다.
+        //         case SpriteRenderer sr:
+        //             if (resourceData is SpriteData)
+        //             {
+        //                 break;
+        //             }
+        //             goto default;
+        //         default:
+        //             Debug.Log("Unsupported ComponentType.");
+        //             return;
+        //     }
+        //     ResourceDatas.Add(component, resourceData);
+        // }
 
         // ResoruceData를 삭제합니다.
-        public bool DelResourceData(Component component)
-        {
-            return ResourceDatas.Remove(component);
-        }
+        // public bool DelResourceData(Component component)
+        // {
+        //     return ResourceDatas.Remove(component);
+        // }
 
         // 갖고 있는 Data 상태로 Component를 Set 합니다.
         public void SetComponentFromData()
@@ -134,7 +136,7 @@ namespace GameEditor.Data
             {
                 {"ObjectData", new JObject()},
             };
-            jObj["ObjectData"] = JsonUtility.ToJson(od);
+            jObj["ObjectData"] = JsonUtility.ToJson(objectData);
             var comps = new JObject();
             foreach (var pair in ComponentDatas)
             {
@@ -169,8 +171,6 @@ namespace GameEditor.Data
             jObj.Add(new JProperty("Children", jArray));
             return jObj;
         }
-        
-        
 
     }
     

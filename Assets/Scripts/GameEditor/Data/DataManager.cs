@@ -47,7 +47,7 @@ namespace GameEditor.Data
         }
         
         // JObject로부터 GameObject를 만든다.
-        public static GameObject CreateGameObjectFromJObject(JObject jObj)
+        public static GameObject CreateGameObject(JObject jObj)
         {
             // instanceID, GameObject 쌍의 딕셔너리 생성.
             var dict = new Dictionary<int, GameObject>();
@@ -67,9 +67,9 @@ namespace GameEditor.Data
         {
             var da = obj.AddComponent<DataAgent>();
             jaObjectPair.Add(new Tuple<JObject, DataAgent>(jObj, da));
-            var od = da.od = JsonUtility.FromJson<ObjectData>((string)jObj["ObjectData"]);
-            obj.name = od.Name;
-            dict.Add(od.Id, obj);
+            var od = da.objectData = JsonUtility.FromJson<ObjectData>((string)jObj["ObjectData"]);
+            obj.name = od.name;
+            dict.Add(od.id, obj);
             foreach (JObject childJObj in jObj["Children"])
             {
                 var nObj = new GameObject
@@ -96,8 +96,21 @@ namespace GameEditor.Data
             }
         }
 
-        // pubilc DataAgent CreateAgent()
-        // {
-        // } 
+        public GameObject CreateGameobject(DataAgent dataAgent)
+        {
+            var newGameObject = new GameObject();
+            // set object property
+            dataAgent.objectData.SetGameObject(ref newGameObject);
+            // create spriteRenderer
+            var spriteData = new SpriteRendererData(dataAgent.imageData);
+            var spriteRenderer = newGameObject.AddComponent<SpriteRenderer>();
+            spriteData.SetComponent(spriteRenderer);
+            // create rigidbody
+            // create collider
+            // create audioSource
+            return newGameObject;
+        }
+
+
     }
 }

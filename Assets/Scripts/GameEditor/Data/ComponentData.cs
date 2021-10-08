@@ -24,7 +24,7 @@ namespace GameEditor.Data
         public abstract bool IsCorrectType(Component comp);
 
         // 인자로 받은 Component타입에 맞는 ComponentData를 생성합니다.
-        public static ComponentData CreateComponentData(Component comp, ResourceData rd)
+        public static ComponentData CreateComponentData(Component comp)
         {
             switch (comp)
             {
@@ -44,19 +44,16 @@ namespace GameEditor.Data
                 {
                     return new TransformData(comp);
                 }
-                case SpriteRenderer sp:
-                    return new SpriteRendererData(comp, (SpriteData) rd);
+                // case SpriteRenderer sp:
+                //     return new SpriteRendererData(comp);
                 case DataAgent oda:
                     return null;
                 default:
-                    Debug.Log("Unsupported ComponentData Type");
+                    Debug.Log("Unsupported ComponentData Type" + comp.GetType());
                     Assert.IsTrue(false);
                     return null;
             }
         }
 
-        public virtual void SetResourceData(ResourceData rd)
-        {
-        }
     }
 }
