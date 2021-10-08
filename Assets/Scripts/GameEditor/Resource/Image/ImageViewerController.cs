@@ -1,23 +1,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+이미지 뷰어를 관리하는 스크립트입니다.
+*/
 public class ImageViewerController : MonoBehaviour
 {
     [SerializeField] GameObject imageItemPrefab, addImageButtonPrefab;
     [SerializeField] Transform contentPanel;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    /*
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    imageDatas: 이미지 데이터,
 
+    isSelectMode: 
+    True    -> 이미지 선택 모드, 
+    False   -> 이미지 추가 모드
+    
+    위의 데이터를 기반으로 UI를 구성하여 리프레시합니다.
+    
+    */
     public void RefreshUI(List<ImageData> imageDatas, bool isSelectMode)
     {
         foreach(Transform transform in contentPanel)
@@ -31,6 +33,7 @@ public class ImageViewerController : MonoBehaviour
         
         if(!isSelectMode)
         {
+            //선택 모드 여부 따라 이미지 추가 버튼을 생성
             GameObject addImageButtonObject =
             GameObject.Instantiate(addImageButtonPrefab, contentPanel);
             

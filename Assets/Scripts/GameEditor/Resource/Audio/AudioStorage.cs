@@ -4,9 +4,13 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
 
+// 오디오를 메모리에 저장하고, 재생하기 위한 저장소입니다.
 public class AudioStorage : MonoBehaviour
 {
+    // 오디오 데이터에 대한 리스트입니다.
     [SerializeField] private List<AudioData> _audioDatas;
+
+    // Audio 편집기의 UI와 저장 상황을 동기화하기 위해 추가한 변수입니다.
     [SerializeField] private AudioEditorController _audioEditorController;
 
     private void Awake()
@@ -14,6 +18,7 @@ public class AudioStorage : MonoBehaviour
         _audioDatas = new List<AudioData>();
     }
 
+    // 코루틴 형태로 오디오 클립을 불러옵니다.
     public IEnumerator LoadAudioClip(AudioData data)
     {
         CopyAudioData(data);

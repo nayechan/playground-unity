@@ -5,6 +5,9 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
+/*
+이미지를 저장하기 위한 저장소입니다.
+*/
 public class ImageStorage : MonoBehaviour
 {
     [SerializeField] private List<ImageData> _imageDatas;
@@ -14,6 +17,7 @@ public class ImageStorage : MonoBehaviour
         _imageDatas = new List<ImageData>();
     }
 
+    //이미지 데이터 추가
     public void AddImageData(ImageData data)
     {
         if(data!=null)

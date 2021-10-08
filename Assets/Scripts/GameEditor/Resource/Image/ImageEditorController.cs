@@ -4,26 +4,43 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 
+// 이미지 에디터를 관리하기 위한 스크립트입니다.
 public class ImageEditorController : MonoBehaviour
 {
+    //이미지 미리보기
     [SerializeField] Image previewImage;
 
+    // 제목, 수평 크기, 수직 크기
     [SerializeField] InputField nameInputField, hSizeInputField, vSizeInputField;
 
+    // 파일명을 나타내기 위한 텍스트 UI 요소
     [SerializeField] Text statusText;
 
+    // 단일~멀티모드 선택 토글, 크기 모드 토글 (상대, 절대)
     [SerializeField] Toggle toggleSingleMode, toggleSizeMode;
 
+    // 멀티모드 활성화시 판넬
     [SerializeField] Transform multiModePanel;
+
+    // 이미지 저장소
     [SerializeField] ImageStorage imageStorage;
 
+    //스프라이트들의 리스트
     List<Sprite> sprites;
+
+    //스프라이트가 저장된 위치들의 리스트
     List<string> spritePaths;
 
+    //현재 단일~멀티모드, 크기모드의 상태
     bool isSingleMode, isRelativeSize;
 
+    //현재 선택된 이미지 인덱스
     int currentIndex;
+
+    //UI의 원래 크기
     float defaultHeight, defaultWidth;
+
+    //높이, 너비 결과값
     float h, w;
 
     // Start is called before the first frame update
@@ -39,6 +56,8 @@ public class ImageEditorController : MonoBehaviour
 
         AddImage();
     }
+
+    //UI 리프레시
     public void RefreshUI()
     {
 
@@ -92,6 +111,8 @@ public class ImageEditorController : MonoBehaviour
 
         statusText.text = "Image "+(currentIndex+1)+"/"+sprites.Count;
     }
+
+    //이전 이미지 선택
     public void PrevImage()
     {
         --currentIndex;
@@ -101,6 +122,8 @@ public class ImageEditorController : MonoBehaviour
         }
         RefreshUI();
     }
+
+    //다음 이미지 선택
     public void NextImage()
     {
         ++currentIndex;
@@ -114,12 +137,16 @@ public class ImageEditorController : MonoBehaviour
         }
         RefreshUI();
     }
+
+    //이미지 추가 (빈 이미지)
     public void AddImage()
     {
         sprites.Add(null);
         spritePaths.Add("");
         RefreshUI();
     }
+
+    //현재 이미지 인덱스에 해당하는 이미지를 배치
     public void SetCurrentImage(string path)
     {
         Texture2D texture = new Texture2D(2, 2, TextureFormat.RGBA32, false);
@@ -135,12 +162,16 @@ public class ImageEditorController : MonoBehaviour
         spritePaths[currentIndex] = path;
         RefreshUI();
     }
+
+    //현재 이미지 인덱스의 이미지 제거
     public void RemoveCurrentImage()
     {
         sprites.RemoveAt(currentIndex);
         spritePaths.RemoveAt(currentIndex);
         PrevImage();
     }
+
+    //이미지 리스트 초기화
     public void ResetAll()
     {
         sprites.Clear();
@@ -158,6 +189,7 @@ public class ImageEditorController : MonoBehaviour
         AddImage();
     }
 
+    //크기 모드 초기화
     public void ResetSizeMode()
     {
         if(toggleSingleMode.isOn)
@@ -166,11 +198,13 @@ public class ImageEditorController : MonoBehaviour
         }
     }
 
+    //이미지 입력 폼 검증
     public bool ValidateForm()
     {
         return true;
     }
 
+    //이미지 데이터 생성
     public ImageData GenerateImageData()
     {
         Debug.Log("isRelativeSize : "+isRelativeSize);
@@ -193,6 +227,7 @@ public class ImageEditorController : MonoBehaviour
         return imageData;
     }
 
+    //추가 버튼 클릭시
     public void OnAddButtonClicked()
     {
         ImageData imageData;
@@ -206,6 +241,7 @@ public class ImageEditorController : MonoBehaviour
         OnClose();
     }
 
+    //취소 버튼/ 닫기 버튼 클릭시
     public void OnClose()
     {
         ResetAll();

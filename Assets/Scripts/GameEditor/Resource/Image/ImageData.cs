@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
+//이미지를 데이터화 하기 위한 클래스입니다.
 public class ImageData
 {
     //private string uuid;
