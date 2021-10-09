@@ -5,14 +5,17 @@ using UnityEngine.UI;
 
 public class CreateObjectPanelController : MonoBehaviour
 {
-    [SerializeField] ImageStorage imageStorage;
-    [SerializeField] SelectMainController selectMain;
-    [SerializeField] InputField nameInput, horizontalSizeInput, verticalSizeInput;
-    [SerializeField] Dropdown typeDropdown;
+    [SerializeField] Image image;
+    [SerializeField] InputField nameInputField;
+    [SerializeField] Dropdown typeDropdown, colliderDropdown;
+    [SerializeField] PanelSwitcher panelSwitcher;
+    [SerializeField] Transform transformSelectObjectPanel, imageSelector;
+
+    ImageData _currentImageData = null;
 
     public bool ValidateForm()
     {
-        return false;
+        return true;
     }
 
     void ResetComponent()
@@ -20,11 +23,56 @@ public class CreateObjectPanelController : MonoBehaviour
         
     }
 
-    public void Cancel(){
-        
+    public void RefreshUI()
+    {
+        image.sprite = _currentImageData.GetSprites()[0];
     }
 
-    public void Add(){
+    public void OpenImageSelector()
+    {
+        Debug.Log("asdf");
+        imageSelector.GetComponent<ImageSelectorController>().SetOnClick(
+            (ImageData imageData)=>{
+                _currentImageData = imageData;
+                panelSwitcher.OpenPanel(transform);
+                RefreshUI();
+            }
+        );
+        panelSwitcher.OpenPanel(imageSelector);
+    }
+
+    public GameEditor.Data.ObjectData GenerateObjectData()
+    {
+        GameEditor.Data.ObjectData objectData = new GameEditor.Data.ObjectData();
+
+        objectData.Name = nameInputField.text;
         
+        string typeString = typeDropdown.options[typeDropdown.value].text;
+        object toyType = GameEditor.Data.ToyType.Parse(
+            typeof(GameEditor.Data.ToyType),typeString
+        );
+        objectData.ToyType = (GameEditor.Data.ToyType)toyType;
+
+        string colliderTypeString = colliderDropdown.options[colliderDropdown.value].text;
+        object colliderType = GameEditor.Data.ColliderType.Parse(
+            typeof(GameEditor.Data.ColliderType),colliderTypeString
+        );
+        objectData.ColliderType = (GameEditor.Data.ColliderType)toyType;
+
+        return objectData;
+    }
+
+    public void OnCancelButtonClick()
+    {
+        panelSwitcher.OpenPanel(transformSelectObjectPanel);
+    }
+
+    public void OnAddButtonClick()
+    {
+        if(ValidateForm())
+        {
+            GameEditor.Data.ObjectData objectData = GenerateObjectData();
+            panelSwitcher.OpenPanel(transformSelectObjectPanel);     
+        }
     }
 }

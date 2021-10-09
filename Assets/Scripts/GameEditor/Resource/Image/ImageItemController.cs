@@ -11,11 +11,17 @@ public class ImageItemController : MonoBehaviour {
     [SerializeField] private Text titleText, typeText;
     [SerializeField] private Image image;
 
+
     bool isImageLoaded = false;
 
     float defaultWidth, defaultHeight;
 
     ImageData _imageData;
+
+    
+    public delegate void OnClick(ImageData imageData);
+
+    public OnClick onClick;
 
     //이미지가 로드되었을 때 까지 작업 (크기 계산 등)을 지연
     public void Awake()
@@ -90,4 +96,7 @@ public class ImageItemController : MonoBehaviour {
         RefreshUI();
 
     }
+
+    public void ExecuteOnClick(){onClick(_imageData);}
+
 }

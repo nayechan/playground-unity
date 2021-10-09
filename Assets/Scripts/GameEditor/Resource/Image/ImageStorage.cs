@@ -12,6 +12,7 @@ public class ImageStorage : MonoBehaviour
 {
     [SerializeField] private List<ImageData> _imageDatas;
     [SerializeField] private ImageViewerController _imageViewerController;
+    [SerializeField] private ImageSelectorController _imageSelectorController;
     private void Awake()
     {
         _imageDatas = new List<ImageData>();
@@ -56,6 +57,7 @@ public class ImageStorage : MonoBehaviour
         }
         
         _imageViewerController.RefreshUI(_imageDatas, false);
+        _imageSelectorController.RefreshUI(_imageDatas);
     }
 
     // 이미지 데이터를 앱 내부 데이터 폴더로 복사합니다.
