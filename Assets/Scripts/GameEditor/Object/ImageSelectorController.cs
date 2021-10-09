@@ -17,7 +17,7 @@ public class ImageSelectorController : MonoBehaviour
     // 이미지 데이터를 기반으로 UI를 재구성합니다.
     private void Awake() {
     }
-    public void RefreshUI(List<ImageData> imageDatas)
+    public void RefreshUI(Dictionary<string, ImageData> imageDatas)
     {
         foreach(Transform transform in contentPanel)
         {
@@ -28,7 +28,7 @@ public class ImageSelectorController : MonoBehaviour
         int col = 0;
         
 
-        foreach(ImageData data in imageDatas)
+        foreach(ImageData data in imageDatas.Values)
         {
             GameObject gameObject = Instantiate(imageItemPrefab,contentPanel);
             gameObject.GetComponent<RectTransform>().anchoredPosition =

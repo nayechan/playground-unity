@@ -25,13 +25,15 @@ namespace GameEditor.Data
         public ToyType toyType;
         public ColliderType colliderType;
         public bool isFixed;
+        public string imageDataUUID;
         public ObjectData()
         {
-            name = "NoNamed";
+            name = "Unnamed";
             id = 0;
             colliderType = ColliderType.None;
             toyType = ToyType.Friend;
             isFixed = true;
+            imageDataUUID = "";
         }
 
         public void SetGameObject(ref GameObject gameObject)

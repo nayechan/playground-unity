@@ -4,18 +4,22 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using GameEditor;
 
 /*
 이미지를 저장하기 위한 저장소입니다.
 */
 public class ImageStorage : MonoBehaviour
 {
-    [SerializeField] private List<ImageData> _imageDatas;
+    //[SerializeField] private List<ImageData> _imageDatas;
     [SerializeField] private ImageViewerController _imageViewerController;
     [SerializeField] private ImageSelectorController _imageSelectorController;
+
+    Dictionary<string, ImageData> _imageDatas;
     private void Awake()
     {
-        _imageDatas = new List<ImageData>();
+        //_imageDatas = new List<ImageData>();
+        _imageDatas = new Dictionary<string, ImageData>();
     }
 
     //이미지 데이터 추가
@@ -53,7 +57,7 @@ public class ImageStorage : MonoBehaviour
             
             data.SetSprites(spriteList);
 
-            _imageDatas.Add(data);
+            _imageDatas.Add(data.GetUUID(), data);
         }
         
         _imageViewerController.RefreshUI(_imageDatas, false);
@@ -72,12 +76,13 @@ public class ImageStorage : MonoBehaviour
             {
                 // 프로젝트 경로에 저장이 되도록 일부 수정하였습니다. ** 태형 **
                 string sandboxPath = OnBroadSandbox.GetOSB().SandboxPath;
-                string reletivePath = System.IO.Path.GetFileName(originalPath);
-                string fullPath = Path.Combine(sandboxPath, reletivePath);
+                string relativePath = System.IO.Path.GetFileName(originalPath);
+                string fullPath = Path.Combine(sandboxPath, relativePath);
                 Debug.Log(fullPath);
+                System.IO.Directory.CreateDirectory(sandboxPath);
                 System.IO.File.Copy(originalPath, fullPath, true);
                 
-                newPaths.Add(reletivePath);
+                newPaths.Add(fullPath);
             }
             else
             {
@@ -87,104 +92,9 @@ public class ImageStorage : MonoBehaviour
         // 저장되는 경로는 프로젝트 경로를 root로 하는 상대경로로 저장합니다.
         data.SetImagePaths(newPaths);
     }
+
+    public ImageData GetImageData(string uuid)
+    {
+        return _imageDatas[uuid];
+    }
 }
-
-    
-//     Sprite currentSprite;
-//     int currentImageIndex = -1;
-
-//     float defaultWidth, defaultHeight;
-//     private void Start() {
-//         sprites = new List<Sprite>();
-//         spritePaths = new List<string>();
-        
-//         defaultWidth = 
-//         displayTarget.GetComponent<RectTransform>().rect.width;
-        
-//         defaultHeight = 
-//         displayTarget.GetComponent<RectTransform>().rect.height;
-//     }
-//     public List<Sprite> GetSpriteList()
-//     {
-//         return sprites;
-//     }
-//     public List<string> GetSpritePathList()
-//     {
-//         return spritePaths;
-//     }
-//     public void SetSpriteList(List<Sprite> sprites)
-//     {
-//         if(sprites.Count > 0)
-//         {
-//             this.sprites = sprites;
-//             currentImageIndex = 0;
-//             UpdateDisplay();
-//         }
-//     }
-//     public void SetSpritePathList(List<string> spritePaths)
-//     {
-//         this.spritePaths = spritePaths;
-//     }
-//     public Sprite GetCurrentSprite()
-//     {
-//         return currentSprite;
-//     }
-//     public void SetCurrentSprite(Sprite sprite)
-//     {
-//         currentSprite = sprite;
-//         sprites[currentImageIndex] = currentSprite;
-//     }
-
-//     public void UpdateDisplay()
-//     {
-//         currentSprite = sprites[currentImageIndex];
-//         displayTarget.sprite = currentSprite;
-//         float h = displayTarget.sprite.texture.height;
-//         float w = displayTarget.sprite.texture.width;
-//         if(h > w)
-//         {
-//             w = (w/h) * defaultWidth;
-//             h = defaultHeight;
-//         }
-//         else
-//         {
-//             h = (h/w) * defaultHeight;
-//             w = defaultWidth;
-//         }
-//         displayTarget.GetComponent<RectTransform>().sizeDelta =
-//         new Vector2(w,h);
-//         displayText.text = 
-//         "Image\n"+(currentImageIndex+1)+"/"+sprites.Count;
-//     }
-
-//     public void SelectNext()
-//     {
-//         if(sprites == null) return;
-//         ++currentImageIndex;
-//         if(currentImageIndex >= sprites.Count)
-//             currentImageIndex = sprites.Count;
-//         UpdateDisplay();
-//     }
-
-//     public void SelectPrev()
-//     {
-//         if(sprites == null) return;
-//         --currentImageIndex;
-//         if(currentImageIndex < 0)
-//             currentImageIndex = 0;
-//         UpdateDisplay();
-//     }
-    
-
-//     public void ResetComponent()
-//     {
-//         sprites.Clear();
-//         currentSprite = null;
-//         currentImageIndex = -1;
-//         displayTarget.GetComponent<RectTransform>().sizeDelta =
-//         new Vector2(360, 360);
-//         displayTarget.sprite = null;
-//         displayText.text = 
-//         "Image\n"+(currentImageIndex+1)+"/"+sprites.Count;
-//     }
-// }

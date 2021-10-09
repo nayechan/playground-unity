@@ -8,9 +8,11 @@ public class ImageData
     //private string uuid;
     [SerializeField] private List<string> _imagePaths;
     [SerializeField] private List<Sprite> _sprites;
-    [SerializeField]private bool _usingSingleImage, _isRelativeSize;
+    [SerializeField] private bool _usingSingleImage, _isRelativeSize;
     [SerializeField] private float _hSize, _vSize;
     [SerializeField] private string  _title;
+
+    private string uuid;
 
     public ImageData(bool imageMode, bool sizeMode, float hSize, float vSize, string title)
     {
@@ -20,6 +22,8 @@ public class ImageData
         _vSize = vSize;
         _imagePaths = new List<string>();
         _title = title;
+
+        uuid = SystemInfo.deviceUniqueIdentifier;
     }
 
     public List<string> GetImagePaths()
@@ -70,6 +74,11 @@ public class ImageData
     public float GetVSize()
     {
         return _vSize;
+    }
+
+    public string GetUUID()
+    {
+        return uuid;
     }
 
 }

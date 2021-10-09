@@ -10,7 +10,7 @@ public class CreateObjectPanelController : MonoBehaviour
     [SerializeField] Dropdown typeDropdown, colliderDropdown;
     [SerializeField] PanelSwitcher panelSwitcher;
     [SerializeField] Transform transformSelectObjectPanel, imageSelector;
-
+    [SerializeField] ObjectStorage objectStorage;
     ImageData _currentImageData = null;
 
     public bool ValidateForm()
@@ -45,19 +45,21 @@ public class CreateObjectPanelController : MonoBehaviour
     {
         GameEditor.Data.ObjectData objectData = new GameEditor.Data.ObjectData();
 
-        objectData.Name = nameInputField.text;
+        objectData.name = nameInputField.text;
         
         string typeString = typeDropdown.options[typeDropdown.value].text;
         object toyType = GameEditor.Data.ToyType.Parse(
             typeof(GameEditor.Data.ToyType),typeString
         );
-        objectData.ToyType = (GameEditor.Data.ToyType)toyType;
+        objectData.toyType = (GameEditor.Data.ToyType)toyType;
 
         string colliderTypeString = colliderDropdown.options[colliderDropdown.value].text;
         object colliderType = GameEditor.Data.ColliderType.Parse(
             typeof(GameEditor.Data.ColliderType),colliderTypeString
         );
-        objectData.ColliderType = (GameEditor.Data.ColliderType)toyType;
+        objectData.colliderType = (GameEditor.Data.ColliderType)toyType;
+
+        objectData.imageDataUUID = _currentImageData.GetUUID();
 
         return objectData;
     }
@@ -72,6 +74,9 @@ public class CreateObjectPanelController : MonoBehaviour
         if(ValidateForm())
         {
             GameEditor.Data.ObjectData objectData = GenerateObjectData();
+
+            objectStorage.AddObjectData(objectData);            
+
             panelSwitcher.OpenPanel(transformSelectObjectPanel);     
         }
     }
