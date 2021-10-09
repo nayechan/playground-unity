@@ -5,7 +5,7 @@ namespace GameEditor.Data
     public class AudioSourceData : ComponentData
     {
         public override string Type { get; }
-        public override void SetComponent(Component comp)
+        public override void ApplyData(Component comp)
         {
             throw new System.NotImplementedException();
         }

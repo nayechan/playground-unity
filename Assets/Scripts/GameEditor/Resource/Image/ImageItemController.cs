@@ -47,7 +47,7 @@ public class ImageItemController : MonoBehaviour {
 
 
         Debug.Log(h+" "+w);
-        if(_imageData.GetSizeMode())
+        if(_imageData.GetIsRelativeSize())
         {
             if(image.sprite != null)
             {
@@ -76,7 +76,7 @@ public class ImageItemController : MonoBehaviour {
 
         Debug.Log(_imageData.GetTitle());
         titleText.text = _imageData.GetTitle();
-        typeText.text = _imageData.GetImageMode() ? "Single" : "Multiple";
+        typeText.text = _imageData.GetIsUsingSingleImage() ? "Single" : "Multiple";
     }
 
     //이미지가 로드될 때까지 작업을 지연시키기 위한 코루틴
