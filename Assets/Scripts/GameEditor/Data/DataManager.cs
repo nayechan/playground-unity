@@ -7,6 +7,16 @@ namespace GameEditor.Data
 {
     public class DataManager
     {
+        private static DataManager dataManager;
+
+        public static DataManager GetDataManager()
+        {
+            if(dataManager == null)
+            {
+                dataManager = new DataManager();
+            }
+            return dataManager;
+        }
         // JObject로부터 List<ComponentData> 를 반환합니다.
         public static List<ComponentData> JObjectToComponentDatas(JObject jObj)
         {
@@ -62,24 +72,24 @@ namespace GameEditor.Data
 
         // JObject내용을 토대로 GameObject를 만들고 DataAgent를 추가한다.
         private static void CreateGameObjectRecursively
-            (GameObject obj, JObject jObj, IDictionary<int, GameObject> dict,
-               ICollection<Tuple<JObject, DataAgent>> jaObjectPair )
+            (GameObject targetObj, JObject objJson, IDictionary<int, GameObject> idObjDict,
+               ICollection<Tuple<JObject, DataAgent>> JsonAgentPair )
         {
-            var da = obj.AddComponent<DataAgent>();
-            jaObjectPair.Add(new Tuple<JObject, DataAgent>(jObj, da));
-            var od = da.objectData = JsonUtility.FromJson<ObjectData>((string)jObj["ObjectData"]);
-            obj.name = od.name;
-            dict.Add(od.id, obj);
-            foreach (JObject childJObj in jObj["Children"])
+            var objAgent = targetObj.AddComponent<DataAgent>();
+            JsonAgentPair.Add(new Tuple<JObject, DataAgent>(objJson, objAgent));
+            var objectData = objAgent.objectData = JsonUtility.FromJson<ObjectData>((string)objJson["ObjectData"]);
+            targetObj.name = objectData.name;
+            idObjDict.Add(objectData.id, targetObj);
+            foreach (JObject childJson in objJson["Children"])
             {
-                var nObj = new GameObject
+                var childObj = new GameObject
                 {
                     transform =
                     {
-                        parent = obj.transform
+                        parent = targetObj.transform
                     }
                 };
-                CreateGameObjectRecursively(nObj, childJObj, dict, jaObjectPair);
+                CreateGameObjectRecursively(childObj, childJson, idObjDict, JsonAgentPair);
             }
         }
 
@@ -96,20 +106,42 @@ namespace GameEditor.Data
             }
         }
 
-        public GameObject CreateGameobject(DataAgent dataAgent)
+        public static GameObject CreateGameobject(DataAgent dataAgent)
         {
             var newGameObject = new GameObject();
             // set object property
             dataAgent.objectData.SetGameObject(ref newGameObject);
             // create spriteRenderer
-            var spriteData = new SpriteRendererData(dataAgent.imageData);
+            var spriteRendererData = new SpriteRendererData(dataAgent.imageData);
             var spriteRenderer = newGameObject.AddComponent<SpriteRenderer>();
-            spriteData.SetComponent(spriteRenderer);
+            spriteRendererData.ApplyData(spriteRenderer);
             // create rigidbody
+            var rigidbody2d = newGameObject.AddComponent<Rigidbody2D>(); 
+            rigidbody2d.bodyType = dataAgent.objectData.isFixed?
+                RigidbodyType2D.Kinematic : RigidbodyType2D.Kinematic;
+            rigidbody2d.sharedMaterial = new PhysicsMaterial2D();
             // create collider
+            switch(dataAgent.objectData.colliderType)
+            {
+                case ColliderType.Circle:
+                {
+                    newGameObject.AddComponent<CircleCollider2D>();
+                    break;   
+                }
+                case ColliderType.Box:
+                {
+                    newGameObject.AddComponent<BoxCollider2D>();
+                    break;   
+                }
+                case ColliderType.None:
+                {
+                    break;   
+                }
+            }
             // create audioSource
             return newGameObject;
         }
+
 
 
     }

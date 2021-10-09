@@ -12,6 +12,7 @@ namespace GameEditor.Data
     {
         public ObjectData objectData;
         public ImageData imageData;
+        public AudioData audioData;
         private Dictionary<Component, ComponentData> ComponentDatas;
         // private Dictionary<Component, ResourceData> ResourceDatas;
         
@@ -76,39 +77,12 @@ namespace GameEditor.Data
             }
         }
         
-        // 인자로 받은 컴포넌트의 ResourceData를 ResourceDatas 필드에 추가합니다.
-        // 게임 제작에서 resourceData가 필요한 컴포넌트를 추가하는 경우 꼭 호출해줍니다.
-        // public void AddResourceData(Component component, ResourceData resourceData)
-        // {
-        //     // 타입이 맞는지 확인합니다.
-        //     switch (component)
-        //     {
-        //         // SpriteRenderer 는 이미지 경로를 저장하고 있는 ImageData 클래스와 함께 Called 하였는지 확인합니다.
-        //         case SpriteRenderer sr:
-        //             if (resourceData is SpriteData)
-        //             {
-        //                 break;
-        //             }
-        //             goto default;
-        //         default:
-        //             Debug.Log("Unsupported ComponentType.");
-        //             return;
-        //     }
-        //     ResourceDatas.Add(component, resourceData);
-        // }
-
-        // ResoruceData를 삭제합니다.
-        // public bool DelResourceData(Component component)
-        // {
-        //     return ResourceDatas.Remove(component);
-        // }
-
         // 갖고 있는 Data 상태로 Component를 Set 합니다.
         public void SetComponentFromData()
         {
             foreach (var pair in ComponentDatas)
             {
-                pair.Value.SetComponent(pair.Key);
+                pair.Value.ApplyData(pair.Key);
             }
         }
         
@@ -136,13 +110,15 @@ namespace GameEditor.Data
             {
                 {"ObjectData", new JObject()},
             };
-            jObj["ObjectData"] = JsonUtility.ToJson(objectData);
+            jObj["ObjectData"] = JsonUtility.ToJson(objectData);            
             var comps = new JObject();
             foreach (var pair in ComponentDatas)
             {
                 comps.Add(new JProperty(pair.Value.Type, JsonUtility.ToJson(pair.Value)));
             }
             jObj.Add(new JProperty("Components", comps));
+            jObj.Add(new JProperty("ImageData", JsonUtility.ToJson(imageData)));
+            jObj.Add(new JProperty("AudioData", JsonUtility.ToJson(audioData)));
             return jObj;
         }
 
@@ -151,7 +127,7 @@ namespace GameEditor.Data
         {
             var comp = cd.AddComponent(gameObject);
             ComponentDatas.Add(comp, cd);
-            cd.SetComponent(comp);
+            cd.ApplyData(comp);
             return comp;
         }
         

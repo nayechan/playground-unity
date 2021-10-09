@@ -2,14 +2,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
+[System.Serializable]
 public class ImageData
 {
     //private string uuid;
-    private List<string> _imagePaths;
-    private List<Sprite> _sprites;
-    private bool _imageMode, _sizeMode;
-    private float _hSize, _vSize;
-    private string  _title;
+    [SerializeField]private List<string> _imagePaths;
+    [SerializeField]private List<Sprite> _sprites;
+    [SerializeField]private bool _imageMode, _sizeMode;
+    [SerializeField]private float _hSize, _vSize;
+    [SerializeField]private string  _title;
 
     public ImageData(bool imageMode, bool sizeMode, float hSize, float vSize, string title)
     {

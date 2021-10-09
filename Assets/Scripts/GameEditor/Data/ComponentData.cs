@@ -11,7 +11,7 @@ namespace GameEditor.Data
         public abstract string Type { get; }
 
         // 인자로 받은 컴포넌트를 본 클래스가 가진 Data의 값으로 Set합니다.
-        public abstract void SetComponent(Component comp);
+        public abstract void ApplyData(Component comp);
 
         // 본 클래스의 Data를 받은 컴포넌트의 값으로 업데이트시켜주는 메소드입니다.
         // 추후 인자로 Dictionary<int, GameObject> 를 추가하여 오브젝트간 연결을 돕는다.

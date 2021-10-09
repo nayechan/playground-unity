@@ -23,8 +23,15 @@ namespace GameEditor.Data
             orderInLayer = 0;
             this.imageData = imageData;
         }
+
+        // SpriteRendererData 클래스를 생성한다.
+        public SpriteRendererData(Component comp)
+        {
+            SetData(comp);
+            //  SetImageData(imgData);
+        }
         // 인자로 받은 Component의 설정을 본 class의 Data로 설정한다.
-        public override void SetComponent(Component comp)
+        public override void ApplyData(Component comp)
         {
             Assert.IsTrue(IsCorrectType(comp));
             var spriteRenderer = (SpriteRenderer)comp;
@@ -59,12 +66,6 @@ namespace GameEditor.Data
             );
         }
 
-        // public void SetGameObject(ref GameObject gameObject)
-        // {
-        //     var spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
-        //     SetComponent(spriteRenderer);
-        // }
-
         // 인자로 받은 GameObject에 SpriteRenderer 컴포넌트를 추가하고
         //해당 컴포넌트를 반환한다.
         public override Component AddComponent(GameObject obj)
@@ -73,12 +74,7 @@ namespace GameEditor.Data
             return sr;
         }
         
-        // SpriteRendererData 클래스를 생성한다.
-        public SpriteRendererData(Component comp)
-        {
-            SetData(comp);
-            //  SetImageData(imgData);
-        }
+
 
         // 본 Class의 data를 받은 Component의 설정값으로 바꾼다.
         public sealed override void SetData(Component comp)
@@ -90,7 +86,7 @@ namespace GameEditor.Data
         }
 
         // texturePath를 인자의 값으로 Set 한다.
-        public void SetImageData(ImageData imgData)
+        public void SetData(ImageData imgData)
         {
             this.imageData = imgData;
         }

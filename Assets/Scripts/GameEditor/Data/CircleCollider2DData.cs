@@ -16,7 +16,7 @@ namespace GameEditor.Data
         public const string _Type = "CircleCollider2DData";
         
         // 인자로 받은 Component의 설정을 본 class의 Data로 설정한다.
-        public override void SetComponent(Component comp)
+        public override void ApplyData(Component comp)
         {
             Assert.IsTrue(IsCorrectType(comp));
             var cir2d = (CircleCollider2D)comp;
