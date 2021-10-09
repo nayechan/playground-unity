@@ -8,14 +8,14 @@ public class ImageData
     //private string uuid;
     [SerializeField]private List<string> _imagePaths;
     [SerializeField]private List<Sprite> _sprites;
-    [SerializeField]private bool _imageMode, _sizeMode;
+    [SerializeField]private bool _usingSingleImage, _isRelativeSize;
     [SerializeField]private float _hSize, _vSize;
     [SerializeField]private string  _title;
 
     public ImageData(bool imageMode, bool sizeMode, float hSize, float vSize, string title)
     {
-        _imageMode = imageMode;
-        _sizeMode = sizeMode;
+        _usingSingleImage = imageMode;
+        _isRelativeSize = sizeMode;
         _hSize = hSize;
         _vSize = vSize;
         _imagePaths = new List<string>();
@@ -52,14 +52,14 @@ public class ImageData
         return _title;
     }
 
-    public bool GetSizeMode()
+    public bool GetIsRelativeSize()
     {
-        return _sizeMode;
+        return _isRelativeSize;
     }
 
-    public bool GetImageMode()
+    public bool GetIsUsingSingleImage()
     {
-        return _imageMode;
+        return _usingSingleImage;
     }
 
     public float GetHSize()

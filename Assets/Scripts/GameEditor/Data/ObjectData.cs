@@ -31,6 +31,7 @@ namespace GameEditor.Data
             id = 0;
             colliderType = ColliderType.None;
             toyType = ToyType.Friend;
+            isFixed = true;
         }
 
         public void SetGameObject(ref GameObject gameObject)

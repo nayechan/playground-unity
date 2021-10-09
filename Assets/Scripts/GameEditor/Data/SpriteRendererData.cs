@@ -50,10 +50,10 @@ namespace GameEditor.Data
         {
             var imagePath = 
                 OnBroadSandbox.GetOSB().GetFullPath(imageData.GetImagePaths()[0]);
-            var texture2d = new Texture2D(0, 0, TextureFormat.RGBA32, false); 
+            var texture = new Texture2D(0, 0, TextureFormat.RGBA32, false); 
             try
             {
-                texture2d.LoadImage(File.ReadAllBytes(imagePath));
+                texture.LoadImage(File.ReadAllBytes(imagePath));
             }
             catch
             {
@@ -61,11 +61,22 @@ namespace GameEditor.Data
                 return;
             }
             spriteRenderer.sprite = Sprite.Create(
-                texture2d, new Rect(0, 0, texture2d.width, texture2d.height), 
+                texture, new Rect(0, 0, texture.width, texture.height), 
                 new Vector2(0.5f,0.5f)
             );
         }
 
+        public static void resizeObjectScale(GameObject gameObject, ImageData imageData)
+        {
+            var texture = gameObject.GetComponent<SpriteRenderer>().sprite.texture;
+            var transform = gameObject.transform;
+            var newScale = 
+                new Vector3(imageData.GetHSize()/texture.width * 100f,
+                            imageData.GetVSize()/texture.height * 100f,
+                            1f);
+            transform.localScale = newScale;
+
+        }
         // 인자로 받은 GameObject에 SpriteRenderer 컴포넌트를 추가하고
         //해당 컴포넌트를 반환한다.
         public override Component AddComponent(GameObject obj)

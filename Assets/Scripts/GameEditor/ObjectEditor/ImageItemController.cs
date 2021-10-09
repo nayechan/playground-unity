@@ -33,7 +33,7 @@ public class ImageItemController : MonoBehaviour {
 
 
         Debug.Log(h+" "+w);
-        if(_imageData.GetSizeMode())
+        if(_imageData.GetIsRelativeSize())
         {
             if(image.sprite != null)
             {
@@ -62,7 +62,7 @@ public class ImageItemController : MonoBehaviour {
 
         Debug.Log(_imageData.GetTitle());
         titleText.text = _imageData.GetTitle();
-        typeText.text = _imageData.GetImageMode() ? "Single" : "Multiple";
+        typeText.text = _imageData.GetIsUsingSingleImage() ? "Single" : "Multiple";
     }
 
     IEnumerator WaitUntilImageLoad()

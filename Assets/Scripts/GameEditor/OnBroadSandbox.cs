@@ -29,6 +29,8 @@ namespace GameEditor
             {
                 OSB = this;
             }
+            sandboxData = new SandboxData();
+            UpdateField(sandboxData);
         }
 
         // 샌드박스 정보를 가진 JObject 를 받아 리소스 경로와

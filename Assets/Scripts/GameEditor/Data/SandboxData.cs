@@ -6,7 +6,14 @@ namespace GameEditor.Data
         public string title;
         public int id;
         public bool editable;
-        public string origin;
+        public bool isOnServer;
 
+        public SandboxData()
+        {
+            title = "New SandBox";
+            id = -1;
+            editable = true;
+            isOnServer = false;
+        }
     }
 }

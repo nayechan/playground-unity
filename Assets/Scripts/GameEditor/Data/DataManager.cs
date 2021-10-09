@@ -7,16 +7,6 @@ namespace GameEditor.Data
 {
     public class DataManager
     {
-        private static DataManager dataManager;
-
-        public static DataManager GetDataManager()
-        {
-            if(dataManager == null)
-            {
-                dataManager = new DataManager();
-            }
-            return dataManager;
-        }
         // JObject로부터 List<ComponentData> 를 반환합니다.
         public static List<ComponentData> JObjectToComponentDatas(JObject jObj)
         {
@@ -118,7 +108,7 @@ namespace GameEditor.Data
             // create rigidbody
             var rigidbody2d = newGameObject.AddComponent<Rigidbody2D>(); 
             rigidbody2d.bodyType = dataAgent.objectData.isFixed?
-                RigidbodyType2D.Kinematic : RigidbodyType2D.Kinematic;
+                RigidbodyType2D.Kinematic : RigidbodyType2D.Dynamic;
             rigidbody2d.sharedMaterial = new PhysicsMaterial2D();
             // create collider
             switch(dataAgent.objectData.colliderType)
@@ -139,6 +129,11 @@ namespace GameEditor.Data
                 }
             }
             // create audioSource
+            // set Scale by ImageData
+            if(!dataAgent.imageData.GetIsRelativeSize())
+            {
+                SpriteRendererData.resizeObjectScale(newGameObject, dataAgent.imageData);
+            }
             return newGameObject;
         }
 
