@@ -22,23 +22,23 @@ namespace GameEditor.Data
     {
         public string name;
         public int id;
-        public ToyType toyType;
         public ColliderType colliderType;
+        public ToyType toyType;
         public bool isFixed;
-        public string imageDataUUID;
+        public int imageDataHashCode;
         public ObjectData()
         {
             name = "Unnamed";
-            id = 0;
             colliderType = ColliderType.None;
             toyType = ToyType.Friend;
             isFixed = true;
-            imageDataUUID = "";
+            imageDataHashCode = 0;
         }
 
-        public void SetGameObject(ref GameObject gameObject)
+        public GameObject SetGameObject(GameObject gameObject)
         {
             gameObject.name = name;
+            return gameObject;
         }
     }
 }

@@ -14,8 +14,12 @@ namespace GameEditor.Data
         public ImageData imageData;
         public AudioData audioData;
         private Dictionary<Component, ComponentData> ComponentDatas;
-        // private Dictionary<Component, ResourceData> ResourceDatas;
-        
+        public int ID // 추후 해시코드로 구현할 예정임.
+        {
+            get {return 0;}
+        }        
+
+
         private void Awake()
         {
             objectData = new ObjectData();
@@ -32,7 +36,6 @@ namespace GameEditor.Data
         public void UpdateComponentData()
         {
             objectData.name = name;
-            objectData.id = GetInstanceID();
             // 삭제된 Component를 확인하고 해당하는 Data를 삭제합니다.
             foreach (var pair in ComponentDatas.Where(pair => pair.Key == null))
             {
@@ -123,12 +126,12 @@ namespace GameEditor.Data
         }
 
         // ComponentData에 해당하는 Component를 오브젝트에 추가하고 해당 값으로 Set 합니다.
-        public Component AddComponentFromData(ComponentData cd)
+        public Component AddComponentFromData(ComponentData componentData)
         {
-            var comp = cd.AddComponent(gameObject);
-            ComponentDatas.Add(comp, cd);
-            cd.ApplyData(comp);
-            return comp;
+            var component = componentData.AddComponent(gameObject);
+            ComponentDatas.Add(component, componentData);
+            componentData.ApplyData(component);
+            return component;
         }
         
         // gameObject 를 포함한 모든 자식 gameObject의 정보를 JObject형태로 반환합니다.

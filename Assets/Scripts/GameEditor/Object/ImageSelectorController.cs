@@ -17,7 +17,7 @@ public class ImageSelectorController : MonoBehaviour
     // 이미지 데이터를 기반으로 UI를 재구성합니다.
     private void Awake() {
     }
-    public void RefreshUI(Dictionary<string, ImageData> imageDatas)
+    public void RefreshUI(Dictionary<int, ImageData> imageDatas)
     {
         foreach(Transform transform in contentPanel)
         {

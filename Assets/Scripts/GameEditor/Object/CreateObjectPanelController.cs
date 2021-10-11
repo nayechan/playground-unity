@@ -59,7 +59,7 @@ public class CreateObjectPanelController : MonoBehaviour
         );
         objectData.colliderType = (GameEditor.Data.ColliderType)toyType;
 
-        objectData.imageDataUUID = _currentImageData.GetUUID();
+        objectData.imageDataHashCode = _currentImageData.GetHashCode();
 
         return objectData;
     }

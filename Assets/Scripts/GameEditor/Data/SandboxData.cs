@@ -1,3 +1,5 @@
+using System.IO;
+
 namespace GameEditor.Data
 {
     [System.Serializable]
@@ -6,14 +8,23 @@ namespace GameEditor.Data
         public string title;
         public int id;
         public bool editable;
-        public bool isOnServer;
+        public bool isLocalSandbox;
 
         public SandboxData()
         {
             title = "New SandBox";
             id = -1;
             editable = true;
-            isOnServer = false;
+            isLocalSandbox = true;
+        }
+
+        public string GetRelativeSandboxPath()
+        {
+            return Path.Combine(
+                isLocalSandbox ? 
+                    SandboxSaveLoader.LocalSandboxDirectoryName :
+                    SandboxSaveLoader.RemoteSandboxDirectoryName,
+                id.ToString());
         }
     }
 }

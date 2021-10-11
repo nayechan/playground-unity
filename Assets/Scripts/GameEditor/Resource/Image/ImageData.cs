@@ -12,7 +12,7 @@ public class ImageData
     [SerializeField] private float _hSize, _vSize;
     [SerializeField] private string  _title;
 
-    private string uuid;
+    // private string uuid;
 
     public ImageData(bool imageMode, bool sizeMode, float hSize, float vSize, string title)
     {
@@ -23,7 +23,7 @@ public class ImageData
         _imagePaths = new List<string>();
         _title = title;
 
-        uuid = SystemInfo.deviceUniqueIdentifier;
+        // uuid = SystemInfo.deviceUniqueIdentifier;
     }
 
     public List<string> GetImagePaths()
@@ -76,9 +76,14 @@ public class ImageData
         return _vSize;
     }
 
-    public string GetUUID()
+    public override int GetHashCode()
     {
-        return uuid;
+        return (_imagePaths.ToString()?? "").GetHashCode()
+                ^ _usingSingleImage.GetHashCode()
+                ^ _isRelativeSize.GetHashCode()
+                ^ _hSize.GetHashCode()
+                ^ _vSize.GetHashCode()
+                ^ _title.GetHashCode();
     }
 
 }

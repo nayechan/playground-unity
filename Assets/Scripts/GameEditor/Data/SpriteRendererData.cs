@@ -49,7 +49,7 @@ namespace GameEditor.Data
         private void SetWithImageData(ref SpriteRenderer spriteRenderer)
         {
             var imagePath = 
-                OnBroadSandbox.GetOSB().GetFullPath(imageData.GetImagePaths()[0]);
+                SandboxSaveLoader.GetSingleton().MakeFullPath(imageData.GetImagePaths()[0]);
             var texture = new Texture2D(0, 0, TextureFormat.RGBA32, false); 
             try
             {

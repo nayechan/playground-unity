@@ -21,7 +21,7 @@ public class ObjectItemController : MonoBehaviour
     {
         _objectData = objectData;
         
-        Debug.Log(_objectData.imageDataUUID);
+        Debug.Log(_objectData.imageDataHashCode);
         Debug.Log(imageStorage);
 
         if(imageStorage == null)
@@ -31,7 +31,7 @@ public class ObjectItemController : MonoBehaviour
 
 
         image.sprite = 
-        imageStorage.GetImageData(_objectData.imageDataUUID).GetSprites()[0];
+        imageStorage.GetImageData(_objectData.imageDataHashCode).GetSprites()[0];
 
 
         typeText.text = _objectData.toyType.ToString();

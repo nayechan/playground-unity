@@ -7,92 +7,64 @@ namespace GameEditor.Data
 {
     public class DataManager
     {
-        // JObject로부터 List<ComponentData> 를 반환합니다.
-        public static List<ComponentData> JObjectToComponentDatas(JObject jObj)
-        {
-            var cds = new List<ComponentData>();
-            foreach (var pair in (JObject)jObj["Components"])
-            {
-                switch (pair.Key)
-                {
-                    case TransformData._Type:
-                    {
-                        cds.Add(JsonUtility.FromJson<TransformData>((string)pair.Value));
-                        break;
-                    }
-                    case BoxCollider2DData._Type:
-                    {
-                        cds.Add(JsonUtility.FromJson<BoxCollider2DData>((string)pair.Value));
-                        break;
-                    }
-                    case CircleCollider2DData._Type:
-                    {
-                        cds.Add(JsonUtility.FromJson<CircleCollider2DData>((string)pair.Value));
-                        break;
-                    }
-                    case Rigidbody2DData._Type:
-                    {
-                        cds.Add(JsonUtility.FromJson<Rigidbody2DData>((string)pair.Value));
-                        break;
-                    }
-                    case SpriteRendererData._Type:
-                    {
-                        cds.Add(JsonUtility.FromJson<SpriteRendererData>((string)pair.Value));
-                        break;
-                    }
-                }
-            }
+        private GameObject newGameObject;
+        private JObject gameObjectRecord;
+        private DataAgent dataAgent;
 
-            return cds;
-        }
-        
-        // JObject로부터 GameObject를 만든다.
-        public static GameObject CreateGameObject(JObject jObj)
+        public static GameObject CreateGameObject(JObject gameObjectRecord)
         {
-            // instanceID, GameObject 쌍의 딕셔너리 생성.
-            var dict = new Dictionary<int, GameObject>();
-            // 오브젝트 구조 먼저 생성, DataAgent 먼저 생성한다.
-            var obj = new GameObject();
-            var jaObjectPair = new List<Tuple<JObject, DataAgent>>();
-            CreateGameObjectRecursively(obj, jObj, dict, jaObjectPair);
-            // 오브젝트에 컴포넌트 추가.
-            CreateComponentAll(jaObjectPair);
-            return obj;
+            var dataManager = new DataManager(gameObjectRecord);
+            return dataManager.CreateGameObject();
         }
 
-        // JObject내용을 토대로 GameObject를 만들고 DataAgent를 추가한다.
-        private static void CreateGameObjectRecursively
-            (GameObject targetObj, JObject objJson, IDictionary<int, GameObject> idObjDict,
-               ICollection<Tuple<JObject, DataAgent>> JsonAgentPair )
+        private DataManager(JObject gameObjectRecord)
         {
-            var objAgent = targetObj.AddComponent<DataAgent>();
-            JsonAgentPair.Add(new Tuple<JObject, DataAgent>(objJson, objAgent));
-            var objectData = objAgent.objectData = JsonUtility.FromJson<ObjectData>((string)objJson["ObjectData"]);
-            targetObj.name = objectData.name;
-            idObjDict.Add(objectData.id, targetObj);
-            foreach (JObject childJson in objJson["Children"])
+            newGameObject = new GameObject();
+            this.gameObjectRecord = gameObjectRecord;
+        }
+
+        private GameObject CreateGameObject()
+        {
+            SetGameObject();
+            CreateChildrenGameObject();
+            return newGameObject;
+        }
+
+        private void SetGameObject()
+        {
+            dataAgent = newGameObject.AddComponent<DataAgent>();
+            SetObjectAndImageData();
+            AppendImageStorage();
+            AddComponents();
+        }
+
+        private void SetObjectAndImageData()
+        {
+            dataAgent.objectData = JsonUtility.FromJson<ObjectData>((string)gameObjectRecord["ObjectData"]);
+            dataAgent.imageData = JsonUtility.FromJson<ImageData>((string)gameObjectRecord["ImageData"]);
+        }
+
+        private void AppendImageStorage()
+        {
+            var imageStorage = ImageStorage.GetSingleton();
+            imageStorage.AddImageData(dataAgent.imageData);
+        }
+
+        private void AddComponents()
+        {
+            var componentDatas = gameObjectRecordToComponentDatas(gameObjectRecord);
+            foreach (var componentData in componentDatas)
             {
-                var childObj = new GameObject
-                {
-                    transform =
-                    {
-                        parent = targetObj.transform
-                    }
-                };
-                CreateGameObjectRecursively(childObj, childJson, idObjDict, JsonAgentPair);
+                dataAgent.AddComponentFromData(componentData);
             }
         }
 
-        private static void CreateComponentAll
-            (IEnumerable<Tuple<JObject, DataAgent>> jaObjectPair)
+        private void CreateChildrenGameObject()
         {
-            foreach (var (jObj, da) in jaObjectPair)
-            {
-                var cds = JObjectToComponentDatas(jObj);
-                foreach (var cd in cds)
-                {
-                    da.AddComponentFromData(cd);
-                }
+            foreach (JObject childRecord in gameObjectRecord["Children"])
+            {                
+                var childGameObject = DataManager.CreateGameObject(childRecord);
+                childGameObject.transform.parent = newGameObject.transform;
             }
         }
 
@@ -100,7 +72,7 @@ namespace GameEditor.Data
         {
             var newGameObject = new GameObject();
             // set object property
-            dataAgent.objectData.SetGameObject(ref newGameObject);
+            dataAgent.objectData.SetGameObject(newGameObject);
             // create spriteRenderer
             var spriteRendererData = new SpriteRendererData(dataAgent.imageData);
             var spriteRenderer = newGameObject.AddComponent<SpriteRenderer>();
@@ -137,7 +109,44 @@ namespace GameEditor.Data
             return newGameObject;
         }
 
+        // JObject로부터 List<ComponentData> 를 반환합니다.
+        private List<ComponentData> gameObjectRecordToComponentDatas(JObject gameObjectRecord)
+        {
+            var componentDatas = new List<ComponentData>();
+            foreach (var pair in (JObject)gameObjectRecord["Components"])
+            {
+                switch (pair.Key)
+                {
+                    case TransformData._Type:
+                    {
+                        componentDatas.Add(JsonUtility.FromJson<TransformData>((string)pair.Value));
+                        break;
+                    }
+                    case BoxCollider2DData._Type:
+                    {
+                        componentDatas.Add(JsonUtility.FromJson<BoxCollider2DData>((string)pair.Value));
+                        break;
+                    }
+                    case CircleCollider2DData._Type:
+                    {
+                        componentDatas.Add(JsonUtility.FromJson<CircleCollider2DData>((string)pair.Value));
+                        break;
+                    }
+                    case Rigidbody2DData._Type:
+                    {
+                        componentDatas.Add(JsonUtility.FromJson<Rigidbody2DData>((string)pair.Value));
+                        break;
+                    }
+                    case SpriteRendererData._Type:
+                    {
+                        componentDatas.Add(JsonUtility.FromJson<SpriteRendererData>((string)pair.Value));
+                        break;
+                    }
+                }
+            }
 
+            return componentDatas;
+        }
 
     }
 }

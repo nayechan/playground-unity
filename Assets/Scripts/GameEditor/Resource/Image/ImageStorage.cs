@@ -14,32 +14,46 @@ public class ImageStorage : MonoBehaviour
     //[SerializeField] private List<ImageData> _imageDatas;
     [SerializeField] private ImageViewerController _imageViewerController;
     [SerializeField] private ImageSelectorController _imageSelectorController;
+    private static ImageStorage _imageStorage;
 
-    Dictionary<string, ImageData> _imageDatas;
+    Dictionary<int, ImageData> _imageDatas;
     private void Awake()
     {
-        //_imageDatas = new List<ImageData>();
-        _imageDatas = new Dictionary<string, ImageData>();
+        SetSingletonIfUnset();
+        _imageDatas = new Dictionary<int, ImageData>();
+    }
+
+    private void SetSingletonIfUnset()
+    {
+        if(_imageStorage == null)
+        {
+            _imageStorage = this;
+        }
+    }
+
+    public static ImageStorage GetSingleton()
+    {
+       return _imageStorage;
     }
 
     //이미지 데이터 추가
-    public void AddImageData(ImageData data)
+    public void AddImageData(ImageData imageData)
     {
-        if(data!=null)
+        if(imageData!=null && !ContainsImageData(imageData))
         {
             List<Sprite> spriteList = new List<Sprite>();
 
-            int imagePathLength = data.GetImagePaths().Count;
+            int imagePathLength = imageData.GetImagePaths().Count;
 
-            MoveImagePath(data);
+            MoveImagePath(imageData);
 
             for(int i=0;i<imagePathLength;++i)
             {
 
                 Texture2D texture = new Texture2D(2, 2, TextureFormat.RGBA32, false);
-                if(data.GetImagePaths()[i] != "")
+                if(imageData.GetImagePaths()[i] != "")
                 {
-                    byte[] byteArray = File.ReadAllBytes(data.GetImagePaths()[i]);
+                    byte[] byteArray = File.ReadAllBytes(imageData.GetImagePaths()[i]);
                     texture.LoadImage(byteArray);
 
                     Sprite s = Sprite.Create(
@@ -55,13 +69,18 @@ public class ImageStorage : MonoBehaviour
                 }
             }
             
-            data.SetSprites(spriteList);
+            imageData.SetSprites(spriteList);
 
-            _imageDatas.Add(data.GetUUID(), data);
+            _imageDatas.Add(imageData.GetHashCode(), imageData);
         }
         
         _imageViewerController.RefreshUI(_imageDatas, false);
         _imageSelectorController.RefreshUI(_imageDatas);
+    }
+
+    private bool ContainsImageData(ImageData imageData)
+    {
+        return _imageDatas.ContainsKey(imageData.GetHashCode());
     }
 
     // 이미지 데이터를 앱 내부 데이터 폴더로 복사합니다.
@@ -74,27 +93,26 @@ public class ImageStorage : MonoBehaviour
         {
             if(originalPath != "")
             {
-                // 프로젝트 경로에 저장이 되도록 일부 수정하였습니다. ** 태형 **
-                string sandboxPath = OnBroadSandbox.GetOSB().SandboxPath;
+                string sandboxPath = SandboxSaveLoader.GetSingleton().currentSandboxPath;
                 string relativePath = System.IO.Path.GetFileName(originalPath);
                 string fullPath = Path.Combine(sandboxPath, relativePath);
                 Debug.Log(fullPath);
                 System.IO.Directory.CreateDirectory(sandboxPath);
                 System.IO.File.Copy(originalPath, fullPath, true);
                 
-                newPaths.Add(fullPath);
+                newPaths.Add(relativePath);
             }
             else
             {
                 newPaths.Add("");
             }
         }
-        // 저장되는 경로는 프로젝트 경로를 root로 하는 상대경로로 저장합니다.
         data.SetImagePaths(newPaths);
     }
 
-    public ImageData GetImageData(string uuid)
+    public ImageData GetImageData(int uuid)
     {
         return _imageDatas[uuid];
     }
+
 }

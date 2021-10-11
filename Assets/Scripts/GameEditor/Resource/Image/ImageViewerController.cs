@@ -20,7 +20,7 @@ public class ImageViewerController : MonoBehaviour
     위의 데이터를 기반으로 UI를 구성하여 리프레시합니다.
     
     */
-    public void RefreshUI(Dictionary<string, ImageData> imageDatas, bool isSelectMode)
+    public void RefreshUI(Dictionary<int, ImageData> imageDatas, bool isSelectMode)
     {
         foreach(Transform transform in contentPanel)
         {
