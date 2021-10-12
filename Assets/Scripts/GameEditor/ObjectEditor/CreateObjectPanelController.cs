@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class CreateObjectPanelController : MonoBehaviour
 {
     [SerializeField] ImageStorage imageStorage;
-    [SerializeField] InputField nameInput;
+    [SerializeField] SelectMainController selectMain;
+    [SerializeField] InputField nameInput, horizontalSizeInput, verticalSizeInput;
     [SerializeField] Dropdown typeDropdown;
 
     public bool ValidateForm()
