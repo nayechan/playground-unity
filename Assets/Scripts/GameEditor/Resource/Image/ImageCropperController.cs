@@ -10,7 +10,11 @@ public class ImageCropperController : MonoBehaviour
     [SerializeField] bool isOval, isZoom;
 
     private void Awake() {
+        
+
     }
+
+    // 이미지 자르기 도구를 열 때의 동작
     public void OpenImageCropper(Image image)
     {
         if(image.sprite == null) return;

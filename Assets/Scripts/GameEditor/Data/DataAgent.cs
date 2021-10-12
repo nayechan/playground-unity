@@ -147,7 +147,6 @@ namespace GameEditor.Data
             jObj.Add(new JProperty("Children", jArray));
             return jObj;
         }
-
     }
     
 }

@@ -67,6 +67,8 @@ public class CreateObjectPanelController : MonoBehaviour
     public void OnCancelButtonClick()
     {
         panelSwitcher.OpenPanel(transformSelectObjectPanel);
+        
+        ResetPanel();            
     }
 
     public void OnAddButtonClick()
@@ -75,9 +77,19 @@ public class CreateObjectPanelController : MonoBehaviour
         {
             GameEditor.Data.ObjectData objectData = GenerateObjectData();
 
-            objectStorage.AddObjectData(objectData);            
+            objectStorage.AddObjectData(objectData);
+
+            ResetPanel();            
 
             panelSwitcher.OpenPanel(transformSelectObjectPanel);     
         }
+    }
+
+    void ResetPanel()
+    {
+        image.sprite = null;
+        nameInputField.text = "";
+        colliderDropdown.value = 0;
+        typeDropdown.value = 0;
     }
 }
