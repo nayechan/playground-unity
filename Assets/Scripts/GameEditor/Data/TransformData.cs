@@ -14,7 +14,7 @@ namespace GameEditor.Data
         public override string Type => _Type;
         public const string _Type = "TransformData";
         // 인자로 받은 Component의 설정을 본 class의 Data로 설정한다.
-        public override void SetComponent(Component comp)
+        public override void ApplyData(Component comp)
         {
             Assert.IsTrue(IsCorrectType(comp));
             var tf = (Transform)comp;
@@ -27,7 +27,7 @@ namespace GameEditor.Data
         // 본 클래스의 값으로 Set 한 뒤 Transform를 반환한다.
         public override Component AddComponent(GameObject obj)
         {
-            SetComponent(obj.transform);
+            ApplyData(obj.transform);
             return obj.transform;
         }
         

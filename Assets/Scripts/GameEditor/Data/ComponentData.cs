@@ -11,7 +11,7 @@ namespace GameEditor.Data
         public abstract string Type { get; }
 
         // 인자로 받은 컴포넌트를 본 클래스가 가진 Data의 값으로 Set합니다.
-        public abstract void SetComponent(Component comp);
+        public abstract void ApplyData(Component comp);
 
         // 본 클래스의 Data를 받은 컴포넌트의 값으로 업데이트시켜주는 메소드입니다.
         // 추후 인자로 Dictionary<int, GameObject> 를 추가하여 오브젝트간 연결을 돕는다.
@@ -24,7 +24,7 @@ namespace GameEditor.Data
         public abstract bool IsCorrectType(Component comp);
 
         // 인자로 받은 Component타입에 맞는 ComponentData를 생성합니다.
-        public static ComponentData CreateComponentData(Component comp, ResourceData rd)
+        public static ComponentData CreateComponentData(Component comp)
         {
             switch (comp)
             {
@@ -44,19 +44,16 @@ namespace GameEditor.Data
                 {
                     return new TransformData(comp);
                 }
-                case SpriteRenderer sp:
-                    return new SpriteRendererData(comp, (SpriteData) rd);
+                // case SpriteRenderer sp:
+                //     return new SpriteRendererData(comp);
                 case DataAgent oda:
                     return null;
                 default:
-                    Debug.Log("Unsupported ComponentData Type");
+                    Debug.Log("Unsupported ComponentData Type" + comp.GetType());
                     Assert.IsTrue(false);
                     return null;
             }
         }
 
-        public virtual void SetResourceData(ResourceData rd)
-        {
-        }
     }
 }
