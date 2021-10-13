@@ -6,11 +6,12 @@ using GameEditor.Data;
 
 public class ObjectItemController : MonoBehaviour
 {
-    ObjectData _objectData;
+    //ObjectData _objectData;
     ImageStorage imageStorage;
+    ObjectBuilder objectBuilder;
     [SerializeField] Image image;
     [SerializeField] Text typeText, nameText;
-    private ImageData currentImageData = null;
+    //private ImageData currentImageData = null;
     float defaultWidth = 0, defaultHeight = 0;
     bool isImageLoaded = false;
 
@@ -24,22 +25,29 @@ public class ObjectItemController : MonoBehaviour
         {
             imageStorage = GameObject.Find("ImageStorage").GetComponent<ImageStorage>();
         }
+
+        if(objectBuilder == null)
+        {
+            objectBuilder = GameObject.Find("ObjectBuilder").GetComponent<ObjectBuilder>();
+        }
         
         StartCoroutine("WaitUntilImageLoad");
     }
     public void SetData(ObjectData objectData)
     {
-        _objectData = objectData;
-        
-        Debug.Log(_objectData.imageDataUUID);
-        Debug.Log(imageStorage);
+        ImageData currentImageData = null;
 
         if(imageStorage == null)
         {
             imageStorage = GameObject.Find("ImageStorage").GetComponent<ImageStorage>();
         }
 
-        currentImageData = imageStorage.GetImageData(_objectData.imageDataUUID);
+        currentImageData = imageStorage.GetImageData(objectData.imageDataUUID);
+
+        Debug.Log(objectData.name);
+        GetComponent<DataAgent>().SetDataAgentResource(objectData, currentImageData);
+        Debug.Log(GetComponent<DataAgent>().GetInstanceID());
+
         if(isImageLoaded)
         {
             RefreshUI();
@@ -48,14 +56,15 @@ public class ObjectItemController : MonoBehaviour
 
     public void RefreshUI()
     {
-        image.sprite = currentImageData.GetSprites()[0];
+        
+        image.sprite = GetComponent<DataAgent>().imageData.GetSprites()[0];
 
-        float h = currentImageData.GetHSize();
-        float w = currentImageData.GetVSize();
+        float h = GetComponent<DataAgent>().imageData.GetHSize();
+        float w = GetComponent<DataAgent>().imageData.GetVSize();
 
 
         Debug.Log(h+" "+w);
-        if(currentImageData.GetIsRelativeSize())
+        if(GetComponent<DataAgent>().imageData.GetIsRelativeSize())
         {
             if(image.sprite != null)
             {
@@ -83,8 +92,8 @@ public class ObjectItemController : MonoBehaviour
         image.GetComponent<RectTransform>().sizeDelta = new Vector2(w,h);
 
 
-        typeText.text = _objectData.toyType.ToString();
-        nameText.text = _objectData.name;
+        typeText.text = GetComponent<DataAgent>().objectData.toyType.ToString();
+        nameText.text = GetComponent<DataAgent>().objectData.name;
     }
 
     IEnumerator WaitUntilImageLoad()
@@ -102,5 +111,10 @@ public class ObjectItemController : MonoBehaviour
         isImageLoaded = true;
         RefreshUI();
 
+    }
+
+    public void OnButtonClick()
+    {
+        objectBuilder.SetCurrentDataAgent(GetComponent<DataAgent>());
     }
 }

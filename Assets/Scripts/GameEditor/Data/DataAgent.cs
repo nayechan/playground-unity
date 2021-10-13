@@ -22,17 +22,31 @@ namespace GameEditor.Data
             ComponentDatas = new Dictionary<Component, ComponentData>();
             // ResourceDatas = new Dictionary<Component, ResourceData>();
         }
+
+        void Update()
+        {
+            
+            Debug.Log(GetInstanceID());
+        }
         
         public void SetDataAgentResource(ObjectData objectData, ImageData imageData)
         {
             this.objectData = objectData;
             this.imageData = imageData;
+            if(this.objectData != null)
+            {
+                Debug.Log(this.objectData.name);
+            }
         } 
         // DataAgent가 속한 GameObject의 ComponentData를 업데이트합니다.
         public void UpdateComponentData()
         {
             objectData.name = name;
             objectData.id = GetInstanceID();
+            if(objectData != null)
+            {
+                Debug.Log(objectData.name);
+            }
             // 삭제된 Component를 확인하고 해당하는 Data를 삭제합니다.
             foreach (var pair in ComponentDatas.Where(pair => pair.Key == null))
             {
