@@ -1,3 +1,4 @@
+using System.Net.Mime;
 using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
@@ -15,16 +16,20 @@ namespace GameEditor
     
     public class SandboxSaveLoader : MonoBehaviour
     {
-        private List<SandboxData> localSandboxDatas;
-        private List<SandboxData> remoteSandboxDatas;
-        private SandboxData currentSandboxData;
-        public static string LocalSandboxDirectoryName = "LocalSandboxs";
-        public static string RemoteSandboxDirectoryName = "RemoteSandboxs";
-        public static string SandboxDataFileName = "SandboxData.json";
-        public static string AppPath {get {return Application.persistentDataPath;}}
-        public static string LocalPath {get {return Path.Combine(AppPath,LocalSandboxDirectoryName);}}
-        public static string RemotePath {get {return Path.Combine(AppPath,RemoteSandboxDirectoryName);}}
-        public string CurrentSandboxPath {get {return GetSandboxPath(currentSandboxData);}}
+        private Dictionary<int, SandboxData> _sandboxDatasOfLocal;
+        private Dictionary<int, SandboxData> _sandboxDatasOfRemote;
+        private SandboxData _sandboxDataOnGround;
+        public static string DirectoryNameOfLocalSandbox = "LocalSandboxs";
+        public static string DirectoryNameOfRemoteSandbox = "RemoteSandboxs";
+        public static string JsonNameOfSandboxData = "SandboxData.json";
+        public static string JsonNameOfToyData = "ToyData.json";
+        public static string JsonNameOfBlockData = "BlockData.json";
+        public static string RootNameOfToy = "RootOfToy";
+        public static string RootNameOfBlock = "RootOfBlock";
+        public static string AppPath;
+        public static string LocalPath;
+        public static string RemotePath;
+        public string CurrentSandboxPath {get {return GetSandboxPath(_sandboxDataOnGround);}}
         private static SandboxSaveLoader _sandboxSaveLoader;
 
 
@@ -35,10 +40,27 @@ namespace GameEditor
 
         void Awake()
         {
+            InitalizeField();
             SetSingletonIfUnset();
-            CreateDirectoriesIfDosentExist();
-            LoadAllSandboxData();
+            CreateDefaultDirectoriesIfDosentExist();
+            UpdateAllSandboxDataFromPC();
         }
+
+        private void InitalizeField()
+        {
+            AppPath = Application.persistentDataPath;
+            LocalPath = Path.Combine(AppPath,DirectoryNameOfLocalSandbox);
+            RemotePath = Path.Combine(AppPath,DirectoryNameOfRemoteSandbox);
+            _sandboxDatasOfLocal = new Dictionary<int, SandboxData>();
+            _sandboxDatasOfRemote = new Dictionary<int, SandboxData>();
+        }
+
+        // private GameObject CreateRootOfToy()
+        // {
+        //     var rootOfToy = new GameObject("RootOfToy");
+        //     rootOfToy.AddComponent<DataAgent>();
+        //     return rootOfToy;
+        // }
 
         private void SetSingletonIfUnset()
         {
@@ -46,63 +68,114 @@ namespace GameEditor
                 _sandboxSaveLoader = this;
         }
 
-        private void CreateDirectoriesIfDosentExist()
+        private static void CreateDefaultDirectoriesIfDosentExist()
         {
             CreateDirectoryIfDosentExist(AppPath);
             CreateDirectoryIfDosentExist(LocalPath);
             CreateDirectoryIfDosentExist(RemotePath);
         }
 
-        private void CreateDirectoryIfDosentExist(string path)
+        private static void CreateDirectoryIfDosentExist(string path)
         {
             if(!Directory.Exists(path))
                 Directory.CreateDirectory(path);
         }
 
-        private void LoadAllSandboxData()
+        public void UpdateAllSandboxDataFromPC()
         {
-            LoadSandboxsData(LocalPath);
-            LoadSandboxsData(RemotePath);
+            UpdateSandboxsData(LocalPath, _sandboxDatasOfLocal);
+            UpdateSandboxsData(RemotePath, _sandboxDatasOfRemote);
         }
 
-        private void LoadSandboxsData(string sandboxsPath)
+        private void UpdateSandboxsData(string sandboxsPath, Dictionary<int, SandboxData> sandboxDatas)
         {
             foreach(var sandboxPath in Directory.GetDirectories(sandboxsPath))
             {
-                LoadSandboxData(Path.Combine(sandboxPath, SandboxDataFileName));
+                try
+                {
+                    var sandboxData = LoadSandboxData(Path.Combine(sandboxPath, JsonNameOfSandboxData));
+                    if(!IsUpdated(sandboxData, sandboxDatas))
+                        continue;
+                    sandboxDatas.Add(sandboxData.GetHashCode(), sandboxData);
+                    Debug.Log("SandboxData Added, Path : " + GetSandboxPath(sandboxData));
+                }
+                catch
+                {
+                    Debug.Log($"Failed to Load {Path.Combine(sandboxPath, JsonNameOfSandboxData)}. ");
+                    
+                    continue;
+                }
             }
+        }
+
+        private bool IsUpdated(SandboxData sandboxData, Dictionary<int, SandboxData> sandboxDatas)
+        {
+            return !sandboxDatas.ContainsKey(sandboxData.GetHashCode());
         }
 
         private SandboxData LoadSandboxData(string sandboxDataPath)
         {
+            var rawSandboxData = File.ReadAllText(sandboxDataPath);
+            return JsonUtility.FromJson<SandboxData>(rawSandboxData);
+        }
+
+        public void SaveSandboxOnGround()
+        {
+            SaveSandbox(_sandboxDataOnGround);
+        }
+
+        public static void SaveSandbox(SandboxData sandboxData)
+        {
+            CreateDirectoryIfDosentExist(GetSandboxPath(sandboxData));
             try
             {
-                var rawSandboxData = File.ReadAllText(sandboxDataPath);
-                return JsonUtility.FromJson<SandboxData>(rawSandboxData);
+                SaveSandboxData(sandboxData);
+                SaveToy(sandboxData);
             }
-            catch(Exception e)
+            catch
             {
-                Debug.Log(e.ToString());
-                throw e;
+                Debug.Log("Failed to create savefile at " + GetSandboxPath(sandboxData));
             }
         }
 
-        public static void SaveSandboxData(SandboxData sandboxData)
+        private static async void SaveSandboxData(SandboxData sandboxData) 
         {
+            var jsonSandboxDataPath = MakeFullPath(sandboxData, JsonNameOfSandboxData);
+            DeleteFileIfExist(jsonSandboxDataPath);
             var jsonSandboxData = JsonUtility.ToJson(sandboxData);
-            // File.CreateText(Current)
+            var stream = File.CreateText(jsonSandboxDataPath);
+            await stream.WriteAsync(jsonSandboxData);
+            stream.Close();
+        }
+        
+        private static async void SaveToy(SandboxData sandboxData) 
+        {
+            var jsonToyDataPath = MakeFullPath(sandboxData, JsonNameOfToyData);
+            DeleteFileIfExist(jsonToyDataPath);
+            var jsonToyData = sandboxData.rootOfToy.GetComponent<DataAgent>().GetJObjectFromAll().ToString();
+            var stream = File.CreateText(jsonToyDataPath);
+            await stream.WriteAsync(jsonToyData);
+            stream.Close();
+        }
+
+        private static void DeleteFileIfExist(string path)
+        {
+            if(File.Exists(path))
+            {
+                File.Delete(path);
+            }
         }
 
         public static string GetSandboxPath(SandboxData sandboxData)
         {
             return Path.Combine(AppPath,
-                sandboxData.isLocalSandbox ? LocalSandboxDirectoryName : RemoteSandboxDirectoryName,
+                sandboxData.isLocalSandbox ? DirectoryNameOfLocalSandbox : DirectoryNameOfRemoteSandbox,
                 sandboxData.id.ToString());
         }
 
         public string MakeFullPathOfCurrentSandbox(string reletivePath)
         {
-            return MakeFullPath(currentSandboxData, reletivePath);
+            return MakeFullPath(_sandboxDataOnGround, reletivePath);
         }
 
         public static string MakeFullPath(SandboxData sandboxData, string reletivePath)
@@ -111,5 +184,29 @@ namespace GameEditor
             return Path.Combine(sandboxPath, reletivePath);
         }
 
+        public static bool isAlreadyExistId(SandboxData sandboxData)
+        {
+            return isAlreadyExistId(sandboxData.id, sandboxData.isLocalSandbox);
+        }
+
+        public static bool isAlreadyExistId(int id, bool isLocalSandbox)
+        {
+            var sandboxsPath = isLocalSandbox ? LocalPath : RemotePath;
+            return Directory.Exists(sandboxsPath);
+        }
+
+        // Methods for debuging
+
+        public void PrintAllSandboxData()
+        {
+            foreach(var sandboxData in _sandboxDatasOfLocal)
+            {
+                sandboxData.ToString();
+            }
+            foreach(var sandboxData in _sandboxDatasOfRemote)
+            {
+                sandboxData.ToString();
+            }
+        }
     }
 }
