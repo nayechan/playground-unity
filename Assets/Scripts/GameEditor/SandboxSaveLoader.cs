@@ -21,19 +21,12 @@ namespace GameEditor
         public static string LocalSandboxDirectoryName = "LocalSandboxs";
         public static string RemoteSandboxDirectoryName = "RemoteSandboxs";
         public static string SandboxDataFileName = "SandboxData.json";
-        private string AppPath {get {return Application.persistentDataPath;}}
-        private string LocalPath {get {return Path.Combine(AppPath,LocalSandboxDirectoryName);}}
-        private string RemotePath {get {return Path.Combine(AppPath,RemoteSandboxDirectoryName);}}
+        public static string AppPath {get {return Application.persistentDataPath;}}
+        public static string LocalPath {get {return Path.Combine(AppPath,LocalSandboxDirectoryName);}}
+        public static string RemotePath {get {return Path.Combine(AppPath,RemoteSandboxDirectoryName);}}
+        public string CurrentSandboxPath {get {return GetSandboxPath(currentSandboxData);}}
         private static SandboxSaveLoader _sandboxSaveLoader;
-        public string currentSandboxPath 
-        {
-            get
-            {
-                return Path.Combine(AppPath,
-                 currentSandboxData.isLocalSandbox ? LocalSandboxDirectoryName : RemoteSandboxDirectoryName,
-                 currentSandboxData.id.ToString());
-            }
-        }
+
 
         public static SandboxSaveLoader GetSingleton()
         {
@@ -94,10 +87,28 @@ namespace GameEditor
             }
         }
 
-
-        public string MakeFullPath(string reletivePath)
+        public static void SaveSandboxData(SandboxData sandboxData)
         {
-            return Path.Combine(currentSandboxPath, reletivePath);
+            var jsonSandboxData = JsonUtility.ToJson(sandboxData);
+            // File.CreateText(Current)
+        }
+
+        public static string GetSandboxPath(SandboxData sandboxData)
+        {
+            return Path.Combine(AppPath,
+                sandboxData.isLocalSandbox ? LocalSandboxDirectoryName : RemoteSandboxDirectoryName,
+                sandboxData.id.ToString());
+        }
+
+        public string MakeFullPathOfCurrentSandbox(string reletivePath)
+        {
+            return MakeFullPath(currentSandboxData, reletivePath);
+        }
+
+        public static string MakeFullPath(SandboxData sandboxData, string reletivePath)
+        {
+            var sandboxPath = GetSandboxPath(sandboxData);
+            return Path.Combine(sandboxPath, reletivePath);
         }
 
     }

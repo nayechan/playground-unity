@@ -106,6 +106,7 @@ namespace GameEditor.Data
             {
                 SpriteRendererData.resizeObjectScale(newGameObject, dataAgent.imageData);
             }
+            newGameObject.AddComponent<DataAgent>();
             return newGameObject;
         }
 

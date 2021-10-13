@@ -93,7 +93,7 @@ public class ImageStorage : MonoBehaviour
         {
             if(originalPath != "")
             {
-                string sandboxPath = SandboxSaveLoader.GetSingleton().currentSandboxPath;
+                string sandboxPath = SandboxSaveLoader.GetSingleton().CurrentSandboxPath;
                 string relativePath = System.IO.Path.GetFileName(originalPath);
                 string fullPath = Path.Combine(sandboxPath, relativePath);
                 Debug.Log(fullPath);

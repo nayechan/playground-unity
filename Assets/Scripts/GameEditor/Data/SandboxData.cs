@@ -1,4 +1,7 @@
+using System.Net.Mime;
+using System;
 using System.IO;
+using UnityEngine;
 
 namespace GameEditor.Data
 {
@@ -7,24 +10,18 @@ namespace GameEditor.Data
     {
         public string title;
         public int id;
-        public bool editable;
         public bool isLocalSandbox;
+        public string creatorName;
+        public DateTime createdTime;
+        public DateTime modifiedTime;
+        public string description;
 
         public SandboxData()
         {
             title = "New SandBox";
             id = -1;
-            editable = true;
             isLocalSandbox = true;
         }
 
-        public string GetRelativeSandboxPath()
-        {
-            return Path.Combine(
-                isLocalSandbox ? 
-                    SandboxSaveLoader.LocalSandboxDirectoryName :
-                    SandboxSaveLoader.RemoteSandboxDirectoryName,
-                id.ToString());
-        }
     }
 }
