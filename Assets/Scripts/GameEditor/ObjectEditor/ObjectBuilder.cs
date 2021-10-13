@@ -7,6 +7,7 @@ public class ObjectBuilder : AbstractSensor
 {
     public DataAgent currentDataAgent;
     public Transform rootObject;
+    public bool isSnap;
 
     // Start is called before the first frame update
     void Awake()
@@ -14,23 +15,38 @@ public class ObjectBuilder : AbstractSensor
         currentDataAgent = null;
     }
 
-    private void Update() {
-        if(Input.GetMouseButtonDown(0) && currentDataAgent != null)
-        {
-            Vector3 pos = Input.mousePosition;
-            pos = Camera.main.ScreenToWorldPoint(pos);
-            GenerateObject(pos);
-        }    
-    }
-
     public bool GenerateObject(Vector3 cursor)
     {
-        Transform transform = FindNearestObject(cursor, rootObject, 0.1f);
+        Transform transform = null;
+        if(isSnap)
+        {
+            transform = FindNearestObject(cursor, rootObject, 0.8f);
+        }
+
         if(transform != null || currentDataAgent == null) return false;
         GameObject obj = DataManager.CreateGameobject(currentDataAgent);
         obj.transform.parent = rootObject;
-        cursor.z = 0;
-        obj.transform.position = cursor;
+        cursor.z = 10;
+
+        Vector3 objSize = obj.GetComponent<SpriteRenderer>().bounds.size;
+
+
+        if(isSnap)
+        {
+            cursor.x = Mathf.Floor(cursor.x);
+            cursor.y = Mathf.Floor(cursor.y);
+        }
+
+            obj.transform.position = cursor;
+
+        if(isSnap){
+            Vector3 pivotAmount = objSize;
+            pivotAmount.x *= 0.5f;
+            pivotAmount.y *= 0.5f;
+            pivotAmount.z = 0;
+
+            obj.transform.position += pivotAmount;
+        }
         return true;
     }
 
@@ -40,7 +56,10 @@ public class ObjectBuilder : AbstractSensor
         foreach(Transform t in rootObject)
         {
             Vector3 pos = t.position;
-            Vector3 scale = t.GetComponent<ObjectInstanceController>().getDefaultSize();//
+            //Vector3 scale = t.GetComponent<ObjectInstanceController>().getDefaultSize();//
+            Vector3 scale = t.gameObject.GetComponent<SpriteRenderer>().bounds.size;
+            
+            Debug.Log(scale);
             if(
                 (pos.x - (scale.x/2)) <= cursor.x && cursor.x <= (pos.x + (scale.x/2)) &&
                 (pos.y - (scale.y/2)) <= cursor.y && cursor.y <= (pos.y + (scale.y/2))
@@ -68,21 +87,58 @@ public class ObjectBuilder : AbstractSensor
         Transform result = null;
         float zIndex = pos.z;
         pos.z = 0;
+        Debug.Log(transform);
         foreach(Transform t in transform)
         {
-            if(t.position.z != zIndex) continue;
-            Vector3 modifiedPosition = t.position;
-            modifiedPosition.z = 0;
+            Vector3 tPos = t.position;
+            //Vector3 scale = t.GetComponent<ObjectInstanceController>().getDefaultSize();//
+            Vector3 scale = t.gameObject.GetComponent<SpriteRenderer>().bounds.size;
+            
+            Debug.Log(scale);
+            if(isSnap)
+            {
+                if(
+                (tPos.x - (scale.x/2)) <= pos.x && pos.x < (tPos.x - (scale.x/2)) + 0.99f &&
+                (tPos.y - (scale.y/2)) <= pos.y && pos.y < (tPos.y - (scale.y/2)) + 0.99f
+                )
+                {
+                    float dist = 0.0f;
+                    dist += (tPos.x - (scale.x/2)) + 0.5f - pos.x;
+                    dist += (tPos.y - (scale.y/2)) + 0.5f - pos.y; 
 
-            float dist = Vector3.Distance(modifiedPosition, pos);
-
-            if(maxDist <= dist) continue;
+                    if(dist < maxDist)
+                    {
+                        Debug.Log(dist);
+                        result = t;
+                        maxDist = dist;
+                    }
+                }
+            }
             else
             {
-                result = t;
-                maxDist = Mathf.Sqrt(dist);
+                if(
+                (tPos.x - (scale.x/2)) <= pos.x && pos.x < (tPos.x + (scale.x/2)) &&
+                (tPos.y - (scale.y/2)) <= pos.y && pos.y < (tPos.y + (scale.y/2))
+                )
+                {
+                    float dist = 0.0f;
+                    dist += tPos.x - pos.x;
+                    dist += tPos.y - pos.y; 
+
+                    if(dist < maxDist)
+                    {
+                        Debug.Log(dist);
+                        result = t;
+                        maxDist = dist;
+                    }
+                }
             }
+            
         }
         return result;
+    }
+    public void ToggleSnap()
+    {
+        isSnap = !isSnap;
     }
 }

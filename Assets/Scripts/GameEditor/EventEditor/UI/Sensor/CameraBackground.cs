@@ -13,6 +13,7 @@ namespace GameEditor.EventEditor.UI.Sensor{
         private Vector2 _touchBeginPosition;
         private Vector3 _camBeginPosition;
         public UnityEvent m_CameraMoved;
+        public ObjectBuilder objectBuilder;
 
         protected override void Start()
         {
@@ -26,22 +27,32 @@ namespace GameEditor.EventEditor.UI.Sensor{
             var tc = TouchController.GetTID();
             switch (tc.mode)
             {
-                case TouchController.TouchMode.CreateObject:
-                {
-                    // var om =  ObjectManager.GetOM();
-                    // var data = new ObjectData();
-                    // info.texturePath = 
-                    break;
-                }
                 case TouchController.TouchMode.CamMove:
                     tc.AlarmMe(touch.fingerId, this);
                     _touchBeginPosition = touch.position;
                     _camBeginPosition = cam.transform.position;
                     break;
-                case TouchController.TouchMode.DeleteObject:
+
+                case TouchController.TouchMode.CreateObject:
+
+                    tc.AlarmMe(touch.fingerId, this);
+                    _touchBeginPosition = touch.position;
+
+                    Vector3 worldPos;
+                    worldPos = touch.position;
+                    worldPos = Camera.main.ScreenToWorldPoint(worldPos);
+                    
+                    objectBuilder.GenerateObject(worldPos);
                     break;
+                
+                case TouchController.TouchMode.DeleteObject:
+                    tc.AlarmMe(touch.fingerId, this);
+                    _touchBeginPosition = touch.position;
+                    break;
+
                 case TouchController.TouchMode.MoveObject:
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -51,10 +62,42 @@ namespace GameEditor.EventEditor.UI.Sensor{
 
         public override void CallBack(Touch touch)
         {
-            Vector3 deltaVector = 
-                cam.ScreenToWorldPoint(touch.position) - cam.ScreenToWorldPoint(_touchBeginPosition);
-            cam.transform.position = _camBeginPosition - deltaVector;
-            m_CameraMoved.Invoke();
+            var tc = TouchController.GetTID();
+            Debug.Log(touch.phase);
+
+            Vector3 worldPos, deltaVector;
+            worldPos = touch.position;
+            worldPos = Camera.main.ScreenToWorldPoint(worldPos);
+
+            switch (tc.mode)
+            {
+            case TouchController.TouchMode.CamMove:
+                deltaVector = 
+                cam.ScreenToWorldPoint(touch.position) - 
+                cam.ScreenToWorldPoint(_touchBeginPosition);
+
+                cam.transform.position = _camBeginPosition - deltaVector;
+
+                m_CameraMoved.Invoke();
+
+                break;
+
+            case TouchController.TouchMode.CreateObject:
+                if(objectBuilder.isSnap)
+                {
+                    objectBuilder.GenerateObject(worldPos);
+                }
+                break;
+
+            case TouchController.TouchMode.DeleteObject:
+                objectBuilder.RemoveObject(worldPos);
+                break;
+                
+            case TouchController.TouchMode.MoveObject:
+                break;
+
+            }
+            
         }
 
         

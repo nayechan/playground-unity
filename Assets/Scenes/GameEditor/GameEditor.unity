@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311915, g: 0.3807396, b: 0.35872662, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2101,12 +2101,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 99494182}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_Father: {fileID: 1159276425}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &101833505
 GameObject:
@@ -3489,6 +3489,7 @@ MonoBehaviour:
   m_CameraMoved:
     m_PersistentCalls:
       m_Calls: []
+  objectBuilder: {fileID: 2131135296}
 --- !u!114 &169867949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5780,8 +5781,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TouchController_obj, Assembly-CSharp
+      - m_Target: {fileID: 2131135296}
+        m_TargetAssemblyTypeName: ObjectBuilder, Assembly-CSharp
         m_MethodName: ToggleSnap
         m_Mode: 1
         m_Arguments:
@@ -7127,11 +7128,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 362922699}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 410378880}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &365499113
@@ -7225,6 +7226,7 @@ GameObject:
   - component: {fileID: 368012764}
   - component: {fileID: 368012763}
   - component: {fileID: 368012762}
+  - component: {fileID: 368012765}
   m_Layer: 5
   m_Name: BlockButton
   m_TagString: Untagged
@@ -7320,6 +7322,18 @@ MonoBehaviour:
           m_StringArgument: Block
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 368012765}
+        m_TargetAssemblyTypeName: TouchModeSwitcher, Assembly-CSharp
+        m_MethodName: SwitchMode
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &368012763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7358,6 +7372,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 368012760}
   m_CullTransparentMesh: 1
+--- !u!114 &368012765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 368012760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 039a07a659a944e4498bd0abbaad18bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  touchController: {fileID: 1135577875}
+  touchMode: 0
 --- !u!1 &370605651
 GameObject:
   m_ObjectHideFlags: 0
@@ -8020,6 +8048,10 @@ Transform:
   - {fileID: 1135577874}
   - {fileID: 188534837}
   - {fileID: 979242474}
+  - {fileID: 362922701}
+  - {fileID: 2131135297}
+  - {fileID: 1227682493}
+  - {fileID: 1159276425}
   m_Father: {fileID: 1078807724}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8230,12 +8262,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 430038278}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_Father: {fileID: 1159276425}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &430815715
 GameObject:
@@ -9340,49 +9372,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 491937291}
   m_CullTransparentMesh: 1
---- !u!1 &519978042
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 519978044}
-  - component: {fileID: 519978043}
-  m_Layer: 0
-  m_Name: testObjectManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &519978043
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519978042}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4de8ac8f5ecb84955b9c5d5f8737bd57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &519978044
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519978042}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.290843, y: 0.17441204, z: 1.0376221}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &526585652
 GameObject:
   m_ObjectHideFlags: 0
@@ -16058,6 +16047,8 @@ GameObject:
   - component: {fileID: 998515290}
   - component: {fileID: 998515289}
   - component: {fileID: 998515288}
+  - component: {fileID: 998515292}
+  - component: {fileID: 998515291}
   m_Layer: 5
   m_Name: MoveCameraButton
   m_TagString: Untagged
@@ -16153,6 +16144,18 @@ MonoBehaviour:
           m_StringArgument: Camera
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 998515291}
+        m_TargetAssemblyTypeName: TouchModeSwitcher, Assembly-CSharp
+        m_MethodName: SwitchMode
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &998515289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16191,6 +16194,46 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 998515286}
   m_CullTransparentMesh: 1
+--- !u!114 &998515291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 998515286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 039a07a659a944e4498bd0abbaad18bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  touchController: {fileID: 1135577875}
+  touchMode: 0
+--- !u!61 &998515292
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 998515286}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &1002954261
 GameObject:
   m_ObjectHideFlags: 0
@@ -18951,6 +18994,39 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1158515011}
   m_CullTransparentMesh: 1
+--- !u!1 &1159276424
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1159276425}
+  m_Layer: 0
+  m_Name: Storage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1159276425
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159276424}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1609469610}
+  - {fileID: 99494185}
+  - {fileID: 430038280}
+  m_Father: {fileID: 410378880}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1161225284
 GameObject:
   m_ObjectHideFlags: 0
@@ -20447,12 +20523,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1227682491}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_Father: {fileID: 410378880}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1228842316
 GameObject:
@@ -22079,7 +22155,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1358116895}
   m_Layer: 0
-  m_Name: Blocks
+  m_Name: Objects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22097,7 +22173,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1358232608
 GameObject:
@@ -23083,6 +23159,7 @@ GameObject:
   - component: {fileID: 1408125587}
   - component: {fileID: 1408125586}
   - component: {fileID: 1408125585}
+  - component: {fileID: 1408125588}
   m_Layer: 5
   m_Name: RemoveObjectButton
   m_TagString: Untagged
@@ -23154,10 +23231,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TouchControll, Assembly-CSharp
-        m_MethodName: SetTouchMode
-        m_Mode: 5
+      - m_Target: {fileID: 1408125588}
+        m_TargetAssemblyTypeName: TouchModeSwitcher, Assembly-CSharp
+        m_MethodName: SwitchMode
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -23204,6 +23281,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1408125583}
   m_CullTransparentMesh: 1
+--- !u!114 &1408125588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1408125583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 039a07a659a944e4498bd0abbaad18bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  touchController: {fileID: 1135577875}
+  touchMode: 2
 --- !u!1 &1411712718
 GameObject:
   m_ObjectHideFlags: 0
@@ -25802,12 +25893,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1609469609}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_Father: {fileID: 1159276425}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1609469611
 MonoBehaviour:
@@ -26009,6 +26100,7 @@ GameObject:
   - component: {fileID: 1627198616}
   - component: {fileID: 1627198615}
   - component: {fileID: 1627198614}
+  - component: {fileID: 1627198617}
   m_Layer: 5
   m_Name: ObjectButton
   m_TagString: Untagged
@@ -26104,6 +26196,18 @@ MonoBehaviour:
           m_StringArgument: Object
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1627198617}
+        m_TargetAssemblyTypeName: TouchModeSwitcher, Assembly-CSharp
+        m_MethodName: SwitchMode
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1627198615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26142,6 +26246,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1627198612}
   m_CullTransparentMesh: 1
+--- !u!114 &1627198617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1627198612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 039a07a659a944e4498bd0abbaad18bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  touchController: {fileID: 1135577875}
+  touchMode: 0
 --- !u!1 &1631633456
 GameObject:
   m_ObjectHideFlags: 0
@@ -26854,6 +26972,7 @@ GameObject:
   - component: {fileID: 1675988786}
   - component: {fileID: 1675988785}
   - component: {fileID: 1675988784}
+  - component: {fileID: 1675988787}
   m_Layer: 5
   m_Name: ResourceButton
   m_TagString: Untagged
@@ -26949,6 +27068,18 @@ MonoBehaviour:
           m_StringArgument: Resource
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1675988787}
+        m_TargetAssemblyTypeName: TouchModeSwitcher, Assembly-CSharp
+        m_MethodName: SwitchMode
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1675988785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26987,6 +27118,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1675988782}
   m_CullTransparentMesh: 1
+--- !u!114 &1675988787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1675988782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 039a07a659a944e4498bd0abbaad18bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  touchController: {fileID: 1135577875}
+  touchMode: 0
 --- !u!1 &1714485711
 GameObject:
   m_ObjectHideFlags: 0
@@ -28353,6 +28498,7 @@ GameObject:
   - component: {fileID: 1812625077}
   - component: {fileID: 1812625076}
   - component: {fileID: 1812625075}
+  - component: {fileID: 1812625078}
   m_Layer: 5
   m_Name: AddObjectButton
   m_TagString: Untagged
@@ -28424,10 +28570,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TouchControll, Assembly-CSharp
-        m_MethodName: SetTouchMode
-        m_Mode: 5
+      - m_Target: {fileID: 1812625078}
+        m_TargetAssemblyTypeName: TouchModeSwitcher, Assembly-CSharp
+        m_MethodName: SwitchMode
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -28474,6 +28620,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1812625073}
   m_CullTransparentMesh: 1
+--- !u!114 &1812625078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1812625073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 039a07a659a944e4498bd0abbaad18bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  touchController: {fileID: 1135577875}
+  touchMode: 1
 --- !u!1 &1816217484
 GameObject:
   m_ObjectHideFlags: 0
@@ -32459,6 +32619,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentDataAgent: {fileID: 0}
   rootObject: {fileID: 1358116895}
+  isSnap: 0
 --- !u!4 &2131135297
 Transform:
   m_ObjectHideFlags: 0
@@ -32466,12 +32627,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2131135295}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_Father: {fileID: 410378880}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2136889480
 GameObject:
