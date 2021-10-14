@@ -18,10 +18,11 @@ namespace GameEditor.Data
         // ingame instances
         [NonSerialized]public GameObject rootOfToy;
         [NonSerialized]public GameObject rootOfBlock;
+        private SandboxSaveLoader sandboxSaveLoader;
 
         public SandboxData()
         {
-            var sandboxSaveLoader = SandboxSaveLoader.GetSingleton();
+            sandboxSaveLoader = SandboxSaveLoader.GetSingleton();
             title = "New SandBox";
             isLocalSandbox = true;
             id = CreateNonOverlappingLocalId();
@@ -43,8 +44,9 @@ namespace GameEditor.Data
             do
             {
                 newId = (new System.Random()).Next(Int32.MinValue, Int32.MaxValue);
+                Debug.Log("new Id : " + newId.ToString());
             }
-            while(!SandboxSaveLoader.isAlreadyExistId(newId, true));
+            while(!sandboxSaveLoader.isAlreadyExistId(newId, true));
             return newId;
         }
 
