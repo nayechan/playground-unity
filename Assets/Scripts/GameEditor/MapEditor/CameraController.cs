@@ -8,7 +8,8 @@ public class CameraController : MonoBehaviour
     public Camera cam;
 
     public void ZoomOut(){
-        cam.orthographicSize += ZoomUnit;
+        if(cam.orthographicSize < 12)
+            cam.orthographicSize += ZoomUnit;
     }
     public void ZoomIn(){
         if(cam.orthographicSize > 1)

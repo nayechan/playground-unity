@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GameEditor.Data;
+using GameEditor.EventEditor.UI.Sensor;
 
 public class ObjectBuilder : AbstractSensor
 {
     public DataAgent currentDataAgent;
     public Transform rootObject;
+    public GameObject objectSensorPrefab;
     public bool isSnap;
 
     // Start is called before the first frame update
@@ -20,12 +22,20 @@ public class ObjectBuilder : AbstractSensor
         Transform transform = null;
         if(isSnap)
         {
-            transform = FindNearestObject(cursor, rootObject, 0.8f);
+            transform = FindNearestObject(cursor, rootObject, 1.0f);
         }
 
         if(transform != null || currentDataAgent == null) return false;
         GameObject obj = DataManager.CreateGameobject(currentDataAgent);
         obj.transform.parent = rootObject;
+
+        Debug.Log(objectSensorPrefab);
+
+        GameObject objectSensor = GameObject.Instantiate(
+            objectSensorPrefab, obj.transform.position, Quaternion.identity, 
+            obj.transform
+        );
+
         cursor.z = 10;
 
         Vector3 objSize = obj.GetComponent<SpriteRenderer>().bounds.size;
@@ -103,8 +113,8 @@ public class ObjectBuilder : AbstractSensor
                 )
                 {
                     float dist = 0.0f;
-                    dist += (tPos.x - (scale.x/2)) + 0.5f - pos.x;
-                    dist += (tPos.y - (scale.y/2)) + 0.5f - pos.y; 
+                    dist += Mathf.Abs((tPos.x - (scale.x/2)) + 0.5f - pos.x);
+                    dist += Mathf.Abs((tPos.y - (scale.y/2)) + 0.5f - pos.y); 
 
                     if(dist < maxDist)
                     {
