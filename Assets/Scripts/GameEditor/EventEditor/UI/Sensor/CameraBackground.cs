@@ -45,11 +45,9 @@ namespace GameEditor.EventEditor.UI.Sensor{
                     break;
                 
                 case TouchController.TouchMode.DeleteObject:
-                    tc.AlarmMe(touch.fingerId, this);
                     break;
 
                 case TouchController.TouchMode.MoveObject:
-                    tc.AlarmMe(touch.fingerId, this);
                     break;
 
                 default:
@@ -89,7 +87,6 @@ namespace GameEditor.EventEditor.UI.Sensor{
                 break;
 
             case TouchController.TouchMode.DeleteObject:
-                objectBuilder.RemoveObject(worldPos);
                 break;
                 
             case TouchController.TouchMode.MoveObject:

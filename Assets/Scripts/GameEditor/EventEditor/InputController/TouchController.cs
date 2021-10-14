@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using System;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class TouchEvent : UnityEvent<Touch>{
 }
@@ -51,6 +52,12 @@ public class TouchController : MonoBehaviour
             RaycastHit[] hits = Physics.RaycastAll(rayOrigin, _cam.transform.forward);
             Array.Sort<RaycastHit>(hits, delegate(RaycastHit h1, RaycastHit h2){return (int)(h1.distance - h2.distance)*32;});
             foreach(RaycastHit hit in hits){
+                Debug.Log(hit.transform.name +", distance="+hit.distance);
+                if(EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+                {
+                    Debug.Log("UGUI Element Detected");
+                    break;
+                }
                 AbstractSensor sensor = hit.collider.GetComponent<AbstractSensor>();
                 if(sensor == null) continue;
                 switch(touch.phase){

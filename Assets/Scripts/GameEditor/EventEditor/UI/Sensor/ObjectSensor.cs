@@ -55,6 +55,25 @@ namespace GameEditor.EventEditor.UI.Sensor
             }
         }
 
+        public override void OnTouchMoved(Touch touch, out bool isRayBlock)
+        {
+            isRayBlock = true;
+            
+            if(TouchController.GetTID().mode == TouchController.TouchMode.DeleteObject)
+            {
+                Destroy(transform.parent.gameObject);
+            }
+        }
+
+        public override void OnTouchStationary(Touch touch, out bool isRayBlock)
+        {
+            isRayBlock = true;
+            if(TouchController.GetTID().mode == TouchController.TouchMode.DeleteObject)
+            {
+                Destroy(transform.parent.gameObject);
+            }
+        }
+
         public override void CallBack(Touch touch)
         {
             Debug.Log(touch.position);
@@ -85,15 +104,14 @@ namespace GameEditor.EventEditor.UI.Sensor
                     Vector3 objSize = 
                     transform.parent.GetComponent<SpriteRenderer>().bounds.size;
 
-                    v.x = Mathf.Floor(v.x);
-                    v.y = Mathf.Floor(v.y);
+                    objSize.y *= -1;
 
-                    Vector3 pivotAmount = objSize;
-                    pivotAmount.x *= 0.5f;
-                    pivotAmount.y *= 0.5f;
-                    pivotAmount.z = 0;
+                    v-=objSize/2;
 
-                    v += pivotAmount;
+                    v.x = Mathf.Round(v.x);
+                    v.y = Mathf.Round(v.y);
+
+                    v+=objSize/2;
                 }
                 transform.parent.position = v;
                 break;

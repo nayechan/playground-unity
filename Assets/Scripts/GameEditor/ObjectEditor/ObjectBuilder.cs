@@ -39,51 +39,25 @@ public class ObjectBuilder : AbstractSensor
         cursor.z = 10;
 
         Vector3 objSize = obj.GetComponent<SpriteRenderer>().bounds.size;
-
-
-        if(isSnap)
-        {
-            cursor.x = Mathf.Floor(cursor.x);
-            cursor.y = Mathf.Floor(cursor.y);
-        }
-
-            obj.transform.position = cursor;
+        Vector3 objPos = cursor;
 
         if(isSnap){
+
             Vector3 pivotAmount = objSize;
             pivotAmount.x *= 0.5f;
-            pivotAmount.y *= 0.5f;
-            pivotAmount.z = 0;
+            pivotAmount.y *= -0.5f;
+            pivotAmount.z = 10;
 
-            obj.transform.position += pivotAmount;
-        }
-        return true;
-    }
-
-    public bool RemoveObject(Vector3 cursor)
-    {
-        List<Transform> objectsToRemove = new List<Transform>();
-        foreach(Transform t in rootObject)
-        {
-            Vector3 pos = t.position;
-            //Vector3 scale = t.GetComponent<ObjectInstanceController>().getDefaultSize();//
-            Vector3 scale = t.gameObject.GetComponent<SpriteRenderer>().bounds.size;
+            objPos-=pivotAmount;
             
-            Debug.Log(scale);
-            if(
-                (pos.x - (scale.x/2)) <= cursor.x && cursor.x <= (pos.x + (scale.x/2)) &&
-                (pos.y - (scale.y/2)) <= cursor.y && cursor.y <= (pos.y + (scale.y/2))
-            )
-            {
-                Debug.Log(pos+" "+scale+" "+cursor);
-                objectsToRemove.Add(t);
-            }
+            objPos.x = Mathf.Round(objPos.x);
+            objPos.y = Mathf.Round(objPos.y);
+
+            objPos+=pivotAmount;
+
         }
-        foreach(Transform t in objectsToRemove)
-        {
-            Destroy(t.gameObject);
-        }
-        
+
+        obj.transform.position = objPos;
         return true;
     }
 
