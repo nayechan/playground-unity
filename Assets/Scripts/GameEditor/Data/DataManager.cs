@@ -128,12 +128,10 @@ namespace GameEditor.Data
                     break;   
                 }
             }
+            SpriteRendererData.resizeObjectScale(newGameObject, dataAgent.imageData, dataAgent.imageData.GetIsRelativeSize());
             // create audioSource
             // set Scale by ImageData
-            if(!dataAgent.imageData.GetIsRelativeSize())
-            {
-                SpriteRendererData.resizeObjectScale(newGameObject, dataAgent.imageData);
-            }
+            
             return newGameObject;
         }
 

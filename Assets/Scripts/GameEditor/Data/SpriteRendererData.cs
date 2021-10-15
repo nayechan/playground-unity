@@ -66,14 +66,28 @@ namespace GameEditor.Data
             );
         }
 
-        public static void resizeObjectScale(GameObject gameObject, ImageData imageData)
+        public static void resizeObjectScale(
+            GameObject gameObject, ImageData imageData, bool isRelativeSize)
         {
             var texture = gameObject.GetComponent<SpriteRenderer>().sprite.texture;
             var transform = gameObject.transform;
-            var newScale = 
-                new Vector3(imageData.GetHSize()/texture.width * 100f,
-                            imageData.GetVSize()/texture.height * 100f,
-                            1f);
+            
+            Vector3 newScale;
+            if(!isRelativeSize)
+            {
+                newScale = new Vector3(
+                    imageData.GetHSize()/texture.width * 100f,
+                    imageData.GetVSize()/texture.height * 100f, 1f
+                );
+            }
+            else
+            {
+                newScale = new Vector3(
+                    imageData.GetHSize(),
+                    imageData.GetVSize(), 1f
+                );
+            }
+            
             transform.localScale = newScale;
 
         }
