@@ -15,14 +15,9 @@ namespace GameEditor.Data
         public DateTime createdTime;
         public DateTime modifiedTime;
         public string description;
-        // ingame instances
-        [NonSerialized]public GameObject rootOfToy;
-        [NonSerialized]public GameObject rootOfBlock;
-        private SandboxSaveLoader sandboxSaveLoader;
 
         public SandboxData()
         {
-            sandboxSaveLoader = SandboxSaveLoader.GetSingleton();
             title = "New SandBox";
             isLocalSandbox = true;
             id = CreateNonOverlappingLocalId();
@@ -30,23 +25,25 @@ namespace GameEditor.Data
             createdTime = DateTime.Now;
             modifiedTime = DateTime.Now;
             description = "";
-        }
-
-        public void SetRootGameObjects(GameObject rootOfToy, GameObject rootOfBlock)
-        {
-            this.rootOfToy = rootOfToy;
-            this.rootOfBlock = rootOfBlock;
+            Debug.Log("Sandbox Created");
         }
 
         private int CreateNonOverlappingLocalId()
         {
-            int newId;
-            do
+            int newId = new int();
+            for(int i = 0; i < 100; ++i)
             {
                 newId = (new System.Random()).Next(Int32.MinValue, Int32.MaxValue);
-                Debug.Log("new Id : " + newId.ToString());
+                if(SandboxChecker.isAlreadyExistId(newId, true))
+                {
+                    Debug.Log($"{newId} is already exist");
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
             }
-            while(!sandboxSaveLoader.isAlreadyExistId(newId, true));
             return newId;
         }
 

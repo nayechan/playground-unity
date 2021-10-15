@@ -3,24 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using GameEditor;
 using GameEditor.Data;
+using Network;
 
 namespace Examples
 {
     public class SandboxSaveLoaderExample : MonoBehaviour
     {
         // Start is called before the first frame update
-        public SandboxData sandboxData;
-        public GameObject rootOfToy;
-        public GameObject rootOfBlock;
-
         void Start()
         {
-            var sandboxSaveLoader = gameObject.AddComponent<SandboxSaveLoader>();
-            sandboxData.SetRootGameObjects(rootOfToy, rootOfBlock);
-            sandboxData.description = "Taehyeong's Test";
-            SandboxSaveLoader.SaveSandbox(sandboxData);
-            sandboxSaveLoader.UpdateAllSandboxDataFromPC();
-            sandboxSaveLoader.PrintAllSandboxData();
+            // var sandboxSaveLoader = SandboxSaveLoader.GetSingleton();
+            // var sandboxData = new SandboxData();
+            // sandboxData.description = "Taehyeong's Test";
+            // sandboxSaveLoader.SaveSandbox(sandboxData);
+            // sandboxSaveLoader.UpdateAllSandboxDataFromPC();
+            // sandboxSaveLoader.LoadSandbox(sandboxData);
+            // Compresser.CreateZip(sandboxSaveLoader.GetSandboxPath(sandboxData));
         }
 
         // Update is called once per frame

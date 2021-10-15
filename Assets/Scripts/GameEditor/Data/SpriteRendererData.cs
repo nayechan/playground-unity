@@ -12,7 +12,6 @@ namespace GameEditor.Data
         public Color color;
         public bool visible;
         public int orderInLayer;
-        
         public override string Type => _Type;
         public const string _Type = "SpriteRendererData";
 
@@ -48,8 +47,10 @@ namespace GameEditor.Data
 
         private void SetWithImageData(ref SpriteRenderer spriteRenderer)
         {
+            // 나중에 Sandbox 객체의 MakeFullPath를 호출하도록 수정 필요!!!
+            // var sandbox = 
             var imagePath = 
-                SandboxSaveLoader.GetSingleton().MakeFullPathOfCurrentSandbox(imageData.GetImagePaths()[0]);
+                Sandbox.MakeFullPath(imageData.GetImagePaths()[0]);
             var texture = new Texture2D(0, 0, TextureFormat.RGBA32, false); 
             try
             {
