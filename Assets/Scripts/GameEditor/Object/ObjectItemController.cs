@@ -59,8 +59,8 @@ public class ObjectItemController : MonoBehaviour
         
         image.sprite = GetComponent<DataAgent>().imageData.GetSprites()[0];
 
-        float h = GetComponent<DataAgent>().imageData.GetHSize();
-        float w = GetComponent<DataAgent>().imageData.GetVSize();
+        float h = GetComponent<DataAgent>().imageData.GetVSize();
+        float w = GetComponent<DataAgent>().imageData.GetHSize();
 
 
         Debug.Log(h+" "+w);

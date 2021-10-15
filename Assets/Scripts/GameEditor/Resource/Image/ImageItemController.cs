@@ -42,22 +42,22 @@ public class ImageItemController : MonoBehaviour {
     {
         image.sprite = _imageData.GetSprites()[0];
 
-        float h = _imageData.GetHSize();
-        float w = _imageData.GetVSize();
+        float w = _imageData.GetHSize();
+        float h = _imageData.GetVSize();
 
 
-        Debug.Log(h+" "+w);
+        Debug.Log(w+" "+h);
         if(_imageData.GetIsRelativeSize())
         {
             if(image.sprite != null)
             {
-                h *= image.sprite.texture.height;
                 w *= image.sprite.texture.width;
+                h *= image.sprite.texture.height;
             }
             
         }
         
-        Debug.Log(h+" "+w);
+        Debug.Log(w+" "+h);
 
         if(h > w)
         {
@@ -70,7 +70,7 @@ public class ImageItemController : MonoBehaviour {
             w = defaultWidth;
         }
         
-        Debug.Log(h+" "+w);
+        Debug.Log(w+" "+h);
 
         image.GetComponent<RectTransform>().sizeDelta = new Vector2(w,h);
 

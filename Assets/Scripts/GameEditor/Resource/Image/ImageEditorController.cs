@@ -79,6 +79,7 @@ public class ImageEditorController : MonoBehaviour
         try{
             w = float.Parse(hSizeInputField.text);
             h = float.Parse(vSizeInputField.text);
+            Debug.Log(w+" "+h);
         }
         catch(Exception e)
         {
@@ -220,7 +221,7 @@ public class ImageEditorController : MonoBehaviour
 
         }
         ImageData imageData = 
-        new ImageData(isSingleMode, isRelativeSize, h, w, nameInputField.text);
+        new ImageData(isSingleMode, isRelativeSize, w, h, nameInputField.text);
 
         imageData.SetImagePaths(spritePaths);
 
