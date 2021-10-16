@@ -17,14 +17,22 @@ namespace GameEditor
     {
         private static Dictionary<int, SandboxData> _sandboxDatasOfLocal = new Dictionary<int, SandboxData>();
         private static Dictionary<int, SandboxData> _sandboxDatasOfRemote = new Dictionary<int, SandboxData>();
-        public static string AppPath = Application.persistentDataPath;
-        public static string LocalPath = Path.Combine(AppPath, DirectoryNameOfLocalSandbox);
-        public static string RemotePath = Path.Combine(AppPath, DirectoryNameOfRemoteSandbox);
+        public static string AppPath;
+        public static string LocalPath;
+        public static string RemotePath;
 
-        public static void Initialize(SandboxData sandboxData)
+        public static void Initialize(string AppPath)
         {
+            SetPath(AppPath);
             CreateDefaultDirectoriesIfDosentExist();
             UpdateAllSandboxDataFromPC();
+        }
+
+        private static void SetPath(string appPath)
+        {
+            AppPath = appPath;
+            LocalPath = Path.Combine(AppPath, DirectoryNameOfLocalSandbox);
+            RemotePath = Path.Combine(AppPath, DirectoryNameOfRemoteSandbox);
         }
 
         private static void CreateDefaultDirectoriesIfDosentExist()
@@ -79,21 +87,46 @@ namespace GameEditor
                 sandboxData.id.ToString());
         }
 
+        public static string MakeFullPath(Sandbox sandbox, string reletivePath)
+        {
+            return MakeFullPath(sandbox.sandboxData, reletivePath);
+        }
+
         public static string MakeFullPath(SandboxData sandboxData, string reletivePath)
         {
             var sandboxPath = GetSandboxPath(sandboxData);
             return Path.Combine(sandboxPath, reletivePath);
         }
 
-        public static bool isAlreadyExistId(SandboxData sandboxData)
+        public static bool IsAlreadyExistId(SandboxData sandboxData)
         {
-            return isAlreadyExistId(sandboxData.id, sandboxData.isLocalSandbox);
+            return IsAlreadyExistId(sandboxData.id, sandboxData.isLocalSandbox);
         }
 
-        public static bool isAlreadyExistId(int id, bool isLocalSandbox)
+        public static bool IsAlreadyExistId(int id, bool isLocalSandbox)
         {
             var sandboxsPath = isLocalSandbox ? LocalPath : RemotePath;
             return Directory.Exists(Path.Combine(sandboxsPath, id.ToString()));
+        }
+
+        public static int CreateNonOverlappingLocalId()
+        {
+            int newId = new int();
+            int tryLimit = 1000;
+            for(int i = 0; i < tryLimit; ++i)
+            {
+                newId = (new System.Random()).Next(Int32.MinValue, Int32.MaxValue);
+                if(SandboxChecker.IsAlreadyExistId(newId, true))
+                {
+                    Debug.Log($"{newId} is already exist");
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return newId;
         }
 
         // Methods for debuging

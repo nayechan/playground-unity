@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 namespace GameEditor.Data
 {
     [Serializable]
-    public class CircleCollider2DData : ComponentData
+    public class CircleCollider2DData : ToyComponentData
     {
         public bool collidable, isTrigger;
         public float colRadius;
@@ -28,7 +28,7 @@ namespace GameEditor.Data
 
         // 인자로 받은 GameObject에 CircleCollider2D 컴포넌트를 추가하고
         //해당 컴포넌트를 반환한다.
-        public override Component AddComponent(GameObject obj)
+        public override Component AddMatchedToyComponent(GameObject obj)
         {
             var cir2d = obj.AddComponent<CircleCollider2D>();
             cir2d.sharedMaterial = new PhysicsMaterial2D();
@@ -38,11 +38,11 @@ namespace GameEditor.Data
         // Component의 값을 갖는 CircleCollider2DDate 클래스를 생성한다.
         public CircleCollider2DData(Component comp)
         {
-            SetData(comp);
+            UpdateByToyComponent(comp);
         }
 
         // 본 Class의 data를 받은 Component의 설정값으로 바꾼다.
-        public sealed override void SetData(Component comp)
+        public sealed override void UpdateByToyComponent(Component comp)
         {
             Assert.IsTrue(IsCorrectType(comp));
             var cir2d = (CircleCollider2D)comp;

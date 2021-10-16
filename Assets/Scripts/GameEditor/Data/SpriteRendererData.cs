@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 namespace GameEditor.Data
 {
     [System.Serializable]
-    public class SpriteRendererData : ComponentData
+    public class SpriteRendererData : ToyComponentData
     {
         public ImageData imageData;
         public Color color;
@@ -26,7 +26,7 @@ namespace GameEditor.Data
         // SpriteRendererData 클래스를 생성한다.
         public SpriteRendererData(Component comp)
         {
-            SetData(comp);
+            UpdateByToyComponent(comp);
             //  SetImageData(imgData);
         }
         // 인자로 받은 Component의 설정을 본 class의 Data로 설정한다.
@@ -47,24 +47,7 @@ namespace GameEditor.Data
 
         private void SetWithImageData(ref SpriteRenderer spriteRenderer)
         {
-            // 나중에 Sandbox 객체의 MakeFullPath를 호출하도록 수정 필요!!!
-            // var sandbox = 
-            var imagePath = 
-                Sandbox.MakeFullPath(imageData.GetImagePaths()[0]);
-            var texture = new Texture2D(0, 0, TextureFormat.RGBA32, false); 
-            try
-            {
-                texture.LoadImage(File.ReadAllBytes(imagePath));
-            }
-            catch
-            {
-                Debug.Log("Can't Load Image : " + imagePath);
-                return;
-            }
-            spriteRenderer.sprite = Sprite.Create(
-                texture, new Rect(0, 0, texture.width, texture.height), 
-                new Vector2(0.5f,0.5f)
-            );
+            // spriteRenderer.sprite = imageData.GetSprites()[0];
         }
 
         public static void resizeObjectScale(GameObject gameObject, ImageData imageData)
@@ -80,7 +63,7 @@ namespace GameEditor.Data
         }
         // 인자로 받은 GameObject에 SpriteRenderer 컴포넌트를 추가하고
         //해당 컴포넌트를 반환한다.
-        public override Component AddComponent(GameObject obj)
+        public override Component AddMatchedToyComponent(GameObject obj)
         {
             var sr = obj.AddComponent<SpriteRenderer>();
             return sr;
@@ -89,7 +72,7 @@ namespace GameEditor.Data
 
 
         // 본 Class의 data를 받은 Component의 설정값으로 바꾼다.
-        public sealed override void SetData(Component comp)
+        public sealed override void UpdateByToyComponent(Component comp)
         {
             var sr = (SpriteRenderer)comp;
             color = sr.color;

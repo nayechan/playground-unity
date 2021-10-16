@@ -32,7 +32,7 @@ public class AudioItemController : MonoBehaviour {
     // 이 요소에 대한 UI 부분을 리프레시합니다.
     public void RefreshUI()
     {
-        typeText.text = _audioData.GetType();
+        typeText.text = _audioData.GetAudioType();
         titleText.text = System.IO.Path.GetFileName(_audioData.GetPath());
     } 
 

@@ -5,19 +5,19 @@ using UnityEngine;
 
 namespace GameEditor.Data
 {
-    public class DataManager
+    public class ToyBuilder
     {
         private GameObject newGameObject;
         private JObject gameObjectRecord;
-        private DataAgent dataAgent;
+        private ToyData toyData;
 
         public static GameObject CreateGameObject(JObject gameObjectRecord)
         {
-            var dataManager = new DataManager(gameObjectRecord);
+            var dataManager = new ToyBuilder(gameObjectRecord);
             return dataManager.CreateGameObject();
         }
 
-        private DataManager(JObject gameObjectRecord)
+        private ToyBuilder(JObject gameObjectRecord)
         {
             newGameObject = new GameObject();
             this.gameObjectRecord = gameObjectRecord;
@@ -32,22 +32,22 @@ namespace GameEditor.Data
 
         private void SetGameObject()
         {
-            dataAgent = newGameObject.AddComponent<DataAgent>();
+            var toyData = new ToyData();
             SetObjectAndImageData();
-            AppendImageStorage();
+            UpdateImageStorage();
             AddComponents();
         }
 
         private void SetObjectAndImageData()
         {
-            dataAgent.objectData = JsonUtility.FromJson<ObjectData>((string)gameObjectRecord["ObjectData"]);
-            dataAgent.imageData = JsonUtility.FromJson<ImageData>((string)gameObjectRecord["ImageData"]);
+            toyData.objectData = JsonUtility.FromJson<ObjectData>((string)gameObjectRecord["ObjectData"]);
+            toyData.imageData = JsonUtility.FromJson<ImageData>((string)gameObjectRecord["ImageData"]);
         }
 
-        private void AppendImageStorage()
+        private void UpdateImageStorage()
         {
             var imageStorage = ImageStorage.GetSingleton();
-            imageStorage.AddImageData(dataAgent.imageData);
+            imageStorage.UpdateImagesDataAndSprites(toyData.imageData);
         }
 
         private void AddComponents()
@@ -55,7 +55,7 @@ namespace GameEditor.Data
             var componentDatas = gameObjectRecordToComponentDatas(gameObjectRecord);
             foreach (var componentData in componentDatas)
             {
-                dataAgent.AddComponentFromData(componentData);
+                toyData.AddComponentFromData(componentData);
             }
         }
 
@@ -63,27 +63,27 @@ namespace GameEditor.Data
         {
             foreach (JObject childRecord in gameObjectRecord["Children"])
             {                
-                var childGameObject = DataManager.CreateGameObject(childRecord);
+                var childGameObject = ToyBuilder.CreateGameObject(childRecord);
                 childGameObject.transform.parent = newGameObject.transform;
             }
         }
 
-        public static GameObject CreateGameobject(DataAgent dataAgent)
+        public static GameObject CreateGameobject(Toy toy)
         {
             var newGameObject = new GameObject();
             // set object property
-            dataAgent.objectData.SetGameObject(newGameObject);
+            toy.objectData.SetGameObject(newGameObject);
             // create spriteRenderer
-            var spriteRendererData = new SpriteRendererData(dataAgent.imageData);
+            var spriteRendererData = new SpriteRendererData(toy.imageData);
             var spriteRenderer = newGameObject.AddComponent<SpriteRenderer>();
             spriteRendererData.ApplyData(spriteRenderer);
             // create rigidbody
             var rigidbody2d = newGameObject.AddComponent<Rigidbody2D>(); 
-            rigidbody2d.bodyType = dataAgent.objectData.isFixed?
+            rigidbody2d.bodyType = toy.objectData.isFixed?
                 RigidbodyType2D.Kinematic : RigidbodyType2D.Dynamic;
             rigidbody2d.sharedMaterial = new PhysicsMaterial2D();
             // create collider
-            switch(dataAgent.objectData.colliderType)
+            switch(toy.objectData.colliderType)
             {
                 case ColliderType.Circle:
                 {
@@ -102,18 +102,18 @@ namespace GameEditor.Data
             }
             // create audioSource
             // set Scale by ImageData
-            if(!dataAgent.imageData.GetIsRelativeSize())
+            if(!toy.imageData.GetIsRelativeSize())
             {
-                SpriteRendererData.resizeObjectScale(newGameObject, dataAgent.imageData);
+                SpriteRendererData.resizeObjectScale(newGameObject, toy.imageData);
             }
-            newGameObject.AddComponent<DataAgent>();
+            newGameObject.AddComponent<Toy>();
             return newGameObject;
         }
 
         // JObject로부터 List<ComponentData> 를 반환합니다.
-        private List<ComponentData> gameObjectRecordToComponentDatas(JObject gameObjectRecord)
+        private List<ToyComponentData> gameObjectRecordToComponentDatas(JObject gameObjectRecord)
         {
-            var componentDatas = new List<ComponentData>();
+            var componentDatas = new List<ToyComponentData>();
             foreach (var pair in (JObject)gameObjectRecord["Components"])
             {
                 switch (pair.Key)

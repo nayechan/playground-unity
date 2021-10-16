@@ -4,6 +4,7 @@ using GameEditor.Data;
 using System.IO;
 using Tools;
 using static Tools.Names;
+using System;
 
 namespace GameEditor
 {
@@ -36,11 +37,13 @@ namespace GameEditor
             try
             {
                 SaveSandboxData();
+                UpdateDataAgents();
                 SaveToy();
             }
-            catch
+            catch(Exception e)
             {
                 Debug.Log("Failed to create savefile at " + SandboxChecker.GetSandboxPath(_sandboxData));
+                Debug.Log(e.ToString());
             }
         }
 
@@ -53,12 +56,17 @@ namespace GameEditor
             stream.Write(jsonSandboxData);
             stream.Close();
         }
+
+        private void UpdateDataAgents()
+        {
+            Toy.UpdateComponentFromDataAll(_rootOfToy);
+        }
         
         private void SaveToy() 
         {
             var jsonToyDataPath = SandboxChecker.MakeFullPath(_sandboxData, JsonNameOfToyData);
             FileTool.DeleteFileIfExist(jsonToyDataPath);
-            var jsonToyData = _rootOfToy.GetComponent<DataAgent>().GetJObjectFromAll().ToString();
+            var jsonToyData = _rootOfToy.GetComponent<Toy>().GetJObjectFromAll().ToString();
             var stream = File.CreateText(jsonToyDataPath);
             stream.Write(jsonToyData);
             stream.Close();
@@ -76,9 +84,10 @@ namespace GameEditor
             {
                 return LoadToy();
             }
-            catch
+            catch(Exception e)
             {
-                Debug.Log("Failed to load with sandboxData : " + _sandboxData.ToString());
+                Debug.Log("Failed to load with sandboxData. Id : " + _sandboxData.id);
+                Debug.Log(e.ToString());
                 return null;
             }
         }
@@ -87,7 +96,7 @@ namespace GameEditor
         {
             var jsonToyDataPath = Path.Combine(SandboxChecker.GetSandboxPath(_sandboxData), JsonNameOfToyData);
             var jsonToyData = JObject.Parse(File.ReadAllText(jsonToyDataPath));
-            var loadedRootOfToy = DataManager.CreateGameObject(jsonToyData);
+            var loadedRootOfToy = ToyBuilder.CreateGameObject(jsonToyData);
             return loadedRootOfToy;
         }
     }

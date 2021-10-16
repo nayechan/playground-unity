@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Net.Mime;
 using System;
 using System.IO;
@@ -20,31 +21,11 @@ namespace GameEditor.Data
         {
             title = "New SandBox";
             isLocalSandbox = true;
-            id = CreateNonOverlappingLocalId();
+            id = -1;
             creatorName = "";
             createdTime = DateTime.Now;
             modifiedTime = DateTime.Now;
             description = "";
-            Debug.Log("Sandbox Created");
-        }
-
-        private int CreateNonOverlappingLocalId()
-        {
-            int newId = new int();
-            for(int i = 0; i < 100; ++i)
-            {
-                newId = (new System.Random()).Next(Int32.MinValue, Int32.MaxValue);
-                if(SandboxChecker.isAlreadyExistId(newId, true))
-                {
-                    Debug.Log($"{newId} is already exist");
-                    continue;
-                }
-                else
-                {
-                    break;
-                }
-            }
-            return newId;
         }
 
         public override int GetHashCode()

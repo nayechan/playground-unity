@@ -15,12 +15,16 @@ public class ImageStorage : MonoBehaviour
     [SerializeField] private ImageViewerController _imageViewerController;
     [SerializeField] private ImageSelectorController _imageSelectorController;
     private static ImageStorage _imageStorage;
+    // 정상 작동을 위해 inspector에서 sandbox를 지정해주세요.
+    public Sandbox sandbox;
 
-    Dictionary<int, ImageData> _imageDatas;
+    Dictionary<string, Sprite> _sprites;
+    Dictionary<int, ImageData> _imagesData;
     private void Awake()
     {
         SetSingletonIfUnset();
-        _imageDatas = new Dictionary<int, ImageData>();
+        _sprites = new Dictionary<string, Sprite>();
+        _imagesData = new Dictionary<int, ImageData>();
     }
 
     private void SetSingletonIfUnset()
@@ -37,82 +41,45 @@ public class ImageStorage : MonoBehaviour
     }
 
     //이미지 데이터 추가
-    public void AddImageData(ImageData imageData)
+    public void UpdateImagesDataAndSprites(ImageData imageData)
     {
-        if(imageData!=null && !ContainsImageData(imageData))
-        {
-            List<Sprite> spriteList = new List<Sprite>();
-
-            int imagePathLength = imageData.GetImagePaths().Count;
-
-            MoveImagePath(imageData);
-
-            for(int i=0;i<imagePathLength;++i)
-            {
-
-                Texture2D texture = new Texture2D(2, 2, TextureFormat.RGBA32, false);
-                if(imageData.GetImagePaths()[i] != "")
-                {
-                    byte[] byteArray = File.ReadAllBytes(imageData.GetImagePaths()[i]);
-                    texture.LoadImage(byteArray);
-
-                    Sprite s = Sprite.Create(
-                        texture, new Rect(0, 0, texture.width, texture.height), 
-                        new Vector2(0.5f,0.5f)
-                    );
-                    Debug.Log(s.pivot);
-                    spriteList.Add(s);
-                }
-                else
-                {
-                    spriteList.Add(null);
-                }
-            }
-            
-            imageData.SetSprites(spriteList);
-
-            _imageDatas.Add(imageData.GetHashCode(), imageData);
-        }
+        _imagesData[imageData.GetHashCode()] = imageData;
+        UpdateSprites(imageData);
         
-        _imageViewerController.RefreshUI(_imageDatas, false);
-        _imageSelectorController.RefreshUI(_imageDatas);
+        _imageViewerController.RefreshUI(_imagesData, false);
+        _imageSelectorController.RefreshUI(_imagesData);
     }
 
-    private bool ContainsImageData(ImageData imageData)
+    private void UpdateSprites(ImageData imageData)
     {
-        return _imageDatas.ContainsKey(imageData.GetHashCode());
-    }
-
-    // 이미지 데이터를 앱 내부 데이터 폴더로 복사합니다.
-    public void MoveImagePath(ImageData data)
-    {
-        List<string> originalPaths = data.GetImagePaths();
-        List<string> newPaths = new List<string>();
-
-        foreach(string originalPath in originalPaths)
+        foreach(var fileName in imageData.GetRelativeImagePaths())
         {
-            if(originalPath != "")
-            {
-                string sandboxPath = SandboxSaveLoader.GetSingleton().CurrentSandboxPath;
-                string relativePath = System.IO.Path.GetFileName(originalPath);
-                string fullPath = Path.Combine(sandboxPath, relativePath);
-                Debug.Log(fullPath);
-                System.IO.Directory.CreateDirectory(sandboxPath);
-                System.IO.File.Copy(originalPath, fullPath, true);
-                
-                newPaths.Add(relativePath);
-            }
-            else
-            {
-                newPaths.Add("");
-            }
+            var imagePath = SandboxChecker.MakeFullPath(sandbox, fileName);
+            _sprites[fileName] = MakeSprite(imagePath);
         }
-        data.SetImagePaths(newPaths);
     }
 
-    public ImageData GetImageData(int uuid)
+    private Sprite MakeSprite(string imagePath)
     {
-        return _imageDatas[uuid];
+        Texture2D texture = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+        byte[] imageBytes = File.ReadAllBytes(imagePath);
+        texture.LoadImage(imageBytes);
+        Sprite sprite = Sprite.Create(
+            texture, new Rect(0, 0, texture.width, texture.height), 
+            new Vector2(0.5f,0.5f)
+        );
+        Debug.Log(sprite.pivot);
+        return sprite;
+    }
+
+    public List<Sprite> GetSprites(ImageData imageData)
+    {
+        var sprites = new List<Sprite>();
+        foreach(var fileName in imageData.GetRelativeImagePaths())
+        {
+            sprites.Add(_sprites[fileName]);
+        }
+        return sprites;
     }
 
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Tools
 {
-    public class FileTool
+    public static class FileTool
     {
         public static void DeleteFileIfExist(string path)
         {
@@ -20,5 +20,14 @@ namespace Tools
             if(!Directory.Exists(path))
                 Directory.CreateDirectory(path);
         }
+
+        public static List<string> AbsolutePathsToFileNames(List<string> absolutePaths)
+        {
+            var fileNames = new List<string>();
+            foreach(var absolutePath in absolutePaths)
+                fileNames.Add(System.IO.Path.GetFileName(absolutePath));
+            return fileNames;
+        }
+
     }
 }

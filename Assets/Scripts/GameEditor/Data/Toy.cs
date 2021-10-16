@@ -8,32 +8,49 @@ using UnityEngine.Assertions;
 
 namespace GameEditor.Data
 {
-    public class DataAgent : MonoBehaviour
+    public class Toy : MonoBehaviour
     {
-        public ObjectData objectData;
-        public ImageData imageData;
-        public AudioData audioData;
-        private Dictionary<Component, ComponentData> ComponentDatas;
-        public int ID // 추후 해시코드로 구현할 예정임.
-        {
-            get {return 0;}
-        }        
+        private ToyData toyData;
 
-
-        private void Awake()
+        
+        public void SetToyData(ToyData toyData)
         {
-            objectData = new ObjectData();
-            ComponentDatas = new Dictionary<Component, ComponentData>();
-            // ResourceDatas = new Dictionary<Component, ResourceData>();
+            this.toyData = toyData;
+        } 
+
+        private List<ToyComponentData> GetSupportedToyComponentsData()
+        {
+            return Toy.GetSupportedToyComponentsData(gameObject);
+        }
+
+        private static List<ToyComponentData> GetSupportedToyComponentsData(GameObject gameObject)
+        {
+            var toyComponentsData = new List<ToyComponentData>();
+            foreach(var component in gameObject.GetComponents<Component>())
+            {
+                if(!ToyComponentData.IsSupportedType(component))
+                    continue;
+                toyComponentsData.Add(ToyComponentData.CreateComponentData(component));
+            }
+            return toyComponentsData;
+        }
+
+        public static void UpdateComponentFromDataAll(GameObject obj)
+        {
+            var da = obj.GetComponent<Toy>();
+            if (da != null)
+            {
+                da.UpdateComponentData();
+            }
+
+            foreach (Transform tp in obj.transform)
+            {
+                UpdateComponentFromDataAll(tp.GameObject());
+            }
         }
         
-        public void SetDataAgentResource(ObjectData objectData, ImageData imageData)
-        {
-            this.objectData = objectData;
-            this.imageData = imageData;
-        } 
         // DataAgent가 속한 GameObject의 ComponentData를 업데이트합니다.
-        public void UpdateComponentData()
+        private void UpdateComponentData()
         {
             objectData.name = name;
             // 삭제된 Component를 확인하고 해당하는 Data를 삭제합니다.
@@ -56,7 +73,7 @@ namespace GameEditor.Data
                 else
                 {
                     // ResourceDatas.TryGetValue(component, out var rd);
-                    var componentData = ComponentData.CreateComponentData(component);
+                    var componentData = ToyComponentData.CreateComponentData(component);
                     if (componentData != null)
                     {
                         ComponentDatas.Add(component, componentData);
@@ -64,36 +81,11 @@ namespace GameEditor.Data
                 }
             }
         }
-
-        // 인자로 받은 오브젝트와 그 하위 오브젝트의 Data를 모두 업데이트 합니다.
-        public static void UpdateComponentFromDataAll(GameObject obj)
-        {
-            var da = obj.GetComponent<DataAgent>();
-            if (da != null)
-            {
-                da.UpdateComponentData();
-            }
-
-            foreach (Transform tp in obj.transform)
-            {
-                UpdateComponentFromDataAll(tp.GameObject());
-            }
-        }
-        
-        // 갖고 있는 Data 상태로 Component를 Set 합니다.
-        public void SetComponentFromData()
-        {
-            foreach (var pair in ComponentDatas)
-            {
-                pair.Value.ApplyData(pair.Key);
-            }
-        }
-        
         // 인자로 받은 오브젝트와 하위 오브젝트 모두 갖고있는 Data상태로 Component를
         // Set 합니다.
-        public static void SetComponentFromDataAll(GameObject obj)
+        private static void SetComponentFromDataAll(GameObject obj)
         {
-            var da = obj.GetComponent<DataAgent>();
+            var da = obj.GetComponent<Toy>();
             if (da != null)
             {
                 da.SetComponentFromData();
@@ -105,6 +97,13 @@ namespace GameEditor.Data
             }
         }
         
+        private void SetComponentFromData()
+        {
+            foreach (var pair in ComponentDatas)
+            {
+                pair.Value.ApplyData(pair.Key);
+            }
+        }
 
         // 기록하고 있는 Datas를 JObject형식으로 반환합니다.
         public JObject GetJObject()
@@ -126,11 +125,11 @@ namespace GameEditor.Data
         }
 
         // ComponentData에 해당하는 Component를 오브젝트에 추가하고 해당 값으로 Set 합니다.
-        public Component AddComponentFromData(ComponentData componentData)
+        public Component AddComponentFromData(ToyComponentData toyComponentData)
         {
-            var component = componentData.AddComponent(gameObject);
-            ComponentDatas.Add(component, componentData);
-            componentData.ApplyData(component);
+            var component = toyComponentData.AddMatchedToyComponent(gameObject);
+            ComponentDatas.Add(component, toyComponentData);
+            toyComponentData.ApplyData(component);
             return component;
         }
         
@@ -141,7 +140,7 @@ namespace GameEditor.Data
             var jArray = new JArray();
             foreach (Transform tp in transform)
             { 
-                var da = tp.GetComponent<DataAgent>();
+                var da = tp.GetComponent<Toy>();
                 if (da != null)
                 {
                     jArray.Add(da.GetJObjectFromAll());

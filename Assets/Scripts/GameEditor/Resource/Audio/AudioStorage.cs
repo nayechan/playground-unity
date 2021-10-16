@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using GameEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -12,6 +13,7 @@ public class AudioStorage : MonoBehaviour
 
     // Audio 편집기의 UI와 저장 상황을 동기화하기 위해 추가한 변수입니다.
     [SerializeField] private AudioEditorController _audioEditorController;
+    public Sandbox sandbox;
 
     private void Awake()
     {
@@ -76,13 +78,11 @@ public class AudioStorage : MonoBehaviour
     // 오디오 데이터를 앱 내부 데이터 폴더로 복사합니다.
     public void CopyAudioData(AudioData data)
     {
-        string newPath = Application.persistentDataPath;
-        newPath += ("/" + System.IO.Path.GetFileName(data.GetPath()));
-
+        var fileName = System.IO.Path.GetFileName(data.GetPath());
+        string newPath = SandboxChecker.MakeFullPath(sandbox, fileName);
         Debug.Log(newPath);
-
         System.IO.File.Copy(data.GetPath(), newPath, true);
-        data.SetPath(newPath);
+        data.SetRelativePath(fileName);
     }
 
     public void AddAudioData(AudioData data)

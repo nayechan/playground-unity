@@ -1,3 +1,5 @@
+using System;
+using GameEditor.Data;
 using UnityEngine;
 
 public class AudioData
@@ -6,6 +8,8 @@ public class AudioData
     private string _path;
     private string _type;
     private AudioClip _audioClip;
+    [NonSerializedAttribute] public ToyData toyData;
+
     public AudioData(string path, string type)
     {
         _path = path;
@@ -28,12 +32,12 @@ public class AudioData
         return _path;
     }
 
-    public void SetPath(string path)
+    public void SetRelativePath(string path)
     {
         _path = path;
     }
 
-    public string GetType()
+    public string GetAudioType()
     {
         return _type;
     }

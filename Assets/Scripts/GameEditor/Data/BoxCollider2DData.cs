@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 namespace GameEditor.Data
 {
     [System.Serializable]
-    public class BoxCollider2DData : ComponentData
+    public class BoxCollider2DData : ToyComponentData
     {
         public bool collidable, isTrigger;
         public Vector2 size;
@@ -31,20 +31,20 @@ namespace GameEditor.Data
         // Component의 값을 갖는 BoxCollider2DData 클래스를 생성한다.
         public BoxCollider2DData(Component comp)
         {
-            SetData(comp);
+            UpdateByToyComponent(comp);
         }
 
         // 인자로 받은 GameObject에 BoxCollider2D 컴포넌트를 추가하고
         //해당 컴포넌트를 반환한다.
-        public override Component AddComponent(GameObject obj)
+        public override Component AddMatchedToyComponent(GameObject gameObject)
         {
-            var box2d = obj.AddComponent<BoxCollider2D>();
+            var box2d = gameObject.AddComponent<BoxCollider2D>();
             box2d.sharedMaterial = new PhysicsMaterial2D();
             return box2d;
         }
         
         // 본 Class의 data를 받은 Component의 설정값으로 바꾼다.
-        public sealed override void SetData(Component comp)
+        public sealed override void UpdateByToyComponent(Component comp)
         {
             Assert.IsTrue(IsCorrectType(comp));
             var box2d = (BoxCollider2D)comp;
@@ -61,6 +61,5 @@ namespace GameEditor.Data
         {
             return comp is BoxCollider2D;
         }
-
     }
 }

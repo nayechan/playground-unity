@@ -18,6 +18,7 @@ public class ImageItemController : MonoBehaviour {
 
     ImageData _imageData;
 
+
     
     public delegate void OnClick(ImageData imageData);
 
@@ -40,7 +41,8 @@ public class ImageItemController : MonoBehaviour {
     //UI 리프레시
     public void RefreshUI()
     {
-        image.sprite = _imageData.GetSprites()[0];
+        var imageStorage = ImageStorage.GetSingleton();
+        image.sprite = imageStorage.GetSprites(_imageData)[0];
 
         float h = _imageData.GetHSize();
         float w = _imageData.GetVSize();

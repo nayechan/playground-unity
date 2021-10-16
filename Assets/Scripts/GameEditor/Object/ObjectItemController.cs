@@ -6,35 +6,14 @@ using GameEditor.Data;
 
 public class ObjectItemController : MonoBehaviour
 {
-    ObjectData _objectData;
-    ImageStorage imageStorage;
-    [SerializeField] Image image;
+    [SerializeField] Image displayImage;
     [SerializeField] Text typeText, nameText;
-    private void Awake() {
-        Debug.Log("asdf");
-        if(imageStorage == null)
-        {
-            imageStorage = GameObject.Find("ImageStorage").GetComponent<ImageStorage>();
-        }
-    }
-    public void SetData(ObjectData objectData)
+
+    public void SetDisplayInstanceData(ToyData toyData)
     {
-        _objectData = objectData;
-        
-        Debug.Log(_objectData.imageDataHashCode);
-        Debug.Log(imageStorage);
-
-        if(imageStorage == null)
-        {
-            imageStorage = GameObject.Find("ImageStorage").GetComponent<ImageStorage>();
-        }
-
-
-        image.sprite = 
-        imageStorage.GetImageData(_objectData.imageDataHashCode).GetSprites()[0];
-
-
-        typeText.text = _objectData.toyType.ToString();
-        nameText.text = _objectData.name;
+        var imageStorage = ImageStorage.GetSingleton();
+        displayImage.sprite = imageStorage.GetSprites(toyData.imageData)[0];
+        typeText.text = toyData.objectData.toyType.ToString();
+        nameText.text = toyData.objectData.name;
     }    
 }

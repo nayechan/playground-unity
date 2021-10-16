@@ -3,6 +3,8 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using Tools;
+using GameEditor;
 
 // 이미지 에디터를 관리하기 위한 스크립트입니다.
 public class ImageEditorController : MonoBehaviour
@@ -43,6 +45,8 @@ public class ImageEditorController : MonoBehaviour
     //높이, 너비 결과값
     float h, w;
 
+    // 정상 작동을 위해 inspector에서 sandbox를 지정해주세요.
+    public Sandbox sandbox;
     // Start is called before the first frame update
     void Start()
     {
@@ -221,11 +225,12 @@ public class ImageEditorController : MonoBehaviour
         }
         ImageData imageData = 
         new ImageData(isSingleMode, isRelativeSize, h, w, nameInputField.text);
-
-        imageData.SetImagePaths(spritePaths);
+        var relativePaths = FileTool.AbsolutePathsToFileNames(spritePaths);
+        imageData.SetRelativeImagePaths(relativePaths);
 
         return imageData;
     }
+
 
     //추가 버튼 클릭시
     public void OnAddButtonClicked()
@@ -233,12 +238,25 @@ public class ImageEditorController : MonoBehaviour
         ImageData imageData;
         if(ValidateForm())
         {
+            // 추가하기 전 중복되는 파일 이름이 있는지 확인하는 코드 추가 필요
+            CopyImagesToSandboxDirectory();
             imageData = GenerateImageData();
-            Debug.Log(imageData);
-            imageStorage.AddImageData(imageData);
+            imageStorage.UpdateImagesDataAndSprites(imageData);
         }
 
         OnClose();
+    }
+
+    // 이미지 데이터를 앱 내부 데이터 폴더로 복사합니다.
+    private void CopyImagesToSandboxDirectory()
+    {
+        List<string> originalPaths = spritePaths;
+        foreach(string originalPath in originalPaths)
+        {
+            string relativePath = System.IO.Path.GetFileName(originalPath);
+            string destination = SandboxChecker.MakeFullPath(sandbox, relativePath);
+            System.IO.File.Copy(originalPath, destination, true);
+        }
     }
 
     //취소 버튼/ 닫기 버튼 클릭시

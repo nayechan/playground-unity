@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 namespace GameEditor.Data
 {
     [System.Serializable]
-    public class TransformData : ComponentData
+    public class TransformData : ToyComponentData
     {
         public Vector3 position;
         public Vector3 rotation;
@@ -25,7 +25,7 @@ namespace GameEditor.Data
 
         // Transform은 모든 오브젝트에 자동 생성되므로 Transform의 값을 
         // 본 클래스의 값으로 Set 한 뒤 Transform를 반환한다.
-        public override Component AddComponent(GameObject obj)
+        public override Component AddMatchedToyComponent(GameObject obj)
         {
             ApplyData(obj.transform);
             return obj.transform;
@@ -34,11 +34,11 @@ namespace GameEditor.Data
         // Component의 값을 갖는 TransformData 클래스를 생성한다.
         public TransformData(Component comp)
         {
-            SetData(comp);
+            UpdateByToyComponent(comp);
         }
         
         // 본 Class의 data를 받은 Component의 설정값으로 바꾼다.
-        public sealed override void SetData(Component comp)
+        public sealed override void UpdateByToyComponent(Component comp)
         {
             Assert.IsTrue(IsCorrectType(comp));
             var tf = (Transform) comp;
