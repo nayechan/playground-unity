@@ -37,7 +37,7 @@ namespace GameEditor
             try
             {
                 SaveSandboxData();
-                UpdateDataAgents();
+                UpdateToysData();
                 SaveToy();
             }
             catch(Exception e)
@@ -57,16 +57,16 @@ namespace GameEditor
             stream.Close();
         }
 
-        private void UpdateDataAgents()
+        private void UpdateToysData()
         {
-            Toy.UpdateComponentFromDataAll(_rootOfToy);
+            ToySaver.UpdateToysComponentsData(_rootOfToy);
         }
         
         private void SaveToy() 
         {
             var jsonToyDataPath = SandboxChecker.MakeFullPath(_sandboxData, JsonNameOfToyData);
             FileTool.DeleteFileIfExist(jsonToyDataPath);
-            var jsonToyData = _rootOfToy.GetComponent<Toy>().GetJObjectFromAll().ToString();
+            var jsonToyData = _rootOfToy.GetComponent<ToySaver>().GetJsonToysData().ToString();
             var stream = File.CreateText(jsonToyDataPath);
             stream.Write(jsonToyData);
             stream.Close();

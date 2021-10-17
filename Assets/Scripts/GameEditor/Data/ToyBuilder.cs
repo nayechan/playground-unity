@@ -68,22 +68,22 @@ namespace GameEditor.Data
             }
         }
 
-        public static GameObject CreateGameobject(Toy toy)
+        public static GameObject CreateGameobject(ToySaver toySaver)
         {
             var newGameObject = new GameObject();
             // set object property
-            toy.objectData.SetGameObject(newGameObject);
+            toySaver.objectData.SetGameObject(newGameObject);
             // create spriteRenderer
-            var spriteRendererData = new SpriteRendererData(toy.imageData);
+            var spriteRendererData = new SpriteRendererData(toySaver.imageData);
             var spriteRenderer = newGameObject.AddComponent<SpriteRenderer>();
             spriteRendererData.ApplyData(spriteRenderer);
             // create rigidbody
             var rigidbody2d = newGameObject.AddComponent<Rigidbody2D>(); 
-            rigidbody2d.bodyType = toy.objectData.isFixed?
+            rigidbody2d.bodyType = toySaver.objectData.isFixed?
                 RigidbodyType2D.Kinematic : RigidbodyType2D.Dynamic;
             rigidbody2d.sharedMaterial = new PhysicsMaterial2D();
             // create collider
-            switch(toy.objectData.colliderType)
+            switch(toySaver.objectData.colliderType)
             {
                 case ColliderType.Circle:
                 {
@@ -102,11 +102,11 @@ namespace GameEditor.Data
             }
             // create audioSource
             // set Scale by ImageData
-            if(!toy.imageData.GetIsRelativeSize())
+            if(!toySaver.imageData.GetIsRelativeSize())
             {
-                SpriteRendererData.resizeObjectScale(newGameObject, toy.imageData);
+                SpriteRendererData.resizeObjectScale(newGameObject, toySaver.imageData);
             }
-            newGameObject.AddComponent<Toy>();
+            newGameObject.AddComponent<ToySaver>();
             return newGameObject;
         }
 

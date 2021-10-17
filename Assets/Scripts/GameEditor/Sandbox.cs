@@ -21,7 +21,7 @@ public class Sandbox : MonoBehaviour
     {
         this.sandboxData = sandboxData;
     }
-    public void SaveSandbox()
+    public void SaveSandboxOnPC()
     {
         SandboxSaveLoader.SaveSandbox(sandboxData, rootOfToy, rootOfBlock);
     }

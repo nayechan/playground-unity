@@ -10,10 +10,10 @@ namespace Examples
     public class CreateGameObjectFromDataAgentExample : MonoBehaviour
     {
         public GameObject obj;
-        private Toy toy;
+        private ToySaver toySaver;
         void Start()
         {
-            toy = obj.AddComponent<Toy>();
+            toySaver = obj.AddComponent<ToySaver>();
             var imageData = new ImageData(true, false, 3f, 5f, "haha");
             // 기본적으로 C:\Users\lunda\AppData\LocalLow\Lighthouse Keeper\project-playground\-1\beach.png 를 로드합니다.
             // imageData.AddImagePath("beach.png");
@@ -30,7 +30,7 @@ namespace Examples
         {
             if(Input.GetMouseButtonDown(0))
             {
-                var gameObject = ToyBuilder.CreateGameobject(toy);
+                var gameObject = ToyBuilder.CreateGameobject(toySaver);
                 Debug.Log(gameObject.ToString() + " is Created ");
             }
         }
