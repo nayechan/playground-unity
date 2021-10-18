@@ -13,7 +13,7 @@ public class ImageData
     [SerializeField] private bool _usingSingleImage, _isRelativeSize;
     [SerializeField] private float _hSize, _vSize;
     [SerializeField] private string  _title;
-    [NonSerializedAttribute] public ToyData toyData;
+    // [NonSerializedAttribute] public ToyData toyData;
 
     // private string uuid;
 
@@ -74,4 +74,21 @@ public class ImageData
                 ^ _title.GetHashCode();
     }
 
+    public void BuildAndAttachSpriteRendererAndAdjustScale(GameObject toy)
+    {
+        var spriteRenderer = CreateSpriteRendererAndLoadSprite(toy);
+        var texture = spriteRenderer.sprite.texture;
+        var newScale = 
+            new Vector3(GetHSize()/texture.width * 100f,
+                        GetVSize()/texture.height * 100f,
+                        1f);
+        toy.transform.localScale = newScale;
+    }
+
+    private SpriteRenderer CreateSpriteRendererAndLoadSprite(GameObject toy)
+    {
+        var spriteRenderer = toy.AddComponent<SpriteRenderer>();
+        spriteRenderer.sprite = ImageStorage.GetSingleton().GetSprites(this)[0];
+        return spriteRenderer;
+    }
 }

@@ -50,5 +50,10 @@ namespace GameEditor.Data
             }
         }
 
+        public List<ToyComponentData> Get()
+        {
+            return toyComponentsData;
+        }
+
     }
 }

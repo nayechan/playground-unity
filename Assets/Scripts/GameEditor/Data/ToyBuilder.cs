@@ -7,41 +7,22 @@ namespace GameEditor.Data
 {
     public class ToyBuilder
     {
-        private GameObject newGameObject;
-        private JObject gameObjectRecord;
+        private GameObject toy;
+        private JObject toyJsonData;
         private ToyData toyData;
+        private ToySaver toySaver;
 
-        public static GameObject CreateGameObject(JObject gameObjectRecord)
+        public static GameObject UpdateImageStorageAndBuildToy(JObject toyJsonData)
         {
-            var dataManager = new ToyBuilder(gameObjectRecord);
-            return dataManager.CreateGameObject();
+            var toyBuilder = new ToyBuilder(toyJsonData);
+            toyBuilder.UpdateImageStorage();
+            return toyBuilder.BuildToy();
         }
 
-        private ToyBuilder(JObject gameObjectRecord)
+        private ToyBuilder(JObject toyJsonData)
         {
-            newGameObject = new GameObject();
-            this.gameObjectRecord = gameObjectRecord;
-        }
-
-        private GameObject CreateGameObject()
-        {
-            SetGameObject();
-            CreateChildrenGameObject();
-            return newGameObject;
-        }
-
-        private void SetGameObject()
-        {
-            var toyData = new ToyData();
-            SetObjectAndImageData();
-            UpdateImageStorage();
-            AddComponents();
-        }
-
-        private void SetObjectAndImageData()
-        {
-            toyData.objectData = JsonUtility.FromJson<ObjectData>((string)gameObjectRecord["ObjectData"]);
-            toyData.imageData = JsonUtility.FromJson<ImageData>((string)gameObjectRecord["ImageData"]);
+            this.toyJsonData = toyJsonData;
+            toyData = LoadToyData(toyJsonData);
         }
 
         private void UpdateImageStorage()
@@ -50,103 +31,52 @@ namespace GameEditor.Data
             imageStorage.UpdateImagesDataAndSprites(toyData.imageData);
         }
 
-        private void AddComponents()
+        private ToyData LoadToyData(JObject toyJsonData)
         {
-            var componentDatas = gameObjectRecordToComponentDatas(gameObjectRecord);
-            foreach (var componentData in componentDatas)
+            return JsonUtility.FromJson<ToyData>(toyJsonData.ToString());
+        }
+
+        private GameObject BuildToy()
+        {
+            CreateToyAndAddToySaver();
+            ApplyObjectData();
+            ApplyImageData();
+            AttachComponents();
+            BulidToyChildren();
+            return toy;
+        }
+
+        private void CreateToyAndAddToySaver()
+        {
+            toy = new GameObject();
+            toySaver = toy.AddComponent<ToySaver>();
+        }
+
+        private void ApplyObjectData()
+        {
+            toy.name = toyData.objectData.name;
+        }
+
+        private void ApplyImageData()
+        {
+            toyData.imageData.BuildAndAttachSpriteRendererAndAdjustScale(toy);
+        }
+
+        private void AttachComponents()
+        {
+            foreach (var toyComponentData in toyData.toyComponentsData.Get())
             {
-                toyData.AddComponentFromData(componentData);
+                toyComponentData.AddDataAppliedToyComponent(toy);
             }
         }
 
-        private void CreateChildrenGameObject()
+        private void BulidToyChildren()
         {
-            foreach (JObject childRecord in gameObjectRecord["Children"])
+            foreach (JObject toyChildrenJsonData in toyJsonData["Children"])
             {                
-                var childGameObject = ToyBuilder.CreateGameObject(childRecord);
-                childGameObject.transform.parent = newGameObject.transform;
+                var toyChildren = UpdateImageStorageAndBuildToy(toyChildrenJsonData);
+                toyChildren.transform.parent = toy.transform;
             }
-        }
-
-        public static GameObject CreateGameobject(ToySaver toySaver)
-        {
-            var newGameObject = new GameObject();
-            // set object property
-            toySaver.objectData.SetGameObject(newGameObject);
-            // create spriteRenderer
-            var spriteRendererData = new SpriteRendererData(toySaver.imageData);
-            var spriteRenderer = newGameObject.AddComponent<SpriteRenderer>();
-            spriteRendererData.ApplyData(spriteRenderer);
-            // create rigidbody
-            var rigidbody2d = newGameObject.AddComponent<Rigidbody2D>(); 
-            rigidbody2d.bodyType = toySaver.objectData.isFixed?
-                RigidbodyType2D.Kinematic : RigidbodyType2D.Dynamic;
-            rigidbody2d.sharedMaterial = new PhysicsMaterial2D();
-            // create collider
-            switch(toySaver.objectData.colliderType)
-            {
-                case ColliderType.Circle:
-                {
-                    newGameObject.AddComponent<CircleCollider2D>();
-                    break;   
-                }
-                case ColliderType.Box:
-                {
-                    newGameObject.AddComponent<BoxCollider2D>();
-                    break;   
-                }
-                case ColliderType.None:
-                {
-                    break;   
-                }
-            }
-            // create audioSource
-            // set Scale by ImageData
-            if(!toySaver.imageData.GetIsRelativeSize())
-            {
-                SpriteRendererData.resizeObjectScale(newGameObject, toySaver.imageData);
-            }
-            newGameObject.AddComponent<ToySaver>();
-            return newGameObject;
-        }
-
-        // JObject로부터 List<ComponentData> 를 반환합니다.
-        private List<ToyComponentData> gameObjectRecordToComponentDatas(JObject gameObjectRecord)
-        {
-            var componentDatas = new List<ToyComponentData>();
-            foreach (var pair in (JObject)gameObjectRecord["Components"])
-            {
-                switch (pair.Key)
-                {
-                    case TransformData._Type:
-                    {
-                        componentDatas.Add(JsonUtility.FromJson<TransformData>((string)pair.Value));
-                        break;
-                    }
-                    case BoxCollider2DData._Type:
-                    {
-                        componentDatas.Add(JsonUtility.FromJson<BoxCollider2DData>((string)pair.Value));
-                        break;
-                    }
-                    case CircleCollider2DData._Type:
-                    {
-                        componentDatas.Add(JsonUtility.FromJson<CircleCollider2DData>((string)pair.Value));
-                        break;
-                    }
-                    case Rigidbody2DData._Type:
-                    {
-                        componentDatas.Add(JsonUtility.FromJson<Rigidbody2DData>((string)pair.Value));
-                        break;
-                    }
-                    case SpriteRendererData._Type:
-                    {
-                        componentDatas.Add(JsonUtility.FromJson<SpriteRendererData>((string)pair.Value));
-                        break;
-                    }
-                }
-            }
-
-            return componentDatas;
         }
 
     }

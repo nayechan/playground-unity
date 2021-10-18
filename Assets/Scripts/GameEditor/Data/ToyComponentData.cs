@@ -16,14 +16,14 @@ namespace GameEditor.Data
                 typeof(Transform)
             };
         
-        public Component AddDataAppliedToyComponent(GameObject gameObject)
+        public Component AddDataAppliedToyComponent(GameObject toy)
         {
-            var component = AddMatchedTypeToyComponent(gameObject);
+            var component = AddMatchedTypeToyComponent(toy);
             ApplyDataToToyComponent(component);
             return component;
         }
 
-        public abstract Component AddMatchedTypeToyComponent(GameObject obj);
+        public abstract Component AddMatchedTypeToyComponent(GameObject toy);
 
         public abstract void ApplyDataToToyComponent(Component comp);
 

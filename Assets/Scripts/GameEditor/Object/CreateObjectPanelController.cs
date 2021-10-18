@@ -42,10 +42,11 @@ public class CreateObjectPanelController : MonoBehaviour
         panelSwitcher.OpenPanel(imageSelector);
     }
 
-    public ToyData GenerateToyData()
+    public ToyData BuildToyData()
     {
         var toyData = new ToyData();
         toyData.objectData = MakeObjectData();
+        return toyData;
     }
 
     private ObjectData MakeObjectData()
@@ -70,7 +71,7 @@ public class CreateObjectPanelController : MonoBehaviour
     {
         if(ValidateForm())
         {
-            ToyData toyData = GenerateToyData();
+            ToyData toyData = BuildToyData();
             toyStorage.AddToyData(toyData);            
             panelSwitcher.OpenPanel(transformSelectObjectPanel);     
         }

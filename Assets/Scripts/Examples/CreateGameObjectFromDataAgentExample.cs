@@ -30,7 +30,7 @@ namespace Examples
         {
             if(Input.GetMouseButtonDown(0))
             {
-                var gameObject = ToyBuilder.CreateGameobject(toySaver);
+                // var gameObject = ToyBuilder.CreateGameobject(toySaver);
                 Debug.Log(gameObject.ToString() + " is Created ");
             }
         }

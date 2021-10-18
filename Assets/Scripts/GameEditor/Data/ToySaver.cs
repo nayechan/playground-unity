@@ -12,8 +12,8 @@ namespace GameEditor.Data
     {
         private ToyData toyData;
 
-        
-        public static void UpdateToysComponentsData(GameObject gameObject)
+        // UpdateToysData
+        public static void UpdateToysData(GameObject gameObject)
         {
             var toySaver = gameObject.GetComponent<ToySaver>();
             if (toySaver != null)
@@ -22,7 +22,7 @@ namespace GameEditor.Data
             }
             foreach (Transform tp in gameObject.transform)
             {
-                UpdateToysComponentsData(tp.gameObject);
+                UpdateToysData(tp.gameObject);
             }
         }
         
@@ -56,6 +56,7 @@ namespace GameEditor.Data
             return ToyComponentData.GetUpdatedToyComponentData(component);
         }
 
+        // -- GetJsonData
         public static JObject GetJsonToysData(ToySaver toySaver)
         {
             return toySaver.GetJsonToysData();
@@ -91,7 +92,6 @@ namespace GameEditor.Data
             jObject["ToyData"] = JsonUtility.ToJson(toyData);            
             return jObject;
         }
-        
 
     }
     
