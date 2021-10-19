@@ -6,21 +6,20 @@ using GameEditor.Data;
 
 public class ObjectItemController : MonoBehaviour
 {
-<<<<<<< HEAD
+// <<<<<<< HEAD
     //ObjectData _objectData;
     ImageStorage imageStorage;
     ObjectBuilder objectBuilder;
-    [SerializeField] Image image;
     [SerializeField] Text typeText, nameText;
-    //private ImageData currentImageData = null;
     float defaultWidth = 0, defaultHeight = 0;
     bool isImageLoaded = false;
+    [SerializeField] Image displayImage;
 
     private void Awake() {
         Debug.Log("asdf");
         
-        defaultWidth = image.GetComponent<RectTransform>().rect.width;
-        defaultHeight = image.GetComponent<RectTransform>().rect.height;
+        defaultWidth = displayImage.GetComponent<RectTransform>().rect.width;
+        defaultHeight = displayImage.GetComponent<RectTransform>().rect.height;
 
         if(imageStorage == null)
         {
@@ -34,28 +33,26 @@ public class ObjectItemController : MonoBehaviour
         
         StartCoroutine("WaitUntilImageLoad");
     }
-    public void SetData(ObjectData objectData)
-    {
-        ImageData currentImageData = null;
+//     public void SetData(ObjectData objectData)
+//     {
+//         ImageData currentImageData = null;
 
-        if(imageStorage == null)
-        {
-            imageStorage = GameObject.Find("ImageStorage").GetComponent<ImageStorage>();
-        }
+//         if(imageStorage == null)
+//         {
+//             imageStorage = GameObject.Find("ImageStorage").GetComponent<ImageStorage>();
+//         }
 
-        currentImageData = imageStorage.GetImageData(objectData.imageDataUUID);
+//         currentImageData = imageStorage.GetImageData(objectData.imageDataUUID);
 
-        Debug.Log(objectData.name);
-        GetComponent<DataAgent>().SetDataAgentResource(objectData, currentImageData);
-        Debug.Log(GetComponent<DataAgent>().GetInstanceID());
+//         Debug.Log(objectData.name);
+//         GetComponent<ToyData>().SetToyDataResource(objectData, currentImageData);
+//         Debug.Log(GetComponent<ToyData>().GetInstanceID());
 
-        if(isImageLoaded)
-        {
-            RefreshUI();
-        }
-=======
-    [SerializeField] Image displayImage;
-    [SerializeField] Text typeText, nameText;
+//         if(isImageLoaded)
+//         {
+//             RefreshUI();
+//         }
+// =======
 
     public void SetDisplayInstanceData(ToyData toyData)
     {
@@ -63,25 +60,24 @@ public class ObjectItemController : MonoBehaviour
         displayImage.sprite = imageStorage.GetSprites(toyData.imageData)[0];
         typeText.text = toyData.objectData.toyType.ToString();
         nameText.text = toyData.objectData.name;
->>>>>>> gameeditor_tae
+// >>>>>>> gameeditor_tae
     }    
 
     public void RefreshUI()
     {
-        
-        image.sprite = GetComponent<DataAgent>().imageData.GetSprites()[0];
+        displayImage.sprite = ImageStorage.GetSingleton().GetSprites(GetComponent<ToyData>().imageData)[0];
 
-        float h = GetComponent<DataAgent>().imageData.GetVSize();
-        float w = GetComponent<DataAgent>().imageData.GetHSize();
+        float h = GetComponent<ToyData>().imageData.GetVSize();
+        float w = GetComponent<ToyData>().imageData.GetHSize();
 
 
         Debug.Log(h+" "+w);
-        if(GetComponent<DataAgent>().imageData.GetIsRelativeSize())
+        if(GetComponent<ToyData>().imageData.GetIsRelativeSize())
         {
-            if(image.sprite != null)
+            if(displayImage.sprite != null)
             {
-                h *= image.sprite.texture.height;
-                w *= image.sprite.texture.width;
+                h *= displayImage.sprite.texture.height;
+                w *= displayImage.sprite.texture.width;
             }
             
         }
@@ -101,22 +97,22 @@ public class ObjectItemController : MonoBehaviour
         
         Debug.Log(h+" "+w);
 
-        image.GetComponent<RectTransform>().sizeDelta = new Vector2(w,h);
+        displayImage.GetComponent<RectTransform>().sizeDelta = new Vector2(w,h);
 
 
-        typeText.text = GetComponent<DataAgent>().objectData.toyType.ToString();
-        nameText.text = GetComponent<DataAgent>().objectData.name;
+        typeText.text = GetComponent<ToyData>().objectData.toyType.ToString();
+        nameText.text = GetComponent<ToyData>().objectData.name;
     }
 
     IEnumerator WaitUntilImageLoad()
     {
-        while(image.GetComponent<RectTransform>().rect.width == 0)
+        while(displayImage.GetComponent<RectTransform>().rect.width == 0)
         {
             yield return null;
         }
 
-        defaultWidth = image.GetComponent<RectTransform>().rect.width;
-        defaultHeight = image.GetComponent<RectTransform>().rect.height;
+        defaultWidth = displayImage.GetComponent<RectTransform>().rect.width;
+        defaultHeight = displayImage.GetComponent<RectTransform>().rect.height;
 
         Debug.Log(defaultWidth+" "+defaultHeight);
 
@@ -127,6 +123,6 @@ public class ObjectItemController : MonoBehaviour
 
     public void OnButtonClick()
     {
-        objectBuilder.SetCurrentDataAgent(GetComponent<DataAgent>());
+        objectBuilder.SetCurrentToyData(GetComponent<ToyData>());
     }
 }

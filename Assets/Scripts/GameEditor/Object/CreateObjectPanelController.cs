@@ -73,17 +73,9 @@ public class CreateObjectPanelController : MonoBehaviour
     {
         if(ValidateForm())
         {
-<<<<<<< HEAD
-            GameEditor.Data.ObjectData objectData = GenerateObjectData();
-
-            objectStorage.AddObjectData(objectData);
-
-            ResetPanel();            
-
-=======
             ToyData toyData = BuildToyData();
             toyStorage.AddToyData(toyData);            
->>>>>>> gameeditor_tae
+            ResetPanel();            
             panelSwitcher.OpenPanel(transformSelectObjectPanel);     
         }
     }

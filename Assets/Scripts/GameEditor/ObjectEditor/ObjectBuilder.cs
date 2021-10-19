@@ -6,7 +6,7 @@ using GameEditor.EventEditor.UI.Sensor;
 
 public class ObjectBuilder : AbstractSensor
 {
-    public DataAgent currentDataAgent;
+    public ToyData currentToyData;
     public Transform rootObject;
     public GameObject objectSensorPrefab;
     public bool isSnap;
@@ -14,7 +14,7 @@ public class ObjectBuilder : AbstractSensor
     // Start is called before the first frame update
     void Awake()
     {
-        currentDataAgent = null;
+        currentToyData = null;
     }
 
     public bool GenerateObject(Vector3 cursor)
@@ -25,8 +25,8 @@ public class ObjectBuilder : AbstractSensor
             transform = FindNearestObject(cursor, rootObject, 1.0f);
         }
 
-        if(transform != null || currentDataAgent == null) return false;
-        GameObject obj = DataManager.CreateGameobject(currentDataAgent);
+        if(transform != null || currentToyData == null) return false;
+        GameObject obj = ToyBuilder.BuildToy(currentToyData);
         obj.transform.parent = rootObject;
 
         Debug.Log(objectSensorPrefab);
@@ -48,6 +48,7 @@ public class ObjectBuilder : AbstractSensor
             pivotAmount.y *= -0.5f;
             pivotAmount.z = 10;
 
+
             objPos-=pivotAmount;
             
             objPos.x = Mathf.Round(objPos.x);
@@ -61,9 +62,9 @@ public class ObjectBuilder : AbstractSensor
         return true;
     }
 
-    public void SetCurrentDataAgent(DataAgent dataAgent)
+    public void SetCurrentToyData(ToyData ToyData)
     {
-        currentDataAgent = dataAgent;
+        currentToyData = ToyData;
     }
 
     public Transform FindNearestObject(Vector3 pos, Transform transform, float maxDist=0.4f)

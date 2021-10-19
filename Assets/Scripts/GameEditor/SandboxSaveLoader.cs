@@ -93,7 +93,7 @@ namespace GameEditor
         {
             var jsonToyDataPath = Path.Combine(SandboxChecker.GetSandboxPath(_sandboxData), JsonNameOfToyData);
             var jsonToyData = JObject.Parse(File.ReadAllText(jsonToyDataPath));
-            var loadedToyRoot = ToyBuilder.UpdateImageStorageAndBuildToy(jsonToyData);
+            var loadedToyRoot = ToyBuilder.UpdateImageStorageAndBuildToyRoot(jsonToyData);
             return loadedToyRoot;
         }
     }
