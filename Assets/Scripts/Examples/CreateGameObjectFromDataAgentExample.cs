@@ -10,19 +10,19 @@ namespace Examples
     public class CreateGameObjectFromDataAgentExample : MonoBehaviour
     {
         public GameObject obj;
-        private DataAgent dataAgent;
+        private ToySaver toySaver;
         void Start()
         {
-            dataAgent = obj.AddComponent<DataAgent>();
+            toySaver = obj.AddComponent<ToySaver>();
             var imageData = new ImageData(true, false, 3f, 5f, "haha");
             // 기본적으로 C:\Users\lunda\AppData\LocalLow\Lighthouse Keeper\project-playground\-1\beach.png 를 로드합니다.
-            imageData.AddImagePath("beach.png");
-            Debug.Log("path : " + imageData.GetImagePaths()[0]);
+            // imageData.AddImagePath("beach.png");
+            Debug.Log("path : " + imageData.GetRelativeImagePaths()[0]);
             var objectData = new ObjectData();
             objectData.colliderType = ColliderType.Box;
             objectData.name = "new Object";
             objectData.isFixed = false;
-            dataAgent.SetDataAgentResource(objectData, imageData);
+            // toy.SetToyData(objectData, imageData);
         }
 
         // Update is called once per frame
@@ -30,7 +30,7 @@ namespace Examples
         {
             if(Input.GetMouseButtonDown(0))
             {
-                var gameObject = DataManager.CreateGameobject(dataAgent);
+                // var gameObject = ToyBuilder.CreateGameobject(toySaver);
                 Debug.Log(gameObject.ToString() + " is Created ");
             }
         }

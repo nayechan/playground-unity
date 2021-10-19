@@ -6,6 +6,7 @@ using GameEditor.Data;
 
 public class ObjectItemController : MonoBehaviour
 {
+<<<<<<< HEAD
     //ObjectData _objectData;
     ImageStorage imageStorage;
     ObjectBuilder objectBuilder;
@@ -52,6 +53,17 @@ public class ObjectItemController : MonoBehaviour
         {
             RefreshUI();
         }
+=======
+    [SerializeField] Image displayImage;
+    [SerializeField] Text typeText, nameText;
+
+    public void SetDisplayInstanceData(ToyData toyData)
+    {
+        var imageStorage = ImageStorage.GetSingleton();
+        displayImage.sprite = imageStorage.GetSprites(toyData.imageData)[0];
+        typeText.text = toyData.objectData.toyType.ToString();
+        nameText.text = toyData.objectData.name;
+>>>>>>> gameeditor_tae
     }    
 
     public void RefreshUI()

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -22,23 +23,23 @@ namespace GameEditor.Data
     {
         public string name;
         public int id;
-        public ToyType toyType;
         public ColliderType colliderType;
+        public ToyType toyType;
         public bool isFixed;
-        public string imageDataUUID;
+        [NonSerializedAttribute] public ToyData toyData;
+
         public ObjectData()
         {
             name = "Unnamed";
-            id = 0;
             colliderType = ColliderType.None;
             toyType = ToyType.Friend;
             isFixed = true;
-            imageDataUUID = "";
         }
 
-        public void SetGameObject(ref GameObject gameObject)
+        public GameObject SetGameObject(GameObject gameObject)
         {
             gameObject.name = name;
+            return gameObject;
         }
     }
 }

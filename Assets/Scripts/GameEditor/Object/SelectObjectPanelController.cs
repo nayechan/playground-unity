@@ -8,7 +8,7 @@ public class SelectObjectPanelController : MonoBehaviour
     [SerializeField] private Transform contentPanel;
     [SerializeField] private GameObject objectExamplePrefab;
 
-    public void UIRefresh(List<ObjectData> objectDataList)
+    public void UIRefresh(List<ToyData> toysData)
     {
         foreach(Transform transform in contentPanel)
         {
@@ -21,12 +21,12 @@ public class SelectObjectPanelController : MonoBehaviour
         int row = 0;
         int col = 1;
 
-        foreach(ObjectData data in objectDataList)
+        foreach(ToyData toyData in toysData)
         {
             GameObject gameObject = Instantiate(objectExamplePrefab,contentPanel);
             gameObject.GetComponent<RectTransform>().anchoredPosition =
             new Vector2(70+340*col, -80-320*row);
-            gameObject.GetComponent<ObjectItemController>().SetData(data);
+            gameObject.GetComponent<ObjectItemController>().SetDisplayInstanceData(toyData);
             ++col;
             if(col>=4) {col=0; ++row;}
         }

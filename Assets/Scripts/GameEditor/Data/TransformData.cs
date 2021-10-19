@@ -5,18 +5,16 @@ using UnityEngine.Assertions;
 namespace GameEditor.Data
 {
     [System.Serializable]
-    public class TransformData : ComponentData
+    public class TransformData : ToyComponentData
     {
         public Vector3 position;
         public Vector3 rotation;
         public Vector3 scale;
         
-        public override string Type => _Type;
-        public const string _Type = "TransformData";
         // 인자로 받은 Component의 설정을 본 class의 Data로 설정한다.
-        public override void ApplyData(Component comp)
+        public override void ApplyDataToToyComponent(Component comp)
         {
-            Assert.IsTrue(IsCorrectType(comp));
+            Assert.IsTrue(IsMatchedType(comp));
             var tf = (Transform)comp;
             tf.position = position;
             tf.rotation = (Quaternion.Euler(rotation));
@@ -25,31 +23,32 @@ namespace GameEditor.Data
 
         // Transform은 모든 오브젝트에 자동 생성되므로 Transform의 값을 
         // 본 클래스의 값으로 Set 한 뒤 Transform를 반환한다.
-        public override Component AddComponent(GameObject obj)
+        public override Component AddMatchedTypeToyComponent(GameObject obj)
         {
-            ApplyData(obj.transform);
+            ApplyDataToToyComponent(obj.transform);
             return obj.transform;
         }
         
         // Component의 값을 갖는 TransformData 클래스를 생성한다.
         public TransformData(Component comp)
         {
-            SetData(comp);
+            UpdateByToyComponent(comp);
         }
         
         // 본 Class의 data를 받은 Component의 설정값으로 바꾼다.
-        public sealed override void SetData(Component comp)
+        public sealed override ToyComponentData UpdateByToyComponent(Component comp)
         {
-            Assert.IsTrue(IsCorrectType(comp));
+            Assert.IsTrue(IsMatchedType(comp));
             var tf = (Transform) comp;
             position = tf.position;
             rotation = tf.rotation.eulerAngles;
             scale = tf.localScale;
+            return this;
         }
         
         // 인자로 받은 Component의 derived 타입이 본 클래스가 담당하는
         //Component타입과 일치하는지 확인한다.
-        public override bool IsCorrectType(Component comp)
+        public override bool IsMatchedType(Component comp)
         {
             return comp is Transform;
         }

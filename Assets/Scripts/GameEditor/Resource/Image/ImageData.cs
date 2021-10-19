@@ -1,18 +1,21 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using GameEditor.Data;
+using System;
 
 //이미지를 데이터화 하기 위한 클래스입니다.
+[System.Serializable]
 public class ImageData
 {
     //private string uuid;
-    [SerializeField] private List<string> _imagePaths;
-    [SerializeField] private List<Sprite> _sprites;
+    [SerializeField] private List<string> _relativeImagePaths;
     [SerializeField] private bool _usingSingleImage, _isRelativeSize;
     [SerializeField] private float _hSize, _vSize;
     [SerializeField] private string  _title;
+    // [NonSerializedAttribute] public ToyData toyData;
 
-    private string uuid;
+    // private string uuid;
 
     public ImageData(bool imageMode, bool sizeMode, float hSize, float vSize, string title)
     {
@@ -20,35 +23,20 @@ public class ImageData
         _isRelativeSize = sizeMode;
         _hSize = hSize;
         _vSize = vSize;
-        _imagePaths = new List<string>();
+        _relativeImagePaths = new List<string>();
         _title = title;
 
-        uuid = SystemInfo.deviceUniqueIdentifier;
+        // uuid = SystemInfo.deviceUniqueIdentifier;
     }
 
-    public List<string> GetImagePaths()
+    public List<string> GetRelativeImagePaths()
     {
-        return _imagePaths;
+        return _relativeImagePaths;
     }
 
-    public void AddImagePath(string path)
+    public void SetRelativeImagePaths(List<string> relativeImagePaths)
     {
-        _imagePaths.Add(path);
-    }
-
-    public void SetImagePaths(List<string> imagePaths)
-    {
-        _imagePaths = imagePaths;
-    }
-
-    public void SetSprites(List<Sprite> sprites)
-    {
-        _sprites = sprites;
-    }
-
-    public List<Sprite> GetSprites()
-    {
-        return _sprites;
+        _relativeImagePaths = relativeImagePaths;
     }
 
     public string GetTitle()
@@ -76,9 +64,31 @@ public class ImageData
         return _vSize;
     }
 
-    public string GetUUID()
+    public override int GetHashCode()
     {
-        return uuid;
+        return (_relativeImagePaths.ToString()?? "").GetHashCode()
+                ^ _usingSingleImage.GetHashCode()
+                ^ _isRelativeSize.GetHashCode()
+                ^ _hSize.GetHashCode()
+                ^ _vSize.GetHashCode()
+                ^ _title.GetHashCode();
     }
 
+    public void BuildAndAttachSpriteRendererAndAdjustScale(GameObject toy)
+    {
+        var spriteRenderer = CreateSpriteRendererAndLoadSprite(toy);
+        var texture = spriteRenderer.sprite.texture;
+        var newScale = 
+            new Vector3(GetHSize()/texture.width * 100f,
+                        GetVSize()/texture.height * 100f,
+                        1f);
+        toy.transform.localScale = newScale;
+    }
+
+    private SpriteRenderer CreateSpriteRendererAndLoadSprite(GameObject toy)
+    {
+        var spriteRenderer = toy.AddComponent<SpriteRenderer>();
+        spriteRenderer.sprite = ImageStorage.GetSingleton().GetSprites(this)[0];
+        return spriteRenderer;
+    }
 }

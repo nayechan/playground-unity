@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using GameEditor.Data;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +11,7 @@ public class CreateObjectPanelController : MonoBehaviour
     [SerializeField] Dropdown typeDropdown, colliderDropdown;
     [SerializeField] PanelSwitcher panelSwitcher;
     [SerializeField] Transform transformSelectObjectPanel, imageSelector;
-    [SerializeField] ObjectStorage objectStorage;
+    [SerializeField] ToyStorage toyStorage;
     ImageData _currentImageData = null;
 
     public bool ValidateForm()
@@ -25,12 +26,12 @@ public class CreateObjectPanelController : MonoBehaviour
 
     public void RefreshUI()
     {
-        image.sprite = _currentImageData.GetSprites()[0];
+        var imageStorage = ImageStorage.GetSingleton();
+        image.sprite = imageStorage.GetSprites(_currentImageData)[0];
     }
 
     public void OpenImageSelector()
     {
-        Debug.Log("asdf");
         imageSelector.GetComponent<ImageSelectorController>().SetOnClick(
             (ImageData imageData)=>{
                 _currentImageData = imageData;
@@ -41,26 +42,23 @@ public class CreateObjectPanelController : MonoBehaviour
         panelSwitcher.OpenPanel(imageSelector);
     }
 
-    public GameEditor.Data.ObjectData GenerateObjectData()
+    public ToyData BuildToyData()
     {
-        GameEditor.Data.ObjectData objectData = new GameEditor.Data.ObjectData();
+        var toyData = new ToyData();
+        toyData.objectData = MakeObjectData();
+        return toyData;
+    }
 
+    private ObjectData MakeObjectData()
+    {
+        var objectData = new ObjectData();
         objectData.name = nameInputField.text;
-        
-        string typeString = typeDropdown.options[typeDropdown.value].text;
-        object toyType = GameEditor.Data.ToyType.Parse(
-            typeof(GameEditor.Data.ToyType),typeString
-        );
-        objectData.toyType = (GameEditor.Data.ToyType)toyType;
-
-        string colliderTypeString = colliderDropdown.options[colliderDropdown.value].text;
-        object colliderType = GameEditor.Data.ColliderType.Parse(
-            typeof(GameEditor.Data.ColliderType),colliderTypeString
-        );
-        objectData.colliderType = (GameEditor.Data.ColliderType)toyType;
-
-        objectData.imageDataUUID = _currentImageData.GetUUID();
-
+        var typeString = typeDropdown.options[typeDropdown.value].text;
+        var toyType = (ToyType)ToyType.Parse(typeof(ToyType),typeString);
+        objectData.toyType = toyType;
+        var colliderTypeString = colliderDropdown.options[colliderDropdown.value].text;
+        var colliderType = (ColliderType)ColliderType.Parse(typeof(ColliderType),colliderTypeString);
+        objectData.colliderType = colliderType;
         return objectData;
     }
 
@@ -75,12 +73,17 @@ public class CreateObjectPanelController : MonoBehaviour
     {
         if(ValidateForm())
         {
+<<<<<<< HEAD
             GameEditor.Data.ObjectData objectData = GenerateObjectData();
 
             objectStorage.AddObjectData(objectData);
 
             ResetPanel();            
 
+=======
+            ToyData toyData = BuildToyData();
+            toyStorage.AddToyData(toyData);            
+>>>>>>> gameeditor_tae
             panelSwitcher.OpenPanel(transformSelectObjectPanel);     
         }
     }
