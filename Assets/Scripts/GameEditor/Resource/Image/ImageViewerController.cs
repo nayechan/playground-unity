@@ -8,17 +8,14 @@ public class ImageViewerController : MonoBehaviour
 {
     [SerializeField] GameObject imageItemPrefab, addImageButtonPrefab;
     [SerializeField] Transform contentPanel;
+    [SerializeField] GameObject imageEditor;
+    [SerializeField] PanelSwitcher imagePanelSwitcher;
 
     /*
-
-    imageDatas: 이미지 데이터,
-
     isSelectMode: 
     True    -> 이미지 선택 모드, 
     False   -> 이미지 추가 모드
-    
     위의 데이터를 기반으로 UI를 구성하여 리프레시합니다.
-    
     */
     public void RefreshUI(bool isSelectMode)
     {
@@ -34,11 +31,12 @@ public class ImageViewerController : MonoBehaviour
         if(!isSelectMode)
         {
             //선택 모드 여부 따라 이미지 추가 버튼을 생성
-            GameObject addImageButtonObject =
+            GameObject addImageButton =
             GameObject.Instantiate(addImageButtonPrefab, contentPanel);
-            
-            addImageButtonObject.GetComponent<RectTransform>().anchoredPosition =
+            addImageButton.GetComponent<RectTransform>().anchoredPosition =
             new Vector2(70+340*col, -80-320*row);
+            var addImageButtonController =  addImageButton.GetComponent<AddImageButtonController>();
+            addImageButtonController.SetField(imagePanelSwitcher, imageEditor);
 
             ++col;
             if(col>=4) {col=0; ++row;}

@@ -6400,8 +6400,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f0cd6ffb01f44d9559cb0d516c833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageItemPrefab: {fileID: 6945548257725674848, guid: 2fa916d98e8124424b4a0372f86888cd, type: 3}
-  contentPanel: {fileID: 1096771573}
+  imageSamplePrefab: {fileID: 0}
+  imageSelectorPanel: {fileID: 0}
 --- !u!1 &346147584
 GameObject:
   m_ObjectHideFlags: 0
@@ -10076,7 +10076,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &594105267
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11016,7 +11016,7 @@ MonoBehaviour:
   panelSwitcher: {fileID: 1983035136}
   transformSelectObjectPanel: {fileID: 1949566557}
   imageSelector: {fileID: 344222616}
-  toyStorage: {fileID: 0}
+  toyStorage: {fileID: 430038279}
 --- !u!114 &662100083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31029,8 +31029,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27eb0c482d2c9f64d9661c304fd44a16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  contentPanel: {fileID: 1778628147}
-  objectExamplePrefab: {fileID: 6945548257725674848, guid: 2eb18cd1bd1574a42b7947bbcf941d81, type: 3}
+  samplePanel: {fileID: 1778628147}
+  toySamplePrefab: {fileID: 6945548257725674848, guid: 2eb18cd1bd1574a42b7947bbcf941d81, type: 3}
 --- !u!224 &1949566557
 RectTransform:
   m_ObjectHideFlags: 0
