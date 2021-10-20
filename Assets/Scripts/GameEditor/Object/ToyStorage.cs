@@ -8,7 +8,7 @@ using GameEditor.Data;
 public class ToyStorage : MonoBehaviour
 {
     [SerializeField] private List<ToyData> _toysData;
-    [SerializeField] private SelectObjectPanelController selectToyPanel;
+    [SerializeField] private SelectToySamplePanelController selectToyPanel;
     private static ToyStorage _toyStorage;
 
     private void Awake()

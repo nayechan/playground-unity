@@ -4,11 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using GameEditor.Data;
 
-public class ObjectItemController : MonoBehaviour
+public class ToySample : MonoBehaviour
 {
-// <<<<<<< HEAD
-    //ObjectData _objectData;
-    ImageStorage imageStorage;
     ObjectBuilder objectBuilder;
     [SerializeField] Text typeText, nameText;
     float defaultWidth = 0, defaultHeight = 0;
@@ -16,15 +13,9 @@ public class ObjectItemController : MonoBehaviour
     [SerializeField] Image displayImage;
 
     private void Awake() {
-        Debug.Log("asdf");
         
         defaultWidth = displayImage.GetComponent<RectTransform>().rect.width;
         defaultHeight = displayImage.GetComponent<RectTransform>().rect.height;
-
-        if(imageStorage == null)
-        {
-            imageStorage = GameObject.Find("ImageStorage").GetComponent<ImageStorage>();
-        }
 
         if(objectBuilder == null)
         {
@@ -33,45 +24,26 @@ public class ObjectItemController : MonoBehaviour
         
         StartCoroutine("WaitUntilImageLoad");
     }
-//     public void SetData(ObjectData objectData)
-//     {
-//         ImageData currentImageData = null;
-
-//         if(imageStorage == null)
-//         {
-//             imageStorage = GameObject.Find("ImageStorage").GetComponent<ImageStorage>();
-//         }
-
-//         currentImageData = imageStorage.GetImageData(objectData.imageDataUUID);
-
-//         Debug.Log(objectData.name);
-//         GetComponent<ToyData>().SetToyDataResource(objectData, currentImageData);
-//         Debug.Log(GetComponent<ToyData>().GetInstanceID());
-
-//         if(isImageLoaded)
-//         {
-//             RefreshUI();
-//         }
-// =======
 
     public void SetDisplayInstanceData(ToyData toyData)
     {
+        Debug.Log(JsonUtility.ToJson(toyData));
+        Debug.Log(JsonUtility.ToJson(toyData.imageData));
         displayImage.sprite = ImageStorage.GetSprites(toyData.imageData)[0];
         typeText.text = toyData.objectData.toyType.ToString();
         nameText.text = toyData.objectData.name;
-// >>>>>>> gameeditor_tae
     }    
 
     public void RefreshUI()
     {
-        displayImage.sprite = ImageStorage.GetSprites(GetComponent<ToyData>().imageData)[0];
+        displayImage.sprite = ImageStorage.GetSprites(GetComponent<ToyDataContainer>().ImageData)[0];
 
-        float h = GetComponent<ToyData>().imageData.GetVSize();
-        float w = GetComponent<ToyData>().imageData.GetHSize();
+        float h = GetComponent<ToyDataContainer>().ImageData.GetVSize();
+        float w = GetComponent<ToyDataContainer>().ImageData.GetHSize();
 
 
         Debug.Log(h+" "+w);
-        if(GetComponent<ToyData>().imageData.GetIsRelativeSize())
+        if(GetComponent<ToyDataContainer>().ImageData.GetIsRelativeSize())
         {
             if(displayImage.sprite != null)
             {
@@ -99,8 +71,8 @@ public class ObjectItemController : MonoBehaviour
         displayImage.GetComponent<RectTransform>().sizeDelta = new Vector2(w,h);
 
 
-        typeText.text = GetComponent<ToyData>().objectData.toyType.ToString();
-        nameText.text = GetComponent<ToyData>().objectData.name;
+        typeText.text = GetComponent<ToyDataContainer>().ObjectData.toyType.ToString();
+        nameText.text = GetComponent<ToyDataContainer>().ObjectData.name;
     }
 
     IEnumerator WaitUntilImageLoad()
@@ -122,6 +94,6 @@ public class ObjectItemController : MonoBehaviour
 
     public void OnButtonClick()
     {
-        objectBuilder.SetCurrentToyData(GetComponent<ToyData>());
+        objectBuilder.SetCurrentToyData(GetComponent<ToyDataContainer>().toyData);
     }
 }

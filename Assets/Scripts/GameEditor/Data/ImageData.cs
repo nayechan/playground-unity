@@ -93,4 +93,5 @@ public class ImageData
         spriteRenderer.sprite = ImageStorage.GetSprites(this)[0];
         return spriteRenderer;
     }
+
 }

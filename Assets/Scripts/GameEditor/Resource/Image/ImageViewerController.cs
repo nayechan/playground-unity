@@ -51,7 +51,7 @@ public class ImageViewerController : MonoBehaviour
             gameObject.GetComponent<RectTransform>().anchoredPosition =
             new Vector2(70+340*col, -80-320*row);
 
-            gameObject.GetComponent<ImageItemController>().SetImageData(imageData);
+            gameObject.GetComponent<ImageSample>().SetImageData(imageData);
 
             ++col;
             if(col>=4) {col=0; ++row;}

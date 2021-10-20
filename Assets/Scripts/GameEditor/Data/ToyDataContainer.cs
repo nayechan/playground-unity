@@ -6,4 +6,7 @@ using UnityEngine;
 public class ToyDataContainer : MonoBehaviour
 {
     public ToyData toyData;
+    public ImageData ImageData { get {return toyData.imageData;}}
+    public ObjectData ObjectData { get {return toyData.objectData;}}
+
 }

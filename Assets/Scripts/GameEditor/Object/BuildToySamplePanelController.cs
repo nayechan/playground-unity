@@ -4,7 +4,7 @@ using GameEditor.Data;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CreateObjectPanelController : MonoBehaviour
+public class BuildToySamplePanelController : MonoBehaviour
 {
     [SerializeField] Image image;
     [SerializeField] InputField nameInputField;
@@ -45,6 +45,7 @@ public class CreateObjectPanelController : MonoBehaviour
     {
         var toyData = new ToyData();
         toyData.objectData = MakeObjectData();
+        toyData.imageData = _currentImageData;
         return toyData;
     }
 
