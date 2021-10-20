@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using Tools;
+using File = Tools.File;
 
 namespace Network
 {
@@ -14,7 +15,7 @@ namespace Network
         public static string CreateZip(string dictionaryPath)
         {
             var zipPath = Path.Combine(dictionaryPath, zipName);
-            FileTool.DeleteFileIfExist(zipPath);
+            File.DeleteFileIfExist(zipPath);
             ZipFile.CreateFromDirectory(dictionaryPath, zipPath);
             return zipPath;
         }

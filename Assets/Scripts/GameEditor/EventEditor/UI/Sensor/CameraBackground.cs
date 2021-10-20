@@ -60,7 +60,7 @@ namespace GameEditor.EventEditor.UI.Sensor{
         public override void CallBack(Touch touch)
         {
             var tc = TouchController.GetTID();
-            Debug.Log(touch.phase);
+            // Debug.Log(touch.phase);
 
             Vector3 worldPos, deltaVector;
             worldPos = touch.position;

@@ -5,13 +5,13 @@ using UnityEngine;
 public class PanelSwitcher : MonoBehaviour
 {   
     [SerializeField] List<Transform> panelToIgnore;
-    public void OpenPanel(Transform panel)
+    public void DeactivateChildExceptIgnoreListAndActivateTarget(Transform panel)
     {
-        ResetPanel();
+        DeactivateChildExceptIgnoreList();
         panel.gameObject.SetActive(true);
     }
 
-    public void ResetPanel()
+    public void DeactivateChildExceptIgnoreList()
     {
         foreach(Transform _transform in transform)
         {

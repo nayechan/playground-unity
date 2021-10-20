@@ -15,7 +15,17 @@ public class Sandbox : MonoBehaviour
     void Awake()
     {
         SandboxChecker.Initialize(Application.persistentDataPath);
+        SandboxInitialize();
     }
+
+
+    // For Test.
+    private void SandboxInitialize()
+    {
+        Tools.File.CreateDirectoryIfDosentExist(SandboxChecker.GetSandboxPath(sandboxData));
+        // SandboxSaveLoader.LoadImageStorageData(sandboxData);
+    }
+    // -------
 
     public void SetSandboxData(SandboxData sandboxData)
     {
@@ -24,6 +34,11 @@ public class Sandbox : MonoBehaviour
     public void SaveSandboxOnPC()
     {
         SandboxSaveLoader.SaveSandbox(sandboxData, rootOfToy, rootOfBlock);
+    }
+
+    public void LoadImagesData()
+    {
+        SandboxSaveLoader.LoadImageStorageData(sandboxData);
     }
 
     public void ReloadToy()

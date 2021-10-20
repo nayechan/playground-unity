@@ -26,8 +26,7 @@ public class CreateObjectPanelController : MonoBehaviour
 
     public void RefreshUI()
     {
-        var imageStorage = ImageStorage.GetSingleton();
-        image.sprite = imageStorage.GetSprites(_currentImageData)[0];
+        image.sprite = ImageStorage.GetSprites(_currentImageData)[0];
     }
 
     public void OpenImageSelector()
@@ -35,11 +34,11 @@ public class CreateObjectPanelController : MonoBehaviour
         imageSelector.GetComponent<ImageSelectorController>().SetOnClick(
             (ImageData imageData)=>{
                 _currentImageData = imageData;
-                panelSwitcher.OpenPanel(transform);
+                panelSwitcher.DeactivateChildExceptIgnoreListAndActivateTarget(transform);
                 RefreshUI();
             }
         );
-        panelSwitcher.OpenPanel(imageSelector);
+        panelSwitcher.DeactivateChildExceptIgnoreListAndActivateTarget(imageSelector);
     }
 
     public ToyData BuildToyData()
@@ -64,7 +63,7 @@ public class CreateObjectPanelController : MonoBehaviour
 
     public void OnCancelButtonClick()
     {
-        panelSwitcher.OpenPanel(transformSelectObjectPanel);
+        panelSwitcher.DeactivateChildExceptIgnoreListAndActivateTarget(transformSelectObjectPanel);
         
         ResetPanel();            
     }
@@ -74,9 +73,9 @@ public class CreateObjectPanelController : MonoBehaviour
         if(ValidateForm())
         {
             ToyData toyData = BuildToyData();
-            toyStorage.AddToyData(toyData);            
+            ToyStorage.AddToyData(toyData);            
             ResetPanel();            
-            panelSwitcher.OpenPanel(transformSelectObjectPanel);     
+            panelSwitcher.DeactivateChildExceptIgnoreListAndActivateTarget(transformSelectObjectPanel);     
         }
     }
 

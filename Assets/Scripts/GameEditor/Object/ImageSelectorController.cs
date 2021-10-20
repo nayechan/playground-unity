@@ -9,15 +9,12 @@ public class ImageSelectorController : MonoBehaviour
 {
     [SerializeField] GameObject imageItemPrefab;
     [SerializeField] Transform contentPanel;
-    [SerializeField] ImageStorage imageStorage;
-    ImageItemController.OnClick _onClick;
-
-    List<ImageItemController> currentItemList;
+    List<ImageItemController> items;
     
     // 이미지 데이터를 기반으로 UI를 재구성합니다.
     private void Awake() {
     }
-    public void RefreshUI(Dictionary<int, ImageData> imageDatas)
+    public void RefreshUI()
     {
         foreach(Transform transform in contentPanel)
         {
@@ -27,16 +24,16 @@ public class ImageSelectorController : MonoBehaviour
         int row = 0;
         int col = 0;
         
-
-        foreach(ImageData data in imageDatas.Values)
+        var imagesData = ImageStorage.GetImagesData();
+        foreach(ImageData imageData in imagesData)
         {
             GameObject gameObject = Instantiate(imageItemPrefab,contentPanel);
             gameObject.GetComponent<RectTransform>().anchoredPosition =
             new Vector2(70+340*col, -80-320*row);
 
-            gameObject.GetComponent<ImageItemController>().SetImageData(data);
-            currentItemList = new List<ImageItemController>();
-            currentItemList.Add(gameObject.GetComponent<ImageItemController>());
+            gameObject.GetComponent<ImageItemController>().SetImageData(imageData);
+            items = new List<ImageItemController>();
+            items.Add(gameObject.GetComponent<ImageItemController>());
 
             ++col;
             if(col>=4) {col=0; ++row;}
@@ -53,13 +50,9 @@ public class ImageSelectorController : MonoBehaviour
     public void SetOnClick(ImageItemController.OnClick onClick)
     {
         Debug.Log(onClick);
-        _onClick = onClick;
-
-        foreach(ImageItemController item in currentItemList)
+        foreach(ImageItemController item in items)
         {
-            item.onClick += _onClick;
+            item.onClick += onClick;
         }
-
-        
     }
 }

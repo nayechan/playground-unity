@@ -5,13 +5,13 @@ using UnityEngine;
 
 namespace Tools
 {
-    public static class FileTool
+    public static class File
     {
         public static void DeleteFileIfExist(string path)
         {
-            if(File.Exists(path))
+            if(System.IO.File.Exists(path))
             {
-                File.Delete(path);
+                System.IO.File.Delete(path);
             }
         }
 

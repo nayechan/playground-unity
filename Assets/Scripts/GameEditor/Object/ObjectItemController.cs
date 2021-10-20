@@ -56,8 +56,7 @@ public class ObjectItemController : MonoBehaviour
 
     public void SetDisplayInstanceData(ToyData toyData)
     {
-        var imageStorage = ImageStorage.GetSingleton();
-        displayImage.sprite = imageStorage.GetSprites(toyData.imageData)[0];
+        displayImage.sprite = ImageStorage.GetSprites(toyData.imageData)[0];
         typeText.text = toyData.objectData.toyType.ToString();
         nameText.text = toyData.objectData.name;
 // >>>>>>> gameeditor_tae
@@ -65,7 +64,7 @@ public class ObjectItemController : MonoBehaviour
 
     public void RefreshUI()
     {
-        displayImage.sprite = ImageStorage.GetSingleton().GetSprites(GetComponent<ToyData>().imageData)[0];
+        displayImage.sprite = ImageStorage.GetSprites(GetComponent<ToyData>().imageData)[0];
 
         float h = GetComponent<ToyData>().imageData.GetVSize();
         float w = GetComponent<ToyData>().imageData.GetHSize();

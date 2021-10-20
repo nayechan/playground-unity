@@ -20,7 +20,7 @@ public class ImageViewerController : MonoBehaviour
     위의 데이터를 기반으로 UI를 구성하여 리프레시합니다.
     
     */
-    public void RefreshUI(Dictionary<int, ImageData> imagesData, bool isSelectMode)
+    public void RefreshUI(bool isSelectMode)
     {
         foreach(Transform transform in contentPanel)
         {
@@ -44,8 +44,8 @@ public class ImageViewerController : MonoBehaviour
             if(col>=4) {col=0; ++row;}
         }
         
-
-        foreach(ImageData imageData in imagesData.Values)
+        var imagesData = ImageStorage.GetImagesData();
+        foreach(ImageData imageData in imagesData)
         {
             GameObject gameObject = Instantiate(imageItemPrefab,contentPanel);
             gameObject.GetComponent<RectTransform>().anchoredPosition =

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &149535886569694603
+--- !u!1 &3053079427357670996
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,11 +8,10 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 149535886569694602}
-  - component: {fileID: 149535886569694607}
-  - component: {fileID: 149535886569694600}
-  - component: {fileID: 149535886569694601}
-  - component: {fileID: 6458407150205765903}
+  - component: {fileID: 3053079427357670997}
+  - component: {fileID: 3053079427357670992}
+  - component: {fileID: 3053079427357670999}
+  - component: {fileID: 3053079427357670998}
   m_Layer: 5
   m_Name: AddImageButton
   m_TagString: Untagged
@@ -20,18 +19,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &149535886569694602
+--- !u!224 &3053079427357670997
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 149535886569694603}
+  m_GameObject: {fileID: 3053079427357670996}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 149535887156904689}
+  - {fileID: 3053079427877771566}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -40,21 +39,21 @@ RectTransform:
   m_AnchoredPosition: {x: 70, y: -80}
   m_SizeDelta: {x: 240, y: 240}
   m_Pivot: {x: 0, y: 1}
---- !u!222 &149535886569694607
+--- !u!222 &3053079427357670992
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 149535886569694603}
+  m_GameObject: {fileID: 3053079427357670996}
   m_CullTransparentMesh: 1
---- !u!114 &149535886569694600
+--- !u!114 &3053079427357670999
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 149535886569694603}
+  m_GameObject: {fileID: 3053079427357670996}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
@@ -78,13 +77,13 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &149535886569694601
+--- !u!114 &3053079427357670998
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 149535886569694603}
+  m_GameObject: {fileID: 3053079427357670996}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
@@ -118,36 +117,23 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 149535886569694600}
+  m_TargetGraphic: {fileID: 3053079427357670999}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6458407150205765903}
-        m_TargetAssemblyTypeName: AddImageButtonController, Assembly-CSharp
-        m_MethodName: OnButton
-        m_Mode: 1
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: PanelSwitcher, Assembly-CSharp
+        m_MethodName: DeactivateChildExceptIgnoreListAndActivateTarget
+        m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &6458407150205765903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 149535886569694603}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 174291259dd8949199c172a910a6e999, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: ImageEditor
---- !u!1 &149535887156904690
+--- !u!1 &3053079427877771565
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -155,9 +141,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 149535887156904689}
-  - component: {fileID: 149535887156904695}
-  - component: {fileID: 149535887156904688}
+  - component: {fileID: 3053079427877771566}
+  - component: {fileID: 3053079427877771560}
+  - component: {fileID: 3053079427877771567}
   m_Layer: 5
   m_Name: Text (1)
   m_TagString: Untagged
@@ -165,18 +151,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &149535887156904689
+--- !u!224 &3053079427877771566
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 149535887156904690}
+  m_GameObject: {fileID: 3053079427877771565}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 149535886569694602}
+  m_Father: {fileID: 3053079427357670997}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -184,21 +170,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &149535887156904695
+--- !u!222 &3053079427877771560
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 149535887156904690}
+  m_GameObject: {fileID: 3053079427877771565}
   m_CullTransparentMesh: 1
---- !u!114 &149535887156904688
+--- !u!114 &3053079427877771567
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 149535887156904690}
+  m_GameObject: {fileID: 3053079427877771565}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}

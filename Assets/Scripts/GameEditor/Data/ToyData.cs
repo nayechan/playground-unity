@@ -12,6 +12,13 @@ namespace GameEditor.Data
         public AudioData audioData;
         public ToyComponentsData toyComponentsData;
 
+        public ToyData()
+        {
+            objectData = new ObjectData();
+            imageData = new ImageData();
+            audioData = new AudioData();
+            toyComponentsData = new ToyComponentsData();
+        }
 
 
     }

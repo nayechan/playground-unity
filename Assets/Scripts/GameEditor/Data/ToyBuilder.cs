@@ -12,10 +12,9 @@ namespace GameEditor.Data
         private ToyData toyData;
         private ToySaver toySaver;
 
-        public static GameObject UpdateImageStorageAndBuildToyRoot(JObject toyJsonData)
+        public static GameObject BuildToyRoot(JObject toyJsonData)
         {
             var toyBuilder = new ToyBuilder(toyJsonData);
-            toyBuilder.UpdateImageStorage();
             return toyBuilder.BuildToys();
         }
 
@@ -23,12 +22,6 @@ namespace GameEditor.Data
         {
             this.toyJsonData = toyJsonData;
             toyData = LoadToyData(toyJsonData);
-        }
-
-        private void UpdateImageStorage()
-        {
-            var imageStorage = ImageStorage.GetSingleton();
-            imageStorage.UpdateImagesDataAndSprites(toyData.imageData);
         }
 
         private ToyData LoadToyData(JObject toyJsonData)
@@ -80,7 +73,7 @@ namespace GameEditor.Data
         {
             foreach (JObject toyChildrenJsonData in toyJsonData["Children"])
             {                
-                var toyChildren = UpdateImageStorageAndBuildToyRoot(toyChildrenJsonData);
+                var toyChildren = BuildToyRoot(toyChildrenJsonData);
                 toyChildren.transform.parent = toy.transform;
             }
         }

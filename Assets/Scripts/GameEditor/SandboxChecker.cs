@@ -9,6 +9,7 @@ using System.IO;
 using System;
 using Tools;
 using static Tools.Names;
+using File = Tools.File;
 
 namespace GameEditor
 {
@@ -37,9 +38,9 @@ namespace GameEditor
 
         private static void CreateDefaultDirectoriesIfDosentExist()
         {
-            FileTool.CreateDirectoryIfDosentExist(AppPath);
-            FileTool.CreateDirectoryIfDosentExist(LocalPath);
-            FileTool.CreateDirectoryIfDosentExist(RemotePath);
+            File.CreateDirectoryIfDosentExist(AppPath);
+            File.CreateDirectoryIfDosentExist(LocalPath);
+            File.CreateDirectoryIfDosentExist(RemotePath);
         }
 
 
@@ -76,7 +77,7 @@ namespace GameEditor
 
         private static SandboxData LoadSandboxData(string sandboxDataPath)
         {
-            var rawSandboxData = File.ReadAllText(sandboxDataPath);
+            var rawSandboxData = System.IO.File.ReadAllText(sandboxDataPath);
             return JsonUtility.FromJson<SandboxData>(rawSandboxData);
         }
 

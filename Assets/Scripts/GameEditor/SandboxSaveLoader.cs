@@ -5,6 +5,8 @@ using System.IO;
 using Tools;
 using static Tools.Names;
 using System;
+using File = Tools.File;
+using System.Collections.Generic;
 
 namespace GameEditor
 {
@@ -30,28 +32,45 @@ namespace GameEditor
         
         private void SaveSandbox()
         {
-            FileTool.CreateDirectoryIfDosentExist(SandboxChecker.GetSandboxPath(_sandboxData));
-            try
-            {
+            File.CreateDirectoryIfDosentExist(SandboxChecker.GetSandboxPath(_sandboxData));
+            // try
+            // {
                 SaveSandboxData();
-                UpdateToyRootData();
-                SaveToyRoot();
-            }
-            catch(Exception e)
-            {
-                Debug.Log("Failed to create savefile at " + SandboxChecker.GetSandboxPath(_sandboxData));
-                Debug.Log(e.ToString());
-            }
+                SaveImageStorageData();
+                UpdateAndSaveToyRootData();
+            // }
+            // catch(Exception e)
+            // {
+            //     Debug.Log("Failed to create savefile at " + SandboxChecker.GetSandboxPath(_sandboxData));
+            //     throw e;
+            // }
         }
 
         private void SaveSandboxData() 
         {
             var jsonSandboxDataPath = SandboxChecker.MakeFullPath(_sandboxData, JsonNameOfSandboxData);
-            FileTool.DeleteFileIfExist(jsonSandboxDataPath);
-            var jsonSandboxData = JsonUtility.ToJson(_sandboxData);
-            var stream = File.CreateText(jsonSandboxDataPath);
-            stream.Write(jsonSandboxData);
-            stream.Close();
+            var jsonSandboxData = JsonUtility.ToJson(_sandboxData, true);
+            System.IO.File.WriteAllText(jsonSandboxDataPath, jsonSandboxData);
+        }
+
+        private void SaveImageStorageData()
+        {
+            var jsonimageStorageDataPath = SandboxChecker.MakeFullPath(_sandboxData, JsonNameOfImageStorageData);
+            var jsonimageStorageData =  JsonUtility.ToJson(ImageStorage.GetImageStorageData(),true); 
+            System.IO.File.WriteAllText(jsonimageStorageDataPath, jsonimageStorageData);
+        }
+
+        private void SaveToyStorageData()
+        {
+            var jsonToyStorageData = JsonUtility.ToJson(ToyStorage.GetToysData(), true); 
+            var jsonToyStorageDataPath = SandboxChecker.MakeFullPath(_sandboxData, JsonNameOfToyStorageData);
+            System.IO.File.WriteAllText(jsonToyStorageDataPath, jsonToyStorageData);
+        }
+
+        private void UpdateAndSaveToyRootData()
+        {
+            UpdateToyRootData();
+            SaveToyRoot();
         }
 
         private void UpdateToyRootData()
@@ -62,11 +81,26 @@ namespace GameEditor
         private void SaveToyRoot() 
         {
             var jsonToyDataPath = SandboxChecker.MakeFullPath(_sandboxData, JsonNameOfToyData);
-            FileTool.DeleteFileIfExist(jsonToyDataPath);
             var jsonToyData = _rootOfToy.GetComponent<ToySaver>().GetJsonToysData().ToString();
-            var stream = File.CreateText(jsonToyDataPath);
-            stream.Write(jsonToyData);
-            stream.Close();
+            System.IO.File.WriteAllText(jsonToyDataPath, jsonToyData);
+        }
+
+        public static void LoadImageStorageData(SandboxData sandboxData)
+        {
+            var jsonImageStorageDataPath = Path.Combine(SandboxChecker.GetSandboxPath(sandboxData), JsonNameOfImageStorageData);
+            var jsonImageStorageData = JObject.Parse(System.IO.File.ReadAllText(jsonImageStorageDataPath));
+            var imageStorageData = JsonUtility.FromJson<ImagesData>(jsonImageStorageData.ToString());
+            foreach(var imageData in imageStorageData.imagesData)
+                ImageStorage.UpdateImagesDataAndSprites(imageData);
+        }
+
+        public static void LoadToyStorageData(SandboxData sandboxData)
+        {
+            var jsonToyStorageDataPath = Path.Combine(SandboxChecker.GetSandboxPath(sandboxData), JsonNameOfToyStorageData);
+            var jsonToyStorageData = JObject.Parse(System.IO.File.ReadAllText(jsonToyStorageDataPath));
+            var toyStorageData = JsonUtility.FromJson<List<ToyData>>(jsonToyStorageData.ToString());
+            foreach(var toyData in toyStorageData)
+                ToyStorage.AddToyData(toyData);
         }
 
         public static GameObject LoadToy(SandboxData sandboxData)
@@ -92,8 +126,8 @@ namespace GameEditor
         private GameObject LoadToy()
         {
             var jsonToyDataPath = Path.Combine(SandboxChecker.GetSandboxPath(_sandboxData), JsonNameOfToyData);
-            var jsonToyData = JObject.Parse(File.ReadAllText(jsonToyDataPath));
-            var loadedToyRoot = ToyBuilder.UpdateImageStorageAndBuildToyRoot(jsonToyData);
+            var jsonToyData = JObject.Parse(System.IO.File.ReadAllText(jsonToyDataPath));
+            var loadedToyRoot = ToyBuilder.BuildToyRoot(jsonToyData);
             return loadedToyRoot;
         }
     }

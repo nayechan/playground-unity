@@ -10,6 +10,8 @@ public class AudioData
     private AudioClip _audioClip;
     [NonSerializedAttribute] public ToyData toyData;
 
+    public AudioData() {}
+
     public AudioData(string path, string type)
     {
         _path = path;

@@ -12,10 +12,16 @@ namespace GameEditor.Data
     {
         private ToyData toyData;
 
+        void Awake()
+        {
+            toyData = new ToyData();
+        }
+
         // UpdateToysData
         public static void UpdateToysData(GameObject gameObject)
         {
             var toySaver = gameObject.GetComponent<ToySaver>();
+            
             if (toySaver != null)
             {
                 toySaver.UpdateToyData();
@@ -54,6 +60,11 @@ namespace GameEditor.Data
         private ToyComponentData GetUpdatedToyComponentData(Component component)
         {
             return ToyComponentData.GetUpdatedToyComponentData(component);
+        }
+
+        public ToyData GetToyData()
+        {
+            return toyData;
         }
 
         // -- GetJsonData

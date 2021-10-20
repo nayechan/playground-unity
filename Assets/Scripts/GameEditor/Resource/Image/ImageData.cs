@@ -15,8 +15,10 @@ public class ImageData
     [SerializeField] private string  _title;
     // [NonSerializedAttribute] public ToyData toyData;
 
-    // private string uuid;
-
+    public ImageData()
+    {
+        _relativeImagePaths = new List<string>();
+    }
     public ImageData(bool imageMode, bool sizeMode, float hSize, float vSize, string title)
     {
         _usingSingleImage = imageMode;
@@ -88,7 +90,7 @@ public class ImageData
     private SpriteRenderer CreateSpriteRendererAndLoadSprite(GameObject toy)
     {
         var spriteRenderer = toy.AddComponent<SpriteRenderer>();
-        spriteRenderer.sprite = ImageStorage.GetSingleton().GetSprites(this)[0];
+        spriteRenderer.sprite = ImageStorage.GetSprites(this)[0];
         return spriteRenderer;
     }
 }

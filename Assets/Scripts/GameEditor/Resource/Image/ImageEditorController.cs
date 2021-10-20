@@ -5,46 +5,33 @@ using UnityEngine.UI;
 using System.IO;
 using Tools;
 using GameEditor;
+using File = Tools.File;
 
 // 이미지 에디터를 관리하기 위한 스크립트입니다.
 public class ImageEditorController : MonoBehaviour
 {
     //이미지 미리보기
     [SerializeField] Image previewImage;
-
     // 제목, 수평 크기, 수직 크기
     [SerializeField] InputField nameInputField, hSizeInputField, vSizeInputField;
-
     // 파일명을 나타내기 위한 텍스트 UI 요소
     [SerializeField] Text statusText;
-
     // 단일~멀티모드 선택 토글, 크기 모드 토글 (상대, 절대)
     [SerializeField] Toggle toggleSingleMode, toggleSizeMode;
-
     // 멀티모드 활성화시 판넬
     [SerializeField] Transform multiModePanel;
-
-    // 이미지 저장소
-    [SerializeField] ImageStorage imageStorage;
-
     //스프라이트들의 리스트
     List<Sprite> sprites;
-
     //스프라이트가 저장된 위치들의 리스트
     List<string> spritePaths;
-
     //현재 단일~멀티모드, 크기모드의 상태
     bool isSingleMode, isRelativeSize;
-
     //현재 선택된 이미지 인덱스
     int currentIndex;
-
     //UI의 원래 크기
     float defaultHeight, defaultWidth;
-
     //높이, 너비 결과값
     float h, w;
-
     // 정상 작동을 위해 inspector에서 sandbox를 지정해주세요.
     public Sandbox sandbox;
     // Start is called before the first frame update
@@ -83,7 +70,7 @@ public class ImageEditorController : MonoBehaviour
         try{
             w = float.Parse(hSizeInputField.text);
             h = float.Parse(vSizeInputField.text);
-            Debug.Log(w+" "+h);
+            // Debug.Log(w+" "+h);
         }
         catch(Exception e)
         {
@@ -155,7 +142,7 @@ public class ImageEditorController : MonoBehaviour
     public void SetCurrentImage(string path)
     {
         Texture2D texture = new Texture2D(2, 2, TextureFormat.RGBA32, false);
-        byte[] byteArray = File.ReadAllBytes(path);
+        byte[] byteArray = System.IO.File.ReadAllBytes(path);
         texture.LoadImage(byteArray);
 
         Sprite s = Sprite.Create(
@@ -210,9 +197,9 @@ public class ImageEditorController : MonoBehaviour
     }
 
     //이미지 데이터 생성
-    public ImageData GenerateImageData()
+    public ImageData BuildImageData()
     {
-        Debug.Log("isRelativeSize : "+isRelativeSize);
+        // Debug.Log("isRelativeSize : "+isRelativeSize);
         h = 1;
         w = 1;
 
@@ -226,7 +213,7 @@ public class ImageEditorController : MonoBehaviour
         }
         ImageData imageData = 
         new ImageData(isSingleMode, isRelativeSize, h, w, nameInputField.text);
-        var relativePaths = FileTool.AbsolutePathsToFileNames(spritePaths);
+        var relativePaths = File.AbsolutePathsToFileNames(spritePaths);
         imageData.SetRelativeImagePaths(relativePaths);
 
         return imageData;
@@ -241,8 +228,8 @@ public class ImageEditorController : MonoBehaviour
         {
             // 추가하기 전 중복되는 파일 이름이 있는지 확인하는 코드 추가 필요
             CopyImagesToSandboxDirectory();
-            imageData = GenerateImageData();
-            imageStorage.UpdateImagesDataAndSprites(imageData);
+            imageData = BuildImageData();
+            ImageStorage.UpdateImagesDataAndSprites(imageData);
         }
 
         OnClose();

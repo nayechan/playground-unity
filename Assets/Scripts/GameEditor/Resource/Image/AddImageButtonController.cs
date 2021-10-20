@@ -10,6 +10,6 @@ public class AddImageButtonController : MonoBehaviour
 
     public void OnButton()
     {
-        imagePanelSwitcher.OpenPanel(imageEditor.transform);
+        imagePanelSwitcher.DeactivateChildExceptIgnoreListAndActivateTarget(imageEditor.transform);
     }
 }

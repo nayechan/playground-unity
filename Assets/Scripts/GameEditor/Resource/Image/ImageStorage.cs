@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -5,6 +7,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using GameEditor;
+using Newtonsoft.Json.Linq;
 
 /*
 이미지를 저장하기 위한 저장소입니다.
@@ -35,20 +38,27 @@ public class ImageStorage : MonoBehaviour
         }
     }
 
-    public static ImageStorage GetSingleton()
+    private static ImageStorage GetSingleton()
     {
        return _imageStorage;
     }
 
     //이미지 데이터 추가
-    public void UpdateImagesDataAndSprites(ImageData imageData)
+    public static void UpdateImagesDataAndSprites(ImageData imageData)
+    {
+        GetSingleton()._UpdateImagesDataAndSprites(imageData);
+    }
+
+    private void _UpdateImagesDataAndSprites(ImageData imageData)
     {
         _imagesData[imageData.GetHashCode()] = imageData;
         UpdateSprites(imageData);
         
-        _imageViewerController.RefreshUI(_imagesData, false);
-        _imageSelectorController.RefreshUI(_imagesData);
+        _imageViewerController.RefreshUI(false);
+        _imageSelectorController.RefreshUI();
     }
+
+
 
     private void UpdateSprites(ImageData imageData)
     {
@@ -68,18 +78,40 @@ public class ImageStorage : MonoBehaviour
             texture, new Rect(0, 0, texture.width, texture.height), 
             new Vector2(0.5f,0.5f)
         );
-        Debug.Log(sprite.pivot);
         return sprite;
     }
 
-    public List<Sprite> GetSprites(ImageData imageData)
+    public static List<ImageData> GetImagesData()
+    {
+        var imagesData = GetSingleton()._imagesData.Values.ToList();
+        return imagesData;   
+    }
+
+    public static ImagesData GetImageStorageData()
+    {
+        var imagesData = new ImagesData(GetSingleton()._imagesData.Values.ToList());
+        return imagesData;   
+    }
+
+    public static List<Sprite> GetSprites(ImageData imageData)
     {
         var sprites = new List<Sprite>();
         foreach(var fileName in imageData.GetRelativeImagePaths())
         {
-            sprites.Add(_sprites[fileName]);
+            sprites.Add(GetSingleton()._sprites[fileName]);
         }
         return sprites;
     }
 
+}
+
+[Serializable]
+public class ImagesData
+{
+    public List<ImageData> imagesData;
+
+    public ImagesData(List<ImageData> imagesData)
+    {
+        this.imagesData = imagesData;
+    }
 }

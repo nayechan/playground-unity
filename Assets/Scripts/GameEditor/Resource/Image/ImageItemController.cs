@@ -10,18 +10,10 @@ public class ImageItemController : MonoBehaviour {
 
     [SerializeField] private Text titleText, typeText;
     [SerializeField] private Image image;
-
-
     bool isImageLoaded = false;
-
     float defaultWidth, defaultHeight;
-
     ImageData _imageData;
-
-
-    
     public delegate void OnClick(ImageData imageData);
-
     public OnClick onClick;
 
     //이미지가 로드되었을 때 까지 작업 (크기 계산 등)을 지연
@@ -41,14 +33,13 @@ public class ImageItemController : MonoBehaviour {
     //UI 리프레시
     public void RefreshUI()
     {
-        var imageStorage = ImageStorage.GetSingleton();
-        image.sprite = imageStorage.GetSprites(_imageData)[0];
+        image.sprite = ImageStorage.GetSprites(_imageData)[0];
 
         float w = _imageData.GetHSize();
         float h = _imageData.GetVSize();
 
 
-        Debug.Log(w+" "+h);
+        // Debug.Log(w+" "+h);
         if(_imageData.GetIsRelativeSize())
         {
             if(image.sprite != null)
@@ -59,7 +50,7 @@ public class ImageItemController : MonoBehaviour {
             
         }
         
-        Debug.Log(w+" "+h);
+        // Debug.Log(w+" "+h);
 
         if(h > w)
         {
@@ -72,11 +63,11 @@ public class ImageItemController : MonoBehaviour {
             w = defaultWidth;
         }
         
-        Debug.Log(w+" "+h);
+        // Debug.Log(w+" "+h);
 
         image.GetComponent<RectTransform>().sizeDelta = new Vector2(w,h);
 
-        Debug.Log(_imageData.GetTitle());
+        // Debug.Log(_imageData.GetTitle());
         titleText.text = _imageData.GetTitle();
         typeText.text = _imageData.GetIsUsingSingleImage() ? "Single" : "Multiple";
     }
@@ -92,13 +83,16 @@ public class ImageItemController : MonoBehaviour {
         defaultWidth = image.GetComponent<RectTransform>().rect.width;
         defaultHeight = image.GetComponent<RectTransform>().rect.height;
 
-        Debug.Log(defaultWidth+" "+defaultHeight);
+        // Debug.Log(defaultWidth+" "+defaultHeight);
 
         isImageLoaded = true;
         RefreshUI();
 
     }
 
-    public void ExecuteOnClick(){onClick(_imageData);}
+    public void ExecuteOnClick()
+    {
+        // onClick(_imageData);
+    }
 
 }
