@@ -1,10 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using System;
-using System.Runtime.InteropServices;
+﻿using System;
 
-namespace WebGLFileUploader
+namespace ExternalScript.WebGLFileUploader
 {
     /// <summary>
     /// WebGL File Uploader.

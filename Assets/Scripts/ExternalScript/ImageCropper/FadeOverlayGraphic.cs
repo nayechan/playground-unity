@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace ImageCropperNamespace
+namespace ExternalScript.ImageCropper
 {
 	[RequireComponent( typeof( CanvasRenderer ) )]
 	public class FadeOverlayGraphic : Graphic

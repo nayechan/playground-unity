@@ -1,4 +1,4 @@
-﻿namespace ImageCropperNamespace
+﻿namespace ExternalScript.ImageCropper
 {
 	public interface ISelectionHandler
 	{

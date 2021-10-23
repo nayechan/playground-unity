@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using Orientation = ImageCropper.Orientation;
+using Orientation = ExternalScript.ImageCropper.ImageCropper.Orientation;
 
-namespace ImageCropperNamespace
+namespace ExternalScript.ImageCropper
 {
 	public static class ImageCropperUtils
 	{

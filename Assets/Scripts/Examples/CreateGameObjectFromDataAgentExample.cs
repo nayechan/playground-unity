@@ -18,7 +18,7 @@ namespace Examples
             // 기본적으로 C:\Users\lunda\AppData\LocalLow\Lighthouse Keeper\project-playground\-1\beach.png 를 로드합니다.
             // imageData.AddImagePath("beach.png");
             Debug.Log("path : " + imageData.GetRelativeImagePaths()[0]);
-            var objectData = new ObjectData();
+            var objectData = new ToyBuildData();
             objectData.colliderType = ColliderType.Box;
             objectData.name = "new Object";
             objectData.isFixed = false;

@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
-using Direction = ImageCropper.Direction;
+using Direction = ExternalScript.ImageCropper.ImageCropper.Direction;
 
-namespace ImageCropperNamespace
+namespace ExternalScript.ImageCropper
 {
 	public class SelectionMovementHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, ISelectionHandler
 	{
