@@ -39,18 +39,18 @@ namespace GameEditor.Object
             return toyData.imageData != null;
         }
         
-
-        public void OpenToyImageSelector()
-        {
-            toyImagePanel.WhenImageSampleClicked(SendImageDataToToyPanel);
-        }
-
         private void SendImageDataToToyPanel(ImageData imageData)
         {
             toySampleImage.sprite = ImageStorage.GetSprites(imageData)[0];
             closeImageSelectorAndOpenToyBuilder.Apply();
             _selectedImageData = imageData;
         }
+
+        public void OpenToyImageSelector()
+        {
+            toyImagePanel.WhenImageSampleClicked(SendImageDataToToyPanel);
+        }
+
 
         private ToyBuildData MakeToyBuildData()
         {

@@ -9,89 +9,58 @@ namespace GameEditor.Panel
 {
     public class ToySample : MonoBehaviour
     {
-        ObjectBuilder objectBuilder;
+        // ObjectBuilder objectBuilder;
         [SerializeField] Text typeText, nameText;
-        float defaultWidth = 0, defaultHeight = 0;
-        bool isImageLoaded = false;
         [SerializeField] Image displayImage;
+        private Vector2 thumbNailBoxSize;
+        private ToyDataContainer _toyDataContainer;
+        private bool initialized = false;
 
-        private void Awake() {
-        
-            defaultWidth = displayImage.GetComponent<RectTransform>().rect.width;
-            defaultHeight = displayImage.GetComponent<RectTransform>().rect.height;
-
-            if(objectBuilder == null)
-            {
-                objectBuilder = GameObject.Find("ObjectBuilder").GetComponent<ObjectBuilder>();
-            }
-        
-            StartCoroutine("WaitUntilImageLoad");
+        private void Initialize()
+        {
+            thumbNailBoxSize = displayImage.GetComponent<RectTransform>().rect.size;
+            _toyDataContainer = GetComponent<ToyDataContainer>();
         }
 
-        public void SetDisplayInstanceData(ToyData toyData)
+        public void SetToySample(ToyData toyData)
         {
+            if (!initialized)
+                Initialize();
+            _toyDataContainer.toyData = toyData;
             displayImage.sprite = ImageStorage.GetSprites(toyData.imageData)[0];
+            displayImage.GetComponent<RectTransform>().sizeDelta = CalcThumbNailBoxSize();
             typeText.text = toyData.toyBuildData.toyType.ToString();
             nameText.text = toyData.toyBuildData.name;
         }    
 
-        public void RefreshSampleUI()
+        private Vector2 CalcThumbNailBoxSize()
         {
-            displayImage.sprite = ImageStorage.GetSprites(GetComponent<ToyDataContainer>().ImageData)[0];
-
-            float h = GetComponent<ToyDataContainer>().ImageData.GetHeight();
-            float w = GetComponent<ToyDataContainer>().ImageData.GetWidth();
-
-
-            Debug.Log(h+" "+w);
-            if(GetComponent<ToyDataContainer>().ImageData.GetIsRelativeSize())
+            var imageData = _toyDataContainer.ImageData;
+            var toyHeight = imageData.GetHeight();
+            var toyWidth = imageData.GetWidth();
+            if(imageData.GetIsRelativeSize())
             {
                 if(displayImage.sprite != null)
                 {
-                    h *= displayImage.sprite.texture.height;
-                    w *= displayImage.sprite.texture.width;
+                    toyHeight *= displayImage.sprite.texture.height;
+                    toyWidth *= displayImage.sprite.texture.width;
                 }
-            
             }
-        
-            Debug.Log(h+" "+w);
-
-            if(h > w)
+            if(toyHeight > toyWidth)
             {
-                w = (w/h) * defaultWidth;
-                h = defaultHeight;
+                toyWidth = (toyWidth/toyHeight) * thumbNailBoxSize.x;
+                toyHeight = thumbNailBoxSize.y;
             }
             else
             {
-                h = (h/w) * defaultHeight;
-                w = defaultWidth;
+                toyHeight = (toyHeight/toyWidth) * thumbNailBoxSize.y;
+                toyWidth = thumbNailBoxSize.x;
             }
-        
-            Debug.Log(h+" "+w);
-
-            displayImage.GetComponent<RectTransform>().sizeDelta = new Vector2(w,h);
-
-
-            typeText.text = GetComponent<ToyDataContainer>().ToyBuildData.toyType.ToString();
-            nameText.text = GetComponent<ToyDataContainer>().ToyBuildData.name;
+            return new Vector2(toyWidth,toyHeight);
         }
-
-        IEnumerator WaitUntilImageLoad()
-        {
-            while(displayImage.GetComponent<RectTransform>().rect.width == 0)
-            {
-                yield return null;
-            }
-            defaultWidth = displayImage.GetComponent<RectTransform>().rect.width;
-            defaultHeight = displayImage.GetComponent<RectTransform>().rect.height;
-            isImageLoaded = true;
-            RefreshSampleUI();
-
-        }
-
         public void WhenSampleClicked()
         {
-            objectBuilder.SetCurrentToyData(GetComponent<ToyDataContainer>().toyData);
+            // objectBuilder.SetCurrentToyData(GetComponent<ToyDataContainer>().toyData);
         }
     }
 }

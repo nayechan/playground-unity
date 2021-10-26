@@ -10,36 +10,38 @@ namespace GameEditor.Resource.Image
 
         [SerializeField] private Text titleText, typeText;
         [SerializeField] private UnityEngine.UI.Image imageGuide;
-        //bool isImageLoaded = false;
-        float defaultWidth, defaultHeight;
-        ImageData _containingImageData;
+        private float defaultWidth, defaultHeight;
+        ImageData _imageData;
         public delegate void WhenImageSampleClicked(ImageData imageData);
         public WhenImageSampleClicked whenImageSampleClicked;
+        private bool initialized = false;
 
-        public void Awake()
+        public void Initialize()
         {
-            StartCoroutine("WaitUntilImageLoad");
+            defaultWidth = imageGuide.GetComponent<RectTransform>().rect.width;
+            defaultHeight = imageGuide.GetComponent<RectTransform>().rect.height;
         }
 
         public void SetImageDataAndRefreshThumbnail(ImageData imageData)
         {
-            _containingImageData = imageData;
-            //if(isImageLoaded)
+            if(!initialized)
+                Initialize();
+            _imageData = imageData;
             RefreshSampleUI();
-        }  
-
-        public void RefreshSampleUI()
-        {
-            imageGuide.sprite = ImageStorage.GetSprites(_containingImageData)[0];
-            imageGuide.GetComponent<RectTransform>().sizeDelta = GetSampleSize(_containingImageData);
-            titleText.text = _containingImageData.GetTitle();
-            typeText.text = _containingImageData.GetIsUsingSingleImage() ? "Single" : "Multiple";
         }
 
-        public Vector2 GetSampleSize(ImageData imageData)
+        private void RefreshSampleUI()
         {
-            float width = imageData.GetWidth();
-            float height = imageData.GetHeight();
+            imageGuide.sprite = ImageStorage.GetSprites(_imageData)[0];
+            imageGuide.GetComponent<RectTransform>().sizeDelta = GetSampleSize(_imageData);
+            titleText.text = _imageData.GetTitle();
+            typeText.text = _imageData.GetIsUsingSingleImage() ? "Single" : "Multiple";
+        }
+
+        private Vector2 GetSampleSize(ImageData imageData)
+        {
+            var width = imageData.GetWidth();
+            var height = imageData.GetHeight();
             if(imageData.GetIsRelativeSize())
             {
                 if(imageGuide.sprite != null)
@@ -61,23 +63,9 @@ namespace GameEditor.Resource.Image
             return new Vector2(width,height);
         }
 
-        IEnumerator WaitUntilImageLoad()
-        {
-            while(imageGuide.GetComponent<RectTransform>().rect.width == 0)
-            {
-                yield return null;
-            }
-
-            defaultWidth = imageGuide.GetComponent<RectTransform>().rect.width;
-            defaultHeight = imageGuide.GetComponent<RectTransform>().rect.height;
-
-            //isImageLoaded = true;
-            //RefreshSampleUI();
-        }
-
         public void InvokeClickEvent()
         {
-            whenImageSampleClicked?.Invoke(_containingImageData);
+            whenImageSampleClicked?.Invoke(_imageData);
         }
 
     }

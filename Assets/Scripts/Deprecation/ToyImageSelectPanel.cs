@@ -31,9 +31,9 @@ namespace GameEditor.Resource.Image
         {
             var imagesData = ImageStorage.GetImagesData();
             _containingImagesSample = new List<ImageSample>();
-            foreach(ImageData imageData in imagesData)
+            foreach(var imageData in imagesData)
             {
-                GameObject newImageSample = Instantiate(imageSamplePrefab, imageSelectorPanel);
+                var newImageSample = Instantiate(imageSamplePrefab, imageSelectorPanel);
                 newImageSample.GetComponent<ImageSample>().SetImageDataAndRefreshThumbnail(imageData);
                 _containingImagesSample.Add(newImageSample.GetComponent<ImageSample>());
 

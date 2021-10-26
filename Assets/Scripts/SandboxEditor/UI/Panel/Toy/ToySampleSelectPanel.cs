@@ -1,45 +1,56 @@
 using System.Collections.Generic;
+using System.Linq;
 using GameEditor.Data;
 using GameEditor.Panel;
 using UnityEngine;
+using GameEditor.Resource.Image;
+using GameEditor.Storage;
 
 namespace GameEditor.Object
 {
     public class ToySampleSelectPanel : MonoBehaviour
     {
         [SerializeField] private GameObject toySamplePrefab;
+        public GameObject addButton;
+        [SerializeField] Transform contentPanel;
+        private const int SAMPLE_MAX = 100;
+        private const int COL_MAX = 4;
 
-        public void RefreshPanel(List<ToyData> toysData)
+        public void RefreshPanel()
         {
             DestroyAllSample();
-            var row = 0;
-            var col = 1;
-            BuildToySample(toysData, ref row, ref col);
-            LocateToySample(ref row);
+            PreSetPanelSize();
+            BuildAndSetPositionOfToySample();
+            SetPositionOfAddButton();
         }
         private void DestroyAllSample()
         {
-            foreach(Transform sample in transform)
-                if(sample.gameObject.name != "AddObject")
+            foreach(Transform sample in contentPanel.transform)
+                if(sample.gameObject.name != "AddToy")
                     Destroy(sample.gameObject);
         }
-        private void BuildToySample(List<ToyData> toysData, ref int row, ref int col)
+        
+        private void PreSetPanelSize()
         {
-            foreach(var toyData in toysData)
+            contentPanel.GetComponent<RectTransform>().sizeDelta = new Vector2(
+                contentPanel.GetComponent<RectTransform>().sizeDelta.x,
+                400 + SAMPLE_MAX/COL_MAX*320
+            );
+        }
+        
+        private void BuildAndSetPositionOfToySample()
+        {
+            foreach(var(toyData, i) in ToyStorage.ToysData.Select(((data, i) => (data, i))))
             {
-                var toySample = Instantiate(toySamplePrefab, transform);
-                toySample.GetComponent<RectTransform>().anchoredPosition =
-                    new Vector2(70+340*col, -80-320*row);
-                toySample.GetComponent<ToySample>().SetDisplayInstanceData(toyData);
-                ++col;
-                if (col < 4) continue;
-                col=0; ++row;
+                var toySample = Instantiate(toySamplePrefab, contentPanel);
+                toySample.GetComponent<RectTransform>().anchoredPosition = ImageSamplePanel.GetNthAnchoredPosition(i);
+                toySample.GetComponent<ToySample>().SetToySample(toyData);
             }
         }
-        private void LocateToySample(ref int row)
+
+        private void SetPositionOfAddButton()
         {
-            var sizeX = GetComponent<RectTransform>().sizeDelta.x;
-            GetComponent<RectTransform>().sizeDelta = new Vector2(sizeX, 400 + row*320);
+            addButton.GetComponent<RectTransform>().anchoredPosition = ImageSamplePanel.GetNthAnchoredPosition(ToyStorage.Count);
         }
     }
 }

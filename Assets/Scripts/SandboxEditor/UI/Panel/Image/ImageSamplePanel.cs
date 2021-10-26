@@ -82,7 +82,7 @@ namespace GameEditor.Resource.Image
         }
         
 
-        private static Vector2 GetNthAnchoredPosition(int n)
+        public static Vector2 GetNthAnchoredPosition(int n)
         {
             var col = n % COL_MAX;
             var row = n / COL_MAX;

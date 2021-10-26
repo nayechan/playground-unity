@@ -10,6 +10,8 @@ namespace GameEditor.Storage
         [SerializeField] private List<ToyData> _toysData;
         [SerializeField] private ToySampleSelectPanel toySampleSelectToyPanel;
         private static ToyStorage _toyStorage;
+        public static int Count => _toyStorage._toysData.Count;
+        public static IEnumerable<ToyData> ToysData => _toyStorage._toysData.ToArray();
 
         private void Awake()
         {
@@ -38,7 +40,7 @@ namespace GameEditor.Storage
         private void _AddToyData(ToyData toyData)
         {
             _toysData.Add(toyData);
-            toySampleSelectToyPanel.RefreshPanel(_toysData);
+            toySampleSelectToyPanel.RefreshPanel();
         }
 
         public static List<ToyData> GetToysData()

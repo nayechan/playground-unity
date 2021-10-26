@@ -13427,6 +13427,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 344222617}
+        m_TargetAssemblyTypeName: GameEditor.Resource.Image.ImageSamplePanel, Assembly-CSharp
+        m_MethodName: RefreshPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &905146929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25091,6 +25103,7 @@ GameObject:
   - component: {fileID: 1675988785}
   - component: {fileID: 1675988784}
   - component: {fileID: 1675988787}
+  - component: {fileID: 1675988788}
   m_Layer: 5
   m_Name: ResourceButton
   m_TagString: Untagged
@@ -25162,22 +25175,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
-        m_MethodName: InactiveAll
+      - m_Target: {fileID: 1675988788}
+        m_TargetAssemblyTypeName: GameEditor.Common.PanelSwitch, Assembly-CSharp
+        m_MethodName: Apply
         m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
-        m_MethodName: ActivatePanel
-        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -25250,6 +25251,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   touchController: {fileID: 1135577875}
   touchMode: 0
+--- !u!114 &1675988788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1675988782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a7c7bbe857de6c4dacfed4cfda82b57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toActivate:
+  - {fileID: 388371201}
+  toDeactivate:
+  - {fileID: 1118927121}
+  - {fileID: 1548159909}
+  - {fileID: 265717052}
 --- !u!1 &1687624783
 GameObject:
   m_ObjectHideFlags: 0
@@ -28597,6 +28616,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toySamplePrefab: {fileID: 6945548257725674848, guid: 04921d89781cecc4cb5b49ba9ff60e72, type: 3}
+  addButton: {fileID: 1073173714}
+  contentPanel: {fileID: 1778628147}
 --- !u!224 &1949566557
 RectTransform:
   m_ObjectHideFlags: 0
