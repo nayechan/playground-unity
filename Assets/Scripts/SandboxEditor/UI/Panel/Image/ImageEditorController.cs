@@ -37,6 +37,7 @@ namespace GameEditor.Resource.Image
         float h, w;
         // 정상 작동을 위해 inspector에서 sandbox를 지정해주세요.
         public PanelSwitch closeImageDataBuilderAndOpenMainPanel;
+        public ImageSamplePanel imageSamplePanel;
         public Sandbox sandbox;
         // Start is called before the first frame update
         void Start()
@@ -55,19 +56,12 @@ namespace GameEditor.Resource.Image
         //UI 리프레시
         public void RefreshUI()
         {
-
             isSingleMode = toggleSingleMode.isOn;
-        
             isRelativeSize = toggleSizeMode.isOn;
-
             multiModePanel.gameObject.SetActive(!isSingleMode);
             toggleSizeMode.interactable = isSingleMode;
-
             if(!isSingleMode)
-            {
                 toggleSizeMode.isOn = false;
-            }
-
             h = 1;
             w = 1;
 
@@ -104,7 +98,6 @@ namespace GameEditor.Resource.Image
             }
 
             previewImage.GetComponent<RectTransform>().sizeDelta = new Vector2(w,h);
-
             statusText.text = "Image "+(currentIndex+1)+"/"+sprites.Count;
         }
 
@@ -135,12 +128,6 @@ namespace GameEditor.Resource.Image
         }
 
         //이미지 추가 (빈 이미지)
-        public void AddImage()
-        {
-            sprites.Add(null);
-            spritePaths.Add("");
-            RefreshUI();
-        }
 
         //현재 이미지 인덱스에 해당하는 이미지를 배치
         public void SetCurrentImage(string path)
@@ -168,23 +155,25 @@ namespace GameEditor.Resource.Image
         }
 
         //이미지 리스트 초기화
-        public void ResetAll()
+        public void ResetInputBoxAll()
         {
             sprites.Clear();
             spritePaths.Clear();
-
             currentIndex = 0;
-
             toggleSingleMode.isOn = true;
             toggleSizeMode.isOn = true;
-
             nameInputField.text = "";
             hSizeInputField.text = "";
             vSizeInputField.text = "";
-
             AddImage();
         }
 
+        public void AddImage()
+        {
+            sprites.Add(null);
+            spritePaths.Add("");
+            RefreshUI();
+        }
         //크기 모드 초기화
         public void ResetSizeMode()
         {
@@ -233,9 +222,10 @@ namespace GameEditor.Resource.Image
                 CopyImagesToSandboxDirectory();
                 var imageData = BuildImageData();
                 ImageStorage.UpdateImagesDataAndSprites(imageData);
+                imageSamplePanel.RefreshPanel();
             }
             closeImageDataBuilderAndOpenMainPanel.Apply();
-            ResetAll();
+            ResetInputBoxAll();
         }
 
         // 이미지 데이터를 앱 내부 데이터 폴더로 복사합니다.
@@ -254,7 +244,7 @@ namespace GameEditor.Resource.Image
         public void OnClose()
         {
             closeImageDataBuilderAndOpenMainPanel.Apply();
-            ResetAll();
+            ResetInputBoxAll();
         }
     }
 }

@@ -34,7 +34,7 @@ namespace GameEditor.Resource.Image
             foreach(ImageData imageData in imagesData)
             {
                 GameObject newImageSample = Instantiate(imageSamplePrefab, imageSelectorPanel);
-                newImageSample.GetComponent<ImageSample>().SetImageData(imageData);
+                newImageSample.GetComponent<ImageSample>().SetImageDataAndRefreshThumbnail(imageData);
                 _containingImagesSample.Add(newImageSample.GetComponent<ImageSample>());
 
                 newImageSample.GetComponent<RectTransform>().anchoredPosition =

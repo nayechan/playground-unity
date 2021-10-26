@@ -13,18 +13,15 @@ namespace GameEditor.Object
         [SerializeField] Image toySampleImage;
         [SerializeField] InputField nameInputField;
         [SerializeField] Dropdown typeDropdown, colliderDropdown;
-        [SerializeField] Transform imageSelector;
+        [SerializeField] ImageSamplePanel toyImagePanel;
         private ImageData _selectedImageData;
-        public PanelSwitch closeToyBuilderAndOpenImageSelector;
         public PanelSwitch closeImageSelectorAndOpenToyBuilder;
-        public PanelSwitch closeToyBuilderAndOpenToyMainPanel;
 
         public void OnAddButtonClick()
         {
             var toyData = BuildToyData();
             if (!IsValid(toyData)) return;
             ToyStorage.AddToyData(toyData);
-            closeToyBuilderAndOpenToyMainPanel.Apply();
             ResetInputBox();
         }
 
@@ -45,11 +42,10 @@ namespace GameEditor.Object
 
         public void OpenToyImageSelector()
         {
-            imageSelector.GetComponent<ToyImageSelectPanel>().SetBehavior(WhenImageSampleClicked);
-            closeToyBuilderAndOpenImageSelector.Apply();
+            toyImagePanel.WhenImageSampleClicked(SendImageDataToToyPanel);
         }
 
-        private void WhenImageSampleClicked(ImageData imageData)
+        private void SendImageDataToToyPanel(ImageData imageData)
         {
             toySampleImage.sprite = ImageStorage.GetSprites(imageData)[0];
             closeImageSelectorAndOpenToyBuilder.Apply();
@@ -73,7 +69,6 @@ namespace GameEditor.Object
 
         public void OnCancelButtonClick()
         {
-            closeToyBuilderAndOpenToyMainPanel.Apply();
             ResetInputBox();            
         }
 

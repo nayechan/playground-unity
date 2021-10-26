@@ -10,7 +10,7 @@ namespace GameEditor.Resource.Image
 
         [SerializeField] private Text titleText, typeText;
         [SerializeField] private UnityEngine.UI.Image imageGuide;
-        bool isImageLoaded = false;
+        //bool isImageLoaded = false;
         float defaultWidth, defaultHeight;
         ImageData _containingImageData;
         public delegate void WhenImageSampleClicked(ImageData imageData);
@@ -21,11 +21,11 @@ namespace GameEditor.Resource.Image
             StartCoroutine("WaitUntilImageLoad");
         }
 
-        public void SetImageData(ImageData imageData)
+        public void SetImageDataAndRefreshThumbnail(ImageData imageData)
         {
             _containingImageData = imageData;
-            if(isImageLoaded)
-                RefreshSampleUI();
+            //if(isImageLoaded)
+            RefreshSampleUI();
         }  
 
         public void RefreshSampleUI()
@@ -71,8 +71,8 @@ namespace GameEditor.Resource.Image
             defaultWidth = imageGuide.GetComponent<RectTransform>().rect.width;
             defaultHeight = imageGuide.GetComponent<RectTransform>().rect.height;
 
-            isImageLoaded = true;
-            RefreshSampleUI();
+            //isImageLoaded = true;
+            //RefreshSampleUI();
         }
 
         public void InvokeClickEvent()

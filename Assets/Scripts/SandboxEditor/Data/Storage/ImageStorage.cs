@@ -22,6 +22,8 @@ namespace GameEditor.Storage
 
         Dictionary<string, Sprite> _sprites;
         Dictionary<int, ImageData> _imagesData;
+        public static int ImageDataCount => _imageStorage._imagesData.Count;
+
         private void Awake()
         {
             SetSingletonIfUnset();
