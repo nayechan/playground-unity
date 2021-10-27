@@ -82,6 +82,7 @@ public class AudioStorage : MonoBehaviour
         string newPath = SandboxChecker.MakeFullPath(sandbox, fileName);
         Debug.Log(newPath);
         System.IO.File.Copy(data.GetPath(), newPath, true);
+        //need to be fixed
         data.SetRelativePath(fileName);
     }
 

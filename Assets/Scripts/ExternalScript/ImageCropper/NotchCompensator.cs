@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using Screen = UnityEngine.Device.Screen; // To support Device Simulator on Unity 2021.1+
 #endif
 
-namespace ImageCropperNamespace
+namespace ExternalScript.ImageCropper
 {
 	public class NotchCompensator : MonoBehaviour
 	{

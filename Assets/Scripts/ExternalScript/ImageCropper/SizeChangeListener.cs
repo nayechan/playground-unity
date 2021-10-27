@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace ImageCropperNamespace
+namespace ExternalScript.ImageCropper
 {
 	public class SizeChangeListener : MonoBehaviour
 	{
