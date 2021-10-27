@@ -71,10 +71,10 @@ namespace GameEditor.Storage
 
         private Sprite MakeSprite(string imagePath)
         {
-            Texture2D texture = new Texture2D(2, 2, TextureFormat.RGBA32, false);
-            byte[] imageBytes = File.ReadAllBytes(imagePath);
+            var texture = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+            var imageBytes = File.ReadAllBytes(imagePath);
             texture.LoadImage(imageBytes);
-            Sprite sprite = Sprite.Create(
+            var sprite = Sprite.Create(
                 texture, new Rect(0, 0, texture.width, texture.height), 
                 new Vector2(0.5f,0.5f)
             );

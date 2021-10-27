@@ -113,16 +113,16 @@ namespace GameEditor
 
         private GameObject LoadSandboxToy()
         {
-            try
-            {
+            // try
+            // {
                 return LoadToy();
-            }
-            catch(Exception e)
-            {
-                Debug.Log("Failed to load with sandboxData. Id : " + _sandboxData.id);
-                Debug.Log(e.ToString());
-                return null;
-            }
+            // }
+            // catch(Exception e)
+            // {
+            //     Debug.Log("Failed to load with sandboxData. Id : " + _sandboxData.id);
+            //     Debug.Log(e.ToString());
+            //     return null;
+            // }
         }
         
         private GameObject LoadToy()

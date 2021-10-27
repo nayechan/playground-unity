@@ -6666,6 +6666,7 @@ GameObject:
   - component: {fileID: 368012763}
   - component: {fileID: 368012762}
   - component: {fileID: 368012765}
+  - component: {fileID: 368012766}
   m_Layer: 5
   m_Name: BlockButton
   m_TagString: Untagged
@@ -6737,22 +6738,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
-        m_MethodName: InactiveAll
+      - m_Target: {fileID: 368012766}
+        m_TargetAssemblyTypeName: GameEditor.Common.PanelSwitch, Assembly-CSharp
+        m_MethodName: Apply
         m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
-        m_MethodName: ActivatePanel
-        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6825,6 +6814,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   touchController: {fileID: 1135577875}
   touchMode: 0
+--- !u!114 &368012766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 368012760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a7c7bbe857de6c4dacfed4cfda82b57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toActivate:
+  - {fileID: 1548159909}
+  toDeactivate:
+  - {fileID: 388371201}
+  - {fileID: 1118927121}
+  - {fileID: 265717052}
 --- !u!1 &370605651
 GameObject:
   m_ObjectHideFlags: 0
@@ -14811,6 +14818,7 @@ GameObject:
   - component: {fileID: 998515288}
   - component: {fileID: 998515292}
   - component: {fileID: 998515291}
+  - component: {fileID: 998515293}
   m_Layer: 5
   m_Name: MoveCameraButton
   m_TagString: Untagged
@@ -14882,22 +14890,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
-        m_MethodName: InactiveAll
+      - m_Target: {fileID: 998515293}
+        m_TargetAssemblyTypeName: GameEditor.Common.PanelSwitch, Assembly-CSharp
+        m_MethodName: Apply
         m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
-        m_MethodName: ActivatePanel
-        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -14996,6 +14992,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &998515293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 998515286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a7c7bbe857de6c4dacfed4cfda82b57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toActivate:
+  - {fileID: 265717052}
+  toDeactivate:
+  - {fileID: 1118927121}
+  - {fileID: 388371201}
+  - {fileID: 1548159909}
 --- !u!1 &1002954261
 GameObject:
   m_ObjectHideFlags: 0
@@ -19070,6 +19084,7 @@ MonoBehaviour:
     isLocalSandbox: 1
     creatorName: Lighthouse Keeper
     description: Test Sandbox
+  rootOfRoots: {fileID: 137415993}
   rootOfToy: {fileID: 1358116894}
   rootOfBlock: {fileID: 584081751}
 --- !u!4 &1227682493
@@ -24305,7 +24320,7 @@ GameObject:
   - component: {fileID: 1627198617}
   - component: {fileID: 1627198618}
   m_Layer: 5
-  m_Name: ObjectButton
+  m_Name: ToyButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25353,8 +25368,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1227682492}
-        m_TargetAssemblyTypeName: Sandbox, Assembly-CSharp
-        m_MethodName: LoadImagesData
+        m_TargetAssemblyTypeName: GameEditor.Sandbox, Assembly-CSharp
+        m_MethodName: LoadSandbox
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -30562,12 +30577,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentToyData:
-    toyBuildData:
-      name: Unnamed
-      id: 0
-      colliderType: 2
-      toyType: 1
-      isFixed: 1
     imageData:
       _relativeImagePaths: []
       _usingSingleImage: 0
@@ -30575,9 +30584,24 @@ MonoBehaviour:
       _toyWidth: 0
       _toyHeight: 0
       _title: 
-    toyComponentsData:
+    toyComponentsDataContainer:
       serializedData: []
       types: []
+    toyMiscData:
+      toyType: 0
+    toyRecipe:
+      imageData:
+        _relativeImagePaths: []
+        _usingSingleImage: 0
+        _isRelativeSize: 0
+        _toyWidth: 0
+        _toyHeight: 0
+        _title: 
+      toyBuildData:
+        name: Unnamed
+        colliderType: 2
+        toyType: 1
+        isFixed: 1
   rootObject: {fileID: 1358116895}
   objectSensorPrefab: {fileID: 2064893652797637067, guid: 5188208daa63d4b64acfc8f824094577, type: 3}
   isSnap: 0

@@ -24,7 +24,7 @@ namespace GameEditor.Data
             rb2d.gravityScale = gravityScale;
             rb2d.drag = linearDrag;
             rb2d.angularDrag = angularDrag;
-            pm2dd.SetComponent(rb2d.sharedMaterial); 
+            pm2dd?.SetComponent(rb2d.sharedMaterial); 
         }
         
         // 인자로 받은 GameObject에 CircleCollider2D 컴포넌트를 추가하고
@@ -40,6 +40,15 @@ namespace GameEditor.Data
         public Rigidbody2DData(Component comp)
         {
             UpdateByToyComponent(comp);
+        }
+
+        public Rigidbody2DData(ToyRecipe toyRecipe)
+        {
+            movable = !toyRecipe.toyBuildData.isFixed;
+            mass = 1f;
+            gravityScale = 1f;
+            linearDrag = 0f;
+            angularDrag = 0.05f;
         }
         
         // 본 Class의 data를 받은 Component의 설정값으로 바꾼다.

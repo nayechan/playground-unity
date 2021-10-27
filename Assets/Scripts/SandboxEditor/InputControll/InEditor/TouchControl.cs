@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 namespace GameEditor.UI
 {
-    public class TouchControll : MonoBehaviour
+    public class TouchControl : MonoBehaviour
     {
         Vector3 _prevPosition;
         float _prevDistance;

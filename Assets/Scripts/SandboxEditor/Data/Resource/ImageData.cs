@@ -42,7 +42,7 @@ namespace GameEditor.Data
         private SpriteRenderer CreateSpriteRendererAndLoadSprite(GameObject toy)
         {
             var spriteRenderer = toy.AddComponent<SpriteRenderer>();
-            spriteRenderer.sprite = ImageStorage.GetSprites(this)[0];
+            spriteRenderer.sprite = ImageStorage.GetSprites(this)?[0];
             return spriteRenderer;
         }
 

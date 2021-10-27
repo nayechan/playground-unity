@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Net;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
@@ -7,9 +6,9 @@ namespace GameEditor.Data
 {
     public class ToyBuilder
     {
-        private GameObject toy;
-        private JObject toyJsonData;
-        private ToyData toyData;
+        private GameObject newToy;
+        private readonly JObject toyJsonData;
+        private readonly ToyData toyData;
         private ToySaver toySaver;
 
         public static GameObject BuildToyRoot(JObject toyJsonData)
@@ -21,66 +20,83 @@ namespace GameEditor.Data
         private ToyBuilder(JObject toyJsonData)
         {
             this.toyJsonData = toyJsonData;
+            Debug.Log(toyJsonData.ToString());
             toyData = LoadToyData(toyJsonData);
         }
 
-        private ToyData LoadToyData(JObject toyJsonData)
+        private static ToyData LoadToyData(JToken toyJsonData)
         {
-            return JsonUtility.FromJson<ToyData>(toyJsonData.ToString());
-        }
-
-        private GameObject BuildToy()
-        {
-            CreateToyAndAddToySaver();
-            ApplyImageData();
-            AttachComponents();
-            return toy;
+            return toyJsonData.ToObject<ToyData>();
         }
 
         private GameObject BuildToys()
         {
             BuildToy();
-            BulidToyChildren();
-            return toy;
+            BuildToyChildren();
+            return newToy;
+        }
+        
+        private GameObject BuildToy()
+        {
+            CreateToyAndAddToySaver();
+            AttachComponents();
+            ApplyImageData();
+            return newToy;
         }
 
         private void CreateToyAndAddToySaver()
         {
-            toy = new GameObject();
-            toySaver = toy.AddComponent<ToySaver>();
+            newToy = new GameObject();
+            toySaver = newToy.AddComponent<ToySaver>();
         }
 
         private void ApplyImageData()
         {
-            toyData.imageData.BuildAndAttachSpriteRendererAndAdjustScale(toy);
+            if (DontHaveImage()) return;
+            toyData.imageData.BuildAndAttachSpriteRendererAndAdjustScale(newToy);
+        }
+
+        private bool DontHaveImage()
+        {
+            return toyData.imageData.GetRelativeImagePaths().Count == 0;
         }
 
         private void AttachComponents()
         {
-            foreach (var toyComponentData in toyData.toyComponentsData.Get())
+            foreach (var toyComponentData in toyData.toyComponentsDataContainer.GetToyComponentsData())
             {
-                toyComponentData.AddDataAppliedToyComponent(toy);
+                Debug.Log("Attaching This " + toyComponentData.ToString() );
+                toyComponentData.AddDataAppliedToyComponent(newToy);
             }
         }
 
-        private void BulidToyChildren()
+        private void BuildToyChildren()
         {
             foreach (JObject toyChildrenJsonData in toyJsonData["Children"])
             {                
                 var toyChildren = BuildToyRoot(toyChildrenJsonData);
-                toyChildren.transform.parent = toy.transform;
+                toyChildren.transform.parent = newToy.transform;
             }
         }
 
         public static GameObject BuildToy(ToyData toyData)
         {
             var toyBuilder = new ToyBuilder(toyData);
-            return toyBuilder.BuildToy();
+            toyBuilder.BuildToy();
+            Tools.Misc.SetChildAndParent(toyBuilder.newToy, Sandbox.RootOfToy);
+            return toyBuilder.newToy;
         }
 
         private ToyBuilder(ToyData toyData)
         {
             this.toyData = toyData;
         }
+
+        private void SetSaverResource()
+        {
+            toySaver.ToyData = toyData;
+        }
+        
+
     }
 }

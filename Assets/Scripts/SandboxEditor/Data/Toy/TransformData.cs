@@ -27,7 +27,6 @@ namespace GameEditor.Data
         // 본 클래스의 값으로 Set 한 뒤 Transform를 반환한다.
         public override Component AddMatchedTypeToyComponent(GameObject obj)
         {
-            ApplyDataToToyComponent(obj.transform);
             return obj.transform;
         }
         
@@ -35,6 +34,13 @@ namespace GameEditor.Data
         public TransformData(Component comp)
         {
             UpdateByToyComponent(comp);
+        }
+
+        public TransformData(ToyRecipe toyRecipe)
+        {
+            name = toyRecipe.toyBuildData.name;
+            position = rotation = Vector3.zero;
+            scale = Vector3.one;
         }
         
         // 본 Class의 data를 받은 Component의 설정값으로 바꾼다.

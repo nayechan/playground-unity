@@ -9,7 +9,7 @@ namespace GameEditor.Data
     [System.Serializable]
     public class BoxCollider2DData : ToyComponentData
     {
-        public bool collidable, isTrigger;
+        public bool enabled, isTrigger;
         public Vector2 size;
         public Vector2 offset;
         public PhysicsMaterial2DData pm2dd;
@@ -21,8 +21,9 @@ namespace GameEditor.Data
             var box2d = (BoxCollider2D) component;
             box2d.size = size;
             box2d.offset = offset;
-            box2d.enabled = collidable;
-            pm2dd.SetComponent(box2d.sharedMaterial); 
+            box2d.enabled = enabled;
+            box2d.autoTiling = true;
+            pm2dd?.SetComponent(box2d.sharedMaterial); 
         }
 
         // Component의 값을 갖는 BoxCollider2DData 클래스를 생성한다.
@@ -37,13 +38,20 @@ namespace GameEditor.Data
             Assert.IsTrue(IsMatchedType(comp));
             var box2d = (BoxCollider2D)comp;
             size = box2d.size;
-            collidable = box2d.enabled;
+            enabled = box2d.enabled;
             isTrigger = box2d.isTrigger;
             offset = box2d.offset;
             pm2dd = new PhysicsMaterial2DData(box2d.sharedMaterial);
             return this;
         }
 
+        public BoxCollider2DData(bool isEnabled = true)
+        {
+            size = Vector2.one;
+            offset = Vector2.zero;
+            enabled = true;
+            isTrigger = isEnabled;
+        }
         // 인자로 받은 GameObject에 BoxCollider2D 컴포넌트를 추가하고
         //해당 컴포넌트를 반환한다.
         public override Component AddMatchedTypeToyComponent(GameObject gameObject)

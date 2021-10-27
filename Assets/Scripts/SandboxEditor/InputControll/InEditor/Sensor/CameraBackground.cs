@@ -87,13 +87,6 @@ namespace GameEditor.EventEditor.UI.Sensor{
                     objectBuilder.GenerateObject(worldPos);
                 }
                 break;
-
-            case TouchController.TouchMode.DeleteObject:
-                break;
-                
-            case TouchController.TouchMode.MoveObject:
-                break;
-
             }
             
         }

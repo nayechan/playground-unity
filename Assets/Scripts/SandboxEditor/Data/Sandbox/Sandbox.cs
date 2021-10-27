@@ -6,8 +6,12 @@ namespace GameEditor
     public class Sandbox : MonoBehaviour
     {
         public SandboxData sandboxData;
+        public GameObject rootOfRoots;
         public GameObject rootOfToy;
         public GameObject rootOfBlock;
+        private static Sandbox _Sandbox;
+        public static GameObject RootOfToy => _Sandbox.rootOfToy;
+        public static GameObject RootOfBlock => _Sandbox.rootOfBlock;
 
         void Awake()
         {
@@ -16,14 +20,18 @@ namespace GameEditor
         }
 
 
-        // For Test.
         private void SandboxInitialize()
         {
+            SetSingletonIfUnset();
             Tools.File.CreateDirectoryIfDosentExist(SandboxChecker.GetSandboxPath(sandboxData));
-            // SandboxSaveLoader.LoadImageStorageData(sandboxData);
         }
-        // -------
-
+        
+        private void SetSingletonIfUnset()
+        {
+            if(_Sandbox == null)
+                _Sandbox = this;
+        }
+        
         public void SetSandboxData(SandboxData sandboxData)
         {
             this.sandboxData = sandboxData;
@@ -31,6 +39,12 @@ namespace GameEditor
         public void SaveSandboxOnPC()
         {
             SandboxSaveLoader.SaveSandbox(sandboxData, rootOfToy, rootOfBlock);
+        }
+
+        public void LoadSandbox()
+        {
+            LoadImagesData();
+            ReloadToy();
         }
 
         public void LoadImagesData()
@@ -42,6 +56,8 @@ namespace GameEditor
         {
             Destroy(rootOfToy);
             rootOfToy = SandboxSaveLoader.LoadToy(sandboxData);
+            Tools.Misc.SetChildAndParent(rootOfToy, rootOfRoots);
+            
         }
 
         public string GetSandboxPath()
@@ -54,7 +70,7 @@ namespace GameEditor
             return SandboxChecker.MakeFullPath(sandboxData, relativePath);
         }
 
-        static public void DeactiveGameObject(GameObject gameObject)
+        public static void DeactiveGameObject(GameObject gameObject)
         {
             gameObject.SetActive(false);
         }

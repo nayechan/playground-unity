@@ -19,24 +19,24 @@ namespace GameEditor.Object
 
         public void OnAddButtonClick()
         {
-            var toyData = BuildToyData();
-            if (!IsValid(toyData)) return;
-            ToyStorage.AddToyData(toyData);
+            var toyRecipe = BuildToyRecipe();
+            if (!IsValid(toyRecipe)) return;
+            var newToyData = new ToyData(toyRecipe);
+            ToyStorage.AddToyData(newToyData);
             ResetInputBox();
         }
 
-        private ToyData BuildToyData()
+        private ToyRecipe BuildToyRecipe()
         {
-            var toyData = new ToyData
+            return new ToyRecipe()
             {
-                toyBuildData = MakeToyBuildData(),
+                toyBuildData = BuildToyBuildDataFromInput(),
                 imageData = _selectedImageData
             };
-            return toyData;
         }
-        private static bool IsValid(ToyData toyData)
+        private static bool IsValid(ToyRecipe toyRecipe)
         {
-            return toyData.imageData != null;
+            return toyRecipe.imageData != null;
         }
         
         private void SendImageDataToToyPanel(ImageData imageData)
@@ -52,7 +52,7 @@ namespace GameEditor.Object
         }
 
 
-        private ToyBuildData MakeToyBuildData()
+        private ToyBuildData BuildToyBuildDataFromInput()
         {
             var toyBuildData = new ToyBuildData
             {

@@ -5,9 +5,9 @@ namespace GameEditor.EventEditor.UI.Sensor
 {
     public class TileGround : AbstractSensor
     {
-        private TouchControll _tc;
+        private TouchControl _tc;
         protected override void Start(){
-            _tc = GameObject.FindObjectOfType<TouchControll>();
+            _tc = GameObject.FindObjectOfType<TouchControl>();
         }
 
         public override void OnTouchBegan(Touch touch, out bool isRayBlock)

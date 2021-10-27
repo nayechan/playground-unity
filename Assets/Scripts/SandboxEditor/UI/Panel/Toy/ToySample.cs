@@ -1,6 +1,4 @@
-using System.Collections;
 using GameEditor.Data;
-using GameEditor.ObjectEditor;
 using GameEditor.Storage;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,29 +11,28 @@ namespace GameEditor.Panel
         [SerializeField] Text typeText, nameText;
         [SerializeField] Image displayImage;
         private Vector2 thumbNailBoxSize;
-        private ToyDataContainer _toyDataContainer;
         private bool initialized = false;
+        private ToyData toyData;
 
         private void Initialize()
         {
             thumbNailBoxSize = displayImage.GetComponent<RectTransform>().rect.size;
-            _toyDataContainer = GetComponent<ToyDataContainer>();
         }
 
         public void SetToySample(ToyData toyData)
         {
             if (!initialized)
                 Initialize();
-            _toyDataContainer.toyData = toyData;
+            this.toyData = toyData;
             displayImage.sprite = ImageStorage.GetSprites(toyData.imageData)[0];
             displayImage.GetComponent<RectTransform>().sizeDelta = CalcThumbNailBoxSize();
-            typeText.text = toyData.toyBuildData.toyType.ToString();
-            nameText.text = toyData.toyBuildData.name;
+            typeText.text = toyData.toyRecipe.toyBuildData.toyType.ToString();
+            nameText.text = toyData.toyRecipe.toyBuildData.name;
         }    
 
         private Vector2 CalcThumbNailBoxSize()
         {
-            var imageData = _toyDataContainer.ImageData;
+            var imageData = toyData.imageData;
             var toyHeight = imageData.GetHeight();
             var toyWidth = imageData.GetWidth();
             if(imageData.GetIsRelativeSize())
@@ -60,7 +57,22 @@ namespace GameEditor.Panel
         }
         public void WhenSampleClicked()
         {
-            // objectBuilder.SetCurrentToyData(GetComponent<ToyDataContainer>().toyData);
+            // Debug.Log(JsonUtility.ToJson(toyData));
+            BuildToyAndPlace();
+        }
+
+        private void BuildToyAndPlace()
+        {
+            var newToy = ToyBuilder.BuildToy(toyData);
+            PlaceToyAtViewPoint(newToy);
+            Debug.Log("new Toy Placed");
+        }
+
+        private static void PlaceToyAtViewPoint(GameObject toy)
+        {
+            Debug.Log("TOY " + toy.ToString());
+            Debug.Log("currentCam " + Camera.main.ToString());
+            toy.transform.position = Vector3.Scale(Camera.main.transform.position, new Vector3(1f, 1f, 0f));
         }
     }
 }

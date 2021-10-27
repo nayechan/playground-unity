@@ -1,20 +1,16 @@
 using System.Collections.Generic;
-using System.Linq;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace GameEditor.Data
 {
     public class ToySaver : MonoBehaviour
     {
-        private ToyData toyData;
+        public ToyData ToyData { get; set; }
 
         void Awake()
         {
-            toyData = new ToyData();
+            ToyData = new ToyData();
         }
 
         // UpdateToysData
@@ -34,18 +30,12 @@ namespace GameEditor.Data
         
         private void UpdateToyData()
         {
-            UpdateToyObjectData();
             UpdateSupportedToyComponentsData();
-        }
-
-        private void UpdateToyObjectData()
-        {
-            toyData.toyBuildData.name = name;
         }
 
         private void UpdateSupportedToyComponentsData()
         {
-            var newToyComponentsData = new ToyComponentsData();
+            var newToyComponentsData = new ToyComponentsDataContainer();
             var toyComponents = GetComponents<Component>();
             foreach(var toyComponent in toyComponents)
             {
@@ -54,17 +44,12 @@ namespace GameEditor.Data
                     newToyComponentsData.Add(GetUpdatedToyComponentData(toyComponent));
                 }
             }
-            toyData.toyComponentsData = newToyComponentsData;
+            ToyData.toyComponentsDataContainer = newToyComponentsData;
         }
 
         private ToyComponentData GetUpdatedToyComponentData(Component component)
         {
             return ToyComponentData.GetUpdatedToyComponentData(component);
-        }
-
-        public ToyData GetToyData()
-        {
-            return toyData;
         }
 
         // -- GetJsonData
@@ -100,7 +85,7 @@ namespace GameEditor.Data
             {
                 {"ToyData", new JObject()},
             };
-            jObject["ToyData"] = JsonUtility.ToJson(toyData);            
+            jObject["ToyData"] = JsonUtility.ToJson(ToyData);            
             return jObject;
         }
 
