@@ -35,6 +35,7 @@ namespace GameEditor.Resource.Audio
         // 이 요소에 대한 UI 부분을 리프레시합니다.
         public void RefreshUI()
         {
+            Debug.Log(typeText);
             typeText.text = _audioData.GetAudioType();
             titleText.text = System.IO.Path.GetFileName(_audioData.GetPath());
         } 

@@ -29,14 +29,17 @@ namespace GameEditor.Storage
             CopyAudioData(data);
 
             string path = data.GetPath();
+            string sandboxPath = SandboxChecker.GetSandboxPath(sandbox.sandboxData);
+
+            Debug.Log(path);
             string fileExtension = Path.GetExtension(path);
             AudioClip audioClip = null;
         
             if (fileExtension == ".wav")
             {
-                Debug.Log(new System.Uri(path).AbsoluteUri);
+                Debug.Log(new System.Uri(sandboxPath+"/"+path).AbsoluteUri);
                 using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(
-                    new System.Uri(path).AbsoluteUri, AudioType.WAV
+                    new System.Uri(sandboxPath+"/"+path), AudioType.WAV
                 ))
                 {
                     yield return www.SendWebRequest();
@@ -52,8 +55,9 @@ namespace GameEditor.Storage
             }
             else if (fileExtension == ".mp3")
             {
+                Debug.Log(File.Exists(sandboxPath+"/"+path));
                 using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(
-                    new System.Uri(path).AbsoluteUri, AudioType.MPEG
+                    new System.Uri(sandboxPath+"/"+path), AudioType.MPEG
                 ))
                 {
                     yield return www.SendWebRequest();
