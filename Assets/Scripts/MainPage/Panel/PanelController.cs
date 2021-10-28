@@ -4,10 +4,10 @@ using UnityEngine;
 
 namespace MainPage.Panel
 {
-    public interface PanelController
+    public abstract class PanelController : MonoBehaviour
     {
-        public void DeactivatePanel();
-        public void ActivatePanel();
-        public void UpdatePanel();
+        public abstract void DeactivatePanel();
+        public abstract void ActivatePanel();
+        public abstract void UpdatePanel();
     }
 }

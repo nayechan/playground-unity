@@ -4,17 +4,17 @@ using UnityEngine;
 
 namespace MainPage.Panel
 {
-    public class SearchPanelController : MonoBehaviour, PanelController
+    public class SearchPanelController : PanelController
     {
-        public void DeactivatePanel()
+        public override void DeactivatePanel()
         {
 
         }
-        public void ActivatePanel()
+        public override void ActivatePanel()
         {
 
         }
-        public void UpdatePanel()
+        public override void UpdatePanel()
         {
             
         }
