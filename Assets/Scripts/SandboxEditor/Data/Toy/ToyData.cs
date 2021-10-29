@@ -11,6 +11,7 @@ namespace GameEditor.Data
         public ToyComponentsDataContainer toyComponentsDataContainer;
         public ToyMiscData toyMiscData;
         public ToyRecipe toyRecipe;
+        public List<ToyData> childToysData;
         private List<ToyComponentData> toyComponentsData;
 
         public ToyData()
@@ -18,6 +19,7 @@ namespace GameEditor.Data
             imageData = new ImageData();
             toyComponentsDataContainer = new ToyComponentsDataContainer();
             toyMiscData = new ToyMiscData();
+            childToysData = new List<ToyData>();
         }
 
         public ToyData(ToyRecipe toyRecipe) : this()
@@ -94,7 +96,6 @@ namespace GameEditor.Data
         
         public void OnBeforeSerialize()
         {
-            Debug.Log("Before Ser Called");
             serializedData = new List<string>();
             types = new List<string>();
             foreach(var toyComponentData in toyComponentsData)
@@ -106,13 +107,10 @@ namespace GameEditor.Data
 
         public void OnAfterDeserialize()
         {
-            Debug.Log("After~~ called");
             for(var i = 0; i < serializedData.Count ; ++i)
             {
                 var type = Type.GetType(types[i]);
-                Debug.Log("TYPE : " + type.ToString());
                 toyComponentsData.Add((ToyComponentData)JsonUtility.FromJson(serializedData[i], type));
-                Debug.Log("serializeddata[i] " + serializedData[i].ToString());
             }
         }
 

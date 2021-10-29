@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311915, g: 0.3807396, b: 0.35872662, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2411,7 +2411,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 137415993}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 621.86145, y: 529.07153, z: -160.04655}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1358116895}
@@ -20790,7 +20790,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1358116894}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -621.86145, y: -529.07153, z: 170.04655}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 137415994}
@@ -20808,6 +20808,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b88f5b7ab1904816b1c741bd37af0206, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _toyData:
+    imageData:
+      _relativeImagePaths: []
+      _usingSingleImage: 0
+      _isRelativeSize: 0
+      _toyWidth: 0
+      _toyHeight: 0
+      _title: 
+    toyComponentsDataContainer:
+      serializedData: []
+      types: []
+    toyMiscData:
+      toyType: 0
+    toyRecipe:
+      imageData:
+        _relativeImagePaths: []
+        _usingSingleImage: 0
+        _isRelativeSize: 0
+        _toyWidth: 0
+        _toyHeight: 0
+        _title: 
+      toyBuildData:
+        name: Unnamed
+        colliderType: 2
+        toyType: 1
+        isFixed: 1
+    childToysData: []
 --- !u!1 &1358232608
 GameObject:
   m_ObjectHideFlags: 0
@@ -30602,6 +30629,7 @@ MonoBehaviour:
         colliderType: 2
         toyType: 1
         isFixed: 1
+    childToysData: []
   rootObject: {fileID: 1358116895}
   objectSensorPrefab: {fileID: 2064893652797637067, guid: 5188208daa63d4b64acfc8f824094577, type: 3}
   isSnap: 0

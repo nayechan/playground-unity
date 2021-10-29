@@ -57,22 +57,21 @@ namespace GameEditor.Panel
         }
         public void WhenSampleClicked()
         {
-            // Debug.Log(JsonUtility.ToJson(toyData));
             BuildToyAndPlace();
         }
 
         private void BuildToyAndPlace()
         {
-            var newToy = ToyBuilder.BuildToy(toyData);
+            var newToy = Sandbox.BuildToyOnSandbox(toyData);
             PlaceToyAtViewPoint(newToy);
             Debug.Log("new Toy Placed");
         }
 
         private static void PlaceToyAtViewPoint(GameObject toy)
         {
-            Debug.Log("TOY " + toy.ToString());
-            Debug.Log("currentCam " + Camera.main.ToString());
+            if (Camera.main is null) return;
             toy.transform.position = Vector3.Scale(Camera.main.transform.position, new Vector3(1f, 1f, 0f));
+            Debug.Log(toy.transform.position);
         }
     }
 }

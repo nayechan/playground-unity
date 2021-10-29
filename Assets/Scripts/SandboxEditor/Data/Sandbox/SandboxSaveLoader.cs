@@ -83,7 +83,7 @@ namespace GameEditor
         private void SaveToyRoot() 
         {
             var jsonToyDataPath = SandboxChecker.MakeFullPath(_sandboxData, JsonNameOfToyData);
-            var jsonToyData = _rootOfToy.GetComponent<ToySaver>().GetJsonToysData().ToString();
+            var jsonToyData = _rootOfToy.GetComponent<ToySaver>().GetJsonToyData();
             System.IO.File.WriteAllText(jsonToyDataPath, jsonToyData);
         }
 
@@ -108,29 +108,15 @@ namespace GameEditor
         public static GameObject LoadToy(SandboxData sandboxData)
         {
             var sandboxSaveLoader = new SandboxSaveLoader(sandboxData, null, null);
-            return sandboxSaveLoader.LoadSandboxToy();
-        }
-
-        private GameObject LoadSandboxToy()
-        {
-            // try
-            // {
-                return LoadToy();
-            // }
-            // catch(Exception e)
-            // {
-            //     Debug.Log("Failed to load with sandboxData. Id : " + _sandboxData.id);
-            //     Debug.Log(e.ToString());
-            //     return null;
-            // }
+            return sandboxSaveLoader.LoadToy();
         }
         
         private GameObject LoadToy()
         {
             var jsonToyDataPath = Path.Combine(SandboxChecker.GetSandboxPath(_sandboxData), JsonNameOfToyData);
-            var jsonToyData = JObject.Parse(System.IO.File.ReadAllText(jsonToyDataPath));
-            var loadedToyRoot = ToyBuilder.BuildToyRoot(jsonToyData);
-            return loadedToyRoot;
+            var jsonToyData = System.IO.File.ReadAllText(jsonToyDataPath);
+            var newToy = ToyLoader.BuildToys(jsonToyData);
+            return newToy;
         }
     }
 }

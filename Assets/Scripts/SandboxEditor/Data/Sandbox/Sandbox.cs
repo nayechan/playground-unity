@@ -57,7 +57,13 @@ namespace GameEditor
             Destroy(rootOfToy);
             rootOfToy = SandboxSaveLoader.LoadToy(sandboxData);
             Tools.Misc.SetChildAndParent(rootOfToy, rootOfRoots);
-            
+        }
+
+        public static GameObject BuildToyOnSandbox(ToyData toyData)
+        {
+            var newToy = ToyLoader.BuildToys(toyData);
+            newToy.transform.parent = RootOfToy.transform;
+            return newToy;
         }
 
         public string GetSandboxPath()

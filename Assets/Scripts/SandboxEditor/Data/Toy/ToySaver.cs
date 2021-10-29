@@ -1,36 +1,36 @@
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 
 namespace GameEditor.Data
 {
     public class ToySaver : MonoBehaviour
     {
-        public ToyData ToyData { get; set; }
+        [SerializeField]private ToyData _toyData;
 
         void Awake()
         {
-            ToyData = new ToyData();
+            _toyData = new ToyData();
         }
 
         // UpdateToysData
         public static void UpdateToysData(GameObject gameObject)
         {
-            var toySaver = gameObject.GetComponent<ToySaver>();
-            
-            if (toySaver != null)
-            {
-                toySaver.UpdateToyData();
-            }
-            foreach (Transform tp in gameObject.transform)
-            {
-                UpdateToysData(tp.gameObject);
-            }
+            gameObject.GetComponent<ToySaver>()?.UpdateToysData();
+        }
+
+        private void UpdateToysData()
+        {
+            UpdateToyData();
+            foreach (Transform child in transform)
+                child.GetComponent<ToySaver>()?.UpdateToysData();
         }
         
         private void UpdateToyData()
         {
             UpdateSupportedToyComponentsData();
+            UpdateChildToyList();
         }
 
         private void UpdateSupportedToyComponentsData()
@@ -38,55 +38,36 @@ namespace GameEditor.Data
             var newToyComponentsData = new ToyComponentsDataContainer();
             var toyComponents = GetComponents<Component>();
             foreach(var toyComponent in toyComponents)
-            {
                 if(ToyComponentData.IsSupportedType(toyComponent))
-                {
                     newToyComponentsData.Add(GetUpdatedToyComponentData(toyComponent));
-                }
-            }
-            ToyData.toyComponentsDataContainer = newToyComponentsData;
+            _toyData.toyComponentsDataContainer = newToyComponentsData;
         }
 
-        private ToyComponentData GetUpdatedToyComponentData(Component component)
+        private void UpdateChildToyList()
         {
-            return ToyComponentData.GetUpdatedToyComponentData(component);
+            _toyData.childToysData = new List<ToyData>();
+            foreach (Transform child in transform)
+            {
+                var childToyData = child.GetComponent<ToySaver>()?._toyData;
+                if(childToyData != null)
+                    _toyData.childToysData.Add(childToyData); 
+            }
+        }
+
+        private static ToyComponentData GetUpdatedToyComponentData(Component component)
+        {
+            return ToyComponentData.GetToyComponentDataFromComponent(component);
+        }
+
+        public void SetToyData(ToyData toyData)
+        {
+            _toyData = toyData;
         }
 
         // -- GetJsonData
-        public static JObject GetJsonToysData(ToySaver toySaver)
+        public string GetJsonToyData()
         {
-            return toySaver.GetJsonToysData();
-        }
-
-        public JObject GetJsonToysData()
-        {
-            var jObject = GetJsonToyData();
-            var jChildsArray = new JArray();
-            foreach (Transform childToy in transform)
-            { 
-                var toySaver = childToy.GetComponent<ToySaver>();
-                if (toySaver != null)
-                {
-                    jChildsArray.Add(toySaver.GetJsonToysData());
-                }
-            }
-            jObject.Add(new JProperty("Children", jChildsArray));
-            return jObject;
-        }
-
-        public static JObject GetJsonToyData(ToySaver toySaver) 
-        {
-            return toySaver.GetJsonToyData();
-        }
-
-        public JObject GetJsonToyData()
-        {
-            var jObject = new JObject
-            {
-                {"ToyData", new JObject()},
-            };
-            jObject["ToyData"] = JsonUtility.ToJson(ToyData);            
-            return jObject;
+            return JsonUtility.ToJson(_toyData, true);
         }
 
     }

@@ -27,7 +27,7 @@ namespace GameEditor.Data
 
         public abstract void ApplyDataToToyComponent(Component comp);
 
-        public static ToyComponentData GetUpdatedToyComponentData(Component component)
+        public static ToyComponentData GetToyComponentDataFromComponent(Component component)
         {
             var newToyComponentData = CreateMatchedComponentData(component);
             return newToyComponentData.UpdateByToyComponent(component);

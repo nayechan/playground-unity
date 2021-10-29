@@ -40,15 +40,11 @@ namespace GameEditor.Resource.Image
 
         private Vector2 GetSampleSize(ImageData imageData)
         {
-            var width = imageData.GetWidth();
-            var height = imageData.GetHeight();
+            var (width, height) = (imageData.GetWidth(), imageData.GetHeight());
             if(imageData.GetIsRelativeSize())
             {
-                if(imageGuide.sprite != null)
-                {
-                    width *= imageGuide.sprite.texture.width;
-                    height *= imageGuide.sprite.texture.height;
-                }
+                width *= imageGuide.sprite.texture.width;
+                height *= imageGuide.sprite.texture.height;
             }
             if(height > width)
             {

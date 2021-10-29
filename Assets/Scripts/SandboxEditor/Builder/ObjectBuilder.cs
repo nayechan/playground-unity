@@ -26,7 +26,7 @@ namespace GameEditor.ObjectEditor
             }
 
             if(transform != null || currentToyData == null) return false;
-            GameObject obj = ToyBuilder.BuildToy(currentToyData);
+            GameObject obj = ToyLoader.BuildToys(currentToyData);
             obj.transform.parent = rootObject;
 
             Debug.Log(objectSensorPrefab);
