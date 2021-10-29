@@ -13606,6 +13606,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1949566556}
+        m_TargetAssemblyTypeName: SandboxEditor.UI.Panel.Toy.ToySampleSelectPanel,
+          Assembly-CSharp
+        m_MethodName: RefreshPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &907592429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18459,6 +18472,19 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1949566556}
         m_TargetAssemblyTypeName: SandboxEditor.UI.Panel.Toy.ToySampleSelectPanel,
+          Assembly-CSharp
+        m_MethodName: RefreshPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 344222617}
+        m_TargetAssemblyTypeName: SandboxEditor.UI.Panel.Image.ImageSamplePanel,
           Assembly-CSharp
         m_MethodName: RefreshPanel
         m_Mode: 1
