@@ -1,14 +1,16 @@
-﻿using System.Linq;
-using System.Net;
-using Newtonsoft.Json.Linq;
+﻿using System;
+using System.Linq;
+using GameEditor.Data;
+using SandboxEditor.Data.Toy;
+using Tools;
 using UnityEngine;
 
-namespace GameEditor.Data
+namespace SandboxEditor.Builder
 {
     public class ToyLoader
     {
         private GameObject _newToy;
-        private readonly ToyData _toyData;
+        [SerializeField]private readonly ToyData _toyData;
 
         public static GameObject BuildToys(string toyJsonData)
         {

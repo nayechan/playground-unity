@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311915, g: 0.3807396, b: 0.35872662, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7557,8 +7557,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bc15b87987ce064b9c601e1b86deb23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _toysData: []
-  toySampleSelectToyPanel: {fileID: 1949566556}
 --- !u!4 &430038280
 Transform:
   m_ObjectHideFlags: 0
@@ -18459,8 +18457,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 344222617}
-        m_TargetAssemblyTypeName: GameEditor.Resource.Image.ImageSamplePanel, Assembly-CSharp
+      - m_Target: {fileID: 1949566556}
+        m_TargetAssemblyTypeName: SandboxEditor.UI.Panel.Toy.ToySampleSelectPanel,
+          Assembly-CSharp
         m_MethodName: RefreshPanel
         m_Mode: 1
         m_Arguments:
@@ -30603,33 +30602,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ea174e1501a75344a8bb5d3ff888f3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentToyData:
-    imageData:
-      _relativeImagePaths: []
-      _usingSingleImage: 0
-      _isRelativeSize: 0
-      _toyWidth: 0
-      _toyHeight: 0
-      _title: 
-    toyComponentsDataContainer:
-      serializedData: []
-      types: []
-    toyMiscData:
-      toyType: 0
-    toyRecipe:
-      imageData:
-        _relativeImagePaths: []
-        _usingSingleImage: 0
-        _isRelativeSize: 0
-        _toyWidth: 0
-        _toyHeight: 0
-        _title: 
-      toyBuildData:
-        name: Unnamed
-        colliderType: 2
-        toyType: 1
-        isFixed: 1
-    childToysData: []
   rootObject: {fileID: 1358116895}
   objectSensorPrefab: {fileID: 2064893652797637067, guid: 5188208daa63d4b64acfc8f824094577, type: 3}
   isSnap: 0

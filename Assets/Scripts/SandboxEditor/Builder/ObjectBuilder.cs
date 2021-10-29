@@ -1,12 +1,13 @@
 using GameEditor.Data;
-using GameEditor.EventEditor.UI.Sensor;
+using SandboxEditor.Data.Toy;
+using SandboxEditor.InputControl.InEditor.Sensor;
 using UnityEngine;
 
-namespace GameEditor.ObjectEditor
+namespace SandboxEditor.Builder
 {
     public class ObjectBuilder : AbstractSensor
     {
-        public ToyData currentToyData;
+        private ToyData currentToyData;
         public Transform rootObject;
         public GameObject objectSensorPrefab;
         public bool isSnap;

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using GameEditor.Data;
-using GameEditor.Storage;
+using SandboxEditor.Data.Storage;
+using SandboxEditor.UI.Panel.Image;
 using UnityEngine;
 
 /*

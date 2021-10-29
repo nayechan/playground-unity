@@ -1,7 +1,8 @@
 using System;
+using SandboxEditor.Data.Toy;
 using UnityEngine;
 
-namespace GameEditor.Data
+namespace SandboxEditor.Data.Resource
 {
     public class AudioData
     {
@@ -9,7 +10,7 @@ namespace GameEditor.Data
         private string _path;
         private string _type;
         private AudioClip _audioClip;
-        [NonSerialized] public ToyData toyData;
+        private ToyData toyData;
 
         public AudioData() {}
 

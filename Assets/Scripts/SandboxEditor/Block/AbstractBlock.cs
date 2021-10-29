@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using GameEditor.EventEditor.Line;
-using GameEditor.EventEditor.UI.Sensor;
+using SandboxEditor.InputControl.InEditor.Sensor;
 using UnityEngine;
 
 namespace GameEditor.EventEditor.Block

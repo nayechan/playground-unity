@@ -1,12 +1,9 @@
-using System.Collections.Generic;
 using System.Linq;
-using GameEditor.Data;
-using GameEditor.Panel;
+using SandboxEditor.Data.Storage;
+using SandboxEditor.UI.Panel.Image;
 using UnityEngine;
-using GameEditor.Resource.Image;
-using GameEditor.Storage;
 
-namespace GameEditor.Object
+namespace SandboxEditor.UI.Panel.Toy
 {
     public class ToySampleSelectPanel : MonoBehaviour
     {

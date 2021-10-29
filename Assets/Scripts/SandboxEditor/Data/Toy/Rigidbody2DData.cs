@@ -1,8 +1,7 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace GameEditor.Data
+namespace SandboxEditor.Data.Toy
 {
     [System.Serializable]
     public class Rigidbody2DData : ToyComponentData

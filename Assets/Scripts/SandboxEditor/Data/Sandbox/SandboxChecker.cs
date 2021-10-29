@@ -1,17 +1,12 @@
-using System.Net.Mime;
-using System.Collections;
-using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
-using UnityEngine;
-using UnityEngine.UI;
-using GameEditor.Data;
-using System.IO;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using Tools;
+using UnityEngine;
 using static Tools.Names;
 using File = Tools.File;
 
-namespace GameEditor
+namespace SandboxEditor.Data.Sandbox
 {
     
     public static class SandboxChecker

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using SandboxEditor.Data.Resource;
 using UnityEngine;
 
-namespace GameEditor.Data
+namespace SandboxEditor.Data.Toy
 {
     [System.Serializable]
     public class ToyData
@@ -12,7 +13,6 @@ namespace GameEditor.Data
         public ToyMiscData toyMiscData;
         public ToyRecipe toyRecipe;
         public List<ToyData> childToysData;
-        private List<ToyComponentData> toyComponentsData;
 
         public ToyData()
         {
@@ -25,7 +25,6 @@ namespace GameEditor.Data
         public ToyData(ToyRecipe toyRecipe) : this()
         {
             this.toyRecipe = toyRecipe;
-            toyComponentsData = toyComponentsDataContainer.GetToyComponentsData();
             SetImageData();
             SetComponentsData();
             SetMicsData();
@@ -45,7 +44,7 @@ namespace GameEditor.Data
 
         private void SetTransformData()
         {
-            toyComponentsData.Add(new TransformData(toyRecipe));
+            toyComponentsDataContainer.Add(new TransformData(toyRecipe));
         }
         
         private void SetColliderData()
@@ -54,13 +53,13 @@ namespace GameEditor.Data
             switch (@colliderType)
             {
                 case ColliderType.Circle:
-                    toyComponentsData.Add(new CircleCollider2DData());
+                    toyComponentsDataContainer.Add(new CircleCollider2DData());
                     break;
                 case ColliderType.Box:
-                    toyComponentsData.Add(new BoxCollider2DData());
+                    toyComponentsDataContainer.Add(new BoxCollider2DData());
                     break;
                 case ColliderType.None:
-                    toyComponentsData.Add(new BoxCollider2DData(false));
+                    toyComponentsDataContainer.Add(new BoxCollider2DData(false));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -69,13 +68,14 @@ namespace GameEditor.Data
 
         private void SetRigidbodyData()
         {
-            toyComponentsData.Add(new Rigidbody2DData(toyRecipe));
+            toyComponentsDataContainer.Add(new Rigidbody2DData(toyRecipe));
         }
 
         private void SetMicsData()
         {
             toyMiscData.toyType = toyRecipe.toyBuildData.toyType;
         }
+
 
 
     }
@@ -100,7 +100,7 @@ namespace GameEditor.Data
             types = new List<string>();
             foreach(var toyComponentData in toyComponentsData)
             {
-                serializedData.Add(JsonUtility.ToJson(toyComponentData));
+                serializedData.Add(JsonUtility.ToJson(toyComponentData, true));
                 types.Add(toyComponentData.GetType().ToString());
             }
         }

@@ -1,8 +1,8 @@
 using GameEditor.EventEditor.Block;
-using GameEditor.EventEditor.InputController;
 using GameEditor.EventEditor.Line;
-using GameEditor.EventEditor.UI.Sensor;
 using GameEditor.GameEditorMain;
+using SandboxEditor.InputControl.InEditor;
+using SandboxEditor.InputControl.InEditor.Sensor;
 using UnityEngine;
 
 namespace GameEditor.EventEditor.Controller

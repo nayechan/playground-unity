@@ -1,7 +1,8 @@
-using GameEditor.Data;
+using SandboxEditor.Builder;
+using SandboxEditor.Data.Toy;
 using UnityEngine;
 
-namespace GameEditor
+namespace SandboxEditor.Data.Sandbox
 {
     public class Sandbox : MonoBehaviour
     {

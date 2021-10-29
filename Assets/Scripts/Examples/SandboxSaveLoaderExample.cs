@@ -4,6 +4,7 @@ using UnityEngine;
 using GameEditor;
 using GameEditor.Data;
 using Network;
+using SandboxEditor.Data.Sandbox;
 
 namespace Examples
 {

@@ -1,14 +1,13 @@
 using System.Collections.Generic;
-using GameEditor.Data;
-using GameEditor.Object;
+using SandboxEditor.Data.Toy;
+using SandboxEditor.UI.Panel.Toy;
 using UnityEngine;
 
-namespace GameEditor.Storage
+namespace SandboxEditor.Data.Storage
 {
     public class ToyStorage : MonoBehaviour
     {
-        [SerializeField] private List<ToyData> _toysData;
-        [SerializeField] private ToySampleSelectPanel toySampleSelectToyPanel;
+        private List<ToyData> _toysData;
         private static ToyStorage _toyStorage;
         public static int Count => _toyStorage._toysData.Count;
         public static IEnumerable<ToyData> ToysData => _toyStorage._toysData.ToArray();
@@ -40,7 +39,6 @@ namespace GameEditor.Storage
         private void _AddToyData(ToyData toyData)
         {
             _toysData.Add(toyData);
-            toySampleSelectToyPanel.RefreshPanel();
         }
 
         public static List<ToyData> GetToysData()

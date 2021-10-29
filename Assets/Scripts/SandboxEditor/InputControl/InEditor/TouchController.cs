@@ -1,13 +1,11 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using GameEditor.EventEditor.UI.Sensor;
+using SandboxEditor.InputControl.InEditor.Sensor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
-namespace GameEditor.EventEditor.InputController
+namespace SandboxEditor.InputControl.InEditor
 {
     public class TouchEvent : UnityEvent<Touch>{
     }

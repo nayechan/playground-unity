@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameEditor.EventEditor.UI
+namespace SandboxEditor.UI
 {
     [ExecuteInEditMode]
     public class TextMeshSort : MonoBehaviour

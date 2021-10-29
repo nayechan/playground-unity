@@ -1,7 +1,7 @@
 using System;
-using UnityEngine;
+using SandboxEditor.Data.Resource;
 
-namespace GameEditor.Data
+namespace SandboxEditor.Data.Toy
 {
     [Serializable]
     public class ToyRecipe

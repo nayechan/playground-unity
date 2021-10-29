@@ -1,16 +1,14 @@
-using Newtonsoft.Json.Linq;
-using UnityEngine;
-using GameEditor.Data;
-using System.IO;
-using Tools;
-using static Tools.Names;
-using System;
-using File = Tools.File;
 using System.Collections.Generic;
-using GameEditor.Object;
-using GameEditor.Storage;
+using System.IO;
+using Newtonsoft.Json.Linq;
+using SandboxEditor.Builder;
+using SandboxEditor.Data.Storage;
+using SandboxEditor.Data.Toy;
+using UnityEngine;
+using static Tools.Names;
+using File = Tools.File;
 
-namespace GameEditor
+namespace SandboxEditor.Data.Sandbox
 {
     
     public class SandboxSaveLoader
@@ -35,17 +33,9 @@ namespace GameEditor
         private void SaveSandbox()
         {
             File.CreateDirectoryIfDosentExist(SandboxChecker.GetSandboxPath(_sandboxData));
-            // try
-            // {
-                SaveSandboxData();
-                SaveImageStorageData();
-                UpdateAndSaveToyRootData();
-            // }
-            // catch(Exception e)
-            // {
-            //     Debug.Log("Failed to create savefile at " + SandboxChecker.GetSandboxPath(_sandboxData));
-            //     throw e;
-            // }
+            SaveSandboxData();
+            SaveImageStorageData();
+            UpdateAndSaveToyRootData();
         }
 
         private void SaveSandboxData() 
@@ -57,9 +47,9 @@ namespace GameEditor
 
         private void SaveImageStorageData()
         {
-            var jsonimageStorageDataPath = SandboxChecker.MakeFullPath(_sandboxData, JsonNameOfImageStorageData);
-            var jsonimageStorageData =  JsonUtility.ToJson(ImageStorage.GetImageStorageData(),true); 
-            System.IO.File.WriteAllText(jsonimageStorageDataPath, jsonimageStorageData);
+            var jsonImageStorageDataPath = SandboxChecker.MakeFullPath(_sandboxData, JsonNameOfImageStorageData);
+            var jsonImageStorageData =  JsonUtility.ToJson(ImageStorage.GetImageStorageData(),true); 
+            System.IO.File.WriteAllText(jsonImageStorageDataPath, jsonImageStorageData);
         }
 
         private void SaveToyStorageData()

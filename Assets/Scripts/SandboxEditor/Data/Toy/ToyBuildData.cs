@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Assertions;
 
-namespace GameEditor.Data
+namespace SandboxEditor.Data.Toy
 {
     public enum ColliderType
     {

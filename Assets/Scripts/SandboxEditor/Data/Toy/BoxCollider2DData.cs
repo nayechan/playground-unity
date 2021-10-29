@@ -1,10 +1,7 @@
-﻿using System;
-using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.Serialization;
 
-namespace GameEditor.Data
+namespace SandboxEditor.Data.Toy
 {
     [System.Serializable]
     public class BoxCollider2DData : ToyComponentData

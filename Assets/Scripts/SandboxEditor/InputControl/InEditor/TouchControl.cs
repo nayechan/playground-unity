@@ -1,7 +1,8 @@
+using GameEditor.UI;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace GameEditor.UI
+namespace SandboxEditor.InputControl.InEditor
 {
     public class TouchControl : MonoBehaviour
     {

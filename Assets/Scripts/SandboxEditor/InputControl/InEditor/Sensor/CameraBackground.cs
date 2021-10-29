@@ -1,13 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using GameEditor.Data;
-using GameEditor.EventEditor.InputController;
-using GameEditor.ObjectEditor;
+using SandboxEditor.Builder;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace GameEditor.EventEditor.UI.Sensor{
+namespace SandboxEditor.InputControl.InEditor.Sensor{
 
     public class CameraBackground : AbstractSensor
     {

@@ -1,7 +1,7 @@
 using GameEditor.EventEditor.Block;
 using UnityEngine;
 
-namespace GameEditor.EventEditor.UI.Sensor
+namespace SandboxEditor.InputControl.InEditor.Sensor
 {
     public class MessageToBlock : AbstractSensor
     {

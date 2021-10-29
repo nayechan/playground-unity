@@ -1,16 +1,12 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using GameEditor.Data;
-using GameEditor.Resource.Image;
-using Newtonsoft.Json.Linq;
+using SandboxEditor.Data.Resource;
+using SandboxEditor.Data.Sandbox;
 using UnityEngine;
-using UnityEngine.Networking;
-using UnityEngine.UI;
 
-namespace GameEditor.Storage
+namespace SandboxEditor.Data.Storage
 {
     /*
 이미지를 저장하기 위한 저장소입니다.
@@ -18,7 +14,7 @@ namespace GameEditor.Storage
     public class ImageStorage : MonoBehaviour
     {
         private static ImageStorage _imageStorage;
-        public Sandbox sandbox;
+        public Sandbox.Sandbox sandbox;
 
         Dictionary<string, Sprite> _sprites;
         Dictionary<int, ImageData> _imagesData;

@@ -1,10 +1,6 @@
-using System.Diagnostics;
-using System.Net.Mime;
 using System;
-using System.IO;
-using UnityEngine;
 
-namespace GameEditor.Data
+namespace SandboxEditor.Data.Sandbox
 {
     [System.Serializable]
     public class SandboxData

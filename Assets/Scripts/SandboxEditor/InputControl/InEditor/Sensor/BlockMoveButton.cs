@@ -1,8 +1,7 @@
 using GameEditor.EventEditor.Block;
-using GameEditor.EventEditor.InputController;
 using UnityEngine;
 
-namespace GameEditor.EventEditor.UI.Sensor
+namespace SandboxEditor.InputControl.InEditor.Sensor
 {
     public class BlockMoveButton : AbstractSensor
     {

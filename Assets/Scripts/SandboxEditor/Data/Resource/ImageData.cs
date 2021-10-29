@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using GameEditor.Storage;
+using SandboxEditor.Data.Storage;
 using UnityEngine;
 
 //이미지를 데이터화 하기 위한 클래스입니다.
-namespace GameEditor.Data
+namespace SandboxEditor.Data.Resource
 {
     [System.Serializable]
     public class ImageData

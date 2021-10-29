@@ -1,6 +1,7 @@
+using SandboxEditor.InputControl.InEditor.Sensor;
 using UnityEngine;
 
-namespace GameEditor.UI
+namespace SandboxEditor.InputControl.InEditor
 {
     public class GridLinePositionUpdater : MonoBehaviour
     {
@@ -18,7 +19,7 @@ namespace GameEditor.UI
                 GameObject x = Instantiate<GameObject>(xLine, xPos, Quaternion.identity, gridLines.transform);
                 GameObject y = Instantiate<GameObject>(yLine, yPos, Quaternion.identity, gridLines.transform);
             }
-            FindObjectOfType<GameEditor.EventEditor.UI.Sensor.CameraBackground>().m_CameraMoved.AddListener(WhenCamMoved);
+            FindObjectOfType<CameraBackground>().m_CameraMoved.AddListener(WhenCamMoved);
 
         }
 

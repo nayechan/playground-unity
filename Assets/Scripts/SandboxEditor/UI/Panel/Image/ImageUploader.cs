@@ -2,7 +2,7 @@ using System.IO;
 using ExternalScript.WebGLFileUploader;
 using UnityEngine;
 
-namespace GameEditor.Resource.Image
+namespace SandboxEditor.UI.Panel.Image
 {
     public class ImageUploader : MonoBehaviour
     {

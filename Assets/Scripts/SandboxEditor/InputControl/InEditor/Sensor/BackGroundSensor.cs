@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameEditor.Common
+namespace SandboxEditor.InputControl.InEditor.Sensor
 {
     public class BackGroundSensor : MonoBehaviour
     {

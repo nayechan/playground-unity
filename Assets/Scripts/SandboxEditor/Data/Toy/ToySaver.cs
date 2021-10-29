@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
+using Tools;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
 
-namespace GameEditor.Data
+namespace SandboxEditor.Data.Toy
 {
     public class ToySaver : MonoBehaviour
     {
@@ -61,7 +60,7 @@ namespace GameEditor.Data
 
         public void SetToyData(ToyData toyData)
         {
-            _toyData = toyData;
+            _toyData = toyData.Clone();
         }
 
         // -- GetJsonData

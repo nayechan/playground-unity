@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using GameEditor.Data;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using SandboxEditor.Data.Resource;
+using SandboxEditor.Data.Toy;
 using UnityEngine;
 
 namespace Examples

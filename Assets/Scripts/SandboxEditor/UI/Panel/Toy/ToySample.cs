@@ -1,18 +1,20 @@
-using GameEditor.Data;
-using GameEditor.Storage;
+using SandboxEditor.Data.Sandbox;
+using SandboxEditor.Data.Storage;
+using SandboxEditor.Data.Toy;
+using Tools;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace GameEditor.Panel
+namespace SandboxEditor.UI.Panel.Toy
 {
     public class ToySample : MonoBehaviour
     {
         // ObjectBuilder objectBuilder;
         [SerializeField] Text typeText, nameText;
-        [SerializeField] Image displayImage;
+        [SerializeField] UnityEngine.UI.Image displayImage;
         private Vector2 thumbNailBoxSize;
         private bool initialized = false;
-        private ToyData toyData;
+        private ToyData _toyData;
 
         private void Initialize()
         {
@@ -23,16 +25,16 @@ namespace GameEditor.Panel
         {
             if (!initialized)
                 Initialize();
-            this.toyData = toyData;
-            displayImage.sprite = ImageStorage.GetSprites(toyData.imageData)[0];
+            _toyData = toyData.Clone();
+            displayImage.sprite = ImageStorage.GetSprites(_toyData.imageData)[0];
             displayImage.GetComponent<RectTransform>().sizeDelta = CalcThumbNailBoxSize();
-            typeText.text = toyData.toyRecipe.toyBuildData.toyType.ToString();
-            nameText.text = toyData.toyRecipe.toyBuildData.name;
+            typeText.text = _toyData.toyRecipe.toyBuildData.toyType.ToString();
+            nameText.text = _toyData.toyRecipe.toyBuildData.name;
         }    
 
         private Vector2 CalcThumbNailBoxSize()
         {
-            var imageData = toyData.imageData;
+            var imageData = _toyData.imageData;
             var toyHeight = imageData.GetHeight();
             var toyWidth = imageData.GetWidth();
             if(imageData.GetIsRelativeSize())
@@ -62,7 +64,7 @@ namespace GameEditor.Panel
 
         private void BuildToyAndPlace()
         {
-            var newToy = Sandbox.BuildToyOnSandbox(toyData);
+            var newToy = Sandbox.BuildToyOnSandbox(_toyData);
             PlaceToyAtViewPoint(newToy);
             Debug.Log("new Toy Placed");
         }

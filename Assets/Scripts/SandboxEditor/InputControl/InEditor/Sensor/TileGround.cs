@@ -1,7 +1,6 @@
-using GameEditor.UI;
 using UnityEngine;
 
-namespace GameEditor.EventEditor.UI.Sensor
+namespace SandboxEditor.InputControl.InEditor.Sensor
 {
     public class TileGround : AbstractSensor
     {

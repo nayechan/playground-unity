@@ -1,13 +1,12 @@
 using System.Collections.Generic;
-using System.Linq;
-using GameEditor.Data;
-using GameEditor.Storage;
+using SandboxEditor.Data.Resource;
+using SandboxEditor.Data.Storage;
 using UnityEngine;
 
 /*
 이미지 뷰어를 관리하는 스크립트입니다.
 */
-namespace GameEditor.Resource.Image
+namespace SandboxEditor.UI.Panel.Image
 {
     public class ImageSamplePanel : MonoBehaviour
     {

@@ -2,7 +2,7 @@ using GameEditor.EventEditor.Block;
 using GameEditor.EventEditor.Controller;
 using UnityEngine;
 
-namespace GameEditor.EventEditor.UI.Sensor
+namespace SandboxEditor.InputControl.InEditor.Sensor
 {
     public class DeleteBlockButton : AbstractSensor
     {

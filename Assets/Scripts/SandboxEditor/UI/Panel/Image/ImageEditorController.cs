@@ -1,15 +1,14 @@
 using System;
 using System.Collections.Generic;
-using GameEditor.Common;
-using GameEditor.Data;
-using GameEditor.Storage;
-using Unity.VisualScripting;
+using SandboxEditor.Data.Resource;
+using SandboxEditor.Data.Sandbox;
+using SandboxEditor.Data.Storage;
 using UnityEngine;
 using UnityEngine.UI;
 using File = Tools.File;
 
 // 이미지 에디터를 관리하기 위한 스크립트입니다.
-namespace GameEditor.Resource.Image
+namespace SandboxEditor.UI.Panel.Image
 {
     public class ImageEditorController : MonoBehaviour
     {

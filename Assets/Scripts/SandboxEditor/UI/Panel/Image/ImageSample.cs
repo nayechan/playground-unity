@@ -1,10 +1,9 @@
-using System.Collections;
-using GameEditor.Data;
-using GameEditor.Storage;
+using SandboxEditor.Data.Resource;
+using SandboxEditor.Data.Storage;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace GameEditor.Resource.Image
+namespace SandboxEditor.UI.Panel.Image
 {
     public class ImageSample : MonoBehaviour {
 

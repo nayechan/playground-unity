@@ -1,16 +1,15 @@
-using System;
-using GameEditor.Common;
-using GameEditor.Data;
-using GameEditor.Resource.Image;
-using GameEditor.Storage;
+using SandboxEditor.Data.Resource;
+using SandboxEditor.Data.Storage;
+using SandboxEditor.Data.Toy;
+using SandboxEditor.UI.Panel.Image;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace GameEditor.Object
+namespace SandboxEditor.UI.Panel.Toy
 {
     public class ToySampleBuildPanel : MonoBehaviour
     {
-        [SerializeField] Image toySampleImage;
+        [SerializeField] UnityEngine.UI.Image toySampleImage;
         [SerializeField] InputField nameInputField;
         [SerializeField] Dropdown typeDropdown, colliderDropdown;
         [SerializeField] ImageSamplePanel toyImagePanel;

@@ -4,7 +4,7 @@ using UnityEngine;
 /*
 이미지 자르기 도구를 관리하기 위한 스크립트입니다.
 */
-namespace GameEditor.Resource.Image
+namespace SandboxEditor.UI.Panel.Image
 {
     public class ImageCropperController : MonoBehaviour
     {
