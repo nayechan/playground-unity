@@ -1,21 +1,21 @@
 using System.Collections.Generic;
+using System.Linq;
 using SandboxEditor.Data.Toy;
-using SandboxEditor.UI.Panel.Toy;
 using UnityEngine;
 
 namespace SandboxEditor.Data.Storage
 {
     public class ToyStorage : MonoBehaviour
     {
-        private List<ToyData> _toysData;
+        private ToysData _toysData;
         private static ToyStorage _toyStorage;
         public static int Count => _toyStorage._toysData.Count;
-        public static IEnumerable<ToyData> ToysData => _toyStorage._toysData.ToArray();
+        public static ToysData ToysData => _toyStorage._toysData;
 
         private void Awake()
         {
             SetSingletonIfUnset();
-            _toysData = new List<ToyData>();
+            _toysData = new ToysData();
         }
 
         private void SetSingletonIfUnset()
@@ -41,11 +41,9 @@ namespace SandboxEditor.Data.Storage
             _toysData.Add(toyData);
         }
 
-        public static List<ToyData> GetToysData()
+        public static ToysData GetToysData()
         {
             return GetSingleton()._toysData;
         }
-
-
     }
 }

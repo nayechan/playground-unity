@@ -44,15 +44,20 @@ namespace SandboxEditor.Data.Sandbox
 
         public void LoadSandbox()
         {
-            LoadImagesData();
+            LoadImageStorageData();
+            LoadToyStorageData();
             ReloadToy();
         }
 
-        public void LoadImagesData()
+        private void LoadImageStorageData()
         {
             SandboxSaveLoader.LoadImageStorageData(sandboxData);
         }
 
+        private void LoadToyStorageData()
+        {
+            SandboxSaveLoader.LoadToyStorageData(sandboxData);
+        }
         public void ReloadToy()
         {
             Destroy(rootOfToy);

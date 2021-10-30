@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json.Linq;
 using SandboxEditor.Builder;
@@ -35,6 +34,7 @@ namespace SandboxEditor.Data.Sandbox
             File.CreateDirectoryIfDosentExist(SandboxChecker.GetSandboxPath(_sandboxData));
             SaveSandboxData();
             SaveImageStorageData();
+            SaveToyStorageData();
             UpdateAndSaveToyRootData();
         }
 
@@ -54,10 +54,11 @@ namespace SandboxEditor.Data.Sandbox
 
         private void SaveToyStorageData()
         {
-            var jsonToyStorageData = JsonUtility.ToJson(ToyStorage.GetToysData(), true); 
             var jsonToyStorageDataPath = SandboxChecker.MakeFullPath(_sandboxData, JsonNameOfToyStorageData);
+            var jsonToyStorageData =  JsonUtility.ToJson(ToyStorage.ToysData,true); 
             System.IO.File.WriteAllText(jsonToyStorageDataPath, jsonToyStorageData);
         }
+
 
         private void UpdateAndSaveToyRootData()
         {
@@ -90,7 +91,7 @@ namespace SandboxEditor.Data.Sandbox
         {
             var jsonToyStorageDataPath = Path.Combine(SandboxChecker.GetSandboxPath(sandboxData), JsonNameOfToyStorageData);
             var jsonToyStorageData = JObject.Parse(System.IO.File.ReadAllText(jsonToyStorageDataPath));
-            var toyStorageData = JsonUtility.FromJson<List<ToyData>>(jsonToyStorageData.ToString());
+            var toyStorageData = JsonUtility.FromJson<ToysData>(jsonToyStorageData.ToString());
             foreach(var toyData in toyStorageData)
                 ToyStorage.AddToyData(toyData);
         }
