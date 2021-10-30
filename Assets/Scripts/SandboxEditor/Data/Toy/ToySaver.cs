@@ -6,7 +6,7 @@ namespace SandboxEditor.Data.Toy
 {
     public class ToySaver : MonoBehaviour
     {
-        [SerializeField]private ToyData _toyData;
+        private ToyData _toyData;
 
         void Awake()
         {

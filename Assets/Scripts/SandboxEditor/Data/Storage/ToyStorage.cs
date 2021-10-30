@@ -20,10 +20,7 @@ namespace SandboxEditor.Data.Storage
 
         private void SetSingletonIfUnset()
         {
-            if(_toyStorage == null)
-            {
-                _toyStorage = this;
-            }
+            _toyStorage ??= this;
         }
 
         private static ToyStorage GetSingleton()

@@ -2,6 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/*
+ * JsonUtility.ToJson 메서드에서 제네릭 (List<ToyData>) 타입의 직렬화를 지원하지 않아
+ * 직렬화를 가능하도록 만든 Wrapper 클래스입니다.
+ */
+
 namespace SandboxEditor.Data.Toy
 {
     [Serializable]

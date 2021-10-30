@@ -9,11 +9,8 @@ public class Test : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        var toydata = new ToyData();
-        toydata.imageData.GetRelativeImagePaths().Add("hfiilj");
-        Debug.Log(JsonUtility.ToJson(toydata));
-        toydata = toydata.Clone();
-        Debug.Log(JsonUtility.ToJson(toydata));
+        var spriteRenderer = GetComponent<SpriteRenderer>();
+        GetComponent<CircleCollider2D>().radius = spriteRenderer.sprite.bounds.size.x/2;
     }
 
     // Update is called once per frame

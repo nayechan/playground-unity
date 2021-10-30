@@ -9,10 +9,11 @@ namespace SandboxEditor.UI.Panel.Toy
 {
     public class ToySampleBuildPanel : MonoBehaviour
     {
-        [SerializeField] UnityEngine.UI.Image toySampleImage;
-        [SerializeField] InputField nameInputField;
-        [SerializeField] Dropdown typeDropdown, colliderDropdown;
-        [SerializeField] ImageSamplePanel toyImagePanel;
+        [SerializeField] private UnityEngine.UI.Image toySampleImage;
+        [SerializeField] private InputField nameInputField;
+        [SerializeField] private Dropdown toyTypeDropdown, colliderDropdown;
+        [SerializeField] private Toggle movableToggle;
+        [SerializeField] private ImageSamplePanel toyImagePanel;
         private ImageData _selectedImageData;
         public PanelSwitch closeImageSelectorAndOpenToyBuilder;
 
@@ -55,14 +56,16 @@ namespace SandboxEditor.UI.Panel.Toy
         {
             var toyBuildData = new ToyBuildData
             {
-                name = nameInputField.text
+                name = nameInputField.text,
+                isFixed = !movableToggle.isOn
             };
-            var typeString = typeDropdown.options[typeDropdown.value].text;
+            var typeString = toyTypeDropdown.options[toyTypeDropdown.value].text;
             var toyType = (ToyType)ToyType.Parse(typeof(ToyType),typeString);
             toyBuildData.toyType = toyType;
             var colliderTypeString = colliderDropdown.options[colliderDropdown.value].text;
             var colliderType = (ColliderType)ColliderType.Parse(typeof(ColliderType),colliderTypeString);
             toyBuildData.colliderType = colliderType;
+            Debug.Log("ColType : " + colliderType.ToString());
             return toyBuildData;
         }
 
@@ -76,7 +79,7 @@ namespace SandboxEditor.UI.Panel.Toy
             toySampleImage.sprite = null;
             nameInputField.text = "";
             colliderDropdown.value = 0;
-            typeDropdown.value = 0;
+            toyTypeDropdown.value = 0;
             _selectedImageData = null;
         }
     }

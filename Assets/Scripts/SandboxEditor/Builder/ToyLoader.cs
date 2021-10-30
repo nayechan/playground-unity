@@ -1,8 +1,6 @@
-﻿using System;
-using System.Linq;
-using GameEditor.Data;
+﻿using System.Linq;
+using SandboxEditor.Data.Storage;
 using SandboxEditor.Data.Toy;
-using Tools;
 using UnityEngine;
 
 namespace SandboxEditor.Builder
@@ -10,7 +8,7 @@ namespace SandboxEditor.Builder
     public class ToyLoader
     {
         private GameObject _newToy;
-        [SerializeField]private readonly ToyData _toyData;
+        private readonly ToyData _toyData;
 
         public static GameObject BuildToys(string toyJsonData)
         {
@@ -41,8 +39,10 @@ namespace SandboxEditor.Builder
         private GameObject BuildToy()
         {
             CreateToyAndAddToySaver();
+            AttachSpriteRendererByImageData();
             AttachComponents();
-            ApplyImageData();
+            AdjustColliderSize();
+            AdjustTransformSizeByImageData();
             return _newToy;
         }
 
@@ -52,18 +52,49 @@ namespace SandboxEditor.Builder
             _newToy.GetComponent<ToySaver>().SetToyData(_toyData);
         }
 
+        private void AttachSpriteRendererByImageData()
+        {
+            if (DontHaveImage()) return;
+            _toyData.imageData.CreateSpriteRendererAndLoadSprite(_newToy);
+        }
+
+
         private void AttachComponents()
         {
             foreach (var toyComponentData in _toyData.toyComponentsDataContainer.GetToyComponentsData())
                 toyComponentData.AddDataAppliedToyComponent(_newToy);
         }
+
+        private void AdjustColliderSize()
+        {
+            var collider2D = _newToy.GetComponent<Collider2D>();
+            switch (collider2D)
+            {
+                case CircleCollider2D circleCollider2D :
+                    circleCollider2D.radius = GetToySpriteBoundSize().x / 2;
+                    break;
+                case BoxCollider2D boxCollider2D  :
+                    boxCollider2D.size = GetToySpriteBoundSize();
+                    break;
+            }
+        }
         
-        private void ApplyImageData()
+        private Vector2 GetToySpriteBoundSize()
+        {
+            return ImageStorage.GetSprites(_toyData.imageData)[0].bounds.size;
+        }
+        
+        private void AdjustTransformSizeByImageData()
         {
             if (DontHaveImage()) return;
-            _toyData.imageData.BuildAndAttachSpriteRendererAndAdjustScale(_newToy);
+            var spriteRenderer = _newToy.GetComponent<SpriteRenderer>();
+            var texture = spriteRenderer.sprite.texture;
+            var newScale = 
+                new Vector3(_toyData.imageData.GetWidth()/texture.width * 100f,
+                    _toyData.imageData.GetHeight()/texture.height * 100f,
+                    1f);
+            _newToy.transform.localScale = newScale;
         }
-
         private bool DontHaveImage()
         {
             return _toyData.imageData.GetRelativeImagePaths().Count == 0;

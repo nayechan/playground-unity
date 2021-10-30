@@ -18,7 +18,7 @@ namespace SandboxEditor.Data.Toy
         {
             Assert.IsTrue(IsMatchedType(comp));
             var rb2d = (Rigidbody2D)comp;
-            rb2d.bodyType = movable ? RigidbodyType2D.Dynamic : RigidbodyType2D.Kinematic; 
+            rb2d.bodyType = movable ? RigidbodyType2D.Dynamic : RigidbodyType2D.Static; 
             rb2d.mass = mass;
             rb2d.gravityScale = gravityScale;
             rb2d.drag = linearDrag;

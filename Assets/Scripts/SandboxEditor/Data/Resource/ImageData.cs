@@ -28,18 +28,7 @@ namespace SandboxEditor.Data.Resource
             _title = title;
         }
 
-        public void BuildAndAttachSpriteRendererAndAdjustScale(GameObject toy)
-        {
-            var spriteRenderer = CreateSpriteRendererAndLoadSprite(toy);
-            var texture = spriteRenderer.sprite.texture;
-            var newScale = 
-                new Vector3(GetWidth()/texture.width * 100f,
-                    GetHeight()/texture.height * 100f,
-                    1f);
-            toy.transform.localScale = newScale;
-        }
-
-        private SpriteRenderer CreateSpriteRendererAndLoadSprite(GameObject toy)
+        public SpriteRenderer CreateSpriteRendererAndLoadSprite(GameObject toy)
         {
             var spriteRenderer = toy.AddComponent<SpriteRenderer>();
             spriteRenderer.sprite = ImageStorage.GetSprites(this)?[0];
