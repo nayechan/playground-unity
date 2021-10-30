@@ -9,6 +9,7 @@ namespace SandboxEditor.Builder
     {
         private GameObject _newToy;
         private readonly ToyData _toyData;
+        private Texture texture;
 
         public static GameObject BuildToys(string toyJsonData)
         {
@@ -87,17 +88,29 @@ namespace SandboxEditor.Builder
         private void AdjustTransformSizeByImageData()
         {
             if (DontHaveImage()) return;
-            var spriteRenderer = _newToy.GetComponent<SpriteRenderer>();
-            var texture = spriteRenderer.sprite.texture;
-            var newScale = 
-                new Vector3(_toyData.imageData.GetWidth()/texture.width * 100f,
-                    _toyData.imageData.GetHeight()/texture.height * 100f,
-                    1f);
-            _newToy.transform.localScale = newScale;
+            texture = _newToy.GetComponent<SpriteRenderer>().sprite.texture;
+            _newToy.transform.localScale = BuildTransformScale();
         }
         private bool DontHaveImage()
         {
             return _toyData.imageData.GetRelativeImagePaths().Count == 0;
+        }
+
+        private Vector3 BuildTransformScale()
+        {
+            return _toyData.imageData.GetIsRelativeSize() ? BuildRelativeScale() : BuildAbsoluteScale();
+        }
+
+        private Vector3 BuildAbsoluteScale()
+        {
+            var xMultiplier = _toyData.imageData.GetWidth() / texture.width * 100f;
+            var yMultiplier = _toyData.imageData.GetHeight()/texture.height * 100f;
+            return new Vector3(xMultiplier, yMultiplier, 1f);
+        }
+        private Vector3 BuildRelativeScale()
+        {
+            var xMultiplier = _toyData.imageData.GetWidth() / texture.width * 100f;
+            return new Vector3(xMultiplier, xMultiplier, 1f);
         }
 
 
