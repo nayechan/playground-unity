@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using SandboxEditor.Data.Storage;
 using SandboxEditor.Data.Toy;
+using SandboxEditor.InputControl.InEditor.Sensor;
+using Tools;
 using UnityEngine;
 
 namespace SandboxEditor.Builder
@@ -39,15 +41,13 @@ namespace SandboxEditor.Builder
         
         private GameObject BuildToy()
         {
-            CreateToyAndAddToySaver();
+            CreateToyAndAttachToySaver();
             AttachSpriteRendererByImageData();
-            AttachComponents();
-            AdjustColliderSize();
-            AdjustTransformSizeByImageData();
+            AttachToyComponent();
             return _newToy;
         }
 
-        private void CreateToyAndAddToySaver()
+        private void CreateToyAndAttachToySaver()
         {
             _newToy = new GameObject("ToyOnBuild", typeof(ToySaver));
             _newToy.GetComponent<ToySaver>().SetToyData(_toyData);
@@ -60,31 +60,30 @@ namespace SandboxEditor.Builder
         }
 
 
-        private void AttachComponents()
+        private void AttachToyComponent()
         {
             foreach (var toyComponentData in _toyData.toyComponentsDataContainer.GetToyComponentsData())
                 toyComponentData.AddDataAppliedToyComponent(_newToy);
+            AdjustToyColliderSize();
+            AdjustTransformSizeByImageData();
+            AttachObjectSensor();
         }
 
-        private void AdjustColliderSize()
+        private void AdjustToyColliderSize()
         {
             var collider2D = _newToy.GetComponent<Collider2D>();
+            if (collider2D == null) return;
             switch (collider2D)
             {
                 case CircleCollider2D circleCollider2D :
-                    circleCollider2D.radius = GetToySpriteBoundSize().x / 2;
+                    circleCollider2D.radius = _toyData.GetToySpriteBoundSize().x / 2;
                     break;
                 case BoxCollider2D boxCollider2D  :
-                    boxCollider2D.size = GetToySpriteBoundSize();
+                    boxCollider2D.size = _toyData.GetToySpriteBoundSize();
                     break;
             }
         }
-        
-        private Vector2 GetToySpriteBoundSize()
-        {
-            return ImageStorage.GetSprites(_toyData.imageData)[0].bounds.size;
-        }
-        
+
         private void AdjustTransformSizeByImageData()
         {
             if (DontHaveImage()) return;
@@ -111,6 +110,17 @@ namespace SandboxEditor.Builder
         {
             var xMultiplier = _toyData.imageData.GetWidth() / texture.width * 100f;
             return new Vector3(xMultiplier, xMultiplier, 1f);
+        }
+
+        private void AttachObjectSensor()
+        {
+            if (_newToy.GetComponent<SpriteRenderer>() == null) return;
+            var toySensor = new GameObject("TouchSensor", typeof(ObjectSensor));
+            Misc.SetChildAndParent(toySensor, _newToy);
+            var sensorCollider = toySensor.AddComponent<BoxCollider>();
+            sensorCollider.transform.localScale = Vector3.one;
+            sensorCollider.size = Vector3.Scale(sensorCollider.size, new Vector3(1f, 1f, 0.1f));
+            sensorCollider.isTrigger = true;
         }
 
 

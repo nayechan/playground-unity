@@ -16,6 +16,7 @@ namespace SandboxEditor.Data.Sandbox
         public static string AppPath;
         public static string LocalPath;
         public static string RemotePath;
+        
 
         public static void Initialize(string AppPath)
         {

@@ -44,7 +44,7 @@ namespace SandboxEditor.Data.Toy
             colRadius = 0.5f;
             offset = Vector2.zero;
             enabled = true;
-            isTrigger = true;
+            isTrigger = false;
         }
 
         // 본 Class의 data를 받은 Component의 설정값으로 바꾼다.

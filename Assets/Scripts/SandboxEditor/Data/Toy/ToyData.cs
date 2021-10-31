@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SandboxEditor.Data.Resource;
+using SandboxEditor.Data.Storage;
 using UnityEngine;
 
 namespace SandboxEditor.Data.Toy
@@ -75,8 +76,19 @@ namespace SandboxEditor.Data.Toy
         {
             toyMiscData.toyType = toyRecipe.toyBuildData.toyType;
         }
+        
+        // 외부 호출용 메서드
+        
+        public Vector2 GetToySpriteBoundSize()
+        {
+            return ImageStorage.GetSprites(imageData)[0].bounds.size;
+        }
 
-
+        public Vector3 GetToySpriteBoundSize3D()
+        {
+            var size2D = ImageStorage.GetSprites(imageData)[0].bounds.size;
+            return new Vector3(size2D.x, size2D.y, 0.1f);
+        }
 
     }
     [System.Serializable]

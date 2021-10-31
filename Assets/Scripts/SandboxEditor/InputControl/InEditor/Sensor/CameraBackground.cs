@@ -11,13 +11,11 @@ namespace SandboxEditor.InputControl.InEditor.Sensor{
         private Vector2 _touchBeginPosition;
         private Vector3 _camBeginPosition;
         public UnityEvent m_CameraMoved;
-        public ObjectBuilder objectBuilder;
 
         protected override void Start()
         {
             cam = GetComponent<Camera>();
             m_CameraMoved = new UnityEvent();
-            Collider2D col = new BoxCollider2D();
         }
 
         public override void OnTouchBegan(Touch touch, out bool isRayBlock)
@@ -32,14 +30,11 @@ namespace SandboxEditor.InputControl.InEditor.Sensor{
                     break;
 
                 case TouchController.TouchMode.CreateObject:
-
-                    //tc.AlarmMe(touch.fingerId, this);
-
                     Vector3 worldPos;
                     worldPos = touch.position;
                     worldPos = Camera.main.ScreenToWorldPoint(worldPos);
                     
-                    objectBuilder.GenerateObject(worldPos);
+                    ObjectBuilder.BuildAndPlaceToy(worldPos);
                     break;
                 
                 case TouchController.TouchMode.DeleteObject:
@@ -58,30 +53,14 @@ namespace SandboxEditor.InputControl.InEditor.Sensor{
         public override void CallBack(Touch touch)
         {
             var tc = TouchController.GetTID();
-            // Debug.Log(touch.phase);
-
-            Vector3 worldPos, deltaVector;
-            worldPos = touch.position;
-            worldPos = Camera.main.ScreenToWorldPoint(worldPos);
 
             switch (tc.mode)
             {
-            case TouchController.TouchMode.CamMove:
-                deltaVector = 
-                cam.ScreenToWorldPoint(touch.position) - 
-                cam.ScreenToWorldPoint(_touchBeginPosition);
-
+                case TouchController.TouchMode.CamMove:
+                var deltaVector = cam.ScreenToWorldPoint(touch.position) - 
+                                  cam.ScreenToWorldPoint(_touchBeginPosition);
                 cam.transform.position = _camBeginPosition - deltaVector;
-
                 m_CameraMoved.Invoke();
-
-                break;
-
-            case TouchController.TouchMode.CreateObject:
-                if(objectBuilder.isSnap)
-                {
-                    objectBuilder.GenerateObject(worldPos);
-                }
                 break;
             }
             

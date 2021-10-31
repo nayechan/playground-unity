@@ -47,7 +47,7 @@ namespace SandboxEditor.Data.Toy
             size = Vector2.one;
             offset = Vector2.zero;
             enabled = isEnabled;
-            isTrigger = true;
+            isTrigger = false;
         }
         // 인자로 받은 GameObject에 BoxCollider2D 컴포넌트를 추가하고
         //해당 컴포넌트를 반환한다.

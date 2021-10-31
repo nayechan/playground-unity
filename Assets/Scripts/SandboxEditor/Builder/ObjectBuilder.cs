@@ -1,66 +1,53 @@
+using System;
 using GameEditor.Data;
+using SandboxEditor.Data.Sandbox;
 using SandboxEditor.Data.Toy;
 using SandboxEditor.InputControl.InEditor.Sensor;
 using UnityEngine;
 
 namespace SandboxEditor.Builder
 {
-    public class ObjectBuilder : AbstractSensor
+    public class ObjectBuilder : MonoBehaviour
     {
         private ToyData currentToyData;
+        private GameObject _newToy;
         public Transform rootObject;
-        public GameObject objectSensorPrefab;
         public bool isSnap;
+        private static ObjectBuilder _ObjectBuilder;
+        public static bool IsSnap => _ObjectBuilder.isSnap;
 
-        // Start is called before the first frame update
-        void Awake()
+        private void Awake()
         {
-            currentToyData = null;
+            _ObjectBuilder ??= this;
         }
 
-        public bool GenerateObject(Vector3 cursor)
+        public static void BuildAndPlaceToy(Vector3 cursorPosition)
         {
-            Transform transform = null;
-            if(isSnap)
-            {
-                transform = FindNearestObject(cursor, rootObject, 1.0f);
-            }
+            _ObjectBuilder._BuildAndPlaceToy(cursorPosition);
+        }
 
-            if(transform != null || currentToyData == null) return false;
-            GameObject obj = ToyLoader.BuildToys(currentToyData);
-            obj.transform.parent = rootObject;
+        private void _BuildAndPlaceToy(Vector3 cursorPosition)
+        {
+            _newToy = ToyLoader.BuildToys(currentToyData);
+            _newToy.transform.parent = rootObject;
+            var newPosition = isSnap ? AdjustedPositionForSnapFunction(cursorPosition) : cursorPosition;
+            newPosition.z = 0;
+            _newToy.transform.position = newPosition;
+        }
 
-            Debug.Log(objectSensorPrefab);
-
-            GameObject objectSensor = GameObject.Instantiate(
-                objectSensorPrefab, obj.transform.position, Quaternion.identity, 
-                obj.transform
-            );
-
-            cursor.z = 10;
-
-            Vector3 objSize = obj.GetComponent<SpriteRenderer>().bounds.size;
-            Vector3 objPos = cursor;
-
-            if(isSnap){
-
-                Vector3 pivotAmount = objSize;
-                pivotAmount.x *= 0.5f;
-                pivotAmount.y *= -0.5f;
-                pivotAmount.z = 10;
-
-
-                objPos-=pivotAmount;
-            
-                objPos.x = Mathf.Round(objPos.x);
-                objPos.y = Mathf.Round(objPos.y);
-
-                objPos+=pivotAmount;
-
-            }
-
-            obj.transform.position = objPos;
-            return true;
+        private Vector3 AdjustedPositionForSnapFunction(Vector3 cursorPosition)
+        {
+            var toySize = _newToy.GetComponent<SpriteRenderer>().bounds.size;
+            var newPosition = cursorPosition;
+            var pivotAmount = toySize;
+            pivotAmount.x *= 0.5f;
+            pivotAmount.y *= -0.5f;
+            pivotAmount.z = 10;
+            newPosition-=pivotAmount;
+            newPosition.x = Mathf.Round(newPosition.x);
+            newPosition.y = Mathf.Round(newPosition.y);
+            newPosition+=pivotAmount;
+            return newPosition;
         }
 
         public void SetCurrentToyData(ToyData ToyData)
