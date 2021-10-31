@@ -1,7 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using GameEditor.Data;
+using System.IO;
+using MainPage;
+using MainPage.Card;
 
 namespace MainPage.Panel
 {
@@ -15,15 +19,15 @@ namespace MainPage.Panel
         void Awake() {
 
         }
-        public override void DeactivatePanel()
+        public override void OnDeactivateComponent()
         {
 
         }
-        public override void ActivatePanel()
+        public override void OnActivateComponent()
         {
 
         }
-        public override void UpdatePanel()
+        public override void UpdateComponent()
         {
             int col = 0, row = 0;
 
@@ -38,20 +42,24 @@ namespace MainPage.Panel
 
             foreach(SandboxData data in sandboxDatas)
             {
+                Sprite sprite = null;
                 Texture2D texture = new Texture2D(2, 2, TextureFormat.RGBA32, false);
-                byte[] byteArray = System.IO.File.ReadAllBytes(debugPath + "/" + data.id + "/thumbnail.png");
-                texture.LoadImage(byteArray);
+                if(File.Exists(debugPath + "/" + data.id + "/thumbnail.png"))
+                {
+                    byte[] byteArray = System.IO.File.ReadAllBytes(debugPath + "/" + data.id + "/thumbnail.png");
+                    texture.LoadImage(byteArray);
 
-                Sprite sprite = Sprite.Create(
-                    texture, new Rect(0, 0, texture.width, texture.height), 
-                    new Vector2(0.5f,0.5f)
-                );
+                    sprite = Sprite.Create(
+                        texture, new Rect(0, 0, texture.width, texture.height), 
+                        new Vector2(0.5f,0.5f)
+                    );
+                }
 
                 GameObject g = Instantiate(projectCardPrefab, contentPanel);
-                g.GetComponent<RectTransform>().anchoredPosition = new Vector2(col*424,row*456);
-                g.GetComponent<SandboxCardController>().SetCard(sprite, data.title, data.creatorName);
+                g.GetComponent<RectTransform>().anchoredPosition = new Vector2(col*424,-row*456);
+                g.GetComponent<SandboxCardController>().SetCardData(sprite, data.title, data.creatorName);
 
-                ++col;
+                ++col; 
                 if(col>=colSize){
                     col = 0;
                     ++row;
@@ -59,10 +67,10 @@ namespace MainPage.Panel
             }
             GameObject addObject = Instantiate(addObjectPrefab, contentPanel);
             addObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(
-                col*424, row*456
+                col*424, -row*456
             );
 
-            contentPanel.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, row*456);
+            contentPanel.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, (row+1)*456);
 
         }
     }

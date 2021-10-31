@@ -14,7 +14,7 @@ namespace MainPage
         string debugPath;
         private void Awake() {
             sandboxDatas = new List<SandboxData>();
-            debugPath = "/Users/yechanna/Desktop/sandbox_test";
+            debugPath = "/Desktop/sandbox_test";
             StartCoroutine("LoadSandboxFolders");
         }
 
@@ -27,13 +27,20 @@ namespace MainPage
 
                 sandboxDatas.Add(sandboxData);
 
-                panelToUpdate.UpdatePanel();
+                panelToUpdate.UpdateComponent();
 
                 yield return null;
             }
         }
 
+        public void AddSandbox(SandboxData data)
+        {
+            sandboxDatas.Add(data);
+            panelToUpdate.UpdateComponent();
+        }
+
         public List<SandboxData> GetSandboxDatas(){return sandboxDatas;}
+
 
     }
 }

@@ -16,14 +16,14 @@ namespace MainPage.Panel
         {
             foreach(PanelController panel in panels)
             {
-                panel.DeactivatePanel();
+                panel.OnDeactivateComponent();
             }
-            selectedPanel.ActivatePanel();
+            selectedPanel.OnActivateComponent();
             currentPanel = selectedPanel;
         }
         public void UpdateCurrentPanel()
         {
-            currentPanel.UpdatePanel();
+            currentPanel.UpdateComponent();
         }
     }
 }
