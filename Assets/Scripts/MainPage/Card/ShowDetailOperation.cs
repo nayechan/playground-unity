@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MainPage.Panel
+public class ShowDetailOperation : SandboxCardOnClickOperation
 {
-    public class TopMenuController : MenuController
+    void execute()
     {
         
     }
 }
-

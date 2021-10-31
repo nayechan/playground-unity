@@ -8,6 +8,7 @@ namespace MainPage.Card
     public class SandboxCardController : CardController
     {
         [SerializeField] Image image;
+        [SerializeField] SandboxCardOnClickOperation operation;
         Button button;
         [SerializeField] Text titleText, authorText;
         public void SetCardData(Sprite sprite, string title, string author)
@@ -21,6 +22,10 @@ namespace MainPage.Card
         }
         public override void OnClick()
         {
+            if(operation != null)
+            {
+                operation.execute();
+            }
         }
     }
 }

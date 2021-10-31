@@ -14,7 +14,7 @@ namespace MainPage
         string debugPath;
         private void Awake() {
             sandboxDatas = new List<SandboxData>();
-            debugPath = "/Desktop/sandbox_test";
+            debugPath = "/Users/yechanna/Desktop/sandbox_test";
             StartCoroutine("LoadSandboxFolders");
         }
 
