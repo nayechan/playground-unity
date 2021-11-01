@@ -3378,7 +3378,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectCardPrefab: {fileID: 2728710090722605678, guid: a3df9f513633e47bd904e783d7a29270, type: 3}
   operation: {fileID: 1016761744}
-  contentPanel: {fileID: 0}
+  contentPanel: {fileID: 1038808438}
   querySandbox: {fileID: 1356378553}
 --- !u!114 &1016761744
 MonoBehaviour:
