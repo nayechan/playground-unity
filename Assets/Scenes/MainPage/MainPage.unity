@@ -3296,6 +3296,7 @@ GameObject:
   - component: {fileID: 1016761742}
   - component: {fileID: 1016761741}
   - component: {fileID: 1016761743}
+  - component: {fileID: 1016761744}
   m_Layer: 5
   m_Name: SearchPanel
   m_TagString: Untagged
@@ -3373,6 +3374,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bce9b84e5c9550a469c5927b8944bbdc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectCardPrefab: {fileID: 2728710090722605678, guid: a3df9f513633e47bd904e783d7a29270, type: 3}
+  operation: {fileID: 1016761744}
+  contentPanel: {fileID: 0}
+  querySandbox: {fileID: 1356378553}
+--- !u!114 &1016761744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016761739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cf98ef87a0e949d1aa86ffce5ea654e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1038808437
@@ -4178,6 +4195,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1326511724}
   m_CullTransparentMesh: 1
+--- !u!1 &1356378552
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1356378554}
+  - component: {fileID: 1356378553}
+  m_Layer: 0
+  m_Name: Server
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1356378553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356378552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53f3a62640072409db0b1bfe64c55bea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1356378554
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356378552}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1393779486
 GameObject:
   m_ObjectHideFlags: 0
@@ -4885,6 +4945,7 @@ GameObject:
   - component: {fileID: 1642646079}
   - component: {fileID: 1642646078}
   - component: {fileID: 1642646077}
+  - component: {fileID: 1642646080}
   m_Layer: 5
   m_Name: InputField
   m_TagString: Untagged
@@ -4974,7 +5035,19 @@ MonoBehaviour:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1642646080}
+        m_TargetAssemblyTypeName: SearchInputField, Assembly-CSharp
+        m_MethodName: OnInputOccured
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
@@ -5021,6 +5094,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1642646075}
   m_CullTransparentMesh: 1
+--- !u!114 &1642646080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1642646075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74a43e91c146a45e9b73f5e86d4d40a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delayTime: 0
+  searchPanelController: {fileID: 1016761743}
 --- !u!224 &1664836918 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6177067538932518680, guid: 9282bc2054a194f489329f306c18d6de, type: 3}
