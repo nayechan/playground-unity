@@ -14,6 +14,7 @@ namespace MainPage.Panel
         [SerializeField] SandboxCardOnClickOperation operation;
         [SerializeField] Transform contentPanel;
         [SerializeField] QuerySandbox querySandbox;
+        Response currentResponseData = null;
         const int colSize = 5;
 
         void Awake() {
@@ -31,10 +32,10 @@ namespace MainPage.Panel
         {
             int col = 0, row = 0;
 
-            Response response = querySandbox.GetResponse();
-            List<Response.ResponseItem> responseDatas = response.GetDataList();
+            if(currentResponseData==null)
+                return;
 
-            string debugPath = "/Users/yechanna/Desktop/sandbox_test";
+            List<Response.ResponseItem> responseDatas = currentResponseData.GetDataList();
 
             foreach(Transform t in contentPanel)
             {
@@ -59,7 +60,11 @@ namespace MainPage.Panel
 
                 GameObject g = Instantiate(projectCardPrefab, contentPanel);
                 g.GetComponent<RectTransform>().anchoredPosition = new Vector2(col*424,-row*456);
-                g.GetComponent<SandboxCardController>().SetCardData(sprite, responseData.getTitle(), responseData.getCreatorName());
+                g.GetComponent<SandboxCardController>().SetCardData(
+                    sprite, 
+                    responseData.getTitle(),
+                    responseData.getCreatorName()
+                );
                 g.GetComponent<SandboxCardController>().setClickOperation(operation);
 
                 ++col; 
@@ -71,6 +76,11 @@ namespace MainPage.Panel
 
             contentPanel.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, (row+1)*456);
 
+        }
+        public void OnSearchResult(Response response)
+        {
+            currentResponseData = response;
+            UpdateComponent();
         }
     }
 }

@@ -1,64 +1,67 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
+using System.Text;
+using System.IO;
 
 public class QuerySandbox : MonoBehaviour
 {
     Query query;
-    private void Awake() {
-        QueryData<string> dataType = new QueryData<string>("EQ");
-        QueryData<string> gameId = new QueryData<string>("BEGINS_WITH");
-        QueryData<string> creatorName = new QueryData<string>("CONTAINS");
-        QueryData<string> desription = new QueryData<string>("CONTAINS");
-        QueryData<int> upvote = new QueryData<int>("GE");
+    Response response = null;
+    public delegate void OnResponse(Response response);
 
-
-        dataType.AddData("GameAttribute");
-        gameId.AddData("20");
-        creatorName.AddData("black");
-        desription.AddData("");
-        upvote.AddData(int.MinValue);
-
-        Query query = new Query(
-            new Query.KeyCondition(
-                dataType,
-                gameId
-            ),
-            new Query.QueryFilter(
-                creatorName,
-                desription,
-                upvote
-            )
-        );
-
+    public IEnumerator SendRequest(Query query, OnResponse onResponse)
+    {
+        Response response;
         string jsonResult = JsonUtility.ToJson(query, true);
+
         Debug.Log(jsonResult);
 
-        Response response = new Response();
-        response.AddItem(new Response.ResponseItem(
-            "Title",
-            0,
-            "GameAttribute",
-            "Description",
-            "20",
-            "Creator"
-        ));
-    }
-    public Response GetResponse(){
-        Response response = new Response();
-        int r = Random.Range(3,35);
-        for(int i=0;i<r;++i)
+        /*
+        List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
+        var bytesOfFile = File.ReadAllBytes(filePath);
+        formData.Add(new MultipartFormFileSection("attachment", bytesOfFile, "asustuf.PNG", "multipart/form-data"));
+        // formData.Add(new MultipartFormFileSection("attachment", bytesOfFile));
+
+        UnityWebRequest www = UnityWebRequest.Post(severAddress, formData);
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
         {
-            response.AddItem(new Response.ResponseItem(
-                "Test "+i,
-                0,
-                "GameAttribute",
-                "Description",
-                "20",
-                "Creator"
-            ));
+            Debug.Log(www.error);
         }
+        else
+        {
+            Debug.Log("Form upload complete!");
+        }
+        */
+
+        List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
+        formData.Add(new MultipartFormFileSection("sandboxData", Encoding.UTF8.GetBytes(jsonResult), "query.json", "multipart/form-data"));
+
         
-        return response;
+
+        using (UnityWebRequest www = UnityWebRequest.Post("http://10.32.204.40:3000/gameShare/searchGame",formData))
+        {
+            yield return www.SendWebRequest();
+            if(www.result != UnityWebRequest.Result.Success)
+            {
+                response = null;
+                Debug.Log(www.result);
+            }
+            else
+            {
+                byte[] resultBinaryData = www.downloadHandler.data;
+
+                string resultStringData = Encoding.Default.GetString(resultBinaryData);
+                Debug.Log(resultStringData);
+                response = JsonUtility.FromJson<Response>(resultStringData);
+                Debug.Log(response.GetDataList().Count);
+
+            }
+        }
+
+        onResponse(response);
     }
 }

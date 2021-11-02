@@ -7,13 +7,14 @@ using UnityEngine;
 public class Response{
     [Serializable]
     public class ResponseItem{
-        string title;
-        int upvote;
-        string dataType;
-        string description;
-        string gameId;
-        string creatorName;
-        public ResponseItem(string title, int upvote, string dataType, string description, string gameId, string creatorName){
+        [SerializeField] string title;
+        [SerializeField] int upvote;
+        [SerializeField] string dataType;
+        [SerializeField] string description;
+        [SerializeField] string gameId;
+        [SerializeField] string creatorName;
+        public ResponseItem(
+            string title, int upvote, string dataType, string description, string gameId, string creatorName){
             this.title = title;
             this.upvote = upvote;
             this.dataType = dataType;
@@ -30,24 +31,41 @@ public class Response{
 
 
     }
-    [SerializeField] List<ResponseItem> items;
-    [SerializeField] int Count;
-    [SerializeField] int ScannedCount;
-    public Response()
+    [Serializable]
+    public class ResponseData{
+        [SerializeField] List<ResponseItem> Items;
+        [SerializeField] int Count;
+        [SerializeField] int ScannedCount;
+        public ResponseData()
+        {
+            Items = new List<ResponseItem>();
+            Count = Items.Count;
+            ScannedCount = Items.Count;
+        }
+        public void AddItem(ResponseItem item){
+            Items.Add(item);
+            ++Count;
+            ++ScannedCount;
+        }
+        public List<ResponseItem> GetDataList(){return Items;}
+    }
+
+    [SerializeField] int status;
+    [SerializeField] string message;
+    [SerializeField] ResponseData data;
+    public Response(int status, string message, ResponseData data)
     {
-        items = new List<ResponseItem>();
-        Count = items.Count;
-        ScannedCount = items.Count;
+        this.status = status;
+        this.message = message;
+        this.data = data;
     }
 
     public void AddItem(ResponseItem item){
-        items.Add(item);
-        ++Count;
-        ++ScannedCount;
+        data.AddItem(item);
     }
 
     public List<ResponseItem> GetDataList()
     {
-        return items;
+        return data.GetDataList();
     }
 }
