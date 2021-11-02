@@ -26,20 +26,20 @@ namespace SandboxEditor.Data.Sandbox
         {
             _Sandbox ??= this;
             Tools.File.CreateDirectoryIfDosentExist(SandboxChecker.GetSandboxPath(sandboxData));
-            // SetSandboxData();
-            // InitTimeScale();
+            // InitializeSandboxData();
             // LoadSandbox();
+            PauseSandbox();
         }
         
         // MainScene(샌드박스 선택씬) 에서 선택된 샌드박스의 정보는 PlayerInfo로 전달받는다.
-        public void SetSandboxData(SandboxData sandboxData)
+        public void InitializeSandboxData(SandboxData sandboxData)
         {
             this.sandboxData = sandboxData;
         }
 
-        private void InitTimeScale()
+        private static void PauseSandbox()
         {
-            SandboxPhase.SandboxPause();
+            SandboxPhase.Pause();
         }
         
         public void SaveSandboxOnPC()

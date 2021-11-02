@@ -11,6 +11,7 @@ namespace SandboxEditor.Data.Toy
         public float gravityScale;
         public float linearDrag;
         public float angularDrag;
+        public bool simulated;
         public PhysicsMaterial2DData pm2dd;
         
         // 인자로 받은 Component의 설정을 본 class의 Data로 설정한다.
@@ -23,6 +24,7 @@ namespace SandboxEditor.Data.Toy
             rb2d.gravityScale = gravityScale;
             rb2d.drag = linearDrag;
             rb2d.angularDrag = angularDrag;
+            rb2d.simulated = simulated;
             pm2dd?.SetComponent(rb2d.sharedMaterial); 
         }
         
@@ -48,6 +50,7 @@ namespace SandboxEditor.Data.Toy
             gravityScale = 1f;
             linearDrag = 0f;
             angularDrag = 0.05f;
+            simulated = false;
         }
         
         // 본 Class의 data를 받은 Component의 설정값으로 바꾼다.

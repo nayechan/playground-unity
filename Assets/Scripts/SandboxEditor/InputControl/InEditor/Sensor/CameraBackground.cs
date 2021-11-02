@@ -52,16 +52,10 @@ namespace SandboxEditor.InputControl.InEditor.Sensor{
 
         public override void CallBack(Touch touch)
         {
-            switch (TouchController.Mode)
-            {
-                case TouchController.TouchMode.CamMove:
-                var deltaVector = cam.ScreenToWorldPoint(touch.position) - 
-                                  cam.ScreenToWorldPoint(_touchBeginPosition);
-                cam.transform.position = _camBeginPosition - deltaVector;
-                m_CameraMoved.Invoke();
-                break;
-            }
-            
+            var deltaVector = cam.ScreenToWorldPoint(touch.position) - 
+                              cam.ScreenToWorldPoint(_touchBeginPosition);
+            cam.transform.position = _camBeginPosition - deltaVector;
+            m_CameraMoved.Invoke();
         }
 
         

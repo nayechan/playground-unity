@@ -88,7 +88,7 @@ namespace SandboxEditor.InputControl.InEditor
         }
 
         public void AlarmMe(int fingerID, AbstractSensor sensor){
-            Debug.Log($"{Time.realtimeSinceStartup} Alarm begin : {fingerID}");
+            // Debug.Log($"{Time.realtimeSinceStartup} Alarm begin : {fingerID}");
             _touchAlarms[fingerID].AddListener(sensor.CallBack);
         }
 
@@ -106,7 +106,7 @@ namespace SandboxEditor.InputControl.InEditor
             foreach(var touch in touches)
             {
                 if (touch.phase != TouchPhase.Ended && touch.phase != TouchPhase.Canceled) continue;
-                Debug.Log($"{Time.realtimeSinceStartup} Alarm end : {touch.fingerId}");
+                // Debug.Log($"{Time.realtimeSinceStartup} Alarm end : {touch.fingerId}");
                 _touchAlarms[touch.fingerId].RemoveAllListeners();
                 _touchAlarms.Remove(touch.fingerId);
             }
