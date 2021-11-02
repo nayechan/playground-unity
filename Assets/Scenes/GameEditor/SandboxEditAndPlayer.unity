@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311915, g: 0.3807396, b: 0.35872662, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3426,7 +3426,6 @@ MonoBehaviour:
   m_CameraMoved:
     m_PersistentCalls:
       m_Calls: []
-  objectBuilder: {fileID: 2131135296}
 --- !u!114 &169867949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3874,7 +3873,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 039a07a659a944e4498bd0abbaad18bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  touchController: {fileID: 1135577875}
   touchMode: 3
 --- !u!1 &181917377
 GameObject:
@@ -6925,7 +6923,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 039a07a659a944e4498bd0abbaad18bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  touchController: {fileID: 1135577875}
   touchMode: 0
 --- !u!114 &368012766
 MonoBehaviour:
@@ -7470,6 +7467,7 @@ Transform:
   - {fileID: 2131135297}
   - {fileID: 1227682493}
   - {fileID: 1159276425}
+  - {fileID: 1376830921}
   m_Father: {fileID: 1078807724}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -15216,7 +15214,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 039a07a659a944e4498bd0abbaad18bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  touchController: {fileID: 1135577875}
   touchMode: 0
 --- !u!61 &998515292
 BoxCollider2D:
@@ -17520,7 +17517,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3051ccd3c3dc94ec7a39e990a41abc65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mode: 0
 --- !u!1 &1139092150
 GameObject:
   m_ObjectHideFlags: 0
@@ -21399,6 +21395,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1374935976}
   m_CullTransparentMesh: 1
+--- !u!1 &1376830920
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1376830921}
+  - component: {fileID: 1376830922}
+  m_Layer: 0
+  m_Name: SandboxPhaseController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1376830921
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376830920}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 410378880}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1376830922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376830920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 983aba908985469e89f4b8777030005d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  editorInterface: {fileID: 1852563823}
 --- !u!1 &1378837667
 GameObject:
   m_ObjectHideFlags: 0
@@ -22007,7 +22047,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 039a07a659a944e4498bd0abbaad18bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  touchController: {fileID: 1135577875}
   touchMode: 2
 --- !u!1 &1411712718
 GameObject:
@@ -23162,7 +23201,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6282915492000312067, guid: 6a61baf863ad3074c90c5e15c538ab9f, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6282915492000312067, guid: 6a61baf863ad3074c90c5e15c538ab9f, type: 3}
       propertyPath: m_AnchorMax.x
@@ -24771,7 +24810,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 039a07a659a944e4498bd0abbaad18bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  touchController: {fileID: 1135577875}
   touchMode: 0
 --- !u!114 &1627198618
 MonoBehaviour:
@@ -25176,7 +25214,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4829085703196211274, guid: 5c8b89171d1a3ae429fb7eafaeb5fc46, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4829085703196211274, guid: 5c8b89171d1a3ae429fb7eafaeb5fc46, type: 3}
       propertyPath: m_AnchorMax.x
@@ -25674,7 +25712,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 039a07a659a944e4498bd0abbaad18bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  touchController: {fileID: 1135577875}
   touchMode: 0
 --- !u!114 &1675988788
 MonoBehaviour:
@@ -27159,7 +27196,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 039a07a659a944e4498bd0abbaad18bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  touchController: {fileID: 1135577875}
   touchMode: 1
 --- !u!1 &1816217484
 GameObject:
@@ -31201,7 +31237,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootObject: {fileID: 1358116895}
-  objectSensorPrefab: {fileID: 2064893652797637067, guid: 5188208daa63d4b64acfc8f824094577, type: 3}
   isSnap: 0
 --- !u!4 &2131135297
 Transform:

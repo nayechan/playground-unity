@@ -115,12 +115,30 @@ namespace SandboxEditor.Builder
         private void AttachObjectSensor()
         {
             if (_newToy.GetComponent<SpriteRenderer>() == null) return;
+            var toySensor = AttachObjectSensorGameObject();
+            AttachObjectSensorCollider(toySensor);
+        }
+        
+        private GameObject AttachObjectSensorGameObject()
+        {
             var toySensor = new GameObject("TouchSensor", typeof(ObjectSensor));
             Misc.SetChildAndParent(toySensor, _newToy);
+            AlignSensorPositionToToy(toySensor);
+            return toySensor;
+        }
+
+        private static void AlignSensorPositionToToy(GameObject toySensor)
+        {
+            toySensor.transform.localPosition = Vector3.zero;
+        }
+
+        private static BoxCollider AttachObjectSensorCollider(GameObject toySensor)
+        {
             var sensorCollider = toySensor.AddComponent<BoxCollider>();
             sensorCollider.transform.localScale = Vector3.one;
             sensorCollider.size = Vector3.Scale(sensorCollider.size, new Vector3(1f, 1f, 0.1f));
             sensorCollider.isTrigger = true;
+            return sensorCollider;
         }
 
 

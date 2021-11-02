@@ -4,7 +4,7 @@ using File = Tools.File;
 
 namespace Network
 {
-    public class Compresser
+    public class Compressor
     {
         private static string zipName = "sandboxZip.zip";
 

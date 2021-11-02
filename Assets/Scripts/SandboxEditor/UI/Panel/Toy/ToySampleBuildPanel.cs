@@ -48,7 +48,7 @@ namespace SandboxEditor.UI.Panel.Toy
 
         public void OpenToyImageSelector()
         {
-            toyImagePanel.WhenImageSampleClicked(SendImageDataToToyPanel);
+            toyImagePanel.SetBehaviorWhenImageSampleClicked(SendImageDataToToyPanel);
         }
 
 

@@ -9,7 +9,7 @@ namespace SandboxEditor.InputControl.InEditor.Sensor
         public override void OnTouchBegan(Touch touch, out bool isRayBlock) {
             isRayBlock = true;
             AbstractBlock block = GetComponentInParent<AbstractBlock>();
-            EventBlockController.GetEBC().DestroyBlock(block);
+            BlockController.GetEBC().DestroyBlock(block);
         }
     }
 }

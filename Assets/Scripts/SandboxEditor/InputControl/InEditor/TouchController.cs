@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using SandboxEditor.InputControl.InEditor.Sensor;
+using TMPro;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -23,12 +25,13 @@ namespace SandboxEditor.InputControl.InEditor
         private static TouchController _tid;
         private static Camera _cam;
         private Dictionary<int, TouchEvent> _touchAlarms; // 특정 fingerID의 터치 이벤트를 지속적으로 듣는 스크립트를 위한 이벤트.
-        public TouchMode mode;
+        private TouchMode _mode;
+        public static TouchMode Mode {get => _tid._mode; set => _tid._mode = value; }
         void Start() {
             _cam = Camera.main;
             _touchAlarms = new Dictionary<int, TouchEvent>();
             _tid = this;
-            mode = TouchMode.CamMove;
+            _mode = TouchMode.CamMove;
         }
 
         void Update() {
@@ -85,6 +88,7 @@ namespace SandboxEditor.InputControl.InEditor
         }
 
         public void AlarmMe(int fingerID, AbstractSensor sensor){
+            Debug.Log($"{Time.realtimeSinceStartup} Alarm begin : {fingerID}");
             _touchAlarms[fingerID].AddListener(sensor.CallBack);
         }
 
@@ -102,6 +106,7 @@ namespace SandboxEditor.InputControl.InEditor
             foreach(var touch in touches)
             {
                 if (touch.phase != TouchPhase.Ended && touch.phase != TouchPhase.Canceled) continue;
+                Debug.Log($"{Time.realtimeSinceStartup} Alarm end : {touch.fingerId}");
                 _touchAlarms[touch.fingerId].RemoveAllListeners();
                 _touchAlarms.Remove(touch.fingerId);
             }

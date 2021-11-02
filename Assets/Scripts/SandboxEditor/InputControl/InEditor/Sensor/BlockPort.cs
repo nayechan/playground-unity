@@ -18,7 +18,7 @@ namespace SandboxEditor.InputControl.InEditor.Sensor
 
         public override void OnTouchBegan(Touch touch, out bool isRayBlock) {
             base.OnTouchBegan(touch, out isRayBlock);
-            EventBlockController.GetEBC().PortTouched(this);
+            BlockController.GetEBC().PortTouched(this);
         }
     }
 }

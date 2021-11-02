@@ -88,7 +88,7 @@ namespace SandboxEditor.UI.Panel.Image
             return new Vector2(70 + 340 * col, -80 - 320 * row);
         }
         
-        public void WhenImageSampleClicked(ImageSample.WhenImageSampleClicked behavior)
+        public void SetBehaviorWhenImageSampleClicked(ImageSample.WhenImageSampleClicked behavior)
         {
             for(var i = 0; i < ImageStorage.ImageDataCount; i++)
             {

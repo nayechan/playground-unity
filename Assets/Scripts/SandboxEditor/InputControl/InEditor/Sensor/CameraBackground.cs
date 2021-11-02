@@ -22,7 +22,7 @@ namespace SandboxEditor.InputControl.InEditor.Sensor{
         {
             var tc = TouchController.GetTID();
             _touchBeginPosition = touch.position;
-            switch (tc.mode)
+            switch (TouchController.Mode)
             {
                 case TouchController.TouchMode.CamMove:
                     tc.AlarmMe(touch.fingerId, this);
@@ -52,9 +52,7 @@ namespace SandboxEditor.InputControl.InEditor.Sensor{
 
         public override void CallBack(Touch touch)
         {
-            var tc = TouchController.GetTID();
-
-            switch (tc.mode)
+            switch (TouchController.Mode)
             {
                 case TouchController.TouchMode.CamMove:
                 var deltaVector = cam.ScreenToWorldPoint(touch.position) - 

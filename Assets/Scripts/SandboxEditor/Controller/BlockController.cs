@@ -7,11 +7,11 @@ using UnityEngine;
 
 namespace GameEditor.EventEditor.Controller
 {
-    public class EventBlockController : MonoBehaviour
+    public class BlockController : MonoBehaviour
     {
         /* 씬 안에 있는 Block들 및 SignalLine 들의 정보를 저장하고 관리하는 클래스입니다*/
         public GameObject signalLineFab, guideText;
-        private static EventBlockController _ebc;
+        private static BlockController _blockController;
         private BlockPort _selectedOutputPort;
         private GameObject _signalLines, _blocks, _objects, _tiles;
         private mode _mode;
@@ -23,7 +23,7 @@ namespace GameEditor.EventEditor.Controller
         };
 
         void Awake(){
-            _ebc = this;
+            _blockController = this;
         }
 
         void Start()
@@ -33,9 +33,9 @@ namespace GameEditor.EventEditor.Controller
             _blocks = new GameObject("Blocks");
         }
 
-        static public EventBlockController GetEBC()
+        static public BlockController GetEBC()
         {
-            return _ebc;
+            return _blockController;
         }
 
         public bool PortTouched(BlockPort port)

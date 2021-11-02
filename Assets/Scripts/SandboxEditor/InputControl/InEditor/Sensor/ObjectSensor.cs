@@ -28,12 +28,13 @@ namespace SandboxEditor.InputControl.InEditor.Sensor
         {
             isRayBlock = true;
             var tc = TouchController.GetTID();
-            switch (tc.mode)
+            switch (TouchController.Mode)
             {
                 case TouchController.TouchMode.DeleteObject:
-                    DeleteSensorParentIfDeleteMode();
+                    DeleteSensorParent();
                     break;
                 case TouchController.TouchMode.MoveObject:
+                    Debug.Log($"{Time.realtimeSinceStartup} ObjectSensor move begin");
                     tc.AlarmMe(touch.fingerId, this);
                     break;
                 default:
@@ -44,22 +45,13 @@ namespace SandboxEditor.InputControl.InEditor.Sensor
         public override void OnTouchMoved(Touch touch, out bool isRayBlock)
         {
             isRayBlock = true;
-            DeleteSensorParentIfDeleteMode();
+            if(TouchController.Mode == TouchController.TouchMode.DeleteObject)
+                DeleteSensorParent();
         }
 
-        private void DeleteSensorParentIfDeleteMode()
+        private void DeleteSensorParent()
         {
-            if (TouchController.GetTID().mode == TouchController.TouchMode.DeleteObject)
-                Destroy(transform.parent.gameObject);
-        }
-
-        public override void OnTouchStationary(Touch touch, out bool isRayBlock)
-        {
-            isRayBlock = true;
-            if(TouchController.GetTID().mode == TouchController.TouchMode.DeleteObject)
-            {
-                Destroy(transform.parent.gameObject);
-            }
+            Destroy(transform.parent.gameObject);
         }
 
         public override void CallBack(Touch touch)
@@ -78,7 +70,6 @@ namespace SandboxEditor.InputControl.InEditor.Sensor
                 newPosition+=objSize/2;
             }
             transform.parent.position = newPosition;
-
         }
     }
 }

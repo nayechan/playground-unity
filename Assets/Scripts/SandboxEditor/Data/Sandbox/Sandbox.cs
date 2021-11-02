@@ -1,3 +1,4 @@
+using GameEditor.EventEditor.Controller;
 using SandboxEditor.Builder;
 using SandboxEditor.Data.Toy;
 using UnityEngine;
@@ -23,20 +24,24 @@ namespace SandboxEditor.Data.Sandbox
 
         private void SandboxInitialize()
         {
-            SetSingletonIfUnset();
+            _Sandbox ??= this;
             Tools.File.CreateDirectoryIfDosentExist(SandboxChecker.GetSandboxPath(sandboxData));
+            // SetSandboxData();
+            // InitTimeScale();
+            // LoadSandbox();
         }
         
-        private void SetSingletonIfUnset()
-        {
-            if(_Sandbox == null)
-                _Sandbox = this;
-        }
-        
+        // MainScene(샌드박스 선택씬) 에서 선택된 샌드박스의 정보는 PlayerInfo로 전달받는다.
         public void SetSandboxData(SandboxData sandboxData)
         {
             this.sandboxData = sandboxData;
         }
+
+        private void InitTimeScale()
+        {
+            SandboxPhase.SandboxPause();
+        }
+        
         public void SaveSandboxOnPC()
         {
             SandboxSaveLoader.SaveSandbox(sandboxData, rootOfToy, rootOfBlock);

@@ -23,10 +23,6 @@ namespace GameEditor.EventEditor.Block
             _outputs = new float[_outputNum];
         }
 
-        public override void Update(){
-            base.Update();
-        }
-
         override protected void BlockAction(){
             switch(currentComparator)
             {
