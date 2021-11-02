@@ -33,7 +33,6 @@ namespace SandboxEditor.InputControl.InEditor.Sensor{
                     Vector3 worldPos;
                     worldPos = touch.position;
                     worldPos = Camera.main.ScreenToWorldPoint(worldPos);
-                    
                     ObjectBuilder.BuildAndPlaceToy(worldPos);
                     break;
                 

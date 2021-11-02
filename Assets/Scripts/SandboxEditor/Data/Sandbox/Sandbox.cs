@@ -15,7 +15,9 @@ namespace SandboxEditor.Data.Sandbox
         public static GameObject RootOfToy => _Sandbox.rootOfToy;
         public static GameObject RootOfBlock => _Sandbox.rootOfBlock;
 
-        void Awake()
+        public static ToyData selectedToyData;
+
+        private void Awake()
         {
             SandboxChecker.Initialize(Application.persistentDataPath);
             SandboxInitialize();
@@ -70,11 +72,17 @@ namespace SandboxEditor.Data.Sandbox
             Tools.Misc.SetChildAndParent(rootOfToy, rootOfRoots);
         }
 
-        public static GameObject BuildToyOnSandbox(ToyData toyData)
+        private static GameObject BuildToyOnToyRoot(ToyData toyData)
         {
+            if (toyData is null) return null;
             var newToy = ToyLoader.BuildToys(toyData);
             newToy.transform.parent = RootOfToy.transform;
             return newToy;
+        }
+
+        public static GameObject BuildSelectedToyOnToyRoot()
+        {
+            return selectedToyData is null ? null : BuildToyOnToyRoot(selectedToyData);
         }
 
         public string GetSandboxPath()

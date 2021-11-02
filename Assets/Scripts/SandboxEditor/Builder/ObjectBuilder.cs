@@ -28,8 +28,8 @@ namespace SandboxEditor.Builder
 
         private void _BuildAndPlaceToy(Vector3 cursorPosition)
         {
-            _newToy = ToyLoader.BuildToys(currentToyData);
-            _newToy.transform.parent = rootObject;
+            _newToy = Sandbox.BuildSelectedToyOnToyRoot();
+            if (_newToy is null) return;
             var newPosition = isSnap ? AdjustedPositionForSnapFunction(cursorPosition) : cursorPosition;
             newPosition.z = 0;
             _newToy.transform.position = newPosition;
@@ -50,9 +50,9 @@ namespace SandboxEditor.Builder
             return newPosition;
         }
 
-        public void SetCurrentToyData(ToyData ToyData)
+        public static void SetCurrentToyData(ToyData ToyData)
         {
-            currentToyData = ToyData;
+            _ObjectBuilder.currentToyData = ToyData;
         }
 
         public Transform FindNearestObject(Vector3 pos, Transform transform, float maxDist=0.4f)

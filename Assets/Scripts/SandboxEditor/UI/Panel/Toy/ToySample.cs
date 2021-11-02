@@ -1,9 +1,11 @@
+using SandboxEditor.Builder;
 using SandboxEditor.Data.Sandbox;
 using SandboxEditor.Data.Storage;
 using SandboxEditor.Data.Toy;
 using Tools;
 using UnityEngine;
 using UnityEngine.UI;
+using static Tools.Misc;
 
 namespace SandboxEditor.UI.Panel.Toy
 {
@@ -59,21 +61,9 @@ namespace SandboxEditor.UI.Panel.Toy
         }
         public void WhenSampleClicked()
         {
-            BuildToyAndPlace();
+            Sandbox.selectedToyData = _toyData;
+            ObjectBuilder.SetCurrentToyData(_toyData);
         }
-
-        private void BuildToyAndPlace()
-        {
-            var newToy = Sandbox.BuildToyOnSandbox(_toyData);
-            PlaceToyAtViewPoint(newToy);
-            Debug.Log("new Toy Placed");
-        }
-
-        private static void PlaceToyAtViewPoint(GameObject toy)
-        {
-            if (Camera.main is null) return;
-            toy.transform.position = Vector3.Scale(Camera.main.transform.position, new Vector3(1f, 1f, 0f));
-            Debug.Log(toy.transform.position);
-        }
+        
     }
 }
