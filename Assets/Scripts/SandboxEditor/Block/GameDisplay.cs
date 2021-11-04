@@ -27,7 +27,7 @@ namespace GameEditor.EventEditor.Block
             Resize(3f);
         }
 
-        public override void GetMessage(string message)
+        public override void MessageCallBack(string message)
         {
             if(message == "1"){
                 _cam.orthographicSize += 1f;

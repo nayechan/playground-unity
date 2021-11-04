@@ -48,7 +48,7 @@ namespace GameEditor.EventEditor.Block
             Debug.Log(_inputs[0]+" "+currentComparator+" "+_inputs[1]+" = "+_outputs[0]);
         }
 
-        public override void GetMessage(string message)
+        public override void MessageCallBack(string message)
         {
             switch(message)
             {

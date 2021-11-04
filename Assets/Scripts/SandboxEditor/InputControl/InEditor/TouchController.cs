@@ -19,7 +19,8 @@ namespace SandboxEditor.InputControl.InEditor
             CamMove,
             CreateObject,
             DeleteObject,
-            MoveObject
+            MoveObject,
+            ConnectPort
         }
     
         private static TouchController _tid;

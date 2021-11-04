@@ -23,7 +23,7 @@ namespace GameEditor.EventEditor.Block
                 value.ToString("0.00");
         }
 
-        public override void GetMessage(string message)
+        public override void MessageCallBack(string message)
         {
             AddValue(float.Parse(message));
         }

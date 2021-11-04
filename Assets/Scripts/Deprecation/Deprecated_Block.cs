@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using GameEditor.EventEditor.Block;
 using UnityEngine;
 
-namespace GameEditor.EventEditor.Block
+namespace Deprecation
 {
-    public class Block : AbstractBlock
+    public class Deprecated_Block : AbstractBlock
     {
         private static int _inputNum = 3, _outputNum = 0;
         private bool _onPlay;

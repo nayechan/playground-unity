@@ -65,7 +65,6 @@ namespace SandboxEditor.UI.Panel.Toy
             var colliderTypeString = colliderDropdown.options[colliderDropdown.value].text;
             var colliderType = (ColliderType)ColliderType.Parse(typeof(ColliderType),colliderTypeString);
             toyBuildData.colliderType = colliderType;
-            Debug.Log("ColType : " + colliderType.ToString());
             return toyBuildData;
         }
 

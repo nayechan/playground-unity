@@ -2,6 +2,7 @@
 using SandboxEditor.Data.Storage;
 using SandboxEditor.Data.Toy;
 using SandboxEditor.InputControl.InEditor.Sensor;
+using SandboxEditor.NewBlock;
 using Tools;
 using UnityEngine;
 
@@ -121,7 +122,7 @@ namespace SandboxEditor.Builder
         
         private GameObject AttachObjectSensorGameObject()
         {
-            var toySensor = new GameObject("TouchSensor", typeof(ObjectSensor));
+            var toySensor = new GameObject("TouchSensor", typeof(ToyBodySensor));
             Misc.SetChildAndParent(toySensor, _newToy);
             AlignSensorPositionToToy(toySensor);
             return toySensor;

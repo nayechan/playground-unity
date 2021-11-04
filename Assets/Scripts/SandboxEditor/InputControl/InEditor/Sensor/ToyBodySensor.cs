@@ -1,10 +1,12 @@
 using System;
+using GameEditor.EventEditor.Controller;
 using SandboxEditor.Builder;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace SandboxEditor.InputControl.InEditor.Sensor
 {
-    public class ObjectSensor : AbstractSensor
+    public class ToyBodySensor : AbstractSensor
     {
         private Camera cam;
         private ObjectBuilder objectBuilder;
@@ -38,15 +40,25 @@ namespace SandboxEditor.InputControl.InEditor.Sensor
                     tc.AlarmMe(touch.fingerId, this);
                     break;
                 default:
+                    isRayBlock = false;
                     break;
             }
         }
 
         public override void OnTouchMoved(Touch touch, out bool isRayBlock)
         {
-            isRayBlock = true;
-            if(TouchController.Mode == TouchController.TouchMode.DeleteObject)
+            if (TouchController.Mode == TouchController.TouchMode.DeleteObject)
+            {
+                isRayBlock = true;
                 DeleteSensorParent();
+            }
+            isRayBlock = false;
+        }
+
+        public override void OnTouchEnded(Touch touch, out bool isRayBlock)
+        {
+            isRayBlock = true;
+            ConnectionController.TryCreateConnection();
         }
 
         private void DeleteSensorParent()

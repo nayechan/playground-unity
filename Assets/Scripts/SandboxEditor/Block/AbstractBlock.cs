@@ -62,15 +62,7 @@ namespace GameEditor.EventEditor.Block
             _inputs[portNum] = val;
         }
 
-        public virtual void GetMessage(string message){ }
-
-        public virtual void OnBodyMove(Vector3 newPos){
-            transform.position = newPos;
-            foreach(var line in _connectedLines){
-                if(line == null) continue;
-                line.ReRendering();
-            }
-        }
+        public virtual void MessageCallBack(string message){ }
 
         public virtual void PlayStart()
         {

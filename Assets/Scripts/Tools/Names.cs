@@ -9,6 +9,7 @@ namespace Tools
         public static string JsonNameOfToyData = "ToyData.json";
         public static string JsonNameOfToyStorageData = "ToyStorageData.json";
         public static string JsonNameOfBlockData = "BlockData.json";
+        public static string JsonNameOfConnectionData = "BlockConnection.json";
         public static string RootNameOfToy = "RootOfToy";
         public static string RootNameOfBlock = "RootOfBlock";
     }
