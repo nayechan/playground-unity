@@ -1,46 +1,49 @@
-using UnityEngine;
-using GameEditor;
-using GameEditor.Data;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using MainPage.Panel;
+// using UnityEngine;
+// using GameEditor;
+// using GameEditor.Data;
+// using System.Collections;
+// using System.Collections.Generic;
+// using System.IO;
+// using MainPage.Panel;
 
-namespace MainPage
-{
-    public class SandboxManager : MonoBehaviour{
-        [SerializeField] PanelController panelToUpdate;
-        List<SandboxData> sandboxDatas;
-        string debugPath;
-        private void Awake() {
-            sandboxDatas = new List<SandboxData>();
-            debugPath = "/Users/yechanna/Desktop/sandbox_test";
-            StartCoroutine("LoadSandboxFolders");
-        }
+// namespace MainPage
+// {
+//     public class SandboxManager : MonoBehaviour{
+//         [SerializeField] PanelController panelToUpdate;
+//         List<SandboxData> sandboxDatas;
+//         string sandboxPath;
+//         private void Awake() {
+//             sandboxPath = Path.Combine(
+//                 Application.persistentDataPath,
+//                 "RemoteSandboxs"
+//             );
+//             sandboxDatas = new List<SandboxData>();
+//             StartCoroutine("LoadSandboxFolders");
+//         }
 
-        IEnumerator LoadSandboxFolders(){
-            foreach(string path in Directory.EnumerateDirectories(debugPath))
-            {
-                var rawSandboxData = System.IO.File.ReadAllText(path+"/SandboxData.json");
+//         public IEnumerator LoadSandboxFolders(){
+//             foreach(string path in Directory.EnumerateDirectories(sandboxPath))
+//             {
+//                 var rawSandboxData = System.IO.File.ReadAllText(path+"/SandboxData.json");
 
-                SandboxData sandboxData = JsonUtility.FromJson<SandboxData>(rawSandboxData);
+//                 SandboxData sandboxData = JsonUtility.FromJson<SandboxData>(rawSandboxData);
 
-                sandboxDatas.Add(sandboxData);
+//                 sandboxDatas.Add(sandboxData);
 
-                panelToUpdate.UpdateComponent();
+//                 yield return null;
+//             }
 
-                yield return null;
-            }
-        }
+//             panelToUpdate.UpdateComponent();
+//         }
 
-        public void AddSandbox(SandboxData data)
-        {
-            sandboxDatas.Add(data);
-            panelToUpdate.UpdateComponent();
-        }
+//         public void AddSandbox(SandboxData data)
+//         {
+//             sandboxDatas.Add(data);
+//             panelToUpdate.UpdateComponent();
+//         }
 
-        public List<SandboxData> GetSandboxDatas(){return sandboxDatas;}
+//         public List<SandboxData> GetSandboxDatas(){return sandboxDatas;}
 
 
-    }
-}
+//     }
+// }

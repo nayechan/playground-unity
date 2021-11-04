@@ -7,11 +7,12 @@ using System.IO;
 
 public class QuerySandbox : MonoBehaviour
 {
-    Query query;
+    SandboxQuery query;
     Response response = null;
+    [SerializeField] string url;
     public delegate void OnResponse(Response response);
 
-    public IEnumerator SendRequest(Query query, OnResponse onResponse)
+    public IEnumerator SendRequest(SandboxQuery query, OnResponse onResponse)
     {
         Response response;
         string jsonResult = JsonUtility.ToJson(query, true);
@@ -42,7 +43,7 @@ public class QuerySandbox : MonoBehaviour
 
         
 
-        using (UnityWebRequest www = UnityWebRequest.Post("http://10.8.0.2:5000/gameShare/searchGame",formData))
+        using (UnityWebRequest www = UnityWebRequest.Post(url,formData))
         {
             yield return www.SendWebRequest();
             if(www.result != UnityWebRequest.Result.Success)

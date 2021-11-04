@@ -15,6 +15,7 @@ namespace MainPage.Panel
 
         [SerializeField] Text titleText, creatorNameText, gameIDText;
         [SerializeField] Text descriptionText;
+        [SerializeField] VoteController vote;
 
         void Awake() {
 
@@ -33,10 +34,15 @@ namespace MainPage.Panel
             creatorNameText.text = currentResponseData.getCreatorName();
             gameIDText.text = "ID : "+currentResponseData.getGameID();
             descriptionText.text = currentResponseData.getDescription();
+            vote.SetVote(currentResponseData.getUpVote());
         }
         public void SetCurrentResponseData(Response.ResponseItem responseData)
         {
             currentResponseData = responseData;
+        }
+        public Response.ResponseItem GetCurrentResponseData()
+        {
+            return currentResponseData;
         }
     }
 }

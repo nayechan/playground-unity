@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using GameEditor;
 using GameEditor.Data;
 using System.IO;
 using MainPage;
@@ -13,7 +14,7 @@ namespace MainPage.Panel
     {
         [SerializeField] GameObject projectCardPrefab, addObjectPrefab;
         [SerializeField] Transform contentPanel;
-        [SerializeField] SandboxManager sandboxManager;
+        //[SerializeField] SandboxManager sandboxManager;
         const int colSize = 5;
 
         void Awake() {
@@ -31,9 +32,7 @@ namespace MainPage.Panel
         {
             int col = 0, row = 0;
 
-            string debugPath = "/Users/yechanna/Desktop/sandbox_test";
-
-            List<SandboxData> sandboxDatas = sandboxManager.GetSandboxDatas();
+            //List<SandboxData> sandboxDatas = Sandbox.
 
             foreach(Transform t in contentPanel)
             {
@@ -44,9 +43,15 @@ namespace MainPage.Panel
             {
                 Sprite sprite = null;
                 Texture2D texture = new Texture2D(2, 2, TextureFormat.RGBA32, false);
-                if(File.Exists(debugPath + "/" + data.id + "/thumbnail.png"))
+                string thumbnailPath = Path.Combine(
+                    Application.persistentDataPath,
+                    "RemoteSandboxs",
+                    data.id.ToString(),
+                    "thumbnail.png"
+                );
+                if(File.Exists(thumbnailPath))
                 {
-                    byte[] byteArray = System.IO.File.ReadAllBytes(debugPath + "/" + data.id + "/thumbnail.png");
+                    byte[] byteArray = System.IO.File.ReadAllBytes(thumbnailPath);
                     texture.LoadImage(byteArray);
 
                     sprite = Sprite.Create(

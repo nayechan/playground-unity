@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using GameEditor.Data;
+using GameEditor;
 using MainPage;
 
 namespace MainPage.Window
@@ -10,7 +11,7 @@ namespace MainPage.Window
     public class CreateSandboxWindowController : WindowController
     {
         [SerializeField] InputField titleText, contentText;
-        [SerializeField] SandboxManager sandboxManager;
+        //[SerializeField] SandboxManager sandboxManager;
         public override void OnActivateComponent()
         {
             base.OnActivateComponent();

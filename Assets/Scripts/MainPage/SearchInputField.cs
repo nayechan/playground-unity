@@ -26,7 +26,12 @@ public class SearchInputField : MonoBehaviour
     IEnumerator SendQuery()
     {
         yield return new WaitForSeconds(delayTime);
+        QueryProcess();
+        
+    }
 
+    public void QueryProcess()
+    {
         string filterType = filterTypeDropdown.options[filterTypeDropdown.value].text;
 
         QueryData<string> dataType = new QueryData<string>("EQ");
@@ -60,12 +65,12 @@ public class SearchInputField : MonoBehaviour
         desription.AddData("");
         upvote.AddData(int.MinValue);
 
-        Query query = new Query(
-            new Query.KeyCondition(
+        SandboxQuery query = new SandboxQuery(
+            new SandboxQuery.KeyCondition(
                 dataType,
                 gameId
             ),
-            new Query.QueryFilter(
+            new SandboxQuery.QueryFilter(
                 title,
                 creatorName,
                 desription,
