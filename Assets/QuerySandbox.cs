@@ -42,7 +42,7 @@ public class QuerySandbox : MonoBehaviour
 
         
 
-        using (UnityWebRequest www = UnityWebRequest.Post("http://10.32.204.40:3000/gameShare/searchGame",formData))
+        using (UnityWebRequest www = UnityWebRequest.Post("http://10.8.0.2:5000/gameShare/searchGame",formData))
         {
             yield return www.SendWebRequest();
             if(www.result != UnityWebRequest.Result.Success)
@@ -57,7 +57,6 @@ public class QuerySandbox : MonoBehaviour
                 string resultStringData = Encoding.Default.GetString(resultBinaryData);
                 Debug.Log(resultStringData);
                 response = JsonUtility.FromJson<Response>(resultStringData);
-                Debug.Log(response.GetDataList().Count);
 
             }
         }

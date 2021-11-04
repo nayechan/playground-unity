@@ -11,9 +11,9 @@ namespace MainPage.Panel
     public class SearchPanelController : PanelController
     {
         [SerializeField] GameObject projectCardPrefab;
-        [SerializeField] SandboxCardOnClickOperation operation;
         [SerializeField] Transform contentPanel;
         [SerializeField] QuerySandbox querySandbox;
+        [SerializeField] Transform downloadPanelTransform;
         Response currentResponseData = null;
         const int colSize = 5;
 
@@ -65,7 +65,8 @@ namespace MainPage.Panel
                     responseData.getTitle(),
                     responseData.getCreatorName()
                 );
-                g.GetComponent<SandboxCardController>().setClickOperation(operation);
+                g.GetComponent<DownloadSandboxOperation>().SetResponseData(responseData);
+                g.GetComponent<DownloadSandboxOperation>().SetDownloadPanel(downloadPanelTransform);
 
                 ++col; 
                 if(col>=colSize){

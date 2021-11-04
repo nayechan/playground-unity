@@ -52,20 +52,15 @@ public class Response{
 
     [SerializeField] int status;
     [SerializeField] string message;
-    [SerializeField] ResponseData data;
-    public Response(int status, string message, ResponseData data)
-    {
-        this.status = status;
-        this.message = message;
-        this.data = data;
-    }
-
-    public void AddItem(ResponseItem item){
-        data.AddItem(item);
-    }
+    [SerializeField] List<ResponseData> data;
 
     public List<ResponseItem> GetDataList()
     {
-        return data.GetDataList();
+        List<ResponseItem> result = new List<ResponseItem>();
+        foreach(var responseData in data)
+        {
+            result.AddRange(responseData.GetDataList());
+        }
+        return result;
     }
 }

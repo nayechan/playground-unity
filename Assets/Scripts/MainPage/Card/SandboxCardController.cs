@@ -27,10 +27,6 @@ namespace MainPage.Card
                 operation.execute();
             }
         }
-        public void setClickOperation(SandboxCardOnClickOperation operation)
-        {
-            this.operation = operation;
-        }
     }
 }
 
