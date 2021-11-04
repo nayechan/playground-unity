@@ -60,5 +60,9 @@ namespace SandboxEditor.NewBlock
             camera.orthographicSize = height;
             guideArea.transform.localScale = new Vector3(2f*(camera.aspect*height),2f*height,1f);
         }
+        
+        protected override void InitializeBlockValue()
+        {
+        }
     }
 }

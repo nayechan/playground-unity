@@ -1,6 +1,8 @@
+using SandboxEditor.InputControl.InEditor;
+using SandboxEditor.InputControl.InEditor.Sensor;
 using UnityEngine;
 
-namespace SandboxEditor.InputControl.InEditor.Sensor
+namespace Deprecation
 {
     public class TileGround : AbstractSensor
     {

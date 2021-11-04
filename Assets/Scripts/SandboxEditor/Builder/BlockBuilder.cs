@@ -39,6 +39,7 @@ namespace SandboxEditor.Builder
 
         private void _CreateSelectedBlock(Vector3 position)
         {
+            if (selectedBlockPrefab == null) return;
             var blockGameObject = Instantiate(selectedBlockPrefab);
             AddBlockOnBlockStorage(blockGameObject);
             AdjustBlockPosition(position, blockGameObject);

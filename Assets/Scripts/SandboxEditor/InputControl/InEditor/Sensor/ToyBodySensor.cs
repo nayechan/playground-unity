@@ -32,12 +32,12 @@ namespace SandboxEditor.InputControl.InEditor.Sensor
             var tc = TouchController.GetTID();
             switch (TouchController.Mode)
             {
-                case TouchController.TouchMode.DeleteObject:
+                case TouchMode.DeleteObject:
                     DeleteSensorParent();
                     break;
-                case TouchController.TouchMode.MoveObject:
+                case TouchMode.MoveObject:
                     Debug.Log($"{Time.realtimeSinceStartup} ObjectSensor move begin");
-                    tc.AlarmMe(touch.fingerId, this);
+                    tc._AlarmMe(touch.fingerId, this);
                     break;
                 default:
                     isRayBlock = false;
@@ -47,18 +47,12 @@ namespace SandboxEditor.InputControl.InEditor.Sensor
 
         public override void OnTouchMoved(Touch touch, out bool isRayBlock)
         {
-            if (TouchController.Mode == TouchController.TouchMode.DeleteObject)
+            if (TouchController.Mode == TouchMode.DeleteObject)
             {
                 isRayBlock = true;
                 DeleteSensorParent();
             }
             isRayBlock = false;
-        }
-
-        public override void OnTouchEnded(Touch touch, out bool isRayBlock)
-        {
-            isRayBlock = true;
-            ConnectionController.TryCreateConnection();
         }
 
         private void DeleteSensorParent()

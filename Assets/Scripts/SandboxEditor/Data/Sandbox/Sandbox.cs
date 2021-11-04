@@ -13,9 +13,11 @@ namespace SandboxEditor.Data.Sandbox
         public GameObject rootOfRoots;
         public GameObject rootOfToy;
         public GameObject rootOfBlock;
+        public GameObject rootOfLine;
         private static Sandbox _Sandbox;
         public static GameObject RootOfToy => _Sandbox.rootOfToy;
         public static GameObject RootOfBlock => _Sandbox.rootOfBlock;
+        public static GameObject RootOfLine => _Sandbox.rootOfLine;
 
         public static ToyData selectedToyData;
 

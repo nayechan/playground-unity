@@ -6,7 +6,7 @@ namespace SandboxEditor.Data.Sandbox
     public class SandboxData
     {
         public string title;
-        public int id;
+        public string id;
         public bool isLocalSandbox;
         public string creatorName;
         public DateTime createdTime;
@@ -17,7 +17,7 @@ namespace SandboxEditor.Data.Sandbox
         {
             title = "New SandBox";
             isLocalSandbox = true;
-            id = -1;
+            id = "1234";
             creatorName = "";
             createdTime = DateTime.Now;
             modifiedTime = DateTime.Now;

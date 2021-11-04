@@ -273,6 +273,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f828bdbe42d4d428054f4f41be05de1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ports:
+  - {fileID: 2634808602383582761}
+  - {fileID: 3669155276256003832}
+  - {fileID: 6132316836795345118}
   toyToSense: {fileID: 2634808602383582761}
   collisionDetected: {fileID: 3669155276256003832}
   anotherToy: {fileID: 6132316836795345118}

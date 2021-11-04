@@ -29,5 +29,12 @@ namespace SandboxEditor.NewBlock
         public override void MessageCallBack(string message)
         {
         }
+
+        protected override void InitializeBlockValue()
+        {
+            toyToSense.portData.Value = null;
+            anotherToy.portData.Value = null;
+            collisionDetected.portData.Value = false;
+        }
     }
 }

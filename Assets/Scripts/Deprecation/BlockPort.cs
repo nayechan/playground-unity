@@ -1,8 +1,8 @@
 using GameEditor.EventEditor.Block;
-using GameEditor.EventEditor.Controller;
+using SandboxEditor.InputControl.InEditor.Sensor;
 using UnityEngine;
 
-namespace SandboxEditor.InputControl.InEditor.Sensor
+namespace Deprecation
 {
     public class BlockPort : AbstractSensor
     {

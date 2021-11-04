@@ -2,7 +2,7 @@ using System.IO;
 using ExternalScript.WebGLFileUploader;
 using UnityEngine;
 
-namespace GameEditor.ObjectEditor
+namespace Deprecation
 {
     public class UploadTest : MonoBehaviour
     {

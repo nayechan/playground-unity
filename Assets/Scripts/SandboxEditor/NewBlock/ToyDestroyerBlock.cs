@@ -25,5 +25,11 @@ namespace SandboxEditor.NewBlock
         public override void MessageCallBack(string message)
         {
         }
+        
+        protected override void InitializeBlockValue()
+        {
+            destroySignal.portData.Value = false;
+            toyToDestroy.portData.Value = null;
+        }
     }
 }

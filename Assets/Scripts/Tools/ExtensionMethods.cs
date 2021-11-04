@@ -1,5 +1,4 @@
-﻿using GameEditor.Data;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Tools
 {

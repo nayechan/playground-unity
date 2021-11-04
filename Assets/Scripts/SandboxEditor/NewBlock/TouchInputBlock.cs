@@ -26,5 +26,11 @@ namespace SandboxEditor.NewBlock
         public override void MessageCallBack(string message)
         {
         }
+        
+        protected override void InitializeBlockValue()
+        {
+            xAxis.portData.Value = 0f;
+            yAxis.portData.Value = 0f;
+        }
     }
 }

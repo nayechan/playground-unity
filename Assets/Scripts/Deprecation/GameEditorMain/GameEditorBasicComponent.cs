@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameEditor.GameEditorMain
+namespace Deprecation.GameEditorMain
 {
     public class GameEditorBasicComponent : MonoBehaviour
     {

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Deprecation;
 using GameEditor.EventEditor.Line;
 using SandboxEditor.InputControl.InEditor.Sensor;
 using UnityEngine;

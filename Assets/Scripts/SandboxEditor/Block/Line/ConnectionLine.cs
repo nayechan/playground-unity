@@ -1,4 +1,6 @@
 using System;
+using SandboxEditor.Data;
+using SandboxEditor.Data.Block;
 using SandboxEditor.InputControl.InEditor.Sensor;
 using UnityEngine;
 
@@ -6,8 +8,7 @@ namespace GameEditor.EventEditor.Line
 {
     public sealed class ConnectionLine : MonoBehaviour
     {
-        private AbstractSensor source;
-        private AbstractSensor destination;
+        public BlockConnection blockConnection;
         public LineRenderer lineRenderer;
         private bool isSet = false;
 
@@ -19,28 +20,24 @@ namespace GameEditor.EventEditor.Line
         private void Update()
         {
             if (isSet)
-                ReRender();
+                ReLocation();
         }
 
-        public void SetLine(AbstractSensor source, AbstractSensor destination)
+        public void SetConnection(BlockConnection blockConnection)
         {
+            this.blockConnection = blockConnection;
             isSet = true;
-            this.source = source;
-            this.destination = destination;
         }
 
-        private void ReRender()
+        private void ReLocation()
         {
-            lineRenderer.enabled = false;
-            if (!isPortOnHide(source) && !isPortOnHide(destination)) return;
-            lineRenderer.enabled = true;
-            lineRenderer.SetPosition(0, source.transform.position);
-            lineRenderer.SetPosition(1, destination.transform.position);
+            lineRenderer.SetPosition(0, blockConnection.source.BlockPort.transform.position);
+            lineRenderer.SetPosition(1, blockConnection.destination.BlockPort.transform.position);
         }
 
-        private static bool isPortOnHide(Component port)
+        private static bool isPortOnHide(PortData port)
         {
-            return port.gameObject.activeSelf;
+            return !port.abstractBlock.gameObject.activeSelf;
         }
     }
 }

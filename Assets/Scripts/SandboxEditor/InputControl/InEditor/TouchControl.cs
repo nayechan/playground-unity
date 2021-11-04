@@ -1,4 +1,4 @@
-using GameEditor.UI;
+using Deprecation;
 using UnityEngine;
 using UnityEngine.Events;
 

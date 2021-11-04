@@ -49,5 +49,11 @@ namespace SandboxEditor.NewBlock
         {
             currentVelocityPanel.text = currentVelocity.ToString();
         }
+        
+        protected override void InitializeBlockValue()
+        {
+            setToyVelocityPort.portData.Value = null;
+            signalPort.portData.Value = false;
+        }
     }
 }

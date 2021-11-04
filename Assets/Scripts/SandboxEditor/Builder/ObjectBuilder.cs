@@ -1,5 +1,4 @@
 using System;
-using GameEditor.Data;
 using SandboxEditor.Data.Sandbox;
 using SandboxEditor.Data.Toy;
 using SandboxEditor.InputControl.InEditor.Sensor;

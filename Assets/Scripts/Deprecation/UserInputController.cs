@@ -1,7 +1,6 @@
-using GameEditor.Common;
 using UnityEngine;
 
-namespace GameEditor.EventEditor.Controller
+namespace Deprecation
 {
     public class UserInputController : MonoBehaviour
     {

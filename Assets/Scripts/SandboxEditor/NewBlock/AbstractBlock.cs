@@ -8,7 +8,7 @@ namespace SandboxEditor.NewBlock
 {
     public abstract class AbstractBlock : MonoBehaviour
     {
-        public List<object> ports;
+        public List<NewBlockPort> ports;
 
         private void Awake()
         {
@@ -24,15 +24,6 @@ namespace SandboxEditor.NewBlock
 
         protected abstract void BlockAction();
 
-        private void OnDestroy()
-        {
-            DestroyConnection();
-        }
-
-        private void DestroyConnection()
-        {
-        }
-
         public abstract BlockData MakeBlockData();
 
         public virtual void SetBlock(BlockData blockData)
@@ -47,7 +38,11 @@ namespace SandboxEditor.NewBlock
         private void FixedUpdate()
         {
             BlockAction();
+            InitializeBlockValue();
         }
+        
+        protected abstract void InitializeBlockValue();
+
     }
 
 }

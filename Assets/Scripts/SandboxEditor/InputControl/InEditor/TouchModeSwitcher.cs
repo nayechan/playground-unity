@@ -4,7 +4,7 @@ namespace SandboxEditor.InputControl.InEditor
 {
     public class TouchModeSwitcher : MonoBehaviour
     {
-        [SerializeField] TouchController.TouchMode touchMode;
+        [SerializeField] TouchMode touchMode;
 
         public void SwitchMode()
         {

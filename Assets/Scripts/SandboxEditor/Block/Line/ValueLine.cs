@@ -1,3 +1,4 @@
+using Deprecation;
 using GameEditor.EventEditor.Block;
 using SandboxEditor.InputControl.InEditor.Sensor;
 using UnityEngine;

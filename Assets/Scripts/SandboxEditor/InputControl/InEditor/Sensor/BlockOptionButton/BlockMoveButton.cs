@@ -9,7 +9,7 @@ namespace SandboxEditor.InputControl.InEditor.Sensor.BlockOptionButton
 
         public override void OnTouchBegan(Touch touch, out bool isRayBlock)
         {
-            TouchController.GetTID().AlarmMe(touch.fingerId, this);
+            TouchController.GetTID()._AlarmMe(touch.fingerId, this);
             isRayBlock = true;
         }
         public override void CallBack(Touch touch)

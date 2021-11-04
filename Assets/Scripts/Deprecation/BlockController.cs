@@ -1,11 +1,10 @@
+using Deprecation.GameEditorMain;
 using GameEditor.EventEditor.Block;
 using GameEditor.EventEditor.Line;
-using GameEditor.GameEditorMain;
 using SandboxEditor.InputControl.InEditor;
-using SandboxEditor.InputControl.InEditor.Sensor;
 using UnityEngine;
 
-namespace GameEditor.EventEditor.Controller
+namespace Deprecation
 {
     public class BlockController : MonoBehaviour
     {

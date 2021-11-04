@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GameEditor;
-using GameEditor.Data;
 using Network;
 using SandboxEditor.Data.Sandbox;
 

@@ -25,26 +25,30 @@ namespace SandboxEditor.InputControl.InEditor.Sensor{
             _touchBeginPosition = touch.position;
             switch (TouchController.Mode)
             {
-                case TouchController.TouchMode.CamMove:
-                    tc.AlarmMe(touch.fingerId, this);
+                case TouchMode.CamMove:
+                    tc._AlarmMe(touch.fingerId, this);
                     _camBeginPosition = cam.transform.position;
                     break;
 
-                case TouchController.TouchMode.CreateObject:
+                case TouchMode.CreateObject:
                     worldPos = touch.position;
                     worldPos = Camera.main.ScreenToWorldPoint(worldPos);
                     ObjectBuilder.BuildAndPlaceToy(worldPos);
                     break;
                 
-                case TouchController.TouchMode.DeleteObject:
+                case TouchMode.DeleteObject:
+                    tc._AlarmMe(touch.fingerId, this);
+                    _camBeginPosition = cam.transform.position;
                     break;
-                case TouchController.TouchMode.CreateBlock:
+                case TouchMode.CreateBlock:
                     worldPos = touch.position;
                     worldPos = Camera.main.ScreenToWorldPoint(worldPos);
                     BlockBuilder.CreateSelectedBlockAndAddOnStorage(worldPos);
                     break;
 
-                case TouchController.TouchMode.MoveObject:
+                case TouchMode.MoveObject:
+                    tc._AlarmMe(touch.fingerId, this);
+                    _camBeginPosition = cam.transform.position;
                     break;
 
                 default:

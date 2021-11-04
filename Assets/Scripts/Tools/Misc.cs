@@ -45,5 +45,6 @@ namespace Tools
                                                     new Vector3(1f, 1f, 0f));
             Debug.Log(toy.transform.position);
         }
+        
     }
 }

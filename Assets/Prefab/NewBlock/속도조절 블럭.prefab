@@ -158,6 +158,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f76bd2052f824f608f04a6a8a8947064, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ports:
+  - {fileID: 2634808602383582761}
+  - {fileID: 3669155276256003832}
   currentVelocityPanel: {fileID: 9187627254343074002}
   setToyVelocityPort: {fileID: 3669155276256003832}
   signalPort: {fileID: 2634808602383582761}

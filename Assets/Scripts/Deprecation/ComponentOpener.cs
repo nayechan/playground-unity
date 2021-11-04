@@ -1,15 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ComponentOpener : MonoBehaviour
+namespace Deprecation
 {
-    [SerializeField] EventEditorComponentSettings componentSettings;
-    [SerializeField] EventEditorComponentSettings.ComponentType componentType;
-    // Start is called before the first frame update
-    public void OpenComponent()
+    public class ComponentOpener : MonoBehaviour
     {
-        Debug.Log(componentType);
-        componentSettings.ActivateWindow(componentType);
+        [SerializeField] EventEditorComponentSettings componentSettings;
+        [SerializeField] EventEditorComponentSettings.ComponentType componentType;
+        // Start is called before the first frame update
+        public void OpenComponent()
+        {
+            Debug.Log(componentType);
+            componentSettings.ActivateWindow(componentType);
+        }
     }
 }

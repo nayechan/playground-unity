@@ -1,11 +1,9 @@
-﻿using System.IO;
-using SandboxEditor.Data.Resource;
+﻿using SandboxEditor.Data.Resource;
 using SandboxEditor.Data.Toy;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace GameEditor.Data
+namespace Deprecation
 {
     [System.Serializable]
     public class SpriteRendererData : ToyComponentData

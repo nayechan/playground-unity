@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using SandboxEditor.InputControl.InEditor.Sensor;
 using SandboxEditor.NewBlock;
 
 namespace SandboxEditor.Data
@@ -9,10 +11,16 @@ namespace SandboxEditor.Data
         public int portIndex;
         public AbstractBlock abstractBlock;
         public PortType portType;
+        public NewBlockPort BlockPort => abstractBlock.ports[portIndex];
+        private object value;
         public object Value
         {
-            get => abstractBlock.ports[portIndex];
-            set => abstractBlock.ports[portIndex] = value;
+            get => value;
+            set
+            {
+                if(value != null)
+                    this.value = value;   
+            }
         }
 
         public PortData(AbstractBlock abstractBlock, int portIndex, PortType portType)
@@ -20,6 +28,11 @@ namespace SandboxEditor.Data
             this.abstractBlock = abstractBlock;
             this.portIndex = portIndex;
             this.portType = portType;
+        }
+
+        public NewBlockPort GetPort()
+        {
+            return abstractBlock.ports[portIndex];
         }
         
     }

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameEditor.UI
+namespace Deprecation
 {
     public class TileBuilder : MonoBehaviour
     {

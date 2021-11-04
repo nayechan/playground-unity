@@ -81,7 +81,7 @@ namespace SandboxEditor.Data.Sandbox
         {
             return Path.Combine(AppPath,
                 sandboxData.isLocalSandbox ? DirectoryNameOfLocalSandbox : DirectoryNameOfRemoteSandbox,
-                sandboxData.id.ToString());
+                sandboxData.id);
         }
 
         public static string MakeFullPath(Sandbox sandbox, string reletivePath)
@@ -100,10 +100,10 @@ namespace SandboxEditor.Data.Sandbox
             return IsAlreadyExistId(sandboxData.id, sandboxData.isLocalSandbox);
         }
 
-        public static bool IsAlreadyExistId(int id, bool isLocalSandbox)
+        public static bool IsAlreadyExistId(string id, bool isLocalSandbox)
         {
             var sandboxsPath = isLocalSandbox ? LocalPath : RemotePath;
-            return Directory.Exists(Path.Combine(sandboxsPath, id.ToString()));
+            return Directory.Exists(Path.Combine(sandboxsPath, id));
         }
 
         public static int CreateNonOverlappingLocalId()
@@ -112,8 +112,8 @@ namespace SandboxEditor.Data.Sandbox
             int tryLimit = 1000;
             for(int i = 0; i < tryLimit; ++i)
             {
-                newId = (new System.Random()).Next(Int32.MinValue, Int32.MaxValue);
-                if(SandboxChecker.IsAlreadyExistId(newId, true))
+                newId = (new System.Random()).Next(int.MinValue, int.MaxValue);
+                if(SandboxChecker.IsAlreadyExistId(newId.ToString(), true))
                 {
                     Debug.Log($"{newId} is already exist");
                     continue;

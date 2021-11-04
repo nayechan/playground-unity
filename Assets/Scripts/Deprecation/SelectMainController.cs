@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameEditor.ObjectEditor
+namespace Deprecation
 {
     public class SelectMainController : MonoBehaviour
     {
