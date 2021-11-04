@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SandboxEditor.Data.Block;
 using SandboxEditor.InputControl.InEditor.Sensor;
 using UnityEngine;
 
@@ -8,7 +9,6 @@ namespace SandboxEditor.NewBlock
     public abstract class AbstractBlock : MonoBehaviour
     {
         public List<object> ports;
-        public GameObject blockPrefab;
 
         private void Awake()
         {
@@ -21,10 +21,6 @@ namespace SandboxEditor.NewBlock
                 port.portData.abstractBlock = this;
         }
 
-        private void FixedUpdate()
-        {
-            BlockAction();
-        }
 
         protected abstract void BlockAction();
 
@@ -37,9 +33,21 @@ namespace SandboxEditor.NewBlock
         {
         }
 
-        protected abstract void OnGameStart();
+        public abstract BlockData MakeBlockData();
 
+        public virtual void SetBlock(BlockData blockData)
+        {
+            transform.position = blockData.position;
+        }
+
+        protected abstract void OnGameStart();
+        
         public abstract void MessageCallBack(string message);
+        
+        private void FixedUpdate()
+        {
+            BlockAction();
+        }
     }
 
 }

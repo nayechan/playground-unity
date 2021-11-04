@@ -19,6 +19,7 @@ namespace SandboxEditor.InputControl.InEditor
             CamMove,
             CreateObject,
             DeleteObject,
+            CreateBlock,
             MoveObject,
             ConnectPort
         }

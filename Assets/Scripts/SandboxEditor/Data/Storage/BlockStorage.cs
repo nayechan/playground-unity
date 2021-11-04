@@ -1,51 +1,47 @@
-﻿using SandboxEditor.Data.Block;
+﻿using System.Collections.Generic;
+using SandboxEditor.Data.Block;
 using SandboxEditor.Data.Toy;
+using SandboxEditor.NewBlock;
 using UnityEngine;
 
 namespace SandboxEditor.Data.Storage
 {
     public class BlockStorage : MonoBehaviour
     {
-        private BlocksData _blocksData;
+        private List<AbstractBlock> _blocks;
         private static BlockStorage _BlockStorage;
-        public static int Count => _BlockStorage._blocksData.Count;
-        public static BlocksData BlocksData => _BlockStorage._blocksData;
-
-        public GameObject collisionDetectorBlock;
-        public GameObject DisplayBlock;
-        public GameObject TouchInputBlock;
-        public GameObject ToyDestroyBlock;
-        public GameObject VelocitySetterBlock;
+        public static int Count => _BlockStorage._blocks.Count;
+        public static List<AbstractBlock> Blocks => _BlockStorage._blocks;
 
         private void Awake()
         {
-            SetSingletonIfUnset();
-            _blocksData = new BlocksData();
-        }
-
-        private void SetSingletonIfUnset()
-        {
             _BlockStorage ??= this;
+            _blocks = new List<AbstractBlock>();
         }
 
-        private static BlockStorage GetSingleton()
+        public static void AddBlock(AbstractBlock block)
         {
-            return _BlockStorage;
+            _BlockStorage._AddBlock(block);
         }
 
-        public static void AddBlockData(BlockData blockData)
+        private void _AddBlock(AbstractBlock block)
         {
-            GetSingleton()._BlockData(blockData);
+            _blocks.Add(block);
         }
 
-        private void _BlockData(BlockData blockData)
+        public static BlocksData GetLatestBlocksData (GameObject rootOfBlock)
         {
-            _blocksData.Add(blockData);
+            var blocksData = new BlocksData();
+            foreach (var block in rootOfBlock.GetComponentsInChildren<AbstractBlock>())
+            {
+                blocksData.Add(block.MakeBlockData()); 
+            }
+            return blocksData;
         }
 
-        public static BlocksData GetBlocksData()
+        public static void RenewBlockList()
         {
-            return GetSingleton()._blocksData;
+            _BlockStorage._blocks = new List<AbstractBlock>();
         }
     }
 }

@@ -6,17 +6,27 @@ using UnityEngine;
 namespace SandboxEditor.Data.Block
 {
     [Serializable]
-    public class BlockData
+    public abstract class BlockData
     {
         public int blockInstanceID;
-        public string blockType;
         public Vector3 position;
+
+        public void SetIDAndPosition(AbstractBlock block)
+        {
+            blockInstanceID = block.GetInstanceID();
+            position = block.transform.position;
+        }
+        public void ApplyDataToBlock(AbstractBlock block)
+        {
+            block.SetBlock(this);
+        }
     }
 
     [Serializable]
-    public class BlocksData
+    public class BlocksData : ISerializationCallbackReceiver
     {
-        private List<BlockData> blocksData = new List<BlockData>();
+        [NonSerialized]
+        public List<BlockData> blocksData = new List<BlockData>();
         public List<string> types;
         public List<string> serializedData;
 

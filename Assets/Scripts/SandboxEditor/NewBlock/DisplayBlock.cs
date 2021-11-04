@@ -1,4 +1,5 @@
 ﻿using System;
+using SandboxEditor.Data.Block;
 using UnityEngine;
 
 namespace SandboxEditor.NewBlock
@@ -13,6 +14,19 @@ namespace SandboxEditor.NewBlock
             // This block doesn't use Port;
         }
 
+        public override BlockData MakeBlockData()
+        {
+            var data = new DisplayBlockData(this);
+            data.SetIDAndPosition(this);
+            return data;
+        }
+        
+        public override void SetBlock(BlockData blockData)
+        {
+            base.SetBlock(blockData);
+            camera.orthographicSize = ((DisplayBlockData) blockData).camSize;
+        }
+        
         protected override void OnGameStart()
         {
             ChangeMainDisplay();

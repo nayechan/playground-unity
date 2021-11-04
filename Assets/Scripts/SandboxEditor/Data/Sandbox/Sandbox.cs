@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using GameEditor.EventEditor.Controller;
 using SandboxEditor.Builder;
+using SandboxEditor.Data.Storage;
 using SandboxEditor.Data.Toy;
 using UnityEngine;
 
@@ -54,6 +56,7 @@ namespace SandboxEditor.Data.Sandbox
             LoadImageStorageData();
             LoadToyStorageData();
             ReloadToy();
+            ReloadBlockAndConnection();
         }
 
         private void LoadImageStorageData()
@@ -70,6 +73,16 @@ namespace SandboxEditor.Data.Sandbox
             Destroy(rootOfToy);
             rootOfToy = SandboxSaveLoader.LoadToy(sandboxData);
             Tools.Misc.SetChildAndParent(rootOfToy, rootOfRoots);
+        }
+
+        private void ReloadBlockAndConnection()
+        {
+            BlockStorage.RenewBlockList();
+            Destroy(rootOfBlock);
+            Dictionary<int, GameObject> blockIdGameObjectPair;
+            (rootOfBlock, blockIdGameObjectPair) = SandboxSaveLoader.LoadBlock(sandboxData);
+            Tools.Misc.SetChildAndParent(rootOfBlock, rootOfRoots);
+            // 커넥션 연결부분 추가. 인스턴스 아이디 + 포트 데이터로 해당하는 커넥션 다시 찾을 수 있음.
         }
 
         private static GameObject BuildToyOnToyRoot(ToyData toyData)

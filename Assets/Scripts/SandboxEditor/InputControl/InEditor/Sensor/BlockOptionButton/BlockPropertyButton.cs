@@ -6,6 +6,7 @@ namespace SandboxEditor.InputControl.InEditor.Sensor.BlockOptionButton
     public class BlockPropertyButton : AbstractSensor
     {
         public List<GameObject> _props;
+        private bool isTurnOn = true;
         protected override void Start()
         {
         }
@@ -15,8 +16,9 @@ namespace SandboxEditor.InputControl.InEditor.Sensor.BlockOptionButton
             foreach (var prop in _props)
             {
                 if(prop == null) return;
-                prop.SetActive(!prop.activeSelf);
+                prop.SetActive(isTurnOn);
             }
+            isTurnOn = !isTurnOn;
         }
 
     }

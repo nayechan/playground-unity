@@ -21,6 +21,7 @@ namespace SandboxEditor.InputControl.InEditor.Sensor{
         public override void OnTouchBegan(Touch touch, out bool isRayBlock)
         {
             var tc = TouchController.GetTID();
+            Vector3 worldPos;
             _touchBeginPosition = touch.position;
             switch (TouchController.Mode)
             {
@@ -30,13 +31,17 @@ namespace SandboxEditor.InputControl.InEditor.Sensor{
                     break;
 
                 case TouchController.TouchMode.CreateObject:
-                    Vector3 worldPos;
                     worldPos = touch.position;
                     worldPos = Camera.main.ScreenToWorldPoint(worldPos);
                     ObjectBuilder.BuildAndPlaceToy(worldPos);
                     break;
                 
                 case TouchController.TouchMode.DeleteObject:
+                    break;
+                case TouchController.TouchMode.CreateBlock:
+                    worldPos = touch.position;
+                    worldPos = Camera.main.ScreenToWorldPoint(worldPos);
+                    BlockBuilder.CreateSelectedBlockAndAddOnStorage(worldPos);
                     break;
 
                 case TouchController.TouchMode.MoveObject:

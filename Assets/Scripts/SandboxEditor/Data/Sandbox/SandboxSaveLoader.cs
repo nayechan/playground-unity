@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json.Linq;
 using SandboxEditor.Builder;
+using SandboxEditor.Data.Block;
 using SandboxEditor.Data.Storage;
 using SandboxEditor.Data.Toy;
 using UnityEngine;
@@ -36,6 +38,7 @@ namespace SandboxEditor.Data.Sandbox
             SaveImageStorageData();
             SaveToyStorageData();
             UpdateAndSaveToyRootData();
+            SaveLatestBlockData();
         }
 
         private void SaveSandboxData() 
@@ -65,7 +68,7 @@ namespace SandboxEditor.Data.Sandbox
             UpdateToyRootData();
             SaveToyRoot();
         }
-
+        
         private void UpdateToyRootData()
         {
             ToySaver.UpdateToysData(_rootOfToy);
@@ -77,6 +80,16 @@ namespace SandboxEditor.Data.Sandbox
             var jsonToyData = _rootOfToy.GetComponent<ToySaver>().GetJsonToyData();
             System.IO.File.WriteAllText(jsonToyDataPath, jsonToyData);
         }
+
+        private void SaveLatestBlockData()
+        {
+            var jsonBlockDataPath = SandboxChecker.MakeFullPath(_sandboxData, JsonNameOfBlockData);
+            var blockData = BlockStorage.GetLatestBlocksData(_rootOfBlock);
+            var jsonBlockData = JsonUtility.ToJson(blockData, true);
+            Debug.Log($"jsonBlockData : {jsonBlockData}");
+            System.IO.File.WriteAllText(jsonBlockDataPath, jsonBlockData);
+        }
+
 
         public static void LoadImageStorageData(SandboxData sandboxData)
         {
@@ -109,6 +122,19 @@ namespace SandboxEditor.Data.Sandbox
             var newToy = ToyLoader.BuildToys(jsonToyData);
             return newToy;
         }
+
+        public static (GameObject, Dictionary<int, GameObject>) LoadBlock(SandboxData sandboxData)
+        {
+            var sandboxSaveLoader = new SandboxSaveLoader(sandboxData, null, null);
+            return sandboxSaveLoader._LoadBlock();
+        }
         
+        private (GameObject, Dictionary<int, GameObject>) _LoadBlock()
+        {
+            var jsonBlockDataPath = Path.Combine(SandboxChecker.GetSandboxPath(_sandboxData), JsonNameOfBlockData);
+            var jsonBlockData = System.IO.File.ReadAllText(jsonBlockDataPath);
+            var blocksData = JsonUtility.FromJson<BlocksData>(jsonBlockData);
+            return BlockBuilder.CreateBlockRootAndUpdateBlockStorage(blocksData);
+        }
     }
 }
