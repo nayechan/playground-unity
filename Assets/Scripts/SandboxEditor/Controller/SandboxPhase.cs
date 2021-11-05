@@ -11,13 +11,19 @@ namespace GameEditor.EventEditor.Controller
     public class SandboxPhase : MonoBehaviour
     {
         public GameObject editorInterface;
+        private static SandboxPhase sandboxPhase;
         private ToyData _toyData;
         // private BlockData _blockData;
 
-        // UI가 모두 사라지고 게임이 시작된다. 호출시 샌드박스 저장없이 시작되므로 주의.
-        public void GameStart()
+        private void Awake()
         {
-            HideEditorInterface();
+            sandboxPhase ??= this;
+        }
+
+        // UI가 모두 사라지고 게임이 시작된다. 호출시 샌드박스 저장없이 시작되므로 주의.
+        public static void GameStart()
+        {
+            sandboxPhase.HideEditorInterface();
             DisableEditorFunctionAndEnablePlayerFunction();
             EnableChildrenRigidBody(Sandbox.RootOfToy); 
             BlockController.BlockActionWhenGameStart();

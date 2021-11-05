@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using GameEditor.EventEditor.Controller;
 using SandboxEditor.Builder;
@@ -36,6 +37,28 @@ namespace SandboxEditor.Data.Sandbox
             SandboxInitialize();
         }
 
+        private void Start()
+        {
+            UpdateSandboxDataFromMainScene();
+            LoadSandbox();
+            if (WeStartPlayRightNow())
+                SandboxPhase.GameStart();
+        }
+
+        private static void UpdateSandboxDataFromMainScene()
+        {
+            var newSandboxData = new SandboxData
+            {
+                id = PlayerPrefs.GetString("sandboxToRun"),
+                isLocalSandbox = PlayerPrefs.GetInt("isLocalSandbox") == 1? true : false,
+            };
+            _Sandbox.sandboxData = newSandboxData;
+        }
+
+        private static bool WeStartPlayRightNow()
+        {
+            return PlayerPrefs.GetInt("isRunningPlayer") == 1 ? true : false;
+        }
 
         private void SandboxInitialize()
         {
