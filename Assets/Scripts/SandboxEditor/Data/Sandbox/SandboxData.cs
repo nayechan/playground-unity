@@ -10,7 +10,7 @@ namespace GameEditor.Data
     public class SandboxData
     {
         public string title;
-        public int id;
+        public string id;
         public bool isLocalSandbox;
         public string creatorName;
         public DateTime createdTime;
@@ -21,7 +21,7 @@ namespace GameEditor.Data
         {
             title = "New SandBox";
             isLocalSandbox = true;
-            id = -1;
+            id = "-1";
             creatorName = "";
             createdTime = DateTime.Now;
             modifiedTime = DateTime.Now;

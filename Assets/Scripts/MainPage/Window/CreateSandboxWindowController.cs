@@ -5,12 +5,16 @@ using UnityEngine.UI;
 using GameEditor.Data;
 using GameEditor;
 using MainPage;
+using MainPage.Panel;
+using System.IO;
+using Tools;
 
 namespace MainPage.Window
 {
     public class CreateSandboxWindowController : WindowController
     {
         [SerializeField] InputField titleText, contentText;
+        [SerializeField] LibraryPanelController libraryPanel;
         //[SerializeField] SandboxManager sandboxManager;
         public override void OnActivateComponent()
         {
@@ -34,8 +38,24 @@ namespace MainPage.Window
             SandboxData sandboxData = new SandboxData();
             sandboxData.title = titleText.text;
             sandboxData.description = contentText.text;
-            
-            sandboxManager.AddSandbox(sandboxData);
+            sandboxData.id = SandboxChecker.CreateNonOverlappingLocalId();
+
+            string jsonData = JsonUtility.ToJson(sandboxData);
+
+            string writePath = SandboxChecker.MakeFullPath(sandboxData, Names.JsonNameOfSandboxData);
+
+            if(!Directory.Exists(SandboxChecker.GetSandboxPath(sandboxData)))
+            {
+                Directory.CreateDirectory(SandboxChecker.GetSandboxPath(sandboxData));
+            }
+
+            System.IO.File.WriteAllText(
+                writePath,
+                jsonData
+            );
+
+            libraryPanel.UpdateComponent();
+
             OnDeactivateComponent();
             gameObject.SetActive(false);
 

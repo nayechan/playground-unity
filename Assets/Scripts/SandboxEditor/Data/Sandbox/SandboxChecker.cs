@@ -104,22 +104,29 @@ namespace GameEditor
             return IsAlreadyExistId(sandboxData.id, sandboxData.isLocalSandbox);
         }
 
-        public static bool IsAlreadyExistId(int id, bool isLocalSandbox)
+        public static bool IsAlreadyExistId(string id, bool isLocalSandbox)
         {
             var sandboxsPath = isLocalSandbox ? LocalPath : RemotePath;
-            return Directory.Exists(Path.Combine(sandboxsPath, id.ToString()));
+            return Directory.Exists(Path.Combine(sandboxsPath, id));
         }
 
-        public static int CreateNonOverlappingLocalId()
+        public static string CreateNonOverlappingLocalId()
         {
-            int newId = new int();
+            DateTime dateTime = DateTime.UtcNow;
+            string newID = "-1";
+
+            int newIDPrefix = new int();
             int tryLimit = 1000;
             for(int i = 0; i < tryLimit; ++i)
             {
-                newId = (new System.Random()).Next(Int32.MinValue, Int32.MaxValue);
-                if(SandboxChecker.IsAlreadyExistId(newId, true))
+                newIDPrefix = (new System.Random()).Next(10000000, 99999999);
+
+                newID = dateTime.ToString("yyyyMMddhhmmss")+"_"+newIDPrefix;
+                Debug.Log(newID);
+
+                if(SandboxChecker.IsAlreadyExistId(newID, true))
                 {
-                    Debug.Log($"{newId} is already exist");
+                    Debug.Log($"{newID} is already exist");
                     continue;
                 }
                 else
@@ -127,7 +134,7 @@ namespace GameEditor
                     break;
                 }
             }
-            return newId;
+            return newID;
         }
 
         // Methods for debuging
@@ -142,6 +149,15 @@ namespace GameEditor
             {
                 sandboxData.ToString();
             }
+        }
+
+        public static Dictionary<int, SandboxData> getLocalSandboxList()
+        {
+            return _sandboxDatasOfLocal;
+        }
+        public static Dictionary<int, SandboxData> getRemoteSandboxList()
+        {
+            return _sandboxDatasOfRemote;
         }
     }
 }

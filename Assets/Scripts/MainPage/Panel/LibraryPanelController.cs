@@ -18,7 +18,7 @@ namespace MainPage.Panel
         const int colSize = 5;
 
         void Awake() {
-
+            UpdateComponent();
         }
         public override void OnDeactivateComponent()
         {
@@ -39,7 +39,14 @@ namespace MainPage.Panel
                 Destroy(t.gameObject);
             }
 
-            foreach(SandboxData data in sandboxDatas)
+            SandboxChecker.UpdateAllSandboxDataFromPC();
+
+            List<SandboxData> allSandboxData = new List<SandboxData>();
+
+            allSandboxData.AddRange(SandboxChecker.getRemoteSandboxList().Values);
+            allSandboxData.AddRange(SandboxChecker.getLocalSandboxList().Values);
+
+            foreach(SandboxData data in allSandboxData)
             {
                 Sprite sprite = null;
                 Texture2D texture = new Texture2D(2, 2, TextureFormat.RGBA32, false);
@@ -63,6 +70,7 @@ namespace MainPage.Panel
                 GameObject g = Instantiate(projectCardPrefab, contentPanel);
                 g.GetComponent<RectTransform>().anchoredPosition = new Vector2(col*424,-row*456);
                 g.GetComponent<SandboxCardController>().SetCardData(sprite, data.title, data.creatorName);
+                g.GetComponent<LibraryCardOptionController>().SetGameID(data.id, data.isLocalSandbox);
 
                 ++col; 
                 if(col>=colSize){

@@ -457,4 +457,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf98ef87a0e949d1aa86ffce5ea654e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  downloadPanel: {fileID: 0}

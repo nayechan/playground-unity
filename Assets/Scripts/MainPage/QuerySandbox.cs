@@ -16,7 +16,6 @@ public class QuerySandbox : MonoBehaviour
     {
         Response response;
         string jsonResult = JsonUtility.ToJson(query, true);
-
         Debug.Log(jsonResult);
 
         /*

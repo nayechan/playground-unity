@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class ShowDetailOperation : SandboxCardOnClickOperation
 {
-    void execute()
+    [SerializeField] LibraryCardOptionController cardOption;
+    public override void execute()
     {
-        
+        LibraryCardObserver.OnClick(cardOption);
     }
 }
