@@ -1,8 +1,7 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace GameEditor.Data
+namespace SandboxEditor.Data.Toy
 {
     [System.Serializable]
     public class Rigidbody2DData : ToyComponentData
@@ -12,6 +11,7 @@ namespace GameEditor.Data
         public float gravityScale;
         public float linearDrag;
         public float angularDrag;
+        public bool simulated;
         public PhysicsMaterial2DData pm2dd;
         
         // 인자로 받은 Component의 설정을 본 class의 Data로 설정한다.
@@ -19,12 +19,13 @@ namespace GameEditor.Data
         {
             Assert.IsTrue(IsMatchedType(comp));
             var rb2d = (Rigidbody2D)comp;
-            rb2d.bodyType = movable ? RigidbodyType2D.Dynamic : RigidbodyType2D.Kinematic; 
+            rb2d.bodyType = movable ? RigidbodyType2D.Dynamic : RigidbodyType2D.Static; 
             rb2d.mass = mass;
             rb2d.gravityScale = gravityScale;
             rb2d.drag = linearDrag;
             rb2d.angularDrag = angularDrag;
-            pm2dd.SetComponent(rb2d.sharedMaterial); 
+            rb2d.simulated = simulated;
+            pm2dd?.SetComponent(rb2d.sharedMaterial); 
         }
         
         // 인자로 받은 GameObject에 CircleCollider2D 컴포넌트를 추가하고
@@ -40,6 +41,16 @@ namespace GameEditor.Data
         public Rigidbody2DData(Component comp)
         {
             UpdateByToyComponent(comp);
+        }
+
+        public Rigidbody2DData(ToyRecipe toyRecipe)
+        {
+            movable = !toyRecipe.toyBuildData.isFixed;
+            mass = 1f;
+            gravityScale = 1f;
+            linearDrag = 0f;
+            angularDrag = 0.05f;
+            simulated = false;
         }
         
         // 본 Class의 data를 받은 Component의 설정값으로 바꾼다.

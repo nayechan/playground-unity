@@ -1,5 +1,6 @@
+using Deprecation;
 using GameEditor.EventEditor.Block;
-using GameEditor.EventEditor.UI.Sensor;
+using SandboxEditor.InputControl.InEditor.Sensor;
 using UnityEngine;
 
 namespace GameEditor.EventEditor.Line

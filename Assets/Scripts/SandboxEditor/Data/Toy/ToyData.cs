@@ -1,29 +1,99 @@
 ﻿using System;
 using System.Collections.Generic;
+using SandboxEditor.Data.Resource;
+using SandboxEditor.Data.Storage;
 using UnityEngine;
 
-namespace GameEditor.Data
+namespace SandboxEditor.Data.Toy
 {
     [System.Serializable]
     public class ToyData
     {
-        public ToyBuildData toyBuildData;
         public ImageData imageData;
-        public AudioData audioData;
-        public ToyComponentsData toyComponentsData;
+        public ToyComponentsDataContainer toyComponentsDataContainer;
+        public ToyMiscData toyMiscData;
+        public ToyRecipe toyRecipe;
+        public List<ToyData> childToysData;
+        public int gameObjectInstanceID;
 
         public ToyData()
         {
-            toyBuildData = new ToyBuildData();
             imageData = new ImageData();
-            audioData = new AudioData();
-            toyComponentsData = new ToyComponentsData();
+            toyComponentsDataContainer = new ToyComponentsDataContainer();
+            toyMiscData = new ToyMiscData();
+            childToysData = new List<ToyData>();
         }
 
+        public ToyData(ToyRecipe toyRecipe) : this()
+        {
+            this.toyRecipe = toyRecipe;
+            SetImageData();
+            SetComponentsData();
+            SetMicsData();
+        }
+
+        private void SetImageData()
+        {
+            imageData = toyRecipe.imageData;
+        }
+
+        private void SetComponentsData()
+        {
+            SetTransformData();
+            SetColliderData();
+            SetRigidbodyData();
+        }
+
+        private void SetTransformData()
+        {
+            toyComponentsDataContainer.Add(new TransformData(toyRecipe));
+        }
+        
+        private void SetColliderData()
+        {
+            var colliderType = toyRecipe.toyBuildData.colliderType;
+            switch (@colliderType)
+            {
+                case ColliderType.Circle:
+                    toyComponentsDataContainer.Add(new CircleCollider2DData());
+                    break;
+                case ColliderType.Box:
+                    toyComponentsDataContainer.Add(new BoxCollider2DData());
+                    break;
+                case ColliderType.None:
+                    toyComponentsDataContainer.Add(new BoxCollider2DData(false));
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private void SetRigidbodyData()
+        {
+            toyComponentsDataContainer.Add(new Rigidbody2DData(toyRecipe));
+        }
+
+        private void SetMicsData()
+        {
+            toyMiscData.toyType = toyRecipe.toyBuildData.toyType;
+        }
+        
+        // 외부 호출용 메서드
+        
+        public Vector2 GetToySpriteBoundSize()
+        {
+            return ImageStorage.GetSprites(imageData)[0].bounds.size;
+        }
+
+        public Vector3 GetToySpriteBoundSize3D()
+        {
+            var size2D = ImageStorage.GetSprites(imageData)[0].bounds.size;
+            return new Vector3(size2D.x, size2D.y, 0.1f);
+        }
 
     }
     [System.Serializable]
-    public class ToyComponentsData : ISerializationCallbackReceiver
+    public class ToyComponentsDataContainer : ISerializationCallbackReceiver
     {
         [NonSerialized]
         public List<ToyComponentData> toyComponentsData = new List<ToyComponentData>();
@@ -43,24 +113,30 @@ namespace GameEditor.Data
             types = new List<string>();
             foreach(var toyComponentData in toyComponentsData)
             {
-                serializedData.Add(JsonUtility.ToJson(toyComponentData));
+                serializedData.Add(JsonUtility.ToJson(toyComponentData, true));
                 types.Add(toyComponentData.GetType().ToString());
             }
         }
 
         public void OnAfterDeserialize()
         {
-            for(int i = 0; i < serializedData.Count ; ++i)
+            for(var i = 0; i < serializedData.Count ; ++i)
             {
-                Type type = Type.GetType(types[i]);
-                toyComponentsData.Add(JsonUtility.FromJson<ToyComponentData>(serializedData[i]));
+                var type = Type.GetType(types[i]);
+                toyComponentsData.Add((ToyComponentData)JsonUtility.FromJson(serializedData[i], type));
             }
         }
 
-        public List<ToyComponentData> Get()
+        public List<ToyComponentData> GetToyComponentsData()
         {
             return toyComponentsData;
         }
 
+    }
+
+    [Serializable]
+    public class ToyMiscData
+    {
+        public ToyType toyType;
     }
 }

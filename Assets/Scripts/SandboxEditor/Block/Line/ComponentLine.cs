@@ -1,4 +1,5 @@
-using GameEditor.EventEditor.UI.Sensor;
+using Deprecation;
+using SandboxEditor.InputControl.InEditor.Sensor;
 using UnityEngine;
 
 namespace GameEditor.EventEditor.Line

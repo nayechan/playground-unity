@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
+using Deprecation;
 using GameEditor.EventEditor.Line;
-using GameEditor.EventEditor.UI.Sensor;
+using SandboxEditor.InputControl.InEditor.Sensor;
 using UnityEngine;
 
 namespace GameEditor.EventEditor.Block
@@ -12,7 +14,7 @@ namespace GameEditor.EventEditor.Block
         // protected GameObject _attachedObject;
         public GameObject _attachedObject;
         protected float[] _inputs, _outputs;
-        protected MyDelegate _AddComponentMethod;
+        private MyDelegate _AddComponentMethod;
         private List<ValueLine> _connectedLines;
         private BlockPort[] _ports;
     
@@ -21,9 +23,10 @@ namespace GameEditor.EventEditor.Block
             _ports = GetComponentsInChildren<BlockPort>();
         }
 
-        public virtual void Update(){
+        protected virtual void FixedUpdate(){
             BlockAction();
         }
+
 
         virtual protected void BlockAction(){}
 
@@ -60,19 +63,17 @@ namespace GameEditor.EventEditor.Block
             _inputs[portNum] = val;
         }
 
-        public virtual void GetMessage(string message){ }
+        public virtual void MessageCallBack(string message){ }
 
-        public virtual void OnBodyMove(Vector3 newPos){
-            transform.position = newPos;
-            foreach(var line in _connectedLines){
-                if(line == null) continue;
-                line.ReRendering();
-            }
+        public virtual void PlayStart()
+        {
+            HideBlock();
         }
-
-        public virtual void PlayStart(){ 
+        
+        
+        private void HideBlock()
+        {
             transform.Translate(Vector3.back * 100f);
         }
-
     }
 }

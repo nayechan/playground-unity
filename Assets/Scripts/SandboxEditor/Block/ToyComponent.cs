@@ -6,10 +6,10 @@ namespace GameEditor.EventEditor.Block
     {
         protected override void Start(){
             base.Start();
-            GetMessage("Block");
+            MessageCallBack("Block");
         }
 
-        public override void GetMessage(string message)
+        public override void MessageCallBack(string message)
         {
             MyDelegate md;
             switch(message){

@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using GameEditor.Storage;
+using SandboxEditor.Data.Storage;
 using UnityEngine;
 
 //이미지를 데이터화 하기 위한 클래스입니다.
-namespace GameEditor.Data
+namespace SandboxEditor.Data.Resource
 {
     [System.Serializable]
     public class ImageData
@@ -28,21 +28,10 @@ namespace GameEditor.Data
             _title = title;
         }
 
-        public void BuildAndAttachSpriteRendererAndAdjustScale(GameObject toy)
-        {
-            var spriteRenderer = CreateSpriteRendererAndLoadSprite(toy);
-            var texture = spriteRenderer.sprite.texture;
-            var newScale = 
-                new Vector3(GetWidth()/texture.width * 100f,
-                    GetHeight()/texture.height * 100f,
-                    1f);
-            toy.transform.localScale = newScale;
-        }
-
-        private SpriteRenderer CreateSpriteRendererAndLoadSprite(GameObject toy)
+        public SpriteRenderer CreateSpriteRendererAndLoadSprite(GameObject toy)
         {
             var spriteRenderer = toy.AddComponent<SpriteRenderer>();
-            spriteRenderer.sprite = ImageStorage.GetSprites(this)[0];
+            spriteRenderer.sprite = ImageStorage.GetSprites(this)?[0];
             return spriteRenderer;
         }
 

@@ -1,10 +1,6 @@
-using System.Diagnostics;
-using System.Net.Mime;
 using System;
-using System.IO;
-using UnityEngine;
 
-namespace GameEditor.Data
+namespace SandboxEditor.Data.Sandbox
 {
     [System.Serializable]
     public class SandboxData
@@ -21,7 +17,7 @@ namespace GameEditor.Data
         {
             title = "New SandBox";
             isLocalSandbox = true;
-            id = "-1";
+            id = "1234";
             creatorName = "";
             createdTime = DateTime.Now;
             modifiedTime = DateTime.Now;

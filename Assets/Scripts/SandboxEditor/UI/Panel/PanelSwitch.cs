@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameEditor.Common
+namespace SandboxEditor.UI.Panel
 {
     public class PanelSwitch : MonoBehaviour
     {

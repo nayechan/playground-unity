@@ -1,7 +1,7 @@
-﻿using GameEditor.Data;
+﻿using SandboxEditor.Data.Resource;
 using UnityEngine;
 
-namespace GameEditor.Common.Data
+namespace SandboxEditor.UI.Panel.Data
 {
     public class AudioSampleDataContainer : MonoBehaviour
     {

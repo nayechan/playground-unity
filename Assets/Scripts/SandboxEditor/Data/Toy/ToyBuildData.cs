@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Assertions;
 
-namespace GameEditor.Data
+namespace SandboxEditor.Data.Toy
 {
     public enum ColliderType
     {
@@ -18,11 +15,10 @@ namespace GameEditor.Data
         Neutral = 4
     }
     // 오브젝트의 이름, 인스턴스 ID등의 정보를 저장하는 클래스입니다.
-    [System.Serializable]
+    [Serializable]
     public class ToyBuildData 
     {
         public string name;
-        public int id;
         public ColliderType colliderType;
         public ToyType toyType;
         public bool isFixed;

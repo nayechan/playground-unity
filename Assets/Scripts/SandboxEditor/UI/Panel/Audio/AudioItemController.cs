@@ -1,11 +1,11 @@
-using GameEditor.Data;
+using SandboxEditor.Data.Resource;
 using UnityEngine;
 using UnityEngine.UI;
 
 /*
 AudioEditor에 표시될 각각의 Audio 선택요소를 관리하는 스크립트입니다.
 */
-namespace GameEditor.Resource.Audio
+namespace SandboxEditor.UI.Panel.Audio
 {
     public class AudioItemController : MonoBehaviour {
 

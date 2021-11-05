@@ -1,70 +1,57 @@
-using GameEditor.Data;
-using GameEditor.EventEditor.UI.Sensor;
+using System;
+using SandboxEditor.Data.Sandbox;
+using SandboxEditor.Data.Toy;
+using SandboxEditor.InputControl.InEditor.Sensor;
 using UnityEngine;
 
-namespace GameEditor.ObjectEditor
+namespace SandboxEditor.Builder
 {
-    public class ObjectBuilder : AbstractSensor
+    public class ObjectBuilder : MonoBehaviour
     {
-        public ToyData currentToyData;
+        private ToyData currentToyData;
+        private GameObject _newToy;
         public Transform rootObject;
-        public GameObject objectSensorPrefab;
         public bool isSnap;
+        private static ObjectBuilder _ObjectBuilder;
+        public static bool IsSnap => _ObjectBuilder.isSnap;
 
-        // Start is called before the first frame update
-        void Awake()
+        private void Awake()
         {
-            currentToyData = null;
+            _ObjectBuilder ??= this;
         }
 
-        public bool GenerateObject(Vector3 cursor)
+        public static void BuildAndPlaceToy(Vector3 cursorPosition)
         {
-            Transform transform = null;
-            if(isSnap)
-            {
-                transform = FindNearestObject(cursor, rootObject, 1.0f);
-            }
-
-            if(transform != null || currentToyData == null) return false;
-            GameObject obj = ToyBuilder.BuildToy(currentToyData);
-            obj.transform.parent = rootObject;
-
-            Debug.Log(objectSensorPrefab);
-
-            GameObject objectSensor = GameObject.Instantiate(
-                objectSensorPrefab, obj.transform.position, Quaternion.identity, 
-                obj.transform
-            );
-
-            cursor.z = 10;
-
-            Vector3 objSize = obj.GetComponent<SpriteRenderer>().bounds.size;
-            Vector3 objPos = cursor;
-
-            if(isSnap){
-
-                Vector3 pivotAmount = objSize;
-                pivotAmount.x *= 0.5f;
-                pivotAmount.y *= -0.5f;
-                pivotAmount.z = 10;
-
-
-                objPos-=pivotAmount;
-            
-                objPos.x = Mathf.Round(objPos.x);
-                objPos.y = Mathf.Round(objPos.y);
-
-                objPos+=pivotAmount;
-
-            }
-
-            obj.transform.position = objPos;
-            return true;
+            _ObjectBuilder._BuildAndPlaceToy(cursorPosition);
         }
 
-        public void SetCurrentToyData(ToyData ToyData)
+        private void _BuildAndPlaceToy(Vector3 cursorPosition)
         {
-            currentToyData = ToyData;
+            _newToy = Sandbox.BuildSelectedToyOnToyRoot();
+            if (_newToy is null) return;
+            var newPosition = isSnap ? AdjustedPositionForSnapFunction(cursorPosition) : cursorPosition;
+            newPosition.z = 0;
+            _newToy.transform.position = newPosition;
+        }
+
+        private Vector3 AdjustedPositionForSnapFunction(Vector3 cursorPosition)
+        {
+            var toySize = _newToy.GetComponent<SpriteRenderer>().bounds.size;
+            var newPosition = cursorPosition;
+            var pivotAmount = toySize;
+            pivotAmount.x *= 0.5f;
+            pivotAmount.y *= -0.5f;
+            pivotAmount.z = 10;
+            newPosition-=pivotAmount;
+            newPosition.x = Mathf.Round(newPosition.x);
+            newPosition.y = Mathf.Round(newPosition.y);
+            newPosition+=pivotAmount;
+            return newPosition;
+        }
+
+        public static void SetCurrentToyData(ToyData ToyData)
+        {
+            _ObjectBuilder.currentToyData = ToyData;
         }
 
         public Transform FindNearestObject(Vector3 pos, Transform transform, float maxDist=0.4f)

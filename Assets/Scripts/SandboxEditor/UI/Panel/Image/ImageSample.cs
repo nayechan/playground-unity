@@ -1,10 +1,9 @@
-using System.Collections;
-using GameEditor.Data;
-using GameEditor.Storage;
+using SandboxEditor.Data.Resource;
+using SandboxEditor.Data.Storage;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace GameEditor.Resource.Image
+namespace SandboxEditor.UI.Panel.Image
 {
     public class ImageSample : MonoBehaviour {
 
@@ -40,15 +39,11 @@ namespace GameEditor.Resource.Image
 
         private Vector2 GetSampleSize(ImageData imageData)
         {
-            var width = imageData.GetWidth();
-            var height = imageData.GetHeight();
+            var (width, height) = (imageData.GetWidth(), imageData.GetHeight());
             if(imageData.GetIsRelativeSize())
             {
-                if(imageGuide.sprite != null)
-                {
-                    width *= imageGuide.sprite.texture.width;
-                    height *= imageGuide.sprite.texture.height;
-                }
+                width *= imageGuide.sprite.texture.width;
+                height *= imageGuide.sprite.texture.height;
             }
             if(height > width)
             {

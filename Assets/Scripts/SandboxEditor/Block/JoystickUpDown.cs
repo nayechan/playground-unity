@@ -1,3 +1,4 @@
+using Deprecation;
 using GameEditor.EventEditor.Controller;
 using UnityEngine;
 

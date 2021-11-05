@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameEditor.UI
+namespace SandboxEditor.UI
 {
     public class CameraZoomController : MonoBehaviour
     {

@@ -1,17 +1,12 @@
-using System.Net.Mime;
-using System.Collections;
-using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
-using UnityEngine;
-using UnityEngine.UI;
-using GameEditor.Data;
-using System.IO;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using Tools;
+using UnityEngine;
 using static Tools.Names;
 using File = Tools.File;
 
-namespace GameEditor
+namespace SandboxEditor.Data.Sandbox
 {
     
     public static class SandboxChecker
@@ -21,6 +16,7 @@ namespace GameEditor
         public static string AppPath;
         public static string LocalPath;
         public static string RemotePath;
+        
 
         public static void Initialize(string AppPath)
         {
@@ -85,7 +81,7 @@ namespace GameEditor
         {
             return Path.Combine(AppPath,
                 sandboxData.isLocalSandbox ? DirectoryNameOfLocalSandbox : DirectoryNameOfRemoteSandbox,
-                sandboxData.id.ToString());
+                sandboxData.id);
         }
 
         public static string MakeFullPath(Sandbox sandbox, string reletivePath)

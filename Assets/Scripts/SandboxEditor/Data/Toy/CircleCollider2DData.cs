@@ -2,12 +2,12 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace GameEditor.Data
+namespace SandboxEditor.Data.Toy
 {
     [Serializable]
     public class CircleCollider2DData : ToyComponentData
     {
-        public bool collidable, isTrigger;
+        public bool enabled, isTrigger;
         public float colRadius;
         public Vector2 offset;
         public PhysicsMaterial2DData pm2dd;
@@ -18,9 +18,10 @@ namespace GameEditor.Data
             Assert.IsTrue(IsMatchedType(comp));
             var cir2d = (CircleCollider2D)comp;
             cir2d.radius = colRadius;
-            cir2d.enabled = collidable;
+            cir2d.enabled = enabled;
+            cir2d.isTrigger = isTrigger;
             cir2d.offset = offset;
-            pm2dd.SetComponent(cir2d.sharedMaterial); 
+            pm2dd?.SetComponent(cir2d.sharedMaterial); 
         }
 
         // 인자로 받은 GameObject에 CircleCollider2D 컴포넌트를 추가하고
@@ -38,14 +39,20 @@ namespace GameEditor.Data
             UpdateByToyComponent(comp);
         }
 
+        public CircleCollider2DData()
+        {
+            colRadius = 0.5f;
+            offset = Vector2.zero;
+            enabled = true;
+            isTrigger = false;
+        }
+
         // 본 Class의 data를 받은 Component의 설정값으로 바꾼다.
         public sealed override ToyComponentData UpdateByToyComponent(Component comp)
         {
             Assert.IsTrue(IsMatchedType(comp));
             var cir2d = (CircleCollider2D)comp;
             colRadius = cir2d.radius;
-            collidable = cir2d.enabled;
-            isTrigger = cir2d.isTrigger;
             offset = cir2d.offset;
             pm2dd = new PhysicsMaterial2DData(cir2d.sharedMaterial);
             return this;

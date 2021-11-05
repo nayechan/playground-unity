@@ -1,3 +1,4 @@
+using Deprecation;
 using GameEditor.EventEditor.Controller;
 using UnityEngine;
 
@@ -5,7 +6,8 @@ namespace GameEditor.EventEditor.Block
 {
     public class TouchViewPortPoint : AbstractBlock
     {
-        private static int _inputNum = 0, _outputNum = 2;
+        private const int _inputNum = 0;
+        private const int _outputNum = 2;
         private UserInputController _userInput;
         private Camera cam;
 
@@ -15,8 +17,8 @@ namespace GameEditor.EventEditor.Block
             _outputs = new float[_outputNum];
             _userInput = GameObject.FindObjectOfType<UserInputController>();
         }
-        override protected void BlockAction(){
-            Camera cam = GameObject.FindObjectOfType<GameDisplay>().GetComponent<Camera>();
+        protected override void BlockAction(){
+            var cam = GameObject.FindObjectOfType<GameDisplay>().GetComponent<Camera>();
             if(cam == null) return;
             _outputs[0] = _userInput.GetTouchInputViewPort(cam).x;
             _outputs[1] = _userInput.GetTouchInputViewPort(cam).y;

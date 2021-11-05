@@ -1,42 +1,42 @@
-using System;
-using GameEditor.Common;
-using GameEditor.Data;
-using GameEditor.Resource.Image;
-using GameEditor.Storage;
+using SandboxEditor.Data.Resource;
+using SandboxEditor.Data.Storage;
+using SandboxEditor.Data.Toy;
+using SandboxEditor.UI.Panel.Image;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace GameEditor.Object
+namespace SandboxEditor.UI.Panel.Toy
 {
     public class ToySampleBuildPanel : MonoBehaviour
     {
-        [SerializeField] Image toySampleImage;
-        [SerializeField] InputField nameInputField;
-        [SerializeField] Dropdown typeDropdown, colliderDropdown;
-        [SerializeField] ImageSamplePanel toyImagePanel;
+        [SerializeField] private UnityEngine.UI.Image toySampleImage;
+        [SerializeField] private InputField nameInputField;
+        [SerializeField] private Dropdown toyTypeDropdown, colliderDropdown;
+        [SerializeField] private Toggle movableToggle;
+        [SerializeField] private ImageSamplePanel toyImagePanel;
         private ImageData _selectedImageData;
         public PanelSwitch closeImageSelectorAndOpenToyBuilder;
 
         public void OnAddButtonClick()
         {
-            var toyData = BuildToyData();
-            if (!IsValid(toyData)) return;
-            ToyStorage.AddToyData(toyData);
+            var toyRecipe = BuildToyRecipe();
+            if (!IsValid(toyRecipe)) return;
+            var newToyData = new ToyData(toyRecipe);
+            ToyStorage.AddToyData(newToyData);
             ResetInputBox();
         }
 
-        private ToyData BuildToyData()
+        private ToyRecipe BuildToyRecipe()
         {
-            var toyData = new ToyData
+            return new ToyRecipe()
             {
-                toyBuildData = MakeToyBuildData(),
+                toyBuildData = BuildToyBuildDataFromInput(),
                 imageData = _selectedImageData
             };
-            return toyData;
         }
-        private static bool IsValid(ToyData toyData)
+        private static bool IsValid(ToyRecipe toyRecipe)
         {
-            return toyData.imageData != null;
+            return toyRecipe.imageData != null;
         }
         
         private void SendImageDataToToyPanel(ImageData imageData)
@@ -48,17 +48,18 @@ namespace GameEditor.Object
 
         public void OpenToyImageSelector()
         {
-            toyImagePanel.WhenImageSampleClicked(SendImageDataToToyPanel);
+            toyImagePanel.SetBehaviorWhenImageSampleClicked(SendImageDataToToyPanel);
         }
 
 
-        private ToyBuildData MakeToyBuildData()
+        private ToyBuildData BuildToyBuildDataFromInput()
         {
             var toyBuildData = new ToyBuildData
             {
-                name = nameInputField.text
+                name = nameInputField.text,
+                isFixed = !movableToggle.isOn
             };
-            var typeString = typeDropdown.options[typeDropdown.value].text;
+            var typeString = toyTypeDropdown.options[toyTypeDropdown.value].text;
             var toyType = (ToyType)ToyType.Parse(typeof(ToyType),typeString);
             toyBuildData.toyType = toyType;
             var colliderTypeString = colliderDropdown.options[colliderDropdown.value].text;
@@ -77,7 +78,7 @@ namespace GameEditor.Object
             toySampleImage.sprite = null;
             nameInputField.text = "";
             colliderDropdown.value = 0;
-            typeDropdown.value = 0;
+            toyTypeDropdown.value = 0;
             _selectedImageData = null;
         }
     }

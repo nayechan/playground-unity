@@ -1,7 +1,7 @@
 using System.IO;
 using ExternalScript.WebGLFileUploader;
-using GameEditor.Data;
-using GameEditor.Storage;
+using SandboxEditor.Data.Resource;
+using SandboxEditor.Data.Storage;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,7 +19,7 @@ SimpleFileBrowser
 비고 :
 */
 
-namespace GameEditor.Resource.Audio
+namespace SandboxEditor.UI.Panel.Audio
 {
     public class AudioUploader : MonoBehaviour
     {

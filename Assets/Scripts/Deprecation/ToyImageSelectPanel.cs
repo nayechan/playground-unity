@@ -1,12 +1,12 @@
 using System.Collections.Generic;
-using GameEditor.Data;
-using GameEditor.Storage;
+using SandboxEditor.Data.Storage;
+using SandboxEditor.UI.Panel.Image;
 using UnityEngine;
 
 /*
 이미지 선택 화면을 관리하는 스크립트입니다.
 */
-namespace GameEditor.Resource.Image
+namespace Deprecation
 {
     public class ToyImageSelectPanel : MonoBehaviour
     {

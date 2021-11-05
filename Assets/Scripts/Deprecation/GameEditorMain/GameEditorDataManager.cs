@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameEditor.GameEditorMain
+namespace Deprecation.GameEditorMain
 {
     [Serializable]
     public class SerializableDictionary<K, V> : Dictionary<K, V>, ISerializationCallbackReceiver

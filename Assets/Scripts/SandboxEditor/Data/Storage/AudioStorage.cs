@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using GameEditor.Data;
-using GameEditor.Resource.Audio;
+using SandboxEditor.Data.Resource;
+using SandboxEditor.Data.Sandbox;
+using SandboxEditor.UI.Panel.Audio;
 using UnityEngine;
 using UnityEngine.Networking;
 
 // 오디오를 메모리에 저장하고, 재생하기 위한 저장소입니다.
-namespace GameEditor.Storage
+namespace SandboxEditor.Data.Storage
 {
     public class AudioStorage : MonoBehaviour
     {
@@ -16,7 +17,7 @@ namespace GameEditor.Storage
 
         // Audio 편집기의 UI와 저장 상황을 동기화하기 위해 추가한 변수입니다.
         [SerializeField] private AudioEditorController _audioEditorController;
-        public Sandbox sandbox;
+        public Sandbox.Sandbox sandbox;
 
         private void Awake()
         {

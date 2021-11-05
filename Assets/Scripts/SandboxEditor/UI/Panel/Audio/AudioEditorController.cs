@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using GameEditor.Data;
+using SandboxEditor.Data.Resource;
 using UnityEngine;
 
 /*
 AudioEditor를 관리하는 스크립트입니다.
 */
-namespace GameEditor.Resource.Audio
+namespace SandboxEditor.UI.Panel.Audio
 {
     public class AudioEditorController : MonoBehaviour
     {
