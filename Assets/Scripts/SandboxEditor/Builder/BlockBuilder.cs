@@ -20,6 +20,7 @@ namespace SandboxEditor.Builder
         public GameObject toyDestroyerBlock;
         public GameObject velocitySetterBlock;
         public GameObject touchInputBlock;
+        public GameObject accelerationBlock;
         
         private void Awake()
         {
@@ -90,6 +91,9 @@ namespace SandboxEditor.Builder
                     break;
                 case CollisionDetectorData collisionDetectorData:
                     blockGameObject = Instantiate(_BlockBuilder.collisionDetectorBlock);
+                    break;
+                case AccelerationBlockData accelerationBlockData:
+                    blockGameObject = Instantiate(_BlockBuilder.accelerationBlock);
                     break;
                 default:
                     return null;

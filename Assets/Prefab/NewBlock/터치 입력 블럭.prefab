@@ -47,11 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c0e4f48c4ef4dfb9fb0d8e9976ff04c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ports:
-  - {fileID: 2634808602383582761}
-  - {fileID: 3669155276256003832}
-  xAxis: {fileID: 2634808602383582761}
-  yAxis: {fileID: 3669155276256003832}
+  touchXAxisOutput: {fileID: 2634808602383582761}
+  touchYAxisOutput: {fileID: 3669155276256003832}
 --- !u!1001 &1792291543493210207
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -441,7 +438,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4506935368086948101, guid: 1ff125a2fff65934da822e8e7ad3e9b9, type: 3}
       propertyPath: m_Text
-      value: "\uD130\uCE58 \uC785\uB825 \uBE14\uB7ED"
+      value: "\uD130\uCE58 \uAC10\uC9C0 \uBE14\uB7ED"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ff125a2fff65934da822e8e7ad3e9b9, type: 3}

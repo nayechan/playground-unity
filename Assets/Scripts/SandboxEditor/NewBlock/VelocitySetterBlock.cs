@@ -44,7 +44,7 @@ namespace SandboxEditor.NewBlock
         public override BlockData SaveBlockData()
         {
             var data = new VelocitySetterBlockData(this);
-            data.SetgameObjectIDAndPosition(this);
+            data.SetGameObjectIDAndPosition(this);
             return data;
         }
         

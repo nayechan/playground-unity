@@ -10,6 +10,7 @@ namespace GameEditor.EventEditor.Controller
         private bool isGameStarted = false;
         public static bool IsGameStarted => _sandboxUpdateController.isGameStarted;
 
+
         private void Awake()
         {
             _sandboxUpdateController ??= this;

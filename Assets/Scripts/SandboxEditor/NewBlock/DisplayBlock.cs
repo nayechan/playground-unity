@@ -1,5 +1,6 @@
 ﻿using System;
 using SandboxEditor.Data.Block;
+using SandboxEditor.Data.Sandbox;
 using UnityEngine;
 
 namespace SandboxEditor.NewBlock
@@ -21,6 +22,7 @@ namespace SandboxEditor.NewBlock
         {
             Camera.main.gameObject.SetActive(false);
             camera.gameObject.SetActive(true);
+            Sandbox.Camera = camera;
         }
 
         public override void MessageCallBack(string message)
@@ -39,7 +41,7 @@ namespace SandboxEditor.NewBlock
         public override BlockData SaveBlockData()
         {
             var data = new DisplayBlockData(this);
-            data.SetgameObjectIDAndPosition(this);
+            data.SetGameObjectIDAndPosition(this);
             return data;
         }
         

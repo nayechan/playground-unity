@@ -14,13 +14,19 @@ namespace SandboxEditor.Data.Sandbox
         public GameObject rootOfToy;
         public GameObject rootOfBlock;
         public GameObject rootOfConnectionSpriteLine;
+        public Camera camera;
         private static Sandbox _Sandbox;
         public static GameObject RootOfToy => _Sandbox.rootOfToy;
         public static GameObject RootOfBlock => _Sandbox.rootOfBlock;
         public static GameObject RootOfConnectionSpriteLine => _Sandbox.rootOfConnectionSpriteLine;
 
         public static ToyData selectedToyData;
-        
+        public static Camera Camera
+        {
+            get => _Sandbox.camera;
+            set => _Sandbox.camera = value;
+        }
+
         private Dictionary<int, GameObject> _blockIDBlockObjectPairs;
         private Dictionary<int, GameObject> _ToyIDToyObjectPairs;
 

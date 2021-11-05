@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using SandboxEditor.Data.Sandbox;
 using SandboxEditor.InputControl.InEditor.Sensor;
 using TMPro;
 using UnityEditorInternal;
@@ -19,6 +20,7 @@ namespace SandboxEditor.InputControl.InEditor
         private Dictionary<int, TouchEvent> _touchAlarms; // 특정 fingerID의 터치 이벤트를 지속적으로 듣는 스크립트를 위한 이벤트.
         private TouchMode _mode;
         public static TouchMode Mode {get => _tid._mode; set => _tid._mode = value; }
+        private Touch[] touches;
         void Start() {
             _cam = Camera.main;
             _touchAlarms = new Dictionary<int, TouchEvent>();
@@ -27,18 +29,18 @@ namespace SandboxEditor.InputControl.InEditor
         }
 
         void Update() {
-            var touches = Input.touches;
-            AlarmAll(touches);
-            ShotRays(touches);
-            ResetOutdatedAlarm(touches);
+            touches = Input.touches;
+            AlarmAll();
+            ShotRays();
+            ResetOutdatedAlarm();
         }
 
         public static TouchController GetTID(){
             return _tid;
         }
 
-        private static void ShotRays(IEnumerable<Touch> touches){
-            foreach(var touch in touches){
+        private static void ShotRays(){
+            foreach(var touch in _tid.touches){
                 // 각 터치에 대해 하나의 Raycast를 진행. Collider를 가진 객체를 검출한다.
                 // 충돌한 객체를 가까운 거리순으로 정렬하고 TouchSensor 컴포넌트를 가지고 있는지 차례대로 확인한다.
                 // TouchSensor 컴포넌트를 가지고 있을 경우 해당 컴포넌트에 Hit 함수를 호출해 Touch 정보를 전달하고
@@ -99,7 +101,7 @@ namespace SandboxEditor.InputControl.InEditor
             _touchAlarms[fingerID].AddListener(sensor.CallBack);
         }
 
-        private void AlarmAll(IEnumerable<Touch> touches){        
+        private void AlarmAll(){        
             foreach(var touch in touches){
                 if(!_touchAlarms.ContainsKey(touch.fingerId)){ //처음 들어오는 입력일 경우
                     _touchAlarms.Add(touch.fingerId, new TouchEvent());
@@ -109,7 +111,7 @@ namespace SandboxEditor.InputControl.InEditor
             }
         }
 
-        private void ResetOutdatedAlarm(IEnumerable<Touch> touches){
+        private void ResetOutdatedAlarm(){
             foreach(var touch in touches)
             {
                 if (touch.phase != TouchPhase.Ended && touch.phase != TouchPhase.Canceled) continue;
@@ -119,6 +121,7 @@ namespace SandboxEditor.InputControl.InEditor
             }
         }
     }
+    
 
     public enum TouchMode
     {

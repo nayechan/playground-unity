@@ -2,6 +2,7 @@ using System;
 using SandboxEditor.Data.Sandbox;
 using SandboxEditor.Data.Toy;
 using SandboxEditor.InputControl.InEditor;
+using SandboxEditor.InputControl.InPlay;
 using UnityEngine;
 using static Tools.Misc;
 
@@ -17,7 +18,7 @@ namespace GameEditor.EventEditor.Controller
         public void GameStart()
         {
             HideEditorInterface();
-            DisableEditorFunction();
+            DisableEditorFunctionAndEnablePlayerFunction();
             EnableChildrenRigidBody(Sandbox.RootOfToy); 
             BlockController.BlockActionWhenGameStart();
             SandboxUpdateController.SetSignalTransferAndBlockActionOn();
@@ -35,7 +36,7 @@ namespace GameEditor.EventEditor.Controller
         public static void TestStart()
         {
             SaveTemporalSandboxData();
-            DisableEditorFunction();
+            DisableEditorFunctionAndEnablePlayerFunction();
             Resume();
         }
 
@@ -73,11 +74,13 @@ namespace GameEditor.EventEditor.Controller
 
         private static void EnableEditorFunction()
         {
+            PlayerTouchController.playerTouchController.enabled = false;
             TouchController.GetTID().enabled = true;
         }
         
-        private static void DisableEditorFunction()
+        private static void DisableEditorFunctionAndEnablePlayerFunction()
         {
+            PlayerTouchController.playerTouchController.enabled = true;
             TouchController.GetTID().enabled = false;
         }
     }

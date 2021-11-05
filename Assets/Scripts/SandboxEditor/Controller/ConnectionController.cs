@@ -43,7 +43,10 @@ namespace GameEditor.EventEditor.Controller
         public static void SendSignal()
         {
             foreach (var connection in BlockConnections)
+            {
                 connection.SendSignal();
+                Debug.Log($"destiantion : {connection.destination.Value}, source : {connection.source.Value}");
+            }
         }
 
         public static void WhenPortClicked(NewBlockPort newPort)

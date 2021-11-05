@@ -21,10 +21,10 @@ namespace SandboxEditor.Data.Block
         public void SendSignal()
         {
             // 신호가 정방향으로 가는 경우 sourceValue를 destinationValue에 입력한다.
-            if (Is.SignalForwardToDestPort(source.portType, destination.portType))
-                destination.Value = source.Value;
-            else
+            if (Is.ReversedDirection(source.portType, destination.portType))
                 source.Value = destination.Value;
+            else
+                destination.Value = source.Value;
         }
         
     }

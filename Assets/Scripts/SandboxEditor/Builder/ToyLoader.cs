@@ -164,9 +164,12 @@ namespace SandboxEditor.Builder
             _toyIDToyObjectPair.Add(_toyData.gameObjectInstanceID, _newToy);
         }
 
-        private static void InitializeToyPort(NewBlockPort port)
+        private void InitializeToyPort(NewBlockPort port)
         {
-            port.portData = new PortData(0, PortType.ToySender, port);
+            port.portData = new PortData(0, PortType.ToySender, port)
+            {
+                Value = _newToy
+            };
         }
 
         private void BuildToyChildren()

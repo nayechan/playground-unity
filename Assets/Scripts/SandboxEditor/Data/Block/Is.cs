@@ -32,7 +32,7 @@ namespace SandboxEditor.Data.Block
             return correctPortTypePairs.Contains((sourceType, destType));
         }
 
-        public static bool SignalForwardToDestPort(PortType sourceType, PortType destType)
+        public static bool ReversedDirection(PortType sourceType, PortType destType)
         {
             return SignalForwardToDestPairs.Contains((sourceType, destType));
         }
