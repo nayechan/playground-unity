@@ -19225,7 +19225,7 @@ MonoBehaviour:
   rootOfRoots: {fileID: 137415993}
   rootOfToy: {fileID: 1358116894}
   rootOfBlock: {fileID: 584081751}
-  rootOfLine: {fileID: 585309208}
+  rootOfConnectionSpriteLine: {fileID: 585309208}
 --- !u!4 &1227682493
 Transform:
   m_ObjectHideFlags: 0

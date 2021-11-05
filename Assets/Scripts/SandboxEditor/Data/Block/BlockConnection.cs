@@ -30,13 +30,27 @@ namespace SandboxEditor.Data.Block
     }
 
     [Serializable]
-    public class BlocksConnection
+    public class BlockConnections : ISerializationCallbackReceiver
     {
         public List<BlockConnection> blockConnections;
 
-        public BlocksConnection(List<BlockConnection> blockConnections)
+        public BlockConnections(List<BlockConnection> blockConnections)
         {
             this.blockConnections = blockConnections;
+        }
+
+        public void OnBeforeSerialize()
+        {
+            foreach (var connectionData in blockConnections)
+            {
+                connectionData.source.UpdateInstanceIDDataIfPortIsOnBlock();
+                connectionData.destination.UpdateInstanceIDDataIfPortIsOnBlock();
+            }
+        }
+
+        public void OnAfterDeserialize()
+        {
+        
         }
     }
     

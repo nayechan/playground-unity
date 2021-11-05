@@ -13,11 +13,11 @@ namespace SandboxEditor.Data.Sandbox
         public GameObject rootOfRoots;
         public GameObject rootOfToy;
         public GameObject rootOfBlock;
-        public GameObject rootOfLine;
+        public GameObject rootOfConnectionSpriteLine;
         private static Sandbox _Sandbox;
         public static GameObject RootOfToy => _Sandbox.rootOfToy;
         public static GameObject RootOfBlock => _Sandbox.rootOfBlock;
-        public static GameObject RootOfLine => _Sandbox.rootOfLine;
+        public static GameObject RootOfConnectionSpriteLine => _Sandbox.rootOfConnectionSpriteLine;
 
         public static ToyData selectedToyData;
         
@@ -62,7 +62,7 @@ namespace SandboxEditor.Data.Sandbox
             LoadToyStorageData();
             ReloadToyAndUpdateToyIDPair();
             ReloadBlockAndUpdateBlockIDPair();
-            // ReLoadConnection(); 
+            ReloadConnection(); 
         }
 
         private void LoadImageStorageData()
@@ -104,9 +104,13 @@ namespace SandboxEditor.Data.Sandbox
             return selectedToyData is null ? null : BuildToyOnToyRoot(selectedToyData);
         }
 
-        public void ReLoadConnection()
+        // 두개의 딕셔너리가 최신화 되려면 토이, 블록을 먼저 불러와야 함.
+        private void ReloadConnection()
         {
-            
+            Destroy(rootOfConnectionSpriteLine);
+            rootOfConnectionSpriteLine = new GameObject("SpriteLineRoot");
+            Tools.Misc.SetChildAndParent(rootOfConnectionSpriteLine, rootOfRoots);
+            SandboxSaveLoader.LoadConnection(sandboxData, _ToyIDToyObjectPairs, _blockIDBlockObjectPairs);
         }
 
         public string GetSandboxPath()

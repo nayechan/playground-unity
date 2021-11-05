@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using SandboxEditor.Data.Toy;
 using SandboxEditor.InputControl.InEditor.Sensor;
 using SandboxEditor.NewBlock;
 using UnityEngine;
@@ -35,8 +36,7 @@ namespace SandboxEditor.Data
 
         public void UpdateInstanceIDDataIfPortIsOnBlock()
         {
-            if(abstractBlock != null)
-                gameObjectInstanceID = abstractBlock.gameObject.GetInstanceID();
+            gameObjectInstanceID = abstractBlock != null ? abstractBlock.gameObject.GetInstanceID() : blockPort.GetComponentInParent<ToySaver>().gameObject.GetInstanceID();
         }
     }
 

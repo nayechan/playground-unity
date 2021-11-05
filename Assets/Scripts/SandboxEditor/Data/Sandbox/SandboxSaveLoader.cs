@@ -144,5 +144,13 @@ namespace SandboxEditor.Data.Sandbox
             var blocksData = JsonUtility.FromJson<BlocksData>(jsonBlockData);
             return BlockBuilder.CreateBlockRootAndUpdateBlockStorage(blocksData);
         }
+
+        public static void LoadConnection(SandboxData _sandboxData, Dictionary<int, GameObject> toyIDPair, Dictionary<int, GameObject> blockIDPair )
+        {
+            var jsonConnectionDataPath = Path.Combine(SandboxChecker.GetSandboxPath(_sandboxData), JsonNameOfConnectionData);
+            var jsonConnectionData = System.IO.File.ReadAllText(jsonConnectionDataPath);
+            var connectionsData = JsonUtility.FromJson<BlockConnections>(jsonConnectionData);
+            ConnectionController.CreateConnectionRootAndRenewConnections(connectionsData, toyIDPair, blockIDPair);
+        }
     }
 }
