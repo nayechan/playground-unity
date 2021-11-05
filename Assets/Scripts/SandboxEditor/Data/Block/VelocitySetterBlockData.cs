@@ -6,16 +6,14 @@ namespace SandboxEditor.Data.Block
     [Serializable]
     public class VelocitySetterBlockData : BlockData
     {
-        public float currentVelocity;
-        public int setToyVelocityPortID;
-        public int signalPortID;
+        public float XVelocity;
+        public float YVelocity;
 
         public VelocitySetterBlockData(VelocitySetterBlock block)
         {
             SetGameObjectIDAndPosition(block);
-            currentVelocity = block.currentVelocity;
-            setToyVelocityPortID = block.setToyVelocityPort.GetInstanceID();
-            signalPortID = block.signalPort.GetInstanceID();
+            XVelocity = block.XVelocity;
+            YVelocity = block.YVelocity;
         }
         
     }

@@ -12,5 +12,11 @@ namespace SandboxEditor.InputControl.InEditor.Sensor
             if (port == null) return;
             NewBlockPort.WhenToyHit(other);
         }
+        
+        private void OnCollisionStay2D(Collision2D other)
+        {
+            if (port == null) return;
+            NewBlockPort.WhenToyHit(other);
+        }
     }
 }

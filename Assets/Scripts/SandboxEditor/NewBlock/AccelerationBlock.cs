@@ -14,7 +14,6 @@ namespace SandboxEditor.NewBlock
         public override void OnEveryFixedUpdateWhenPlaying()
         {
             if (toyToAccelerate.Value == null) return;
-            Debug.Log($"im Acc block. x and y input is {(float)xAxisInput.Value}, {(float)yAxisInput.Value}");
             var targetToy = (GameObject) toyToAccelerate.Value;
             var rigidbody2D = targetToy.GetComponent<Rigidbody2D>();
             if (rigidbody2D == null) return;

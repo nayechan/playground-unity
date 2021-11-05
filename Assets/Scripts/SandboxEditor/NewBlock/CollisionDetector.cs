@@ -15,19 +15,18 @@ namespace SandboxEditor.NewBlock
 
         public override void OnEveryFixedUpdateWhenPlaying()
         {
-            if (CollisionInEveryFrame.HitToyAndOther.ContainsKey(toyToSense.gameObject))
+            if (toyToSense.Value == null) return;
+            var targetToyGameObject = (GameObject) toyToSense.Value;
+            if (CollisionInEveryFrame.HitToyAndOther.ContainsKey(targetToyGameObject))
             {
-                Debug.Log($"Collision Detected {toyToSense.gameObject}");
                 collisionDetected.Value = true;
-                anotherToy.Value = CollisionInEveryFrame.HitToyAndOther[toyToSense.gameObject];
-                Debug.Log($"another toy is {anotherToy.Value}");
+                anotherToy.Value = CollisionInEveryFrame.HitToyAndOther[targetToyGameObject];
             }
             else
             {
                 collisionDetected.Value = false;
                 anotherToy.Value = null;
             }
-                
         }
         
         public override BlockData SaveBlockData()

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using SandboxEditor.Data;
 using SandboxEditor.InputControl.InEditor.Sensor;
 using UnityEngine;
@@ -25,12 +23,14 @@ namespace GameEditor.EventEditor.Controller
         {
             foreach (var collision in Collisions2D)
             {
-                var port = collision.gameObject.GetComponent<NewBlockPort>();
-                var portOther = collision.otherCollider.gameObject.GetComponent<NewBlockPort>();
-                if(IsToySender(port))
-                    HitToyAndOther.Add(port.gameObject, portOther.gameObject);
-                if(IsToySender(portOther))
-                    HitToyAndOther.Add(portOther.gameObject, port.gameObject);
+                var hitGameObject = collision.gameObject;
+                var hitPort = hitGameObject.GetComponentInChildren<NewBlockPort>();
+                var otherGameObject = collision.otherCollider.gameObject;
+                var otherPort = otherGameObject.GetComponentInChildren<NewBlockPort>();
+                if(IsToySender(hitPort) && !HitToyAndOther.ContainsKey(hitGameObject))
+                    HitToyAndOther.Add(hitGameObject, otherGameObject);
+                if(IsToySender(otherPort) && !HitToyAndOther.ContainsKey(otherGameObject))
+                    HitToyAndOther.Add(otherGameObject, hitGameObject);
             }
         }
 
