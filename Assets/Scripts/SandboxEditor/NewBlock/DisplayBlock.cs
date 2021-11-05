@@ -9,7 +9,7 @@ namespace SandboxEditor.NewBlock
         public Camera camera;
         public GameObject guideArea;
 
-        public override void OnEveryFixedUpdate() { }
+        public override void OnEveryFixedUpdateWhenPlaying() { }
 
         public override void WhenGameStart()
         {

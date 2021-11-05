@@ -21,6 +21,7 @@ namespace GameEditor.EventEditor.Controller
             EnableChildrenRigidBody(Sandbox.RootOfToy); 
             BlockController.BlockActionWhenGameStart();
             SandboxUpdateController.SetSignalTransferAndBlockActionOn();
+            Sandbox.RootOfConnectionSpriteLine.SetActive(false);
         }
 
 

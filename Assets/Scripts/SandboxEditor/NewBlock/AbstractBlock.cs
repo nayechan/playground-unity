@@ -1,29 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using SandboxEditor.Data.Block;
+﻿using SandboxEditor.Data.Block;
 using SandboxEditor.Data.Storage;
-using SandboxEditor.InputControl.InEditor.Sensor;
 using UnityEngine;
 
 namespace SandboxEditor.NewBlock
 {
     public abstract class AbstractBlock : MonoBehaviour
     {
-        public int gameObjectInstanceID;
-
-        private void Awake()
-        {
-            gameObjectInstanceID = gameObject.GetInstanceID();
-        }
-
-        // 게임 시작시 매 프레임마다 실행되는 코드.
-        public virtual void OnEveryFixedUpdate() {}
 
         public virtual void WhenGameStart()
         {
             DisableBlockRenderer();
         }
-
+        
         private void DisableBlockRenderer()
         {
             foreach (var spriteRenderer in GetComponentsInChildren<SpriteRenderer>())
@@ -31,7 +19,11 @@ namespace SandboxEditor.NewBlock
             foreach (var meshRenderer in GetComponentsInChildren<MeshRenderer>())
                 meshRenderer.enabled = false;
         }
+
+        public virtual void OnEveryFixedUpdateWhenPlaying() {}
         
+        
+        // 설정창이 있는 블럭에서 값을 조절하기 위해 사용.
         public virtual void MessageCallBack(string message) { }
 
         protected virtual void OnDestroy()

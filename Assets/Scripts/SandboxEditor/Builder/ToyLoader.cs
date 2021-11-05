@@ -126,7 +126,7 @@ namespace SandboxEditor.Builder
             if (_newToy.GetComponent<SpriteRenderer>() == null) return;
             AttachObjectSensorGameObject();
             AttachObjectSensorCollider();
-            AttachToyPort();
+            AttachToyPortAndCollisionSensor();
         }
         
         private void AttachObjectSensorGameObject()
@@ -150,10 +150,12 @@ namespace SandboxEditor.Builder
             return sensorCollider;
         }
 
-        private void AttachToyPort()
+        private void AttachToyPortAndCollisionSensor()
         {
             var port = _toySensor.GetComponent<NewBlockPort>();
             InitializeToyPort(port);
+            var sensor = _newToy.AddComponent<ToyCollisionSensor>();
+            sensor.port = port;
         }
 
 

@@ -44,7 +44,6 @@ namespace GameEditor.EventEditor.Controller
         {
             foreach (var connection in BlockConnections)
                 connection.SendSignal();
-            Debug.Log("Signal Sent");
         }
 
         public static void WhenPortClicked(NewBlockPort newPort)
@@ -173,7 +172,6 @@ namespace GameEditor.EventEditor.Controller
         private static NewBlockPort FindMatchingGameObject(PortData portData, IReadOnlyDictionary<int, GameObject> toyIDPair,
             IReadOnlyDictionary<int, GameObject> blockIDPair)
         {
-            Debug.Log(JsonUtility.ToJson(portData));
             var matchedGameObject = FindMatchingGameObject(portData.gameObjectInstanceID, toyIDPair, blockIDPair);
             return FindMatchingBlockPort(portData.portIndex, matchedGameObject);
         }
@@ -201,6 +199,15 @@ namespace GameEditor.EventEditor.Controller
         private static void RenewConnectionList()
         {
             _ConnectionController._blockConnections = new HashSet<BlockConnection>();
+        }
+
+        public static HashSet<BlockConnection> GetConnections(NewBlockPort port)
+        {
+            if (!PortAndConnectionsPairs.ContainsKey(port)) return null;
+            var connections = PortAndConnectionsPairs[port];
+            foreach (var connection in connections.ToList().Where(connection => !_ConnectionController._blockConnections.Contains(connection)))
+                connections.Remove(connection);
+            return connections;
         }
 
     }

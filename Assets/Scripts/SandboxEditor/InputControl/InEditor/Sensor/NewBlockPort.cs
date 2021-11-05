@@ -1,7 +1,5 @@
-using System;
 using GameEditor.EventEditor.Controller;
 using SandboxEditor.Data;
-using SandboxEditor.Data.Block;
 using UnityEngine;
 
 namespace SandboxEditor.InputControl.InEditor.Sensor
@@ -10,6 +8,11 @@ namespace SandboxEditor.InputControl.InEditor.Sensor
     {
         public PortData portData;
         public int PortIndex => portData.portIndex;
+        public object Value
+        {
+            get => portData.Value;
+            set => portData.Value = value;
+        }
 
         public PortType PortType
         {
@@ -27,8 +30,23 @@ namespace SandboxEditor.InputControl.InEditor.Sensor
 
         private void OnDestroy()
         {
+            InitializeDestinationValue();
             ConnectionController.DeleteConnections(this);
         }
 
+        private void InitializeDestinationValue()
+        {
+            Value = null;
+            var connections = ConnectionController.GetConnections(this);
+            if (connections == null) return;
+            foreach (var connection in connections)
+                connection.SendSignal();
+        }
+
+        public static void WhenToyHit(Collision2D collision2D)
+        {
+            Debug.Log($"Hit, {collision2D.gameObject} , other : {collision2D.otherRigidbody.gameObject}");
+            CollisionInEveryFrame.AddCollision2D(collision2D);
+        }
     }
 }

@@ -13,47 +13,45 @@ namespace SandboxEditor.NewBlock
         public NewBlockPort signalPort;
         public float currentVelocity = 0f;
 
-        public override void OnEveryFixedUpdate()
+        private void Update()
+        {
+            refreshVelocityPanel();
+        }
+        
+        private void refreshVelocityPanel()
+        {
+            currentVelocityPanel.text = currentVelocity.ToString();
+        }
+
+        public override void OnEveryFixedUpdateWhenPlaying()
         {
         }
 
-        public override BlockData SaveBlockData()
-        {
-            var data = new VelocitySetterBlockData(this);
-            data.SetgameObjectIDAndPosition(this);
-            return data;
-        }
 
-        public override void LoadBlockData(BlockData blockData)
-        {
-            base.LoadBlockData(blockData);
-            currentVelocity = ((VelocitySetterBlockData) blockData).currentVelocity;
-        }
-
-
-        public override void WhenGameStart()
-        {
-        }
 
         public override void MessageCallBack(string message)
         {
             currentVelocity += float.Parse(message);
         }
 
-        private void Update()
-        {
-            refreshVelocityPanel();
-        }
 
-        private void refreshVelocityPanel()
-        {
-            currentVelocityPanel.text = currentVelocity.ToString();
-        }
-        
         protected void InitializeBlockDataValue()
         {
             setToyVelocityPort.portData.Value = null;
             signalPort.portData.Value = false;
+        }
+        
+        public override BlockData SaveBlockData()
+        {
+            var data = new VelocitySetterBlockData(this);
+            data.SetgameObjectIDAndPosition(this);
+            return data;
+        }
+        
+        public override void LoadBlockData(BlockData blockData)
+        {
+            base.LoadBlockData(blockData);
+            currentVelocity = ((VelocitySetterBlockData) blockData).currentVelocity;
         }
     }
 }

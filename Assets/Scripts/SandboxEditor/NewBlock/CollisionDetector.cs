@@ -1,6 +1,9 @@
-﻿using SandboxEditor.Data.Block;
+﻿using System;
+using System.Linq;
+using GameEditor.EventEditor.Controller;
+using SandboxEditor.Data.Block;
 using SandboxEditor.InputControl.InEditor.Sensor;
-using Unity.VisualScripting;
+using UnityEngine;
 
 namespace SandboxEditor.NewBlock
 {
@@ -10,36 +13,28 @@ namespace SandboxEditor.NewBlock
         public NewBlockPort collisionDetected;
         public NewBlockPort anotherToy;
 
-
-        public override void OnEveryFixedUpdate()
+        public override void OnEveryFixedUpdateWhenPlaying()
         {
+            if (CollisionInEveryFrame.HitToyAndOther.ContainsKey(toyToSense.gameObject))
+            {
+                Debug.Log($"Collision Detected {toyToSense.gameObject}");
+                collisionDetected.Value = true;
+                anotherToy.Value = CollisionInEveryFrame.HitToyAndOther[toyToSense.gameObject];
+                Debug.Log($"another toy is {anotherToy.Value}");
+            }
+            else
+            {
+                collisionDetected.Value = false;
+                anotherToy.Value = null;
+            }
+                
         }
-
+        
         public override BlockData SaveBlockData()
         {
             var data = new CollisionDetectorData();
             data.SetgameObjectIDAndPosition(this);
             return data;
-        }
-
-
-        public override void WhenGameStart()
-        {
-        }
-
-        protected override void OnDestroy()
-        {
-            base.OnDestroy();
-            InitializePortValue();
-            
-        }
-        
-
-        private void InitializePortValue()
-        {
-            anotherToy.portData.Value = null;
-            toyToSense.portData.Value = null;
-            collisionDetected.portData.Value = false;
         }
     }
 }

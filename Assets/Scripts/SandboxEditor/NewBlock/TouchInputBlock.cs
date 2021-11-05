@@ -9,7 +9,7 @@ namespace SandboxEditor.NewBlock
         public NewBlockPort xAxis;
         public NewBlockPort yAxis;
 
-        public override void OnEveryFixedUpdate()
+        public override void OnEveryFixedUpdateWhenPlaying()
         {
         }
 
@@ -18,10 +18,6 @@ namespace SandboxEditor.NewBlock
             var data = new TouchInputBlockData();
             data.SetgameObjectIDAndPosition(this);
             return data;
-        }
-
-        public override void WhenGameStart()
-        {
         }
 
         public override void MessageCallBack(string message)

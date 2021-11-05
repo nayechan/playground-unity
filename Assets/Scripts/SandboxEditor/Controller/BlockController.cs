@@ -10,8 +10,7 @@ namespace GameEditor.EventEditor.Controller
         public static void BlockAction()
         {
             foreach(var block in BlockStorage.Blocks)
-                block.OnEveryFixedUpdate();
-            Debug.Log("block FixedFrame Passed");
+                block.OnEveryFixedUpdateWhenPlaying();
         }
 
         public static void BlockActionWhenGameStart()

@@ -54,6 +54,7 @@ namespace SandboxEditor.Data.Toy
             var cir2d = (CircleCollider2D)comp;
             colRadius = cir2d.radius;
             offset = cir2d.offset;
+            enabled = cir2d.enabled;
             pm2dd = new PhysicsMaterial2DData(cir2d.sharedMaterial);
             return this;
         }

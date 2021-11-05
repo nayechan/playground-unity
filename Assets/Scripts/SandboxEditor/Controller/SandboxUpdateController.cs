@@ -8,6 +8,7 @@ namespace GameEditor.EventEditor.Controller
     {
         private static SandboxUpdateController _sandboxUpdateController;
         private bool isGameStarted = false;
+        public static bool IsGameStarted => _sandboxUpdateController.isGameStarted;
 
         private void Awake()
         {
@@ -17,8 +18,10 @@ namespace GameEditor.EventEditor.Controller
         private void FixedUpdate()
         {
             if (!isGameStarted) return;
+            CollisionInEveryFrame.RecordeToyCollision();
             ConnectionController.SendSignal();
             BlockController.BlockAction();
+            CollisionInEveryFrame.RenewCollisions2D();
         }
 
         public static void SetSignalTransferAndBlockActionOn()
