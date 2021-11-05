@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using MainPage;
 using MainPage.Card;
-using GameEditor.Data;
 using System.IO;
 
 namespace MainPage.Panel

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using GameEditor;
+using SandboxEditor.Data.Sandbox;
 using MainPage.Panel;
 
 public class SandboxInitializer : MonoBehaviour

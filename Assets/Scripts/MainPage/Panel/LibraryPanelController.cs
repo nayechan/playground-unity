@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using GameEditor;
-using GameEditor.Data;
+using SandboxEditor.Data.Sandbox;
 using System.IO;
 using MainPage;
 using MainPage.Card;

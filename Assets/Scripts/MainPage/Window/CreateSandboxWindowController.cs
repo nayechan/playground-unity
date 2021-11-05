@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using GameEditor.Data;
+using SandboxEditor.Data.Sandbox;
 using GameEditor;
 using MainPage;
 using MainPage.Panel;
