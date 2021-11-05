@@ -11,14 +11,14 @@ namespace SandboxEditor.Data.Block
         public int blockInstanceID;
         public Vector3 position;
 
-        public void SetIDAndPosition(AbstractBlock block)
+        public void SetgameObjectIDAndPosition(AbstractBlock block)
         {
-            blockInstanceID = block.GetInstanceID();
+            blockInstanceID = block.gameObject.GetInstanceID();
             position = block.transform.position;
         }
         public void ApplyDataToBlock(AbstractBlock block)
         {
-            block.SetBlock(this);
+            block.LoadBlockData(this);
         }
     }
 

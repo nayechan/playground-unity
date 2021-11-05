@@ -8,18 +8,25 @@ namespace SandboxEditor.Data.Block
         private static readonly HashSet<(PortType, PortType)> correctPortTypePairs =
             new HashSet<(PortType, PortType)>
             {
-                (PortType.Bool, PortType.Bool),
-                (PortType.Scalar, PortType.Scalar),
-                (PortType.ToyReceiver, PortType.Toy)
+                (PortType.BoolSender, PortType.BoolReceiver),
+                (PortType.ScalarSender, PortType.ScalarReceiver),
+                (PortType.ToyReceiver, PortType.ToySender)
             };
         
         private static readonly HashSet<(PortType, PortType)> SignalForwardToDestPairs =
             new HashSet<(PortType, PortType)>
             {
-                (PortType.ToyReceiver, PortType.Toy)
+                (PortType.ToyReceiver, PortType.ToySender)
             };
-        
-        
+
+        private static readonly HashSet<PortType> ConnectionStartTypes =
+            new HashSet<PortType>()
+            {
+                PortType.BoolSender,
+                PortType.ScalarSender,
+                PortType.ToyReceiver
+            };
+
         public static bool CorrectPortPair(PortType sourceType, PortType destType)
         {
             return correctPortTypePairs.Contains((sourceType, destType));
@@ -28,6 +35,11 @@ namespace SandboxEditor.Data.Block
         public static bool SignalForwardToDestPort(PortType sourceType, PortType destType)
         {
             return SignalForwardToDestPairs.Contains((sourceType, destType));
+        }
+
+        public static bool ConnectionStartType(PortType portType)
+        {
+            return ConnectionStartTypes.Contains(portType);
         }
     }
 }

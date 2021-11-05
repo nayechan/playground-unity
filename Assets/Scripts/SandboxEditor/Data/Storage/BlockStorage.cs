@@ -19,25 +19,25 @@ namespace SandboxEditor.Data.Storage
             _blocks = new List<AbstractBlock>();
         }
 
-        public static void AddBlock(AbstractBlock block)
-        {
-            _BlockStorage._AddBlock(block);
-        }
-
-        private void _AddBlock(AbstractBlock block)
-        {
-            _blocks.Add(block);
-        }
 
         public static BlocksData GetLatestBlocksData (GameObject rootOfBlock)
         {
             var blocksData = new BlocksData();
             foreach (var block in rootOfBlock.GetComponentsInChildren<AbstractBlock>())
-            {
-                blocksData.Add(block.MakeBlockData()); 
-            }
+                blocksData.Add(block.SaveBlockData()); 
             return blocksData;
         }
+        
+        public static void AddBlock(AbstractBlock block)
+        {
+            Blocks.Add(block);
+        }
+
+        public static void RemoveBlock(AbstractBlock block)
+        {
+            Blocks.Remove(block);
+        }
+        
 
         public static void RenewBlockList()
         {

@@ -9,37 +9,12 @@ namespace SandboxEditor.NewBlock
         public Camera camera;
         public GameObject guideArea;
 
-        protected override void BlockAction()
-        {
-            // This block doesn't use Port;
-        }
+        public override void OnEveryFixedUpdate() { }
 
-        public override BlockData MakeBlockData()
+        public override void WhenGameStart()
         {
-            var data = new DisplayBlockData(this);
-            data.SetIDAndPosition(this);
-            return data;
-        }
-        
-        public override void SetBlock(BlockData blockData)
-        {
-            base.SetBlock(blockData);
-            camera.orthographicSize = ((DisplayBlockData) blockData).camSize;
-        }
-        
-        protected override void OnGameStart()
-        {
+            base.WhenGameStart();
             ChangeMainDisplay();
-            DisableRenderer();
-        }
-
-
-        private void DisableRenderer()
-        {
-            foreach (var spriteRenderer in GetComponentsInChildren<SpriteRenderer>())
-                spriteRenderer.enabled = false;
-            foreach (var meshRenderer in GetComponentsInChildren<MeshRenderer>())
-                meshRenderer.enabled = false;
         }
 
         private void ChangeMainDisplay()
@@ -61,8 +36,17 @@ namespace SandboxEditor.NewBlock
             guideArea.transform.localScale = new Vector3(2f*(camera.aspect*height),2f*height,1f);
         }
         
-        protected override void InitializeBlockValue()
+        public override BlockData SaveBlockData()
         {
+            var data = new DisplayBlockData(this);
+            data.SetgameObjectIDAndPosition(this);
+            return data;
+        }
+        
+        public override void LoadBlockData(BlockData blockData)
+        {
+            base.LoadBlockData(blockData);
+            camera.orthographicSize = ((DisplayBlockData) blockData).camSize;
         }
     }
 }

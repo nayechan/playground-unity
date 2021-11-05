@@ -14,6 +14,7 @@ namespace SandboxEditor.Data.Toy
         public ToyMiscData toyMiscData;
         public ToyRecipe toyRecipe;
         public List<ToyData> childToysData;
+        public int gameObjectInstanceID;
 
         public ToyData()
         {

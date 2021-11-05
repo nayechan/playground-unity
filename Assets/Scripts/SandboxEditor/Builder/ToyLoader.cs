@@ -1,16 +1,19 @@
 ﻿using System.Linq;
+using SandboxEditor.Data;
 using SandboxEditor.Data.Storage;
 using SandboxEditor.Data.Toy;
 using SandboxEditor.InputControl.InEditor.Sensor;
 using SandboxEditor.NewBlock;
-using Tools;
+using Unity.VisualScripting;
 using UnityEngine;
+using static Tools.Misc;
 
 namespace SandboxEditor.Builder
 {
     public class ToyLoader
     {
         private GameObject _newToy;
+        private GameObject _toySensor;
         private readonly ToyData _toyData;
         private Texture texture;
 
@@ -116,16 +119,16 @@ namespace SandboxEditor.Builder
         private void AttachObjectSensor()
         {
             if (_newToy.GetComponent<SpriteRenderer>() == null) return;
-            var toySensor = AttachObjectSensorGameObject();
-            AttachObjectSensorCollider(toySensor);
+            AttachObjectSensorGameObject();
+            AttachObjectSensorCollider();
+            AttachToyPort();
         }
         
-        private GameObject AttachObjectSensorGameObject()
+        private void AttachObjectSensorGameObject()
         {
-            var toySensor = new GameObject("TouchSensor", typeof(ToyBodySensor));
-            Misc.SetChildAndParent(toySensor, _newToy);
-            AlignSensorPositionToToy(toySensor);
-            return toySensor;
+            _toySensor = new GameObject("TouchSensor", typeof(ToyBodySensor), typeof(NewBlockPort));
+            SetChildAndParent(_toySensor, _newToy);
+            AlignSensorPositionToToy(_toySensor);
         }
 
         private static void AlignSensorPositionToToy(GameObject toySensor)
@@ -133,15 +136,25 @@ namespace SandboxEditor.Builder
             toySensor.transform.localPosition = Vector3.zero;
         }
 
-        private static BoxCollider AttachObjectSensorCollider(GameObject toySensor)
+        private BoxCollider AttachObjectSensorCollider()
         {
-            var sensorCollider = toySensor.AddComponent<BoxCollider>();
+            var sensorCollider = _toySensor.AddComponent<BoxCollider>();
             sensorCollider.transform.localScale = Vector3.one;
             sensorCollider.size = Vector3.Scale(sensorCollider.size, new Vector3(1f, 1f, 0.1f));
             sensorCollider.isTrigger = true;
             return sensorCollider;
         }
 
+        private void AttachToyPort()
+        {
+            var port = _toySensor.GetComponent<NewBlockPort>();
+            InitializeToyPort(port);
+        }
+
+        private static void InitializeToyPort(NewBlockPort port)
+        {
+            port.portData = new PortData(0, PortType.ToySender, port);
+        }
 
         private void BuildToyChildren()
         {

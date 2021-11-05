@@ -31,13 +31,9 @@ namespace GameEditor.EventEditor.Line
 
         private void ReLocation()
         {
-            lineRenderer.SetPosition(0, blockConnection.source.BlockPort.transform.position);
-            lineRenderer.SetPosition(1, blockConnection.destination.BlockPort.transform.position);
+            lineRenderer.SetPosition(0, blockConnection.source.blockPort.transform.position);
+            lineRenderer.SetPosition(1, blockConnection.destination.blockPort.transform.position);
         }
 
-        private static bool isPortOnHide(PortData port)
-        {
-            return !port.abstractBlock.gameObject.activeSelf;
-        }
     }
 }

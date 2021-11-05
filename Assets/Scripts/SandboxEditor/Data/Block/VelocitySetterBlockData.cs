@@ -12,7 +12,7 @@ namespace SandboxEditor.Data.Block
 
         public VelocitySetterBlockData(VelocitySetterBlock block)
         {
-            SetIDAndPosition(block);
+            SetgameObjectIDAndPosition(block);
             currentVelocity = block.currentVelocity;
             setToyVelocityPortID = block.setToyVelocityPort.GetInstanceID();
             signalPortID = block.signalPort.GetInstanceID();

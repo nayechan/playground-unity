@@ -96,7 +96,7 @@ namespace SandboxEditor.Builder
             }
 
             var block = blockGameObject.GetComponent<AbstractBlock>();
-            block.SetBlock(blockData);
+            block.LoadBlockData(blockData);
             BlockStorage.AddBlock(block);
             return blockGameObject;
         }

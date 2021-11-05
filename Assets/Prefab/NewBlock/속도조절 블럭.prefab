@@ -178,16 +178,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3041067610086323879, guid: 5fe92807b95b2c14f855c178db73a108, type: 3}
       propertyPath: portData.portType
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 3041067610086323879, guid: 5fe92807b95b2c14f855c178db73a108, type: 3}
+      propertyPath: portData.blockPort
+      value: 
+      objectReference: {fileID: 3669155276256003832}
     - target: {fileID: 3041067610086323879, guid: 5fe92807b95b2c14f855c178db73a108, type: 3}
       propertyPath: portData.abstractBlock
       value: 
       objectReference: {fileID: 1982274709823741671}
     - target: {fileID: 4345911927704057462, guid: 5fe92807b95b2c14f855c178db73a108, type: 3}
       propertyPath: portData.portType
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4345911927704057462, guid: 5fe92807b95b2c14f855c178db73a108, type: 3}
+      propertyPath: portData.blockPort
+      value: 
+      objectReference: {fileID: 2634808602383582761}
     - target: {fileID: 4345911927704057462, guid: 5fe92807b95b2c14f855c178db73a108, type: 3}
       propertyPath: portData.abstractBlock
       value: 

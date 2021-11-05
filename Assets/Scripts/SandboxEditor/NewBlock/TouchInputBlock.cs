@@ -8,18 +8,19 @@ namespace SandboxEditor.NewBlock
     {
         public NewBlockPort xAxis;
         public NewBlockPort yAxis;
-        protected override void BlockAction()
+
+        public override void OnEveryFixedUpdate()
         {
         }
 
-        public override BlockData MakeBlockData()
+        public override BlockData SaveBlockData()
         {
             var data = new TouchInputBlockData();
-            data.SetIDAndPosition(this);
+            data.SetgameObjectIDAndPosition(this);
             return data;
         }
 
-        protected override void OnGameStart()
+        public override void WhenGameStart()
         {
         }
 
@@ -27,7 +28,7 @@ namespace SandboxEditor.NewBlock
         {
         }
         
-        protected override void InitializeBlockValue()
+        protected void InitializeBlockDataValue()
         {
             xAxis.portData.Value = 0f;
             yAxis.portData.Value = 0f;

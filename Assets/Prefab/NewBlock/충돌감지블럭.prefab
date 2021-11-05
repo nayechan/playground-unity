@@ -225,7 +225,8 @@ MonoBehaviour:
   portData:
     portIndex: 2
     abstractBlock: {fileID: 2054918811391089690}
-    portType: 2
+    portType: 4
+    blockPort: {fileID: 6132316836795345118}
 --- !u!1 &6312591616032077221
 GameObject:
   m_ObjectHideFlags: 0
@@ -297,8 +298,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3041067610086323879, guid: 5fe92807b95b2c14f855c178db73a108, type: 3}
       propertyPath: portData.portType
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3041067610086323879, guid: 5fe92807b95b2c14f855c178db73a108, type: 3}
+      propertyPath: portData.blockPort
+      value: 
+      objectReference: {fileID: 3669155276256003832}
     - target: {fileID: 3041067610086323879, guid: 5fe92807b95b2c14f855c178db73a108, type: 3}
       propertyPath: portData.portIndex
       value: 1
@@ -329,8 +334,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4345911927704057462, guid: 5fe92807b95b2c14f855c178db73a108, type: 3}
       propertyPath: portData.portType
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 4345911927704057462, guid: 5fe92807b95b2c14f855c178db73a108, type: 3}
+      propertyPath: portData.blockPort
+      value: 
+      objectReference: {fileID: 2634808602383582761}
     - target: {fileID: 4345911927704057462, guid: 5fe92807b95b2c14f855c178db73a108, type: 3}
       propertyPath: portData.abstractBlock
       value: 

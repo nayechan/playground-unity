@@ -86,7 +86,6 @@ namespace SandboxEditor.Data.Sandbox
             var jsonBlockDataPath = SandboxChecker.MakeFullPath(_sandboxData, JsonNameOfBlockData);
             var blockData = BlockStorage.GetLatestBlocksData(_rootOfBlock);
             var jsonBlockData = JsonUtility.ToJson(blockData, true);
-            Debug.Log($"jsonBlockData : {jsonBlockData}");
             System.IO.File.WriteAllText(jsonBlockDataPath, jsonBlockData);
         }
 

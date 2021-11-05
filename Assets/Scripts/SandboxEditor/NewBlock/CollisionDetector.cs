@@ -1,5 +1,6 @@
 ﻿using SandboxEditor.Data.Block;
 using SandboxEditor.InputControl.InEditor.Sensor;
+using Unity.VisualScripting;
 
 namespace SandboxEditor.NewBlock
 {
@@ -8,32 +9,36 @@ namespace SandboxEditor.NewBlock
         public NewBlockPort toyToSense;
         public NewBlockPort collisionDetected;
         public NewBlockPort anotherToy;
-        
 
-        protected override void BlockAction()
+
+        public override void OnEveryFixedUpdate()
         {
         }
 
-        public override BlockData MakeBlockData()
+        public override BlockData SaveBlockData()
         {
             var data = new CollisionDetectorData();
-            data.SetIDAndPosition(this);
+            data.SetgameObjectIDAndPosition(this);
             return data;
         }
-        
-        
-        protected override void OnGameStart()
+
+
+        public override void WhenGameStart()
         {
         }
 
-        public override void MessageCallBack(string message)
+        protected override void OnDestroy()
         {
+            base.OnDestroy();
+            InitializePortValue();
+            
         }
+        
 
-        protected override void InitializeBlockValue()
+        private void InitializePortValue()
         {
-            toyToSense.portData.Value = null;
             anotherToy.portData.Value = null;
+            toyToSense.portData.Value = null;
             collisionDetected.portData.Value = false;
         }
     }

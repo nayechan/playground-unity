@@ -30,6 +30,7 @@ namespace SandboxEditor.Data.Toy
         {
             UpdateSupportedToyComponentsData();
             UpdateChildToyList();
+            UpdateGameObjectInstanceID();
         }
 
         private void UpdateSupportedToyComponentsData()
@@ -56,6 +57,11 @@ namespace SandboxEditor.Data.Toy
         private static ToyComponentData GetUpdatedToyComponentData(Component component)
         {
             return ToyComponentData.GetToyComponentDataFromComponent(component);
+        }
+
+        private void UpdateGameObjectInstanceID()
+        {
+            _toyData.gameObjectInstanceID = gameObject.GetInstanceID();
         }
 
         public void SetToyData(ToyData toyData)

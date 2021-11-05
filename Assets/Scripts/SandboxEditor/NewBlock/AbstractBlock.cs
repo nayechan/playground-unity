@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SandboxEditor.Data.Block;
+using SandboxEditor.Data.Storage;
 using SandboxEditor.InputControl.InEditor.Sensor;
 using UnityEngine;
 
@@ -8,41 +9,42 @@ namespace SandboxEditor.NewBlock
 {
     public abstract class AbstractBlock : MonoBehaviour
     {
-        public List<NewBlockPort> ports;
+        public int gameObjectInstanceID;
 
         private void Awake()
         {
-            InitializePortData();
+            gameObjectInstanceID = gameObject.GetInstanceID();
         }
 
-        private void InitializePortData()
+        // 게임 시작시 매 프레임마다 실행되는 코드.
+        public virtual void OnEveryFixedUpdate() {}
+
+        public virtual void WhenGameStart()
         {
-            foreach (var port in GetComponentsInChildren<NewBlockPort>())
-                port.portData.abstractBlock = this;
+            DisableBlockRenderer();
         }
 
+        private void DisableBlockRenderer()
+        {
+            foreach (var spriteRenderer in GetComponentsInChildren<SpriteRenderer>())
+                spriteRenderer.enabled = false;
+            foreach (var meshRenderer in GetComponentsInChildren<MeshRenderer>())
+                meshRenderer.enabled = false;
+        }
+        
+        public virtual void MessageCallBack(string message) { }
 
-        protected abstract void BlockAction();
+        protected virtual void OnDestroy()
+        {
+            BlockStorage.RemoveBlock(this);
+        }
 
-        public abstract BlockData MakeBlockData();
+        public abstract BlockData SaveBlockData();
 
-        public virtual void SetBlock(BlockData blockData)
+        public virtual void LoadBlockData(BlockData blockData)
         {
             transform.position = blockData.position;
         }
-
-        protected abstract void OnGameStart();
-        
-        public abstract void MessageCallBack(string message);
-        
-        private void FixedUpdate()
-        {
-            BlockAction();
-            InitializeBlockValue();
-        }
-        
-        protected abstract void InitializeBlockValue();
-
     }
 
 }

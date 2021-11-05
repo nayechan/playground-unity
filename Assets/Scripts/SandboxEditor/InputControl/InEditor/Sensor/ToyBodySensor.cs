@@ -28,16 +28,16 @@ namespace SandboxEditor.InputControl.InEditor.Sensor
 
         public override void OnTouchBegan(Touch touch, out bool isRayBlock)
         {
-            isRayBlock = true;
             var tc = TouchController.GetTID();
             switch (TouchController.Mode)
             {
                 case TouchMode.DeleteObject:
                     DeleteSensorParent();
+                    isRayBlock = true;
                     break;
                 case TouchMode.MoveObject:
-                    Debug.Log($"{Time.realtimeSinceStartup} ObjectSensor move begin");
                     tc._AlarmMe(touch.fingerId, this);
+                    isRayBlock = true;
                     break;
                 default:
                     isRayBlock = false;

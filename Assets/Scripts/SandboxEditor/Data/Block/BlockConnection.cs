@@ -1,7 +1,5 @@
 ﻿using System;
-using SandboxEditor.NewBlock;
 using UnityEngine;
-using static SandboxEditor.Data.PortType;
 
 namespace SandboxEditor.Data.Block
 {

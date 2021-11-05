@@ -3819,7 +3819,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 039a07a659a944e4498bd0abbaad18bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  touchMode: 3
+  touchMode: 4
 --- !u!1 &181917377
 GameObject:
   m_ObjectHideFlags: 0
@@ -8500,12 +8500,16 @@ MonoBehaviour:
   blockConnection:
     source:
       portIndex: 0
-      abstractBlock: {fileID: 0}
       portType: 0
+      blockPort: {fileID: 0}
+      gameObjectInstanceID: 0
+      abstractBlock: {fileID: 0}
     destination:
       portIndex: 0
-      abstractBlock: {fileID: 0}
       portType: 0
+      blockPort: {fileID: 0}
+      gameObjectInstanceID: 0
+      abstractBlock: {fileID: 0}
     spriteLine: {fileID: 0}
   lineRenderer: {fileID: 0}
 --- !u!1 &491937291
@@ -17138,7 +17142,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1118927122
 RectTransform:
   m_ObjectHideFlags: 0
@@ -23987,7 +23991,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1548159910
 RectTransform:
   m_ObjectHideFlags: 0

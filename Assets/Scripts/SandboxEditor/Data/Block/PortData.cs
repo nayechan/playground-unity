@@ -2,6 +2,7 @@
 using System.Linq;
 using SandboxEditor.InputControl.InEditor.Sensor;
 using SandboxEditor.NewBlock;
+using UnityEngine;
 
 namespace SandboxEditor.Data
 {
@@ -9,9 +10,11 @@ namespace SandboxEditor.Data
     public class PortData
     {
         public int portIndex;
-        public AbstractBlock abstractBlock;
         public PortType portType;
-        public NewBlockPort BlockPort => abstractBlock.ports[portIndex];
+        public NewBlockPort blockPort;
+
+        public int gameObjectInstanceID;
+        public AbstractBlock abstractBlock;
         private object value;
         public object Value
         {
@@ -23,25 +26,27 @@ namespace SandboxEditor.Data
             }
         }
 
-        public PortData(AbstractBlock abstractBlock, int portIndex, PortType portType)
+        public PortData(int portIndex, PortType portType, NewBlockPort blockPort)
         {
-            this.abstractBlock = abstractBlock;
             this.portIndex = portIndex;
             this.portType = portType;
+            this.blockPort = blockPort;
         }
 
-        public NewBlockPort GetPort()
+        public void UpdateInstanceIDDataIfPortIsOnBlock()
         {
-            return abstractBlock.ports[portIndex];
+            if(abstractBlock != null)
+                gameObjectInstanceID = abstractBlock.gameObject.GetInstanceID();
         }
-        
     }
 
     public enum PortType
     {
-        Scalar,
-        Bool,
-        Toy,
+        ScalarReceiver,
+        ScalarSender,
+        BoolReceiver,
+        BoolSender,
+        ToySender,
         ToyReceiver
     }
 }
