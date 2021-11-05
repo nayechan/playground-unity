@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using GameEditor.EventEditor.Controller;
+using UnityEngine;
 
 namespace Tools
 {
@@ -26,9 +27,8 @@ namespace Tools
             
         }
         
-        public static void EnableChildrenBlock(GameObject blockRoot)
+        public static void EnableBlock(GameObject blockRoot)
         {
-            
         }
 
         public static void PlaceToyAtViewPoint(GameObject toy)

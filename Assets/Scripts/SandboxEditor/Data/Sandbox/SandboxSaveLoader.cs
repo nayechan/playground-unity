@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using GameEditor.EventEditor.Controller;
 using Newtonsoft.Json.Linq;
 using SandboxEditor.Builder;
 using SandboxEditor.Data.Block;
@@ -14,9 +15,9 @@ namespace SandboxEditor.Data.Sandbox
     
     public class SandboxSaveLoader
     {
-        private SandboxData _sandboxData;
-        private GameObject _rootOfToy;
-        private GameObject _rootOfBlock;
+        private readonly SandboxData _sandboxData;
+        private readonly GameObject _rootOfToy;
+        private readonly GameObject _rootOfBlock;
 
         public static void SaveSandbox(SandboxData sandboxData, GameObject rootOfToy, GameObject rootOfBlock)
         {
@@ -39,6 +40,7 @@ namespace SandboxEditor.Data.Sandbox
             SaveToyStorageData();
             UpdateAndSaveToyRootData();
             SaveLatestBlockData();
+            SaveConnectionData();
         }
 
         private void SaveSandboxData() 
@@ -88,6 +90,14 @@ namespace SandboxEditor.Data.Sandbox
             var jsonBlockData = JsonUtility.ToJson(blockData, true);
             System.IO.File.WriteAllText(jsonBlockDataPath, jsonBlockData);
         }
+        
+        private void SaveConnectionData()
+        {
+            var jsonConnectionDataPath = SandboxChecker.MakeFullPath(_sandboxData, JsonNameOfConnectionData);
+            var connectionData = ConnectionController.GetBlockConnections();
+            var jsonConnectionData = JsonUtility.ToJson(connectionData, true);
+            System.IO.File.WriteAllText(jsonConnectionDataPath, jsonConnectionData);
+        }
 
 
         public static void LoadImageStorageData(SandboxData sandboxData)
@@ -108,27 +118,26 @@ namespace SandboxEditor.Data.Sandbox
                 ToyStorage.AddToyData(toyData);
         }
 
-        public static GameObject LoadToy(SandboxData sandboxData)
+        public static GameObject LoadToy(SandboxData sandboxData, ref Dictionary<int, GameObject> _toyIDToyObjectPair)
         {
             var sandboxSaveLoader = new SandboxSaveLoader(sandboxData, null, null);
-            return sandboxSaveLoader.LoadToy();
+            return sandboxSaveLoader.LoadToy(ref _toyIDToyObjectPair);
         }
         
-        private GameObject LoadToy()
+        private GameObject LoadToy(ref Dictionary<int, GameObject>_toyIDToyObjectPair)
         {
             var jsonToyDataPath = Path.Combine(SandboxChecker.GetSandboxPath(_sandboxData), JsonNameOfToyData);
             var jsonToyData = System.IO.File.ReadAllText(jsonToyDataPath);
-            var newToy = ToyLoader.BuildToys(jsonToyData);
-            return newToy;
+            return  ToyLoader.BuildToys(jsonToyData, ref _toyIDToyObjectPair);
         }
 
         public static (GameObject, Dictionary<int, GameObject>) LoadBlock(SandboxData sandboxData)
         {
             var sandboxSaveLoader = new SandboxSaveLoader(sandboxData, null, null);
-            return sandboxSaveLoader._LoadBlock();
+            return sandboxSaveLoader.LoadBlock();
         }
         
-        private (GameObject, Dictionary<int, GameObject>) _LoadBlock()
+        private (GameObject, Dictionary<int, GameObject>) LoadBlock()
         {
             var jsonBlockDataPath = Path.Combine(SandboxChecker.GetSandboxPath(_sandboxData), JsonNameOfBlockData);
             var jsonBlockData = System.IO.File.ReadAllText(jsonBlockDataPath);

@@ -18,7 +18,9 @@ namespace GameEditor.EventEditor.Controller
         {
             HideEditorInterface();
             DisableEditorFunction();
-            Resume();
+            EnableChildrenRigidBody(Sandbox.RootOfToy); 
+            BlockController.BlockActionWhenGameStart();
+            SandboxUpdateController.SetSignalTransferAndBlockActionOn();
         }
 
 
@@ -42,10 +44,8 @@ namespace GameEditor.EventEditor.Controller
         }
 
         // Toy, Block 을 동작시킨다. 
-        public static void Resume()
+        private static void Resume()
         {
-            EnableChildrenRigidBody(Sandbox.RootOfToy); 
-            EnableChildrenBlock(Sandbox.RootOfBlock);
         }
 
         // Run 페이즈에서 다시 Run 을 누르기 이전 상태로 되돌린다.

@@ -20,6 +20,9 @@ namespace SandboxEditor.Data.Sandbox
         public static GameObject RootOfLine => _Sandbox.rootOfLine;
 
         public static ToyData selectedToyData;
+        
+        private Dictionary<int, GameObject> _blockIDBlockObjectPairs;
+        private Dictionary<int, GameObject> _ToyIDToyObjectPairs;
 
         private void Awake()
         {
@@ -57,8 +60,9 @@ namespace SandboxEditor.Data.Sandbox
         {
             LoadImageStorageData();
             LoadToyStorageData();
-            ReloadToy();
-            ReloadBlockAndConnection();
+            ReloadToyAndUpdateToyIDPair();
+            ReloadBlockAndUpdateBlockIDPair();
+            // ReLoadConnection(); 
         }
 
         private void LoadImageStorageData()
@@ -70,27 +74,27 @@ namespace SandboxEditor.Data.Sandbox
         {
             SandboxSaveLoader.LoadToyStorageData(sandboxData);
         }
-        public void ReloadToy()
+        public void ReloadToyAndUpdateToyIDPair()
         {
             Destroy(rootOfToy);
-            rootOfToy = SandboxSaveLoader.LoadToy(sandboxData);
+            _Sandbox._ToyIDToyObjectPairs = new Dictionary<int, GameObject>();
+            rootOfToy = SandboxSaveLoader.LoadToy(sandboxData, ref _Sandbox._ToyIDToyObjectPairs);
             Tools.Misc.SetChildAndParent(rootOfToy, rootOfRoots);
         }
 
-        private void ReloadBlockAndConnection()
+        private void ReloadBlockAndUpdateBlockIDPair()
         {
             BlockStorage.RenewBlockList();
             Destroy(rootOfBlock);
-            Dictionary<int, GameObject> blockIdGameObjectPair;
-            (rootOfBlock, blockIdGameObjectPair) = SandboxSaveLoader.LoadBlock(sandboxData);
+            (rootOfBlock, _blockIDBlockObjectPairs) = SandboxSaveLoader.LoadBlock(sandboxData);
             Tools.Misc.SetChildAndParent(rootOfBlock, rootOfRoots);
-            // 커넥션 연결부분 추가. 인스턴스 아이디 + 포트 데이터로 해당하는 커넥션 다시 찾을 수 있음.
         }
 
         private static GameObject BuildToyOnToyRoot(ToyData toyData)
         {
             if (toyData is null) return null;
-            var newToy = ToyLoader.BuildToys(toyData);
+            _Sandbox._ToyIDToyObjectPairs = new Dictionary<int, GameObject>();
+            var newToy = ToyLoader.BuildToys(toyData, ref _Sandbox._ToyIDToyObjectPairs);
             newToy.transform.parent = RootOfToy.transform;
             return newToy;
         }
@@ -98,6 +102,11 @@ namespace SandboxEditor.Data.Sandbox
         public static GameObject BuildSelectedToyOnToyRoot()
         {
             return selectedToyData is null ? null : BuildToyOnToyRoot(selectedToyData);
+        }
+
+        public void ReLoadConnection()
+        {
+            
         }
 
         public string GetSandboxPath()

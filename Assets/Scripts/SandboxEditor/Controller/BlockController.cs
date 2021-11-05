@@ -7,13 +7,14 @@ namespace GameEditor.EventEditor.Controller
     {
         public static BlockController _blockController;
         
-        public static void OnEveryFixedUpdate()
+        public static void BlockAction()
         {
             foreach(var block in BlockStorage.Blocks)
                 block.OnEveryFixedUpdate();
+            Debug.Log("block FixedFrame Passed");
         }
 
-        public static void WhenGameStart()
+        public static void BlockActionWhenGameStart()
         {
             foreach(var block in BlockStorage.Blocks)
                 block.WhenGameStart();

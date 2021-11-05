@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace SandboxEditor.Data.Block
@@ -25,6 +27,17 @@ namespace SandboxEditor.Data.Block
                 source.Value = destination.Value;
         }
         
+    }
+
+    [Serializable]
+    public class BlocksConnection
+    {
+        public List<BlockConnection> blockConnections;
+
+        public BlocksConnection(List<BlockConnection> blockConnections)
+        {
+            this.blockConnections = blockConnections;
+        }
     }
     
 }

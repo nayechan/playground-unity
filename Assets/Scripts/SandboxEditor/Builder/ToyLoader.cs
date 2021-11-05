@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using SandboxEditor.Data;
 using SandboxEditor.Data.Storage;
 using SandboxEditor.Data.Toy;
@@ -16,29 +17,33 @@ namespace SandboxEditor.Builder
         private GameObject _toySensor;
         private readonly ToyData _toyData;
         private Texture texture;
+        private Dictionary<int, GameObject> _toyIDToyObjectPair;
 
-        public static GameObject BuildToys(string toyJsonData)
+        public static GameObject BuildToys(string toyJsonData, ref Dictionary<int, GameObject> toyIDToyObjectPair)
         {
-            return new ToyLoader(toyJsonData).BuildToys();
+            return new ToyLoader(toyJsonData, ref toyIDToyObjectPair).BuildToys();
         }
 
-        private ToyLoader(string toyJsonData)
+        private ToyLoader(string toyJsonData, ref Dictionary<int, GameObject> toyIDToyObjectPair)
         {
             _toyData = JsonUtility.FromJson<ToyData>(toyJsonData);
+            _toyIDToyObjectPair = toyIDToyObjectPair;
         }
         
-        public static GameObject BuildToys(ToyData toyData)
+        public static GameObject BuildToys(ToyData toyData, ref Dictionary<int, GameObject> toyIDToyObjectPair)
         {
-            return new ToyLoader(toyData).BuildToys();
+            return new ToyLoader(toyData, ref toyIDToyObjectPair).BuildToys();
         }
-        private ToyLoader(ToyData toyData)
+        private ToyLoader(ToyData toyData, ref Dictionary<int, GameObject> toyIDToyObjectPair)
         {
             _toyData = toyData;
+            _toyIDToyObjectPair = toyIDToyObjectPair;
         }
         
         private GameObject BuildToys()
         {
             BuildToy();
+            UpdateIDObjectPair();
             BuildToyChildren();
             return _newToy;
         }
@@ -151,6 +156,12 @@ namespace SandboxEditor.Builder
             InitializeToyPort(port);
         }
 
+
+        private void UpdateIDObjectPair()
+        {
+            _toyIDToyObjectPair.Add(_toyData.gameObjectInstanceID, _newToy);
+        }
+
         private static void InitializeToyPort(NewBlockPort port)
         {
             port.portData = new PortData(0, PortType.ToySender, port);
@@ -158,8 +169,10 @@ namespace SandboxEditor.Builder
 
         private void BuildToyChildren()
         {
-            foreach (var child in _toyData.childToysData.Select(BuildToys))
-                child.transform.parent = _newToy.transform;
+            foreach (var childGameObject in _toyData.childToysData.Select(child => BuildToys(child, ref _toyIDToyObjectPair)))
+            {
+                childGameObject.transform.parent = _newToy.transform;
+            }
         }
 
     }

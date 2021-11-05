@@ -18,17 +18,13 @@ namespace GameEditor.EventEditor.Controller
         {
             if (!isGameStarted) return;
             ConnectionController.SendSignal();
-            BlockController.OnEveryFixedUpdate();
+            BlockController.BlockAction();
         }
 
-        public static void WhenGameStart()
+        public static void SetSignalTransferAndBlockActionOn()
         {
             _sandboxUpdateController.isGameStarted = true;
         }
 
-        private static void CallBackToBlock()
-        {
-            BlockController.WhenGameStart();
-        }
     }
 }

@@ -19,8 +19,8 @@ namespace SandboxEditor.NewBlock
 
         private void ChangeMainDisplay()
         {
-            Camera.main.enabled = false;
-            camera.enabled = true;
+            Camera.main.gameObject.SetActive(false);
+            camera.gameObject.SetActive(true);
         }
 
         public override void MessageCallBack(string message)

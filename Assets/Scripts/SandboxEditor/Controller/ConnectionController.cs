@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using GameEditor.EventEditor.Line;
 using SandboxEditor.Data;
 using SandboxEditor.Data.Block;
@@ -43,6 +44,7 @@ namespace GameEditor.EventEditor.Controller
         {
             foreach (var connection in BlockConnections)
                 connection.SendSignal();
+            Debug.Log("Signal Sent");
         }
 
         public static void WhenPortClicked(NewBlockPort newPort)
@@ -95,7 +97,7 @@ namespace GameEditor.EventEditor.Controller
         }
 
 
-        private static void CreateConnection(NewBlockPort destinationPort)
+        public static void CreateConnection(NewBlockPort destinationPort)
         {
             var blockConnection = new BlockConnection(SelectedSourcePort.portData, destinationPort.portData);
             BlockConnections.Add(blockConnection);
@@ -138,9 +140,9 @@ namespace GameEditor.EventEditor.Controller
             BlockConnections.Remove(blockConnection);
         }
 
-        public static IEnumerable<BlockConnection> GetBlockConnections()
+        public static BlocksConnection GetBlockConnections()
         {
-            return BlockConnections;
+            return new BlocksConnection(BlockConnections.ToList());
         }
         // 연결정보 세이브 로드 구현.
     }
