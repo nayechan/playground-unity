@@ -1,5 +1,6 @@
 ﻿using SandboxEditor.Data.Block;
 using SandboxEditor.InputControl.InEditor.Sensor;
+using UnityEngine;
 
 namespace SandboxEditor.NewBlock
 {
@@ -10,6 +11,8 @@ namespace SandboxEditor.NewBlock
 
         public override void OnEveryFixedUpdateWhenPlaying()
         {
+            if (destroySignal.Value == null || (bool) destroySignal.Value == false) return;
+            Destroy((GameObject)toyToDestroy.Value);
         }
 
         public override BlockData SaveBlockData()
@@ -17,16 +20,6 @@ namespace SandboxEditor.NewBlock
             var data = new ToyDestroyerBlockData();
             data.SetGameObjectIDAndPosition(this);
             return data;
-        }
-
-        public override void MessageCallBack(string message)
-        {
-        }
-        
-        protected void InitializeBlockDataValue()
-        {
-            destroySignal.portData.Value = false;
-            toyToDestroy.portData.Value = null;
         }
     }
 }
