@@ -17,8 +17,10 @@ namespace Tools
 
         public static void CreateDirectoryIfDosentExist(string path)
         {
-            if(!Directory.Exists(path))
-                Directory.CreateDirectory(path);
+            var directoryPath = Path.GetDirectoryName(path);
+            Debug.Log(directoryPath);
+            if(!Directory.Exists(directoryPath))
+                Directory.CreateDirectory(directoryPath);
         }
 
         public static List<string> AbsolutePathsToFileNames(List<string> absolutePaths)

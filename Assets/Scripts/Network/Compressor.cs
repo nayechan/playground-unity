@@ -1,19 +1,17 @@
 using System.IO.Compression;
 using System.IO;
+using Tools;
 using File = Tools.File;
 
 namespace Network
 {
-    public class Compressor
+    public static class Compressor
     {
-        private static string zipName = "sandboxZip.zip";
-
-        public static string CreateZip(string dictionaryPath)
+        public static void CreateZip(string dictionaryPath, string destinationOfZipFile)
         {
-            var zipPath = Path.Combine(dictionaryPath, zipName);
-            File.DeleteFileIfExist(zipPath);
-            ZipFile.CreateFromDirectory(dictionaryPath, zipPath);
-            return zipPath;
+            File.CreateDirectoryIfDosentExist(destinationOfZipFile);
+            File.DeleteFileIfExist(destinationOfZipFile);
+            ZipFile.CreateFromDirectory(dictionaryPath, destinationOfZipFile);
         }
 
     }
