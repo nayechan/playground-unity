@@ -8,14 +8,14 @@ namespace SandboxEditor.NewBlock
 {
     public class TouchInputBlock : AbstractBlock
     {
-        public NewBlockPort touchXAxisOutput;
-        public NewBlockPort touchYAxisOutput;
+        public BlockPort touchXAxisOutput;
+        public BlockPort touchYAxisOutput;
 
         public override void OnEveryFixedUpdateWhenPlaying()
         {
             var inputViewPort = PlayerTouchController.TouchToViewport();
-            (touchXAxisOutput.Value, touchYAxisOutput.Value) = (inputViewPort.x, inputViewPort.y);
-            Debug.Log($"Value is {(float)touchXAxisOutput.Value}, {(float)touchYAxisOutput.Value}");
+            (touchXAxisOutput.value, touchYAxisOutput.value) = (inputViewPort.x, inputViewPort.y);
+            Debug.Log($"value is {(float)touchXAxisOutput.value}, {(float)touchYAxisOutput.value}");
         }
 
         public override BlockData SaveBlockData()

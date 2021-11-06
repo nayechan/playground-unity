@@ -9,7 +9,7 @@ namespace Network
     {
         public static void CreateZip(string dictionaryPath, string destinationOfZipFile)
         {
-            File.CreateDirectoryIfDosentExist(destinationOfZipFile);
+            File.CreateDirectoryIfDoesntExist(destinationOfZipFile);
             File.DeleteFileIfExist(destinationOfZipFile);
             ZipFile.CreateFromDirectory(dictionaryPath, destinationOfZipFile);
         }

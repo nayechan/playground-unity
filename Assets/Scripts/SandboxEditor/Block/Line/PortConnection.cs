@@ -6,9 +6,9 @@ using UnityEngine;
 
 namespace GameEditor.EventEditor.Line
 {
-    public sealed class ConnectionLine : MonoBehaviour
+    public sealed class PortConnection : MonoBehaviour
     {
-        public BlockConnection blockConnection;
+        public PortConnectionData portConnectionData;
         public LineRenderer lineRenderer;
         private bool isSet = false;
 
@@ -23,16 +23,16 @@ namespace GameEditor.EventEditor.Line
                 ReLocation();
         }
 
-        public void SetConnection(BlockConnection blockConnection)
+        public void SetConnection(PortConnectionData portConnectionData)
         {
-            this.blockConnection = blockConnection;
+            this.portConnectionData = portConnectionData;
             isSet = true;
         }
 
         private void ReLocation()
         {
-            lineRenderer.SetPosition(0, blockConnection.source.blockPort.transform.position);
-            lineRenderer.SetPosition(1, blockConnection.destination.blockPort.transform.position);
+            lineRenderer.SetPosition(0, portConnectionData.senderData.blockPort.transform.position);
+            lineRenderer.SetPosition(1, portConnectionData.receiverData.blockPort.transform.position);
         }
 
     }

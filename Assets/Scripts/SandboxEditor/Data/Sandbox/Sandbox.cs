@@ -16,6 +16,7 @@ namespace SandboxEditor.Data.Sandbox
         public GameObject rootOfBlock;
         public GameObject rootOfConnectionSpriteLine;
         public Camera camera;
+        public bool dontLoadPlayerPref;
         private static Sandbox _Sandbox;
         public static GameObject RootOfToy => _Sandbox.rootOfToy;
         public static GameObject RootOfBlock => _Sandbox.rootOfBlock;
@@ -39,19 +40,14 @@ namespace SandboxEditor.Data.Sandbox
 
         private void Start()
         {
-            if(IfGetSandboxDataFromMainScene())
-                UpdateSandboxDataFromMainScene();
+            if (dontLoadPlayerPref) return;
+            LoadSandboxDataFromMainScene();
             LoadSandbox();
-            if (WeStartPlayRightNow())
+            if (WeStartPlayRightNow()) 
                 SandboxPhase.GameStart();
         }
 
-        private bool IfGetSandboxDataFromMainScene()
-        {
-            return true;
-        }
-
-        private static void UpdateSandboxDataFromMainScene()
+        private static void LoadSandboxDataFromMainScene()
         {
             var newSandboxData = new SandboxData
             {
@@ -69,16 +65,9 @@ namespace SandboxEditor.Data.Sandbox
         private void SandboxInitialize()
         {
             _Sandbox ??= this;
-            Tools.File.CreateDirectoryIfDosentExist(SandboxChecker.GetSandboxPath(sandboxData));
-            // InitializeSandboxData();
-            // LoadSandbox();
+            Tools.File.CreateDirectoryIfDoesntExist(SandboxChecker.GetSandboxPath(sandboxData));
+            Debug.Log(SandboxChecker.GetSandboxPath(sandboxData));
             PauseSandbox();
-        }
-        
-        // MainScene(샌드박스 선택씬) 에서 선택된 샌드박스의 정보는 PlayerInfo로 전달받는다.
-        public void InitializeSandboxData(SandboxData sandboxData)
-        {
-            this.sandboxData = sandboxData;
         }
 
         private static void PauseSandbox()

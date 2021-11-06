@@ -10,8 +10,8 @@ namespace SandboxEditor.NewBlock
     {
         public TextMesh XVelocityPanel;
         public TextMesh YVelocityPanel;
-        public NewBlockPort setToyVelocityPort;
-        public NewBlockPort signalPort;
+        public BlockPort setToyVelocityPort;
+        public BlockPort signalPort;
         public float XVelocity = 0f;
         public float YVelocity = 0f;
 
@@ -22,17 +22,19 @@ namespace SandboxEditor.NewBlock
         
         private void refreshVelocityPanel()
         {
-            XVelocityPanel.text = "X : " + XVelocity.ToString();
-            YVelocityPanel.text = "Y : " + YVelocity.ToString();
+            XVelocityPanel.text = "X : " + XVelocity;
+            YVelocityPanel.text = "Y : " + YVelocity;
         }
 
         public override void OnEveryFixedUpdateWhenPlaying()
         {
-            if (setToyVelocityPort.Value == null) return;
-            if (signalPort.Value == null || (bool)signalPort.Value == false) return;
-            var toy = (GameObject) setToyVelocityPort.Value;
+            if (setToyVelocityPort.value == null) return;
+            var toy = (GameObject) setToyVelocityPort.value;
+            Debug.Log($"Object Connected : {toy}");
+            if (signalPort.value == null || (bool)signalPort.value == false) return;
             var rigidbody2D = toy.GetComponent<Rigidbody2D>();
             rigidbody2D.velocity = new Vector2(XVelocity, YVelocity);
+            Debug.Log($"signal On, set velocity of : {toy}");
         }
 
 

@@ -9,23 +9,24 @@ namespace SandboxEditor.NewBlock
 {
     public class CollisionDetector : AbstractBlock
     {
-        public NewBlockPort toyToSense;
-        public NewBlockPort collisionDetected;
-        public NewBlockPort anotherToy;
+        public BlockPort toyToSense;
+        public BlockPort collisionDetected;
+        public BlockPort anotherToy;
 
         public override void OnEveryFixedUpdateWhenPlaying()
         {
-            if (toyToSense.Value == null) return;
-            var targetToyGameObject = (GameObject) toyToSense.Value;
+            if (toyToSense.value == null) return;
+            var targetToyGameObject = (GameObject) toyToSense.value;
             if (CollisionInEveryFrame.HitToyAndOther.ContainsKey(targetToyGameObject))
             {
-                collisionDetected.Value = true;
-                anotherToy.Value = CollisionInEveryFrame.HitToyAndOther[targetToyGameObject];
+                collisionDetected.value = true;
+                anotherToy.value = CollisionInEveryFrame.HitToyAndOther[targetToyGameObject];
+                Debug.Log($"Colldetector Set hisSignal true");
             }
             else
             {
-                collisionDetected.Value = false;
-                anotherToy.Value = null;
+                collisionDetected.value = false;
+                anotherToy.value = null;
             }
         }
         

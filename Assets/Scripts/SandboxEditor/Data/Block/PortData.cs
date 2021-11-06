@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Linq;
 using SandboxEditor.Data.Toy;
 using SandboxEditor.InputControl.InEditor.Sensor;
 using SandboxEditor.NewBlock;
-using UnityEngine;
 
 namespace SandboxEditor.Data
 {
@@ -12,22 +10,12 @@ namespace SandboxEditor.Data
     {
         public int portIndex;
         public PortType portType;
-        public NewBlockPort blockPort;
+        public BlockPort blockPort;
 
         public int gameObjectInstanceID;
         public AbstractBlock abstractBlock;
-        private object value;
-        public object Value
-        {
-            get => value;
-            set
-            {
-                if(value != null)
-                    this.value = value;   
-            }
-        }
 
-        public PortData(int portIndex, PortType portType, NewBlockPort blockPort)
+        public PortData(int portIndex, PortType portType, BlockPort blockPort)
         {
             this.portIndex = portIndex;
             this.portType = portType;

@@ -21,7 +21,7 @@ namespace GameEditor.EventEditor.Controller
             if (!isGameStarted) return;
             CollisionInEveryFrame.RecordeToyCollision();
             BlockController.BlockAction();
-            ConnectionController.SendSignal();
+            ConnectionController.SendSignals();
             CollisionInEveryFrame.RenewCollisions2D();
         }
 

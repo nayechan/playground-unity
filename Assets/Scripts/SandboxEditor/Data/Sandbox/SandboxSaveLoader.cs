@@ -34,7 +34,7 @@ namespace SandboxEditor.Data.Sandbox
         
         private void SaveSandbox()
         {
-            File.CreateDirectoryIfDosentExist(SandboxChecker.GetSandboxPath(_sandboxData));
+            File.CreateDirectoryIfDoesntExist(SandboxChecker.GetSandboxPath(_sandboxData));
             SaveSandboxData();
             SaveImageStorageData();
             SaveToyStorageData();

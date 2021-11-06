@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
 
 namespace Tools
 {
@@ -15,12 +13,10 @@ namespace Tools
             }
         }
 
-        public static void CreateDirectoryIfDosentExist(string path)
+        public static void CreateDirectoryIfDoesntExist(string path)
         {
-            var directoryPath = Path.GetDirectoryName(path);
-            Debug.Log(directoryPath);
-            if(!Directory.Exists(directoryPath))
-                Directory.CreateDirectory(directoryPath);
+            if(!Directory.Exists(path))
+                Directory.CreateDirectory(path);
         }
 
         public static List<string> AbsolutePathsToFileNames(List<string> absolutePaths)

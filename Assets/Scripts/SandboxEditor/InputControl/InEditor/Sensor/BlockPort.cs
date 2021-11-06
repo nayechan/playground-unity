@@ -4,21 +4,11 @@ using UnityEngine;
 
 namespace SandboxEditor.InputControl.InEditor.Sensor
 {
-    public class NewBlockPort : AbstractSensor
+    public class BlockPort : AbstractSensor
     {
         public PortData portData;
-        public int PortIndex => portData.portIndex;
-        public object Value
-        {
-            get => portData.Value;
-            set => portData.Value = value;
-        }
-
-        public PortType PortType
-        {
-            get => portData.portType;
-            set => portData.portType = value;
-        }
+        public object value;
+        public PortType Type => portData.portType;
 
         public override void OnTouchBegan(Touch touch, out bool isRayBlock)
         {
@@ -36,7 +26,7 @@ namespace SandboxEditor.InputControl.InEditor.Sensor
 
         private void InitializeDestinationValue()
         {
-            Value = null;
+            value = null;
             var connections = ConnectionController.GetConnections(this);
             if (connections == null) return;
             foreach (var connection in connections)

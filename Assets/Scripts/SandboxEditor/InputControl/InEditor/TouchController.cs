@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
-using SandboxEditor.Data.Sandbox;
 using SandboxEditor.InputControl.InEditor.Sensor;
-using TMPro;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;

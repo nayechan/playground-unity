@@ -5,18 +5,18 @@ namespace SandboxEditor.InputControl.InEditor.Sensor
 {
     public class ToyCollisionSensor : MonoBehaviour
     {
-        public NewBlockPort port;
+        public BlockPort port;
 
         private void OnCollisionEnter2D(Collision2D other)
         {
             if (port == null) return;
-            NewBlockPort.WhenToyHit(other);
+            BlockPort.WhenToyHit(other);
         }
         
         private void OnCollisionStay2D(Collision2D other)
         {
             if (port == null) return;
-            NewBlockPort.WhenToyHit(other);
+            BlockPort.WhenToyHit(other);
         }
     }
 }

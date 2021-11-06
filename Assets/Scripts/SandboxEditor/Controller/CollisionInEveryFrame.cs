@@ -24,9 +24,9 @@ namespace GameEditor.EventEditor.Controller
             foreach (var collision in Collisions2D)
             {
                 var hitGameObject = collision.gameObject;
-                var hitPort = hitGameObject.GetComponentInChildren<NewBlockPort>();
+                var hitPort = hitGameObject.GetComponentInChildren<BlockPort>();
                 var otherGameObject = collision.otherCollider.gameObject;
-                var otherPort = otherGameObject.GetComponentInChildren<NewBlockPort>();
+                var otherPort = otherGameObject.GetComponentInChildren<BlockPort>();
                 if(IsToySender(hitPort) && !HitToyAndOther.ContainsKey(hitGameObject))
                     HitToyAndOther.Add(hitGameObject, otherGameObject);
                 if(IsToySender(otherPort) && !HitToyAndOther.ContainsKey(otherGameObject))
@@ -34,10 +34,10 @@ namespace GameEditor.EventEditor.Controller
             }
         }
 
-        private static bool IsToySender(NewBlockPort port)
+        private static bool IsToySender(BlockPort port)
         {
             if (port == null) return false;
-            return port.PortType == PortType.ToySender;
+            return port.Type == PortType.ToySender;
         }
 
         public static void AddCollision2D(Collision2D collision2D)

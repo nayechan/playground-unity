@@ -10,23 +10,24 @@ using SandboxEditor.InputControl.InEditor.Sensor;
 using UnityEngine;
 using UnityEngine.UI;
 using static Tools.Misc;
+using Object = UnityEngine.Object;
 
 namespace GameEditor.EventEditor.Controller
 {
     public class ConnectionController : MonoBehaviour
     {
         private static ConnectionController _ConnectionController;
-        private static HashSet<BlockConnection> BlockConnections => _ConnectionController._blockConnections;
-        private HashSet<BlockConnection> _blockConnections;
-        private static Dictionary<NewBlockPort, HashSet<BlockConnection>> PortAndConnectionsPairs =>
+        private static HashSet<PortConnectionData> BlockConnections => _ConnectionController._blockConnections;
+        private HashSet<PortConnectionData> _blockConnections;
+        private static Dictionary<BlockPort, HashSet<PortConnectionData>> PortAndConnectionsPairs =>
             _ConnectionController.portLineAndConnectionsPairs;
-        private Dictionary<NewBlockPort, HashSet<BlockConnection>> portLineAndConnectionsPairs;
-        private static NewBlockPort SelectedSourcePort
+        private Dictionary<BlockPort, HashSet<PortConnectionData>> portLineAndConnectionsPairs;
+        private static BlockPort SelectedSourcePort
         {
             get => _ConnectionController.selectedSourcePort;
             set => _ConnectionController.selectedSourcePort = value;
         }
-        private NewBlockPort selectedSourcePort;
+        private BlockPort selectedSourcePort;
         private static GameObject SpriteLine => _ConnectionController.spriteLine;
         public GameObject spriteLine;
         public GameObject guideMessage;
@@ -36,49 +37,61 @@ namespace GameEditor.EventEditor.Controller
         private void Awake()
         {
             _ConnectionController ??= this;
-            _blockConnections = new HashSet<BlockConnection>();
-            portLineAndConnectionsPairs = new Dictionary<NewBlockPort, HashSet<BlockConnection>>();
+            _blockConnections = new HashSet<PortConnectionData>();
+            portLineAndConnectionsPairs = new Dictionary<BlockPort, HashSet<PortConnectionData>>();
         }
 
-        public static void SendSignal()
+        public static void SendSignals()
         {
             foreach (var connection in BlockConnections)
-            {
                 connection.SendSignal();
-                Debug.Log($"destiantion : {connection.destination.Value}, source : {connection.source.Value}");
-            }
         }
 
-        public static void WhenPortClicked(NewBlockPort newPort)
+        public static void WhenPortClicked(BlockPort clickedPort)
         {
-            if (!IsOnConnecting() && !Is.ConnectionStartType(newPort.PortType)) return;
-            if (!IsOnConnecting())
+            if (!IsWaitingAnotherPort())
             {
-                SetSelectedSource(newPort);
+                if (IsNotBlock(clickedPort)) return;
+                SetSelectedSource(clickedPort);
                 ShowGuideMessage("선을 목적지 포트에 연결하세요.");
+                return;
             }
-            else
-            {
-                if (newPort == SelectedSourcePort || !Is.CorrectPortPair(SelectedSourcePort.PortType, newPort.PortType))
-                {
-                    ShowGuideMessage("올바르지 않은 포트입니다. 다시 연결해 주세요.");
-                    SelectedSourcePort = null;
-                    _ConnectionController.OffGuideMessage(2f);
-                    return;
-                }
-                CreateConnection(newPort);
-                _ConnectionController.OffGuideMessage(0f);
-                SelectedSourcePort = null;
-            }
+            if(BothPortIsEqual(clickedPort, SelectedSourcePort) || !ConnectionChecker.correctCombinations.Contains((clickedPort.Type, SelectedSourcePort.Type)))
+                InitializeConnectPhaseAndShowGuideMessage();
+            var (senderPort, receiverPort) = (SelectedSourcePort, clickedPort);
+            if (!ConnectionChecker.senderTypes.Contains(senderPort.Type))
+                (senderPort, receiverPort) = (receiverPort, senderPort);
+            CreateConnection(senderPort, receiverPort);
+            _ConnectionController.OffGuideMessage(0f);
+            SelectedSourcePort = null;
         }
-        private static void SetSelectedSource(NewBlockPort port)
+
+        private static bool IsNotBlock(BlockPort port)
+        {
+            return port.portData.abstractBlock == null;
+        }
+        
+        
+        private static void SetSelectedSource(BlockPort port)
         {
             SelectedSourcePort = port;
         }
 
-        public static bool IsOnConnecting()
+        private static bool IsWaitingAnotherPort()
         {
             return SelectedSourcePort != null;
+        }
+
+        private static bool BothPortIsEqual(Object first, Object second)
+        {
+            return first == second;
+        }
+
+        private static void InitializeConnectPhaseAndShowGuideMessage()
+        {
+            SelectedSourcePort = null;
+            ShowGuideMessage("올바르지 않은 연결입니다. 다시 연결해 주세요.");
+            _ConnectionController.OffGuideMessage(2f);
         }
 
         private static void ShowGuideMessage(string message)
@@ -98,46 +111,35 @@ namespace GameEditor.EventEditor.Controller
             _ConnectionController.guideMessage.SetActive(false);
         }
 
-
-        public static void CreateConnection(NewBlockPort destinationPort)
+        private static void CreateConnection(BlockPort senderPort, BlockPort receiverPort)
         {
-            var blockConnection = new BlockConnection(SelectedSourcePort.portData, destinationPort.portData);
+            var blockConnection = new PortConnectionData(senderPort, receiverPort);
             BlockConnections.Add(blockConnection);
-            AddToPortAndConnectionPairs(SelectedSourcePort, blockConnection);
-            AddToPortAndConnectionPairs(destinationPort, blockConnection);
+            AddToPortAndConnectionPairs(senderPort, blockConnection);
+            AddToPortAndConnectionPairs(receiverPort, blockConnection);
             CreateAndSetConnectionSpriteLine(blockConnection);
             SetChildAndParent(blockConnection.spriteLine, Sandbox.RootOfConnectionSpriteLine); 
         }
 
-        private static void CreateConnection(NewBlockPort source, NewBlockPort destination)
-        {
-            var blockConnection = new BlockConnection(source.portData, destination.portData);
-            BlockConnections.Add(blockConnection);
-            AddToPortAndConnectionPairs(source, blockConnection);
-            AddToPortAndConnectionPairs(destination, blockConnection);
-            CreateAndSetConnectionSpriteLine(blockConnection);
-            SetChildAndParent(blockConnection.spriteLine, Sandbox.RootOfConnectionSpriteLine); 
-        }
-
-        private static void AddToPortAndConnectionPairs(NewBlockPort port, BlockConnection blockConnection)
+        private static void AddToPortAndConnectionPairs(BlockPort port, PortConnectionData portConnectionData)
         {
             CreateNewDictionaryIfDoesntExist(port);
-            PortAndConnectionsPairs[port].Add(blockConnection);
+            PortAndConnectionsPairs[port].Add(portConnectionData);
         }
 
-        private static void CreateNewDictionaryIfDoesntExist(NewBlockPort port)
+        private static void CreateNewDictionaryIfDoesntExist(BlockPort port)
         {
             if (!PortAndConnectionsPairs.ContainsKey(port))
-                PortAndConnectionsPairs[port] = new HashSet<BlockConnection>();
+                PortAndConnectionsPairs[port] = new HashSet<PortConnectionData>();
         }
 
-        private static void CreateAndSetConnectionSpriteLine(BlockConnection blockConnection)
+        private static void CreateAndSetConnectionSpriteLine(PortConnectionData portConnectionData)
         {
-            blockConnection.spriteLine = Instantiate(SpriteLine);
-            blockConnection.spriteLine.GetComponent<ConnectionLine>().SetConnection(blockConnection);
+            portConnectionData.spriteLine = Instantiate(SpriteLine);
+            portConnectionData.spriteLine.GetComponent<PortConnection>().SetConnection(portConnectionData);
         }
 
-        public static void DeleteConnections(NewBlockPort port)
+        public static void DeleteConnections(BlockPort port)
         {
             if (!PortAndConnectionsPairs.ContainsKey(port)) return;
             var blockConnections = PortAndConnectionsPairs[port];
@@ -146,10 +148,10 @@ namespace GameEditor.EventEditor.Controller
             PortAndConnectionsPairs.Remove(port);
         }
 
-        private static void DeleteConnection(BlockConnection blockConnection)
+        private static void DeleteConnection(PortConnectionData portConnectionData)
         {
-            Destroy(blockConnection.spriteLine);
-            BlockConnections.Remove(blockConnection);
+            Destroy(portConnectionData.spriteLine);
+            BlockConnections.Remove(portConnectionData);
         }
 
         public static BlockConnections GetBlockConnections()
@@ -164,15 +166,15 @@ namespace GameEditor.EventEditor.Controller
                 CreateConnection(blockConnectionData, toyIDPair, blockIDPair);
         }
 
-        private static void CreateConnection(BlockConnection blockConnection, Dictionary<int, GameObject> toyIDPair,
+        private static void CreateConnection(PortConnectionData portConnectionData, Dictionary<int, GameObject> toyIDPair,
             Dictionary<int, GameObject> blockIDPair)
         {
-            var source = FindMatchingGameObject(blockConnection.source, toyIDPair, blockIDPair);
-            var destination = FindMatchingGameObject(blockConnection.destination, toyIDPair, blockIDPair);
+            var source = FindMatchingGameObject(portConnectionData.senderData, toyIDPair, blockIDPair);
+            var destination = FindMatchingGameObject(portConnectionData.receiverData, toyIDPair, blockIDPair);
             CreateConnection(source, destination);
         }
 
-        private static NewBlockPort FindMatchingGameObject(PortData portData, IReadOnlyDictionary<int, GameObject> toyIDPair,
+        private static BlockPort FindMatchingGameObject(PortData portData, IReadOnlyDictionary<int, GameObject> toyIDPair,
             IReadOnlyDictionary<int, GameObject> blockIDPair)
         {
             var matchedGameObject = FindMatchingGameObject(portData.gameObjectInstanceID, toyIDPair, blockIDPair);
@@ -190,10 +192,10 @@ namespace GameEditor.EventEditor.Controller
             return matchedGameObject;
         }
         
-        private static NewBlockPort FindMatchingBlockPort(int portIndex, GameObject gameObjectWithBlockPort)
+        private static BlockPort FindMatchingBlockPort(int portIndex, GameObject gameObjectWithBlockPort)
         {
-            NewBlockPort matchedBlockPort = null;
-            foreach (var port in gameObjectWithBlockPort.GetComponentsInChildren<NewBlockPort>())
+            BlockPort matchedBlockPort = null;
+            foreach (var port in gameObjectWithBlockPort.GetComponentsInChildren<BlockPort>())
                 if (port.portData.portIndex == portIndex)
                     matchedBlockPort = port;
             return matchedBlockPort;
@@ -201,10 +203,10 @@ namespace GameEditor.EventEditor.Controller
         // 연결정보 세이브 로드 구현.
         private static void RenewConnectionList()
         {
-            _ConnectionController._blockConnections = new HashSet<BlockConnection>();
+            _ConnectionController._blockConnections = new HashSet<PortConnectionData>();
         }
 
-        public static HashSet<BlockConnection> GetConnections(NewBlockPort port)
+        public static HashSet<PortConnectionData> GetConnections(BlockPort port)
         {
             if (!PortAndConnectionsPairs.ContainsKey(port)) return null;
             var connections = PortAndConnectionsPairs[port];

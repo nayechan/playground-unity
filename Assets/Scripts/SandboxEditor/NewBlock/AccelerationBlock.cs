@@ -7,20 +7,20 @@ namespace SandboxEditor.NewBlock
 {
     public class AccelerationBlock : AbstractBlock
     {
-        public NewBlockPort toyToAccelerate;
-        public NewBlockPort xAxisInput;
-        public NewBlockPort yAxisInput;
+        public BlockPort toyToAccelerate;
+        public BlockPort xAxisInput;
+        public BlockPort yAxisInput;
 
         public override void OnEveryFixedUpdateWhenPlaying()
         {
-            if (toyToAccelerate.Value == null) return;
-            var targetToy = (GameObject) toyToAccelerate.Value;
+            if (toyToAccelerate.value == null) return;
+            var targetToy = (GameObject) toyToAccelerate.value;
             var rigidbody2D = targetToy.GetComponent<Rigidbody2D>();
             if (rigidbody2D == null) return;
             // rigidbody2D.AddForce(new Vector2((float)xAxisInput.Value, (float)yAxisInput.Value));
-            xAxisInput.Value ??= 0f;
-            yAxisInput.Value ??= 0f;
-            rigidbody2D.AddForce(new Vector2((float)xAxisInput.Value*10f, (float)yAxisInput.Value*10f));
+            xAxisInput.value ??= 0f;
+            yAxisInput.value ??= 0f;
+            rigidbody2D.AddForce(new Vector2((float)xAxisInput.value*10f, (float)yAxisInput.value*10f));
         }
 
         public override BlockData SaveBlockData()

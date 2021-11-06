@@ -6,13 +6,13 @@ namespace SandboxEditor.NewBlock
 {
     public class ToyDestroyerBlock : AbstractBlock
     {
-        public NewBlockPort destroySignal;
-        public NewBlockPort toyToDestroy;
+        public BlockPort destroySignal;
+        public BlockPort toyToDestroy;
 
         public override void OnEveryFixedUpdateWhenPlaying()
         {
-            if (destroySignal.Value == null || (bool) destroySignal.Value == false) return;
-            Destroy((GameObject)toyToDestroy.Value);
+            if (destroySignal.value == null || (bool) destroySignal.value == false) return;
+            Destroy((GameObject)toyToDestroy.value);
         }
 
         public override BlockData SaveBlockData()

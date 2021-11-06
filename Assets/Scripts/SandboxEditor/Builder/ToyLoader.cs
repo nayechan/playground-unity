@@ -131,7 +131,7 @@ namespace SandboxEditor.Builder
         
         private void AttachObjectSensorGameObject()
         {
-            _toySensor = new GameObject("TouchSensor", typeof(ToyBodySensor), typeof(NewBlockPort));
+            _toySensor = new GameObject("TouchSensor", typeof(ToyBodySensor), typeof(BlockPort));
             SetChildAndParent(_toySensor, _newToy);
             AlignSensorPositionToToy(_toySensor);
         }
@@ -152,7 +152,7 @@ namespace SandboxEditor.Builder
 
         private void AttachToyPortAndCollisionSensor()
         {
-            var port = _toySensor.GetComponent<NewBlockPort>();
+            var port = _toySensor.GetComponent<BlockPort>();
             InitializeToyPort(port);
             var sensor = _newToy.AddComponent<ToyCollisionSensor>();
             sensor.port = port;
@@ -164,12 +164,10 @@ namespace SandboxEditor.Builder
             _toyIDToyObjectPair.Add(_toyData.gameObjectInstanceID, _newToy);
         }
 
-        private void InitializeToyPort(NewBlockPort port)
+        private void InitializeToyPort(BlockPort port)
         {
-            port.portData = new PortData(0, PortType.ToySender, port)
-            {
-                Value = _newToy
-            };
+            port.portData = new PortData(0, PortType.ToySender, port);
+            port.value = _newToy;
         }
 
         private void BuildToyChildren()

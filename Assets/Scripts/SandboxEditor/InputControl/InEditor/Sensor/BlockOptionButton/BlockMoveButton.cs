@@ -1,4 +1,3 @@
-using GameEditor.EventEditor.Block;
 using UnityEngine;
 
 namespace SandboxEditor.InputControl.InEditor.Sensor.BlockOptionButton
