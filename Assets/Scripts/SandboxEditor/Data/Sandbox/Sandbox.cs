@@ -39,10 +39,16 @@ namespace SandboxEditor.Data.Sandbox
 
         private void Start()
         {
-            UpdateSandboxDataFromMainScene();
+            if(IfGetSandboxDataFromMainScene())
+                UpdateSandboxDataFromMainScene();
             LoadSandbox();
             if (WeStartPlayRightNow())
                 SandboxPhase.GameStart();
+        }
+
+        private bool IfGetSandboxDataFromMainScene()
+        {
+            return true;
         }
 
         private static void UpdateSandboxDataFromMainScene()
