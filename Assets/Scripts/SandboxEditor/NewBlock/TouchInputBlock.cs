@@ -20,9 +20,7 @@ namespace SandboxEditor.NewBlock
 
         public override BlockData SaveBlockData()
         {
-            var data = new TouchInputBlockData();
-            data.SetGameObjectIDAndPosition(this);
-            return data;
+            return new TouchInputBlockData(this);
         }
         
     }

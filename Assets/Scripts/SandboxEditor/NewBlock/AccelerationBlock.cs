@@ -25,9 +25,7 @@ namespace SandboxEditor.NewBlock
 
         public override BlockData SaveBlockData()
         {
-            var data = new AccelerationBlockData();
-            data.SetGameObjectIDAndPosition(this);
-            return data;
+            return new AccelerationBlockData(this);
         }
     }
 }

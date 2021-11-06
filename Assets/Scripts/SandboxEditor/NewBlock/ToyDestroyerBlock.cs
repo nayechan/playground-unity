@@ -17,9 +17,7 @@ namespace SandboxEditor.NewBlock
 
         public override BlockData SaveBlockData()
         {
-            var data = new ToyDestroyerBlockData();
-            data.SetGameObjectIDAndPosition(this);
-            return data;
+            return new ToyDestroyerBlockData(this);
         }
     }
 }

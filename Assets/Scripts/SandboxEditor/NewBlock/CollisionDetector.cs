@@ -21,7 +21,6 @@ namespace SandboxEditor.NewBlock
             {
                 collisionDetected.value = true;
                 anotherToy.value = CollisionInEveryFrame.HitToyAndOther[targetToyGameObject];
-                Debug.Log($"Colldetector Set hisSignal true");
             }
             else
             {
@@ -32,9 +31,7 @@ namespace SandboxEditor.NewBlock
         
         public override BlockData SaveBlockData()
         {
-            var data = new CollisionDetectorData();
-            data.SetGameObjectIDAndPosition(this);
-            return data;
+            return new CollisionDetectorData(this);
         }
     }
 }

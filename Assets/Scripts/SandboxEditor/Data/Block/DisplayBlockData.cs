@@ -8,9 +8,9 @@ namespace SandboxEditor.Data.Block
     {
         public float camSize;
 
-        public DisplayBlockData(DisplayBlock block)
+        public DisplayBlockData(DisplayBlock blockToSave) : base(blockToSave)
         {
-            camSize = block.camera.orthographicSize;
+            camSize = blockToSave.camera.orthographicSize;
         }
     }
 }

@@ -40,9 +40,7 @@ namespace SandboxEditor.NewBlock
         
         public override BlockData SaveBlockData()
         {
-            var data = new DisplayBlockData(this);
-            data.SetGameObjectIDAndPosition(this);
-            return data;
+            return new DisplayBlockData(this);
         }
         
         public override void LoadBlockData(BlockData blockData)

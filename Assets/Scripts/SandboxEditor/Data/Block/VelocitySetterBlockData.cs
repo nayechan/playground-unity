@@ -9,11 +9,10 @@ namespace SandboxEditor.Data.Block
         public float XVelocity;
         public float YVelocity;
 
-        public VelocitySetterBlockData(VelocitySetterBlock block)
+        public VelocitySetterBlockData(VelocitySetterBlock blockToSave) : base(blockToSave)
         {
-            SetGameObjectIDAndPosition(block);
-            XVelocity = block.XVelocity;
-            YVelocity = block.YVelocity;
+            XVelocity = blockToSave.XVelocity;
+            YVelocity = blockToSave.YVelocity;
         }
         
     }
