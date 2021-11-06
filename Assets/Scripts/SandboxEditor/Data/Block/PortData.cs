@@ -30,8 +30,8 @@ namespace SandboxEditor.Data
 
     public enum PortType
     {
-        ScalarReceiver,
-        ScalarSender,
+        VectorReceiver,
+        VectorSender,
         BoolReceiver,
         BoolSender,
         ToySender,

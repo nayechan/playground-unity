@@ -10,7 +10,7 @@ namespace SandboxEditor.Data.Block
             new HashSet<(PortType, PortType)>
             {
                 (PortType.BoolSender, PortType.BoolReceiver),
-                (PortType.ScalarSender, PortType.ScalarReceiver),
+                (PortType.VectorSender, PortType.VectorReceiver),
                 (PortType.ToySender, PortType.ToyReceiver),
             };
         
@@ -18,10 +18,10 @@ namespace SandboxEditor.Data.Block
             new HashSet<(PortType, PortType)>
             {
                 (PortType.BoolSender, PortType.BoolReceiver),
-                (PortType.ScalarSender, PortType.ScalarReceiver),
+                (PortType.VectorSender, PortType.VectorReceiver),
                 (PortType.ToySender, PortType.ToyReceiver),
                 (PortType.BoolReceiver, PortType.BoolSender),
-                (PortType.ScalarReceiver, PortType.ScalarSender),
+                (PortType.VectorReceiver, PortType.VectorSender),
                 (PortType.ToyReceiver, PortType.ToySender),
             };
         
@@ -29,7 +29,7 @@ namespace SandboxEditor.Data.Block
             new HashSet<PortType>()
             {
                 PortType.BoolSender,
-                PortType.ScalarSender,
+                PortType.VectorSender,
                 PortType.ToySender,
             };
 
@@ -37,7 +37,7 @@ namespace SandboxEditor.Data.Block
             new HashSet<PortType>()
             {
                 PortType.BoolReceiver,
-                PortType.ScalarReceiver,
+                PortType.VectorReceiver,
                 PortType.ToyReceiver
             };
     }
