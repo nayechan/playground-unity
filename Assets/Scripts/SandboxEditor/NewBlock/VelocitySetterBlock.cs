@@ -40,9 +40,9 @@ namespace SandboxEditor.NewBlock
         public override void MessageCallBack(string message)
         {
             if(message[0] == 'x')
-                XVelocity += float.Parse(message[1..]);
+                XVelocity += float.Parse(message.Substring(1));
             if(message[0] == 'y')
-                YVelocity += float.Parse(message[1..]);
+                YVelocity += float.Parse(message.Substring(1));
         }
 
         public override BlockData SaveBlockData()
