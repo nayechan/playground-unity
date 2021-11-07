@@ -39,6 +39,11 @@ namespace MainPage.Window
             sandboxData.title = titleText.text;
             sandboxData.description = contentText.text;
             sandboxData.id = SandboxChecker.CreateNonOverlappingLocalId();
+            sandboxData.creatorName = PlayerPrefs.GetString("myNickName","Playground");
+
+            if(sandboxData.title == "") {sandboxData.title = "No title";}
+            if(sandboxData.description == ""){sandboxData.description = "No Description";}
+            if(sandboxData.creatorName == ""){sandboxData.description = "Unknown Creator";}
 
             string jsonData = JsonUtility.ToJson(sandboxData);
 
