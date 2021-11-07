@@ -1,7 +1,6 @@
 using System;
 using GameEditor.EventEditor.Controller;
 using SandboxEditor.Builder;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace SandboxEditor.InputControl.InEditor.Sensor
