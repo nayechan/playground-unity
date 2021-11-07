@@ -1,4 +1,5 @@
 ﻿using SandboxEditor.Data.Block;
+using SandboxEditor.Data.Block.Register;
 using SandboxEditor.InputControl.InEditor.Sensor;
 using UnityEngine;
 
@@ -9,10 +10,21 @@ namespace SandboxEditor.NewBlock
         public BlockPort destroySignal;
         public BlockPort toyToDestroy;
 
+        private void Start()
+        {
+            InitializePortRegister();
+        }
+
+        protected override void InitializePortRegister()
+        {
+            destroySignal.register = new BoolRegister();
+            toyToDestroy.register = new ToyRegister();
+        }
+
         public override void OnEveryFixedUpdateWhenPlaying()
         {
-            if (destroySignal.value == null || (bool) destroySignal.value == false) return;
-            Destroy((GameObject)toyToDestroy.value);
+            if (destroySignal.RegisterValue == null || (bool) destroySignal.RegisterValue == false) return;
+            Destroy((GameObject)toyToDestroy.RegisterValue);
         }
 
         public override BlockData SaveBlockData()

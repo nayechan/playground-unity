@@ -1,4 +1,5 @@
-﻿using SandboxEditor.Data.Block;
+﻿using System;
+using SandboxEditor.Data.Block;
 using SandboxEditor.Data.Storage;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ namespace SandboxEditor.NewBlock
 {
     public abstract class AbstractBlock : MonoBehaviour
     {
+        protected abstract void InitializePortRegister();
 
         public virtual void WhenGameStart()
         {

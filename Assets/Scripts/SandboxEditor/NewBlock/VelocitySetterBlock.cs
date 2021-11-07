@@ -1,6 +1,5 @@
-﻿using System;
-using SandboxEditor.Data;
-using SandboxEditor.Data.Block;
+﻿using SandboxEditor.Data.Block;
+using SandboxEditor.Data.Block.Register;
 using SandboxEditor.InputControl.InEditor.Sensor;
 using UnityEngine;
 
@@ -10,11 +9,22 @@ namespace SandboxEditor.NewBlock
     {
         public TextMesh XVelocityPanel;
         public TextMesh YVelocityPanel;
-        public BlockPort setToyVelocityPort;
+        public BlockPort ToyToSetVelocity;
         public BlockPort signalPort;
         public float XVelocity = 0f;
         public float YVelocity = 0f;
 
+        private void Start()
+        {
+            InitializePortRegister();
+        }
+
+        protected override void InitializePortRegister()
+        {
+            ToyToSetVelocity.register = new ToyRegister();
+            signalPort.register = new BoolRegister();
+        }
+        
         private void Update()
         {
             refreshVelocityPanel();
@@ -28,16 +38,14 @@ namespace SandboxEditor.NewBlock
 
         public override void OnEveryFixedUpdateWhenPlaying()
         {
-            if (setToyVelocityPort.value == null) return;
-            var toy = (GameObject) setToyVelocityPort.value;
+            if (ToyToSetVelocity.RegisterValue == null) return;
+            var toy = (GameObject) ToyToSetVelocity.RegisterValue;
             Debug.Log($"Object Connected : {toy}");
-            if (signalPort.value == null || (bool)signalPort.value == false) return;
+            if ((bool)signalPort.RegisterValue == false) return;
             var rigidbody2D = toy.GetComponent<Rigidbody2D>();
             rigidbody2D.velocity = new Vector2(XVelocity, YVelocity);
             Debug.Log($"signal On, set velocity of : {toy}");
         }
-
-
 
         public override void MessageCallBack(string message)
         {

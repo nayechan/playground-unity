@@ -7,12 +7,7 @@ namespace SandboxEditor.Data.Block.Register
         public bool Data
         {
             get => (bool) data;
-            private set => Data = value;
-        }
-
-        public BoolRegister()
-        {
-            data = false;
+            private set => data = value;
         }
 
         public override void ReceiveData(AbstractRegister FromThisRegister)
@@ -20,19 +15,24 @@ namespace SandboxEditor.Data.Block.Register
             switch (FromThisRegister)
             {
                 case BoolRegister anotherBoolRegister:
-                    Data = anotherBoolRegister.Data || Data;
+                    data = anotherBoolRegister.Data;
                     break;
                 case VectorRegister anotherVectorRegister:
-                    Data = anotherVectorRegister.Data != 0f || Data;
+                    data = anotherVectorRegister.Data != 0f;
                     break;
                 case ToyRegister anotherToyRegister:
-                    Data = anotherToyRegister.Data != null || Data;
+                    Data = anotherToyRegister.Data != null;
                     break;
                 case null:
                     break;
                 default:
                     throw new NotImplementedException();
             }
+        }
+
+        public override void InitializeData()
+        {
+            data = false;
         }
     }
 }

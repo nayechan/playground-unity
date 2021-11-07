@@ -26,7 +26,7 @@ namespace SandboxEditor.Data.Block
 
         public void SendSignal()
         {
-            receiver.value = sender.value;
+            receiver.register.ReceiveData(sender.register);
         }
         
     }

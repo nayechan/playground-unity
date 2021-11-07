@@ -1,4 +1,5 @@
 ﻿using SandboxEditor.Data.Block;
+using SandboxEditor.Data.Block.Register;
 using SandboxEditor.InputControl.InEditor;
 using SandboxEditor.InputControl.InEditor.Sensor;
 using SandboxEditor.InputControl.InPlay;
@@ -11,11 +12,22 @@ namespace SandboxEditor.NewBlock
         public BlockPort touchXAxisOutput;
         public BlockPort touchYAxisOutput;
 
+        private void Start()
+        {
+            InitializePortRegister();
+        }
+
+        protected override void InitializePortRegister()
+        {
+            touchXAxisOutput.register = new VectorRegister();
+            touchYAxisOutput.register = new VectorRegister();
+        }
+
         public override void OnEveryFixedUpdateWhenPlaying()
         {
             var inputViewPort = PlayerTouchController.TouchToViewport();
-            (touchXAxisOutput.value, touchYAxisOutput.value) = (inputViewPort.x, inputViewPort.y);
-            Debug.Log($"value is {(float)touchXAxisOutput.value}, {(float)touchYAxisOutput.value}");
+            (touchXAxisOutput.RegisterValue, touchYAxisOutput.RegisterValue) = (inputViewPort.x, inputViewPort.y);
+            Debug.Log($"value is {(float)touchXAxisOutput.RegisterValue}, {(float)touchYAxisOutput.RegisterValue}");
         }
 
         public override BlockData SaveBlockData()

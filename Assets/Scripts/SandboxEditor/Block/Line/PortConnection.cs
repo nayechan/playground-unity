@@ -1,4 +1,5 @@
 using System;
+using GameEditor.EventEditor.Controller;
 using SandboxEditor.Data;
 using SandboxEditor.Data.Block;
 using SandboxEditor.InputControl.InEditor.Sensor;
@@ -10,29 +11,44 @@ namespace GameEditor.EventEditor.Line
     {
         public PortConnectionData portConnectionData;
         public LineRenderer lineRenderer;
-        private bool isSet = false;
-
-        private void Awake()
-        {
-            var lineRenderer = GetComponent<LineRenderer>();
-        }
+        private bool isConnectionSet = false;
+        private SpriteRenderer senderSpriteRenderer;
+        private SpriteRenderer receiverSpriteRenderer;
+        private bool senderPortIsOnToy = false;
+        private bool receiverPortIsOnToy = false;
 
         private void Update()
         {
-            if (isSet)
-                ReLocation();
+            if (SandboxUpdateController.IsGameStarted) return;
+            if (isConnectionSet && AreBothPortInvisible())
+                ReRender();
+            else
+                lineRenderer.enabled = false;
         }
 
         public void SetConnection(PortConnectionData portConnectionData)
         {
             this.portConnectionData = portConnectionData;
-            isSet = true;
+            isConnectionSet = true;
+            senderSpriteRenderer = portConnectionData.senderData.blockPort.GetComponent<SpriteRenderer>();
+            receiverSpriteRenderer = portConnectionData.receiverData.blockPort.GetComponent<SpriteRenderer>();
+            if (senderSpriteRenderer == null)
+                senderPortIsOnToy = true;
+            if (receiverSpriteRenderer == null)
+                receiverPortIsOnToy = true;
         }
 
-        private void ReLocation()
+        private void ReRender()
         {
+            lineRenderer.enabled = true;
             lineRenderer.SetPosition(0, portConnectionData.senderData.blockPort.transform.position);
             lineRenderer.SetPosition(1, portConnectionData.receiverData.blockPort.transform.position);
+        }
+
+        private bool AreBothPortInvisible()
+        {
+            return (senderPortIsOnToy || senderSpriteRenderer.enabled) &&
+                   (senderPortIsOnToy || receiverSpriteRenderer.enabled);
         }
 
     }

@@ -12,6 +12,13 @@ namespace SandboxEditor.NewBlock
 
         public override void OnEveryFixedUpdateWhenPlaying() { }
 
+        protected override void InitializePortRegister() { }
+
+        private void Start()
+        {
+            ChangeSizeOfCameraAndGuideArea(camera.orthographicSize);
+        }
+
         public override void WhenGameStart()
         {
             base.WhenGameStart();

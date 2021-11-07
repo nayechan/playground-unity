@@ -1,5 +1,6 @@
 using GameEditor.EventEditor.Controller;
 using SandboxEditor.Data;
+using SandboxEditor.Data.Block.Register;
 using UnityEngine;
 
 namespace SandboxEditor.InputControl.InEditor.Sensor
@@ -7,8 +8,19 @@ namespace SandboxEditor.InputControl.InEditor.Sensor
     public class BlockPort : AbstractSensor
     {
         public PortData portData;
-        public object value;
+        public AbstractRegister register;
+        public object RegisterValue
+        {
+            get => register.data;
+            set => register.data = value;
+        }
+
         public PortType Type => portData.portType;
+
+        public BlockPort(AbstractRegister register)
+        {
+            this.register = register;
+        }
 
         public override void OnTouchBegan(Touch touch, out bool isRayBlock)
         {
@@ -20,13 +32,13 @@ namespace SandboxEditor.InputControl.InEditor.Sensor
 
         private void OnDestroy()
         {
-            InitializeDestinationValue();
+            InitializeReceiverValue();
             ConnectionController.DeleteConnections(this);
         }
 
-        private void InitializeDestinationValue()
+        private void InitializeReceiverValue()
         {
-            value = null;
+            register.InitializeData();
             var connections = ConnectionController.GetConnections(this);
             if (connections == null) return;
             foreach (var connection in connections)

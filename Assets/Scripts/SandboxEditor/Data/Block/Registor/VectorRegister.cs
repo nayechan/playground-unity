@@ -7,12 +7,7 @@ namespace SandboxEditor.Data.Block.Register
         public float Data
         {
             get => (float) data;
-            private set => Data = value;
-        }
-
-        public VectorRegister()
-        {
-            Data = 0f;
+            private set => data = value;
         }
         
         public override void ReceiveData(AbstractRegister FromThisRegister)
@@ -21,15 +16,12 @@ namespace SandboxEditor.Data.Block.Register
             {
                 case BoolRegister anotherBoolRegister:
                     var receive = anotherBoolRegister.Data ? 1f : 0f;
-                    if (receive >= Data)
-                        Data = receive;
+                    data = receive;
                     break;
                 case VectorRegister anotherVectorRegister:
-                    if(anotherVectorRegister.Data >= Data)
-                        Data = anotherVectorRegister.Data;
+                    data = anotherVectorRegister.Data;
                     break;
                 case ToyRegister _:
-                    // Wrong Connection
                     break;
                 case null:
                     break;
@@ -38,5 +30,9 @@ namespace SandboxEditor.Data.Block.Register
             }
         }
 
+        public override void InitializeData()
+        {
+            Data = 0f;
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using SandboxEditor.Data;
+using SandboxEditor.Data.Block.Register;
 using SandboxEditor.Data.Storage;
 using SandboxEditor.Data.Toy;
 using SandboxEditor.InputControl.InEditor.Sensor;
@@ -167,7 +168,7 @@ namespace SandboxEditor.Builder
         private void InitializeToyPort(BlockPort port)
         {
             port.portData = new PortData(0, PortType.ToySender, port);
-            port.value = _newToy;
+            port.register = new ToyRegister(_newToy);
         }
 
         private void BuildToyChildren()

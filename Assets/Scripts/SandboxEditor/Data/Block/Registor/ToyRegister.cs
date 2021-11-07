@@ -8,20 +8,23 @@ namespace SandboxEditor.Data.Block.Register
         public GameObject Data
         {
             get => (GameObject) data;
-            private set => Data = value;
+            private set => data = value;
         }
         
-        public ToyRegister()
+        // base Constructor는 자동으로 호출된다.
+        public ToyRegister(GameObject toy)
         {
-            data = null;
+            data = toy;
         }
+        
+        public ToyRegister() { }
         
         public override void ReceiveData(AbstractRegister FromThisRegister)
         {
             switch (FromThisRegister)
             {
                 case ToyRegister anotherToyRegister:
-                    data ??= anotherToyRegister.Data;
+                    data = anotherToyRegister.Data;
                     break;
                 case BoolRegister _:
                     break;
@@ -32,6 +35,11 @@ namespace SandboxEditor.Data.Block.Register
                 default:
                     throw new NotImplementedException();
             }
+        }
+
+        public override void InitializeData()
+        {
+            Data = null;
         }
     }
 }

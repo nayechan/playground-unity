@@ -2,6 +2,7 @@
 using System.Linq;
 using GameEditor.EventEditor.Controller;
 using SandboxEditor.Data.Block;
+using SandboxEditor.Data.Block.Register;
 using SandboxEditor.InputControl.InEditor.Sensor;
 using UnityEngine;
 
@@ -13,19 +14,32 @@ namespace SandboxEditor.NewBlock
         public BlockPort collisionDetected;
         public BlockPort anotherToy;
 
+        private void Start()
+        {
+            InitializePortRegister();
+        }
+
+        protected override void InitializePortRegister()
+        {
+            toyToSense.register = new ToyRegister();
+            collisionDetected.register = new BoolRegister();
+            if (anotherToy != null)
+                anotherToy.register = new ToyRegister();
+        }
+
         public override void OnEveryFixedUpdateWhenPlaying()
         {
-            if (toyToSense.value == null) return;
-            var targetToyGameObject = (GameObject) toyToSense.value;
+            if (toyToSense.RegisterValue == null) return;
+            var targetToyGameObject = (GameObject) toyToSense.RegisterValue;
             if (CollisionInEveryFrame.HitToyAndOther.ContainsKey(targetToyGameObject))
             {
-                collisionDetected.value = true;
-                anotherToy.value = CollisionInEveryFrame.HitToyAndOther[targetToyGameObject];
+                collisionDetected.RegisterValue = true;
+                anotherToy.RegisterValue = CollisionInEveryFrame.HitToyAndOther[targetToyGameObject];
             }
             else
             {
-                collisionDetected.value = false;
-                anotherToy.value = null;
+                collisionDetected.RegisterValue = false;
+                anotherToy.RegisterValue = null;
             }
         }
         
