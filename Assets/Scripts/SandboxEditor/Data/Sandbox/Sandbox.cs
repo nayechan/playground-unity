@@ -43,8 +43,8 @@ namespace SandboxEditor.Data.Sandbox
             if (dontLoadPlayerPref) return;
             LoadSandboxDataFromMainScene();
             LoadSandbox();
-            if (WeStartPlayRightNow()) 
-                SandboxPhase.GameStart();
+            // if (WeStartPlayRightNow()) 
+            //     SandboxPhase.GameStart();
         }
 
         private static void LoadSandboxDataFromMainScene()

@@ -10,5 +10,5 @@ EditorBuildSettings:
     guid: 6912eba1de4107549abba7bb06643c08
   - enabled: 1
     path: Assets/Scenes/GameEditor/SandboxEditAndPlayer.unity
-    guid: 3f47eaf821978f0478e3f4ba0bc2112a
+    guid: 2f8a0ddc12e33d84fa5c6baee249d897
   m_configObjects: {}
