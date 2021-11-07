@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using SandboxEditor.UI.Panel;
 using Tools;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace SandboxEditor.InputControl.InEditor.Sensor.BlockOptionButton

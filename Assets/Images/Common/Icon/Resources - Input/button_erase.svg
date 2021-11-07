@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96">
+  <g id="button_erase" transform="translate(-830 -1472)">
+    <g id="area" transform="translate(830 1472)" fill="#fff" stroke="#dcdceb" stroke-width="4">
+      <rect width="96" height="96" rx="40" stroke="none"/>
+      <rect x="2" y="2" width="92" height="92" rx="38" fill="none"/>
+    </g>
+    <path id="icon" d="M44.459,23.852a4.286,4.286,0,0,0,0-6.061L30.173,3.505a4.286,4.286,0,0,0-6.061,0L1.255,26.362a4.286,4.286,0,0,0,0,6.061l8.571,8.571a4.286,4.286,0,0,0,3.031,1.255H44.643a1.071,1.071,0,0,0,1.071-1.071V37.607a1.071,1.071,0,0,0-1.071-1.071H31.775L44.459,23.852ZM17.439,18.26,29.7,30.526l-6.01,6.01H13.449L6.306,29.393,17.439,18.26Z" transform="translate(855.143 1497.75)" fill="#787882"/>
+  </g>
+</svg>
