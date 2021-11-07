@@ -40,11 +40,17 @@ namespace SandboxEditor.Data.Sandbox
 
         private void Start()
         {
-            if (dontLoadPlayerPref) return;
+            if (dontLoadPlayerPref)
+            {
+                LoadSandbox();
+                return;
+            }
+
             LoadSandboxDataFromMainScene();
             LoadSandbox();
-            // if (WeStartPlayRightNow()) 
-            //     SandboxPhase.GameStart();
+            if (WeStartPlayRightNow()) 
+                SandboxPhase.GameStart();
+
         }
 
         private static void LoadSandboxDataFromMainScene()

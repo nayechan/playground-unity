@@ -12,8 +12,8 @@ namespace GameEditor.EventEditor.Line
         public PortConnectionData portConnectionData;
         public LineRenderer lineRenderer;
         private bool isConnectionSet = false;
-        private SpriteRenderer senderSpriteRenderer;
-        private SpriteRenderer receiverSpriteRenderer;
+        private BlockBody senderPortBlockBody;
+        private BlockBody receiverPortBlockBody;
         private bool senderPortIsOnToy = false;
         private bool receiverPortIsOnToy = false;
 
@@ -30,11 +30,11 @@ namespace GameEditor.EventEditor.Line
         {
             this.portConnectionData = portConnectionData;
             isConnectionSet = true;
-            senderSpriteRenderer = portConnectionData.senderData.blockPort.GetComponent<SpriteRenderer>();
-            receiverSpriteRenderer = portConnectionData.receiverData.blockPort.GetComponent<SpriteRenderer>();
-            if (senderSpriteRenderer == null)
+            senderPortBlockBody = portConnectionData.senderData.blockPort.GetComponentInParent<BlockBody>();
+            receiverPortBlockBody = portConnectionData.receiverData.blockPort.GetComponentInParent<BlockBody>();
+            if (senderPortBlockBody == null)
                 senderPortIsOnToy = true;
-            if (receiverSpriteRenderer == null)
+            if (receiverPortBlockBody == null)
                 receiverPortIsOnToy = true;
         }
 
@@ -47,8 +47,8 @@ namespace GameEditor.EventEditor.Line
 
         private bool AreBothPortInvisible()
         {
-            return (senderPortIsOnToy || senderSpriteRenderer.enabled) &&
-                   (senderPortIsOnToy || receiverSpriteRenderer.enabled);
+            return (senderPortIsOnToy || senderPortBlockBody.gameObject.activeSelf) &&
+                   (receiverPortIsOnToy || receiverPortBlockBody.gameObject.activeSelf);
         }
 
     }

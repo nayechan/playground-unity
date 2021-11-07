@@ -1,4 +1,5 @@
-﻿using SandboxEditor.Data.Block;
+﻿using System.Collections;
+using SandboxEditor.Data.Block;
 using SandboxEditor.Data.Block.Register;
 using SandboxEditor.InputControl.InEditor.Sensor;
 using UnityEngine;
@@ -24,7 +25,13 @@ namespace SandboxEditor.NewBlock
         public override void OnEveryFixedUpdateWhenPlaying()
         {
             if (destroySignal.RegisterValue == null || (bool) destroySignal.RegisterValue == false) return;
-            Destroy((GameObject)toyToDestroy.RegisterValue);
+            StartCoroutine(DestroyAfterMilliSec(((GameObject)toyToDestroy.RegisterValue)));
+        }
+
+        private IEnumerator DestroyAfterMilliSec(Object gameObject)
+        {
+            yield return new WaitForFixedUpdate();
+            Destroy(gameObject);
         }
 
         public override BlockData SaveBlockData()
