@@ -38,7 +38,7 @@ namespace SandboxEditor.InputControl.InEditor.Sensor
 
         private void InitializeReceiverValue()
         {
-            register.InitializeData();
+            register?.InitializeData();
             var connections = ConnectionController.GetConnections(this);
             if (connections == null) return;
             foreach (var connection in connections)

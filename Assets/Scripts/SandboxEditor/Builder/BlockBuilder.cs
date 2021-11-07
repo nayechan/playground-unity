@@ -21,6 +21,7 @@ namespace SandboxEditor.Builder
         public GameObject velocitySetterBlock;
         public GameObject touchInputBlock;
         public GameObject accelerationBlock;
+        public GameObject audioBlock;
         
         private void Awake()
         {
@@ -94,6 +95,9 @@ namespace SandboxEditor.Builder
                     break;
                 case AccelerationBlockData accelerationBlockData:
                     blockGameObject = Instantiate(_BlockBuilder.accelerationBlock);
+                    break;
+                case AudioBlockData audioBlockData:
+                    blockGameObject = Instantiate(_BlockBuilder.audioBlock);
                     break;
                 default:
                     return null;

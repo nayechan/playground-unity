@@ -57,6 +57,13 @@ namespace SandboxEditor.Data.Sandbox
             System.IO.File.WriteAllText(jsonImageStorageDataPath, jsonImageStorageData);
         }
 
+        private void SaveAudioStorageData()
+        {
+            var jsonImageStorageDataPath = SandboxChecker.MakeFullPath(_sandboxData, JsonNameOfImageStorageData);
+            var jsonImageStorageData =  JsonUtility.ToJson(ImageStorage.GetImageStorageData(),true); 
+            System.IO.File.WriteAllText(jsonImageStorageDataPath, jsonImageStorageData);
+        }
+
         private void SaveToyStorageData()
         {
             var jsonToyStorageDataPath = SandboxChecker.MakeFullPath(_sandboxData, JsonNameOfToyStorageData);

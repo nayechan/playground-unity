@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using SandboxEditor.Data.Resource;
+using SandboxEditor.NewBlock;
 using UnityEngine;
 
 /*
@@ -14,16 +15,6 @@ namespace SandboxEditor.UI.Panel.Audio
         [SerializeField] Transform contentPanel;
 
         // Start is called before the first frame update
-        void Start()
-        {
-        
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
 
         // UI를 Refresh 합니다 (다른 곳에서 AudioData 리스트를 넘겨서 호출하면, 그걸 바탕으로 UI를 재생성)
         public void RefreshUI(List<AudioData> audioDatas)

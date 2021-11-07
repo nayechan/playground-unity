@@ -5,6 +5,9 @@ namespace Tools
 {
     public static class File
     {
+        public const string BackgroundMusicPath = "Sound/BackgroundMusic";
+        public const string EffectSoundPath = "Sound/EffectSound";
+        
         public static void DeleteFileIfExist(string path)
         {
             if(System.IO.File.Exists(path))

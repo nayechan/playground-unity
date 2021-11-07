@@ -1,4 +1,5 @@
 using SandboxEditor.Data.Resource;
+using SandboxEditor.Data.Storage;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,23 +30,17 @@ namespace SandboxEditor.UI.Panel.Audio
         public void SetAudioData(AudioData data)
         {
             _audioData = data;
-            RefreshUI();
+            typeText.text = _audioData.type;
+            titleText.text = _audioData.fileName;
         }  
 
-        // 이 요소에 대한 UI 부분을 리프레시합니다.
-        public void RefreshUI()
-        {
-            Debug.Log(typeText);
-            typeText.text = _audioData.GetAudioType();
-            titleText.text = System.IO.Path.GetFileName(_audioData.GetPath());
-        } 
 
         // 이 요소가 클릭하였을 때의 동작입니다.
         public void OnButtonClicked()
         {
-            audioSource.Stop();
-            audioSource.clip = _audioData.GetAudioClip();
-            audioSource.Play();
+            AudioStorage.audioStorage.audioSelectPanel.SetActive(false);
+            AudioStorage.audioStorage.selectedAudioBlock.audioSource.clip = _audioData.audioClip;
+            AudioStorage.audioStorage.selectedAudioBlock.audioName = _audioData.fileName;
         }
     }
 }

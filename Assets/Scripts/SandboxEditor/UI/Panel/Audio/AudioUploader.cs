@@ -1,7 +1,10 @@
+using System;
 using System.IO;
 using ExternalScript.WebGLFileUploader;
 using SandboxEditor.Data.Resource;
+using SandboxEditor.Data.Sandbox;
 using SandboxEditor.Data.Storage;
+using SandboxEditor.NewBlock;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,6 +30,8 @@ namespace SandboxEditor.UI.Panel.Audio
 
         [SerializeField] private Dropdown _typeDropdown;
         [SerializeField] private Text _fileStatusInputField;
+
+        public Sandbox sandbox;
 
         private string _currentPath;
 
@@ -151,8 +156,16 @@ namespace SandboxEditor.UI.Panel.Audio
 
         public void OnConfirmButtonClicked()
         {
-            string audioType = _typeDropdown.options[_typeDropdown.value].text;
-            _audioStorage.AddAudioData(new AudioData(_currentPath, audioType));
+            var audioType = _typeDropdown.options[_typeDropdown.value].text;
+            CopyAudioData(_currentPath);
+            _audioStorage.AddAudioData(new AudioData(Path.GetFileName(_currentPath), audioType));
+        }
+        
+        private void CopyAudioData(string originalPath)
+        {
+            var fileName = Path.GetFileName(originalPath);
+            var sandboxAudioPath = SandboxChecker.MakeFullPath(sandbox, fileName);
+            File.Copy(originalPath, sandboxAudioPath, true);
         }
     }
 }

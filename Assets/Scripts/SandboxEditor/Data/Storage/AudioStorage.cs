@@ -1,11 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using SandboxEditor.Data.Resource;
 using SandboxEditor.Data.Sandbox;
+using SandboxEditor.NewBlock;
 using SandboxEditor.UI.Panel.Audio;
 using UnityEngine;
 using UnityEngine.Networking;
+using File = Tools.File;
 
 // 오디오를 메모리에 저장하고, 재생하기 위한 저장소입니다.
 namespace SandboxEditor.Data.Storage
@@ -13,91 +17,86 @@ namespace SandboxEditor.Data.Storage
     public class AudioStorage : MonoBehaviour
     {
         // 오디오 데이터에 대한 리스트입니다.
-        [SerializeField] private List<AudioData> _audioDatas;
+        public Dictionary<string, AudioData> _audiosData;
 
         // Audio 편집기의 UI와 저장 상황을 동기화하기 위해 추가한 변수입니다.
         [SerializeField] private AudioEditorController _audioEditorController;
         public Sandbox.Sandbox sandbox;
+        
+        public static AudioStorage audioStorage;
 
+        public AudioBlock selectedAudioBlock;
+        public GameObject audioSelectPanel;
         private void Awake()
         {
-            _audioDatas = new List<AudioData>();
+            _audiosData = new Dictionary<string, AudioData>();
+            LoadAudioClipResources(Resources.LoadAll<AudioClip>(File.BackgroundMusicPath), "BGM");
+            LoadAudioClipResources(Resources.LoadAll<AudioClip>(File.EffectSoundPath), "EffectSound");
+            _audioEditorController.RefreshUI(_audiosData.Values.ToList());
+
+            audioStorage ??= this;
+        }
+
+        private void LoadAudioClipResources(IEnumerable<AudioClip> audiosData, string type)
+        {
+            foreach (var clip in audiosData)
+            {
+                var audioData = new AudioData(clip.name, type)
+                {
+                    audioClip = clip
+                };
+                _audiosData.Add(clip.name, audioData);
+            }
         }
 
         // 코루틴 형태로 오디오 클립을 불러옵니다.
-        public IEnumerator LoadAudioClip(AudioData data)
+        private IEnumerator LoadAudioClip(AudioData audioData)
         {
-            CopyAudioData(data);
-
-            string path = data.GetPath();
-            string sandboxPath = SandboxChecker.GetSandboxPath(sandbox.sandboxData);
-
-            Debug.Log(path);
-            string fileExtension = Path.GetExtension(path);
+            var fileExtension = Path.GetExtension(audioData.fileName);
+            Debug.Log(audioData.fileName);
+            Debug.Log(fileExtension);
+            Debug.Log(new System.Uri(SandboxChecker.MakeFullPath(sandbox, audioData.fileName)).AbsoluteUri);
             AudioClip audioClip = null;
-        
-            if (fileExtension == ".wav")
+            var TypePair = new Dictionary<string, AudioType>()
             {
-                Debug.Log(new System.Uri(sandboxPath+"/"+path).AbsoluteUri);
-                using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(
-                    new System.Uri(sandboxPath+"/"+path), AudioType.WAV
-                ))
+                {".wav", AudioType.WAV},
+                {".mp3", AudioType.MPEG}
+            };
+            if (TypePair.ContainsKey(fileExtension))
+            {
+                Debug.Log(TypePair[fileExtension]);
+                using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip 
+                         (new Uri(SandboxChecker.MakeFullPath(sandbox, audioData.fileName)).AbsoluteUri, TypePair[fileExtension]))
                 {
                     yield return www.SendWebRequest();
                     if (www.result != UnityWebRequest.Result.Success)
-                    {
                         Debug.Log("Error Occured : "+www.result);
-                    }
                     else
-                    {
                         audioClip = DownloadHandlerAudioClip.GetContent(www);
-                    }
-                }
-            }
-            else if (fileExtension == ".mp3")
-            {
-                Debug.Log(File.Exists(sandboxPath+"/"+path));
-                using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(
-                    new System.Uri(sandboxPath+"/"+path), AudioType.MPEG
-                ))
-                {
-                    yield return www.SendWebRequest();
-                    if (www.result != UnityWebRequest.Result.Success)
-                    {
-                        Debug.Log("Error Occured : "+www.result);
-                    }
-                    else
-                    {
-                        audioClip = DownloadHandlerAudioClip.GetContent(www);
-                    }
                 }
             }
 
-            if (audioClip != null)
-            {
-                Debug.Log("pass");
-                audioClip.name = Path.GetFileName(path);
-                data.SetAudioClip(audioClip);
-                _audioDatas.Add(data);
-                _audioEditorController.RefreshUI(_audioDatas);
-            }
-        }
-
-        // 오디오 데이터를 앱 내부 데이터 폴더로 복사합니다.
-        public void CopyAudioData(AudioData data)
-        {
-            var fileName = System.IO.Path.GetFileName(data.GetPath());
-            string newPath = SandboxChecker.MakeFullPath(sandbox, fileName);
-            Debug.Log(newPath);
-            System.IO.File.Copy(data.GetPath(), newPath, true);
-            data.SetRelativePath(fileName);
+            if (audioClip == null) yield break;
+            audioClip.name = audioData.fileName;
+            audioData.audioClip = audioClip;
+            _audiosData.Add(audioData.fileName, audioData);
+            _audioEditorController.RefreshUI(_audiosData.Values.ToList());
         }
 
         public void AddAudioData(AudioData data)
         {
-            Debug.Log("test");
             StartCoroutine(LoadAudioClip(data));
         }
 
+    }
+    [Serializable]
+    public class AudiosData
+    {
+        public List<AudioData> audiosData;
+
+        public AudiosData(List<AudioData> audiosData)
+        {
+            this.audiosData = audiosData;
+        }
     }
 }

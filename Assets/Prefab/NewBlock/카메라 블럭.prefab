@@ -84,6 +84,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6366077212999271820}
   - component: {fileID: 2580838002143379848}
+  - component: {fileID: 7196277729826424596}
   m_Layer: 0
   m_Name: "\uCE74\uBA54\uB77C \uBE14\uB7ED"
   m_TagString: Untagged
@@ -123,9 +124,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab4d3651512f4464989ec1b68187a498, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameObjectInstanceID: 0
   camera: {fileID: 3917875651159363138}
+  audioListener: {fileID: 7196277729826424596}
   guideArea: {fileID: 8108926848174763618}
+--- !u!81 &7196277729826424596
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6312591616032077221}
+  m_Enabled: 0
 --- !u!1 &8108926848174763618
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ namespace SandboxEditor.NewBlock
     public class DisplayBlock : AbstractBlock
     {
         public Camera camera;
+        public AudioListener audioListener;
         public GameObject guideArea;
 
         public override void OnEveryFixedUpdateWhenPlaying() { }
@@ -23,6 +24,7 @@ namespace SandboxEditor.NewBlock
         {
             base.WhenGameStart();
             ChangeMainDisplay();
+            audioListener.enabled = true;
         }
 
         private void ChangeMainDisplay()

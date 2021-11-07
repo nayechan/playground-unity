@@ -4,46 +4,21 @@ using UnityEngine;
 
 namespace SandboxEditor.Data.Resource
 {
+    [Serializable]
     public class AudioData
     {
         //private string uuid;
-        private string _path;
-        private string _type;
-        private AudioClip _audioClip;
-        private ToyData toyData;
+        public string fileName;
+        public string type;
+        public AudioClip audioClip;
 
         public AudioData() {}
 
-        public AudioData(string path, string type)
+        public AudioData(string fileName, string type)
         {
-            _path = path;
-            _type = type;
-            _audioClip = null;
+            this.fileName = fileName;
+            this.type = type;
         }
-
-        public AudioClip GetAudioClip()
-        {
-            return _audioClip;
-        }
-
-        public void SetAudioClip(AudioClip audioClip)
-        {
-            _audioClip = audioClip;
-        }
-
-        public string GetPath()
-        {
-            return _path;
-        }
-
-        public void SetRelativePath(string path)
-        {
-            _path = path;
-        }
-
-        public string GetAudioType()
-        {
-            return _type;
-        }
+        
     }
 }

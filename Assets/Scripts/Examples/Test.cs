@@ -1,14 +1,17 @@
 using System.Collections.Generic;
+using Tools;
 using UnityEngine;
 
 public class Test : MonoBehaviour
 {
+    public List<AudioClip> ac;
     // Start is called before the first frame update
     void Start()
     {
-        object a = gameObject;
-        var b = (GameObject)a;
-        Debug.Log(b.transform.position);
+        foreach(var clip in Resources.LoadAll<AudioClip>(File.BackgroundMusicPath))
+            ac.Add(clip);
+        foreach(var clip in Resources.LoadAll<AudioClip>(File.EffectSoundPath))
+            ac.Add(clip);
     }
 
     // Update is called once per frame
