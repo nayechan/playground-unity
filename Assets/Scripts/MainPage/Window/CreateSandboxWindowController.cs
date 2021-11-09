@@ -45,19 +45,30 @@ namespace MainPage.Window
             if(sandboxData.description == ""){sandboxData.description = "No Description";}
             if(sandboxData.creatorName == ""){sandboxData.description = "Unknown Creator";}
 
-            string jsonData = JsonUtility.ToJson(sandboxData);
-
-            string writePath = SandboxChecker.MakeFullPath(sandboxData, Names.JsonNameOfSandboxData);
-
-            if(!Directory.Exists(SandboxChecker.GetSandboxPath(sandboxData)))
-            {
-                Directory.CreateDirectory(SandboxChecker.GetSandboxPath(sandboxData));
+            Debug.Log(sandboxData.creatorName);
+            try{
+                SandboxSaveLoader.SaveSandbox(sandboxData, null, null);
+            }
+            catch{
+                
             }
 
-            System.IO.File.WriteAllText(
-                writePath,
-                jsonData
-            );
+            // string jsonData = JsonUtility.ToJson(sandboxData);
+
+            // Debug.Log(jsonData);
+
+
+            // string writePath = SandboxChecker.MakeFullPath(sandboxData, Names.JsonNameOfSandboxData);
+
+            // if(!Directory.Exists(SandboxChecker.GetSandboxPath(sandboxData)))
+            // {
+            //     Directory.CreateDirectory(SandboxChecker.GetSandboxPath(sandboxData));
+            // }
+
+            // System.IO.File.WriteAllText(
+            //     writePath,
+            //     jsonData
+            // );
 
             libraryPanel.UpdateComponent();
 
