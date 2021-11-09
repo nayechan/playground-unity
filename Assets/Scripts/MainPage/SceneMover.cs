@@ -42,7 +42,7 @@ public class SceneMover : MonoBehaviour
             if(sceneMovementText != null)
             {
                 sceneMovementText.text = string.Format(
-                    loadText, asyncLoad.progress.ToString()
+                    loadText, (asyncLoad.progress*100.0f).ToString()
                 );
             }
             yield return null;
