@@ -71,8 +71,6 @@ namespace SandboxEditor.Data.Sandbox
         private void SandboxInitialize()
         {
             _Sandbox ??= this;
-            Tools.File.CreateDirectoryIfDoesntExist(SandboxChecker.GetSandboxPath(sandboxData));
-            Debug.Log(SandboxChecker.GetSandboxPath(sandboxData));
             PauseSandbox();
         }
 

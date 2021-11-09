@@ -34,7 +34,6 @@ namespace SandboxEditor.Data.Sandbox
 
         private static void CreateDefaultDirectoriesIfDosentExist()
         {
-            File.CreateDirectoryIfDoesntExist(AppPath);
             File.CreateDirectoryIfDoesntExist(LocalPath);
             File.CreateDirectoryIfDoesntExist(RemotePath);
         }
