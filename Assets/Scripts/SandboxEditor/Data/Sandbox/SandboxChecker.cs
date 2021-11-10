@@ -13,7 +13,7 @@ namespace SandboxEditor.Data.Sandbox
     {
         private static Dictionary<int, SandboxData> _sandboxDatasOfLocal = new Dictionary<int, SandboxData>();
         private static Dictionary<int, SandboxData> _sandboxDatasOfRemote = new Dictionary<int, SandboxData>();
-        public static string AppPath;
+        public static string ApplicationPath;
         public static string LocalPath;
         public static string RemotePath;
         
@@ -27,13 +27,14 @@ namespace SandboxEditor.Data.Sandbox
 
         private static void SetPath(string appPath)
         {
-            AppPath = appPath;
-            LocalPath = Path.Combine(AppPath, DirectoryNameOfLocalSandbox);
-            RemotePath = Path.Combine(AppPath, DirectoryNameOfRemoteSandbox);
+            ApplicationPath = appPath;
+            LocalPath = Path.Combine(ApplicationPath, DirectoryNameOfLocalSandbox);
+            RemotePath = Path.Combine(ApplicationPath, DirectoryNameOfRemoteSandbox);
         }
 
         private static void CreateDefaultDirectoriesIfDosentExist()
         {
+            File.CreateDirectoryIfDoesntExist(ApplicationPath);
             File.CreateDirectoryIfDoesntExist(LocalPath);
             File.CreateDirectoryIfDoesntExist(RemotePath);
         }
@@ -78,14 +79,14 @@ namespace SandboxEditor.Data.Sandbox
 
         public static string GetSandboxPath(SandboxData sandboxData)
         {
-            return Path.Combine(AppPath,
+            return Path.Combine(ApplicationPath,
                 sandboxData.isLocalSandbox ? DirectoryNameOfLocalSandbox : DirectoryNameOfRemoteSandbox,
                 sandboxData.id);
         }
 
         public static string MakeFullPath(Sandbox sandbox, string reletivePath)
         {
-            return MakeFullPath(sandbox.sandboxData, reletivePath);
+            return MakeFullPath(sandbox._sandboxData, reletivePath);
         }
 
         public static string MakeFullPath(SandboxData sandboxData, string reletivePath)

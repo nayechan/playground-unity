@@ -22,10 +22,26 @@ namespace SandboxEditor.Data.Sandbox
         private readonly GameObject _rootOfBlock;
 
 
-        public static void MakeNewSandbox(SandboxData newSandboxData)
+
+        public static void SaveSandbox(SandboxData sandboxData, GameObject rootOfToy, GameObject rootOfBlock)
         {
+            var sandboxSaveLoader = new SandboxSaveLoader(sandboxData, rootOfToy, rootOfBlock);
+            sandboxSaveLoader.SaveSandbox();
+        }
+        
+        private SandboxSaveLoader(SandboxData sandboxData, GameObject rootOfToy = null, GameObject rootOfBlock = null)
+        {
+            _sandboxData = sandboxData;
+            _rootOfBlock = rootOfBlock;
+            _rootOfToy = rootOfToy;
+        }
+        
+        public static void InitializeLocalSandbox(SandboxData newSandboxData)
+        {
+            var sandboxSaveLoader = new SandboxSaveLoader(newSandboxData);
             File.CreateDirectoryIfDoesntExist(SandboxChecker.GetSandboxPath(newSandboxData));
             DeleteFilesIfExist(newSandboxData);
+            sandboxSaveLoader.CreateDefaultJson();
         }
 
         private static void DeleteFilesIfExist(SandboxData newSandboxData)
@@ -37,32 +53,28 @@ namespace SandboxEditor.Data.Sandbox
             File.DeleteFileIfExist(newSandboxData.SandboxDataPath);
         }
         
-
-        public static void SaveSandbox(SandboxData sandboxData, GameObject rootOfToy, GameObject rootOfBlock)
+        private void CreateDefaultJson()
         {
-            var sandboxSaveLoader = new SandboxSaveLoader(sandboxData, rootOfToy, rootOfBlock);
-            sandboxSaveLoader.SaveSandbox();
-        }
-        
-        private SandboxSaveLoader(SandboxData sandboxData, GameObject rootOfToy, GameObject rootOfBlock)
-        {
-            _sandboxData = sandboxData;
-            _rootOfBlock = rootOfBlock;
-            _rootOfToy = rootOfToy;
+            SaveJsonDataLocally(_sandboxData, _sandboxData.SandboxDataPath);
+            SaveJsonDataLocally(File.DefaultJsonObject, _sandboxData.ImageDataPath);
+            SaveJsonDataLocally(File.DefaultJsonObject, _sandboxData.ToyStorageDataPath);
+            SaveJsonDataLocally(File.DefaultJsonObject, _sandboxData.ToyDataPath);
+            SaveJsonDataLocally(File.DefaultJsonObject, _sandboxData.BlockDataPath);
+            SaveJsonDataLocally(File.DefaultJsonObject, _sandboxData.ConnectionDataPath);
         }
         
         private void SaveSandbox()
         {
             File.CreateDirectoryIfDoesntExist(SandboxChecker.GetSandboxPath(_sandboxData));
-            SaveData(_sandboxData, _sandboxData.SandboxDataPath);
-            SaveData(ImageStorage.GetImageStorageData() ?? File.DefaultJsonObject, _sandboxData.ImageDataPath);
-            SaveData(ToyStorage.ToysData?? File.DefaultJsonObject, _sandboxData.ToyStorageDataPath);
-            SaveData(_rootOfToy?.GetComponent<ToySaver>().GetToyData(), _sandboxData.ToyDataPath);
-            SaveData(BlockStorage.GetLatestBlocksData(_rootOfBlock), _sandboxData.BlockDataPath);
-            SaveData(ConnectionController.GetBlockConnections(), _sandboxData.ConnectionDataPath);
+            SaveJsonDataLocally(_sandboxData, _sandboxData.SandboxDataPath);
+            SaveJsonDataLocally(ImageStorage.GetImageStorageData() ?? File.DefaultJsonObject, _sandboxData.ImageDataPath);
+            SaveJsonDataLocally(ToyStorage.ToysData, _sandboxData.ToyStorageDataPath);
+            SaveJsonDataLocally(_rootOfToy?.GetComponent<ToySaver>().GetToyData(), _sandboxData.ToyDataPath);
+            SaveJsonDataLocally(BlockStorage.GetLatestBlocksData(_rootOfBlock), _sandboxData.BlockDataPath);
+            SaveJsonDataLocally(ConnectionController.GetBlockConnections(), _sandboxData.ConnectionDataPath);
         }
 
-        private void SaveData(object data, string filePath)
+        private void SaveJsonDataLocally(object data, string filePath)
         {
             var jsonData = JsonUtility.ToJson(data, true);
             System.IO.File.WriteAllText(filePath, jsonData);
