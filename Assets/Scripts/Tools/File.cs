@@ -7,6 +7,7 @@ namespace Tools
     {
         public const string BackgroundMusicPath = "Sound/BackgroundMusic";
         public const string EffectSoundPath = "Sound/EffectSound";
+        public static readonly object DefaultJsonObject = new object();
         
         public static void DeleteFileIfExist(string path)
         {
@@ -29,6 +30,7 @@ namespace Tools
                 fileNames.Add(System.IO.Path.GetFileName(absolutePath));
             return fileNames;
         }
+        
 
     }
 }

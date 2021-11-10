@@ -45,30 +45,8 @@ namespace MainPage.Window
             if(sandboxData.description == ""){sandboxData.description = "No Description";}
             if(sandboxData.creatorName == ""){sandboxData.description = "Unknown Creator";}
 
-            Debug.Log(sandboxData.creatorName);
-            try{
-                SandboxSaveLoader.SaveSandbox(sandboxData, null, null);
-            }
-            catch{
-                
-            }
-
-            // string jsonData = JsonUtility.ToJson(sandboxData);
-
-            // Debug.Log(jsonData);
-
-
-            // string writePath = SandboxChecker.MakeFullPath(sandboxData, Names.JsonNameOfSandboxData);
-
-            // if(!Directory.Exists(SandboxChecker.GetSandboxPath(sandboxData)))
-            // {
-            //     Directory.CreateDirectory(SandboxChecker.GetSandboxPath(sandboxData));
-            // }
-
-            // System.IO.File.WriteAllText(
-            //     writePath,
-            //     jsonData
-            // );
+            // 기존 저장 함수를 삭제하고 이 함수로 대체해주세요.
+            SandboxSaveLoader.InitializeLocalSandbox(sandboxData);
 
             libraryPanel.UpdateComponent();
 
