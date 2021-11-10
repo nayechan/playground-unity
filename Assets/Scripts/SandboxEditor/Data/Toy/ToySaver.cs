@@ -69,10 +69,9 @@ namespace SandboxEditor.Data.Toy
             _toyData = toyData.Clone();
         }
 
-        // -- GetJsonData
-        public string GetJsonToyData()
+        public ToyData GetToyData()
         {
-            return JsonUtility.ToJson(_toyData, true);
+            return _toyData;
         }
 
     }
