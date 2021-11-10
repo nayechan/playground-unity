@@ -4,6 +4,7 @@ using GameEditor.EventEditor.Controller;
 using SandboxEditor.Builder;
 using SandboxEditor.Data.Storage;
 using SandboxEditor.Data.Toy;
+using Tools;
 using UnityEngine;
 
 namespace SandboxEditor.Data.Sandbox
@@ -60,6 +61,8 @@ namespace SandboxEditor.Data.Sandbox
                 id = PlayerPrefs.GetString("sandboxToRun"),
                 isLocalSandbox = PlayerPrefs.GetInt("isLocalSandbox") == 1? true : false,
             };
+            var sandboxDataPath = SandboxChecker.MakeFullPath(newSandboxData, Names.JsonNameOfSandboxData);
+            newSandboxData = SandboxSaveLoader.LoadSandboxData(sandboxDataPath);
             _Sandbox.sandboxData = newSandboxData;
         }
 
@@ -81,9 +84,16 @@ namespace SandboxEditor.Data.Sandbox
         
         public void SaveSandboxOnPC()
         {
+            UpdateToyRootData();
             SandboxSaveLoader.SaveSandbox(sandboxData, rootOfToy, rootOfBlock);
         }
 
+        
+        private void UpdateToyRootData()
+        {
+            ToySaver.UpdateToysData(RootOfToy);
+        }
+        
         public void LoadSandbox()
         {
             LoadImageStorageData();

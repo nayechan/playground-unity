@@ -1,4 +1,5 @@
 using System;
+using Tools;
 
 namespace SandboxEditor.Data.Sandbox
 {
@@ -12,6 +13,16 @@ namespace SandboxEditor.Data.Sandbox
         public DateTime createdTime;
         public DateTime modifiedTime;
         public string description;
+
+        public string SandboxPath => SandboxChecker.GetSandboxPath(this);
+        public string SandboxDataPath => SandboxChecker.MakeFullPath(this, Names.JsonNameOfSandboxData);
+        public string ToyDataPath => SandboxChecker.MakeFullPath(this, Names.JsonNameOfToyData);
+        public string ToyStorageDataPath => SandboxChecker.MakeFullPath(this, Names.JsonNameOfToyStorageData);
+        public string ImageDataPath => SandboxChecker.MakeFullPath(this, Names.JsonNameOfImageStorageData);
+        public string ConnectionDataPath => SandboxChecker.MakeFullPath(this, Names.JsonNameOfConnectionData);
+        public string BlockDataPath => SandboxChecker.MakeFullPath(this, Names.JsonNameOfBlockData);
+        
+        
 
         public SandboxData()
         {
