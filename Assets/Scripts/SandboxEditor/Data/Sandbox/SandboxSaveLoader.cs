@@ -35,7 +35,7 @@ namespace SandboxEditor.Data.Sandbox
         private void SaveSandbox()
         {
             File.CreateDirectoryIfDoesntExist(SandboxChecker.GetSandboxPath(_sandboxData));
-            SaveSandboxData();
+            _SaveSandboxData();
             SaveImageStorageData();
             SaveToyStorageData();
             UpdateAndSaveToyRootData();
@@ -43,7 +43,13 @@ namespace SandboxEditor.Data.Sandbox
             SaveConnectionData();
         }
 
-        private void SaveSandboxData() 
+        public static void SaveSandboxData(SandboxData sandboxData)
+        {
+            var sandboxSaveLoader = new SandboxSaveLoader(sandboxData, null, null);
+            sandboxSaveLoader._SaveSandboxData();
+        }
+
+        private void _SaveSandboxData() 
         {
             var jsonSandboxDataPath = SandboxChecker.MakeFullPath(_sandboxData, JsonNameOfSandboxData);
             var jsonSandboxData = JsonUtility.ToJson(_sandboxData, true);
