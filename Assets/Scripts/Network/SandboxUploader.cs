@@ -12,8 +12,8 @@ public class SandboxUploader : MonoBehaviour
 {
     private const string severAddress = "http://10.8.0.2:5000/gameShare/uploadGame";
     public Sandbox sandbox;
-    private string SandboxPath => SandboxChecker.GetSandboxPath(sandbox.sandboxData);
-    private static string ZipFilePath => Path.Combine(SandboxChecker.AppPath, Names.TemporaryFolderName,  Names.CompressedSandboxName);
+    private string SandboxPath => SandboxChecker.GetSandboxPath(sandbox._sandboxData);
+    private static string ZipFilePath => Path.Combine(SandboxChecker.ApplicationPath, Names.TemporaryFolderName,  Names.CompressedSandboxName);
     private string SandboxDataJsonPath => Path.Combine(SandboxPath, Names.JsonNameOfSandboxData);
 
     public void CompressAndUploadSandbox()

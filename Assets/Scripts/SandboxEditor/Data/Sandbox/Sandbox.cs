@@ -11,13 +11,19 @@ namespace SandboxEditor.Data.Sandbox
 {
     public class Sandbox : MonoBehaviour
     {
-        public SandboxData sandboxData;
+        public SandboxData _sandboxData;
+        public static SandboxData SandboxData
+        {
+            get => _Sandbox._sandboxData;
+            private set => _Sandbox._sandboxData = value;
+        }
+
         public GameObject rootOfRoots;
         public GameObject rootOfToy;
         public GameObject rootOfBlock;
         public GameObject rootOfConnectionSpriteLine;
         public Camera camera;
-        public bool dontLoadPlayerPref;
+        public bool EditorTestMode;
         private static Sandbox _Sandbox;
         public static GameObject RootOfToy => _Sandbox.rootOfToy;
         public static GameObject RootOfBlock => _Sandbox.rootOfBlock;
@@ -35,46 +41,44 @@ namespace SandboxEditor.Data.Sandbox
 
         private void Awake()
         {
+            _Sandbox ??= this;
             SandboxChecker.Initialize(Application.persistentDataPath);
             SandboxInitialize();
         }
 
+        private void SandboxInitialize()
+        {
+            PauseSandbox();
+        }
+
         private void Start()
         {
-            if (dontLoadPlayerPref)
+            if (EditorTestMode)
             {
-                LoadSandbox();
+                //LoadSandbox();
                 return;
             }
 
-            LoadSandboxDataFromMainScene();
+            ReadSandboxDataFromMainScene();
             LoadSandbox();
             if (WeStartPlayRightNow()) 
                 SandboxPhase.GameStart();
 
         }
 
-        private static void LoadSandboxDataFromMainScene()
+        private static void ReadSandboxDataFromMainScene()
         {
             var newSandboxData = new SandboxData
             {
                 id = PlayerPrefs.GetString("sandboxToRun"),
                 isLocalSandbox = PlayerPrefs.GetInt("isLocalSandbox") == 1? true : false,
             };
-            var sandboxDataPath = SandboxChecker.MakeFullPath(newSandboxData, Names.JsonNameOfSandboxData);
-            newSandboxData = SandboxSaveLoader.LoadSandboxData(sandboxDataPath);
-            _Sandbox.sandboxData = newSandboxData;
+            SandboxData =  SandboxSaveLoader.LoadSandboxData(newSandboxData.SandboxDataPath);
         }
 
         private static bool WeStartPlayRightNow()
         {
             return PlayerPrefs.GetInt("isRunningPlayer") == 1 ? true : false;
-        }
-
-        private void SandboxInitialize()
-        {
-            _Sandbox ??= this;
-            PauseSandbox();
         }
 
         private static void PauseSandbox()
@@ -85,7 +89,7 @@ namespace SandboxEditor.Data.Sandbox
         public void SaveSandboxOnPC()
         {
             UpdateToyRootData();
-            SandboxSaveLoader.SaveSandbox(sandboxData, rootOfToy, rootOfBlock);
+            SandboxSaveLoader.SaveSandbox(SandboxData, rootOfToy, rootOfBlock);
         }
 
         
@@ -105,18 +109,18 @@ namespace SandboxEditor.Data.Sandbox
 
         private void LoadImageStorageData()
         {
-            SandboxSaveLoader.LoadImageStorageData(sandboxData);
+            SandboxSaveLoader.LoadImageStorageData(SandboxData);
         }
 
         private void LoadToyStorageData()
         {
-            SandboxSaveLoader.LoadToyStorageData(sandboxData);
+            SandboxSaveLoader.LoadToyStorageData(SandboxData);
         }
         public void ReloadToyAndUpdateToyIDPair()
         {
             Destroy(rootOfToy);
             _Sandbox._ToyIDToyObjectPairs = new Dictionary<int, GameObject>();
-            rootOfToy = SandboxSaveLoader.LoadToy(sandboxData, ref _Sandbox._ToyIDToyObjectPairs);
+            rootOfToy = SandboxSaveLoader.LoadToy(SandboxData, ref _Sandbox._ToyIDToyObjectPairs);
             Tools.Misc.SetChildAndParent(rootOfToy, rootOfRoots);
         }
 
@@ -124,7 +128,7 @@ namespace SandboxEditor.Data.Sandbox
         {
             BlockStorage.RenewBlockList();
             Destroy(rootOfBlock);
-            (rootOfBlock, _blockIDBlockObjectPairs) = SandboxSaveLoader.LoadBlock(sandboxData);
+            (rootOfBlock, _blockIDBlockObjectPairs) = SandboxSaveLoader.LoadBlock(SandboxData);
             Tools.Misc.SetChildAndParent(rootOfBlock, rootOfRoots);
         }
 
@@ -148,17 +152,17 @@ namespace SandboxEditor.Data.Sandbox
             Destroy(rootOfConnectionSpriteLine);
             rootOfConnectionSpriteLine = new GameObject("SpriteLineRoot");
             Tools.Misc.SetChildAndParent(rootOfConnectionSpriteLine, rootOfRoots);
-            SandboxSaveLoader.LoadConnection(sandboxData, _ToyIDToyObjectPairs, _blockIDBlockObjectPairs);
+            SandboxSaveLoader.LoadConnection(SandboxData, _ToyIDToyObjectPairs, _blockIDBlockObjectPairs);
         }
 
         public string GetSandboxPath()
         {
-            return SandboxChecker.GetSandboxPath(sandboxData);
+            return SandboxChecker.GetSandboxPath(SandboxData);
         }
 
         public string MakeFullPath(string relativePath)
         {
-            return SandboxChecker.MakeFullPath(sandboxData, relativePath);
+            return SandboxChecker.MakeFullPath(SandboxData, relativePath);
         }
 
         public static void DeactiveGameObject(GameObject gameObject)
