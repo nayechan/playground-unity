@@ -56,6 +56,7 @@ namespace SandboxEditor.Data.Sandbox
             if (EditorTestMode)
             {
                 //LoadSandbox();
+                Debug.Log("EditorTestMode");
                 return;
             }
 
@@ -73,11 +74,14 @@ namespace SandboxEditor.Data.Sandbox
                 id = PlayerPrefs.GetString("sandboxToRun"),
                 isLocalSandbox = PlayerPrefs.GetInt("isLocalSandbox") == 1? true : false,
             };
+
+            Debug.Log("ID : "+newSandboxData.id+" "+newSandboxData.isLocalSandbox);
             SandboxData =  SandboxSaveLoader.LoadSandboxData(newSandboxData.SandboxDataPath);
         }
 
         private static bool WeStartPlayRightNow()
         {
+            Debug.Log(PlayerPrefs.GetInt("isRunningPlayer"));
             return PlayerPrefs.GetInt("isRunningPlayer") == 1 ? true : false;
         }
 

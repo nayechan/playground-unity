@@ -25,6 +25,8 @@ public class LibraryCardOptionController : MonoBehaviour
         PlayerPrefs.SetInt("isLocalSandbox", isLocal?1:0);
         PlayerPrefs.SetInt("isRunningPlayer", 1);
 
+        Debug.Log(string.Format("Game ID : {0}, isLocalSandbox : {1}, isRunningPlayer : {2}",gameID,isLocal,1));
+
         SceneMover.getInstance().MoveScene(sceneToMoveOn);
     }
 
@@ -33,6 +35,7 @@ public class LibraryCardOptionController : MonoBehaviour
         PlayerPrefs.SetString("sandboxToRun",gameID);
         PlayerPrefs.SetInt("isLocalSandbox", isLocal?1:0);
         PlayerPrefs.SetInt("isRunningPlayer", 0);
+        Debug.Log(string.Format("Game ID : {0}, isLocalSandbox : {1}, isRunningPlayer : {2}",gameID,isLocal,0));
 
         SceneMover.getInstance().MoveScene(sceneToMoveOn);
     }
