@@ -22,7 +22,7 @@ namespace SandboxEditor.UI.Panel.Toy
             var toyRecipe = BuildToyRecipe();
             if (!IsValid(toyRecipe)) return;
             var newToyData = new ToyData(toyRecipe);
-            ToyStorage.AddToyData(newToyData);
+            ToyPrefabDataStorage.AddToyRecipeData(newToyData);
             ResetInputBox();
         }
 

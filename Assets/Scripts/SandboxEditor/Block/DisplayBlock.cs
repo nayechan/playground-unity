@@ -17,19 +17,18 @@ namespace SandboxEditor.Block
         private void Start()
         {
             ChangeSizeOfCameraAndGuideArea(camera.orthographicSize);
+            camera.enabled = false;
         }
 
         public override void WhenGameStart()
         {
             base.WhenGameStart();
-            Sandbox.EditorCamera.enabled = false;
             camera.enabled = true;
             audioListener.enabled = true;
         }
 
         public override void WhenBackToEditor()
         {
-            Sandbox.EditorCamera.enabled = true;
             camera.enabled = false;
             audioListener.enabled = false;
         }

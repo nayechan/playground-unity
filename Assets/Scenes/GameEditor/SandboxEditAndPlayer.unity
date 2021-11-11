@@ -2493,39 +2493,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!1 &137415993
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 137415994}
-  m_Layer: 0
-  m_Name: SandboxObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &137415994
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 137415993}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1358116895}
-  - {fileID: 584081752}
-  - {fileID: 585309209}
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &141333532
 GameObject:
   m_ObjectHideFlags: 0
@@ -9957,8 +9924,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 137415994}
-  m_RootOrder: 1
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &584708965
 GameObject:
@@ -10141,12 +10108,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 585309208}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 137415994}
-  m_RootOrder: 2
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &594105266
 GameObject:
@@ -19717,16 +19684,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 634c867a26ad14fb9ba83d5ddc1ed816, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rootOfToy: {fileID: 1358116894}
+  _rootOfBlock: {fileID: 584081751}
+  _rootOfConnectionSpriteLine: {fileID: 585309208}
   _sandboxData:
     title: New SandBox
-    id: 1234
+    id: 12345
     isLocalSandbox: 1
     creatorName: 
     description: 
-  rootOfRoots: {fileID: 137415993}
-  rootOfToy: {fileID: 1358116894}
-  rootOfBlock: {fileID: 584081751}
-  rootOfConnectionSpriteLine: {fileID: 585309208}
   camera: {fileID: 169867945}
   EditorTestMode: 0
 --- !u!4 &1227682493
@@ -21508,8 +21474,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 137415994}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1358116896
 MonoBehaviour:

@@ -23,7 +23,7 @@ namespace GameEditor.EventEditor.Controller
         {
             foreach (var collision in Collisions2D)
             {
-                if (collision.gameObject == null) continue;
+                if (collision?.gameObject == null) continue;
                 var hitGameObject = collision.gameObject;
                 var hitPort = hitGameObject.GetComponentInChildren<BlockPort>();
                 var otherGameObject = collision.otherCollider.gameObject;

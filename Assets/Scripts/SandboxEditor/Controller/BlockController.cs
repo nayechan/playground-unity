@@ -18,5 +18,11 @@ namespace GameEditor.EventEditor.Controller
             foreach(var block in BlockStorage.Blocks)
                 block.WhenGameStart();
         }
+        
+        public static void BlockActionWhenBackToEditor()
+        {
+            foreach(var block in BlockStorage.Blocks)
+                block.WhenBackToEditor();
+        }
     }
 }

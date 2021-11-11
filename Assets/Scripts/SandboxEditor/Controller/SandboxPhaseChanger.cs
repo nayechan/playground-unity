@@ -64,14 +64,14 @@ namespace GameEditor.EventEditor.Controller
 
         // Run 페이즈에서 다시 Run 을 누르기 이전 상태로 되돌린다.
         // 토이의 물리효과와 블럭의 효과는 다시 멈춤상태가 된다.
-        public static void TestStop()
+        public static void BackToEditor()
         {
             EnableEditorFunction();
-            RecoverTemporalData();
+            ReloadInstance();
             Pause();
         }
 
-        private static void RecoverTemporalData()
+        private static void ReloadInstance()
         {
             throw new NotImplementedException();
         }
@@ -88,12 +88,16 @@ namespace GameEditor.EventEditor.Controller
         {
             PlayerTouchController.playerTouchController.enabled = false;
             TouchController.GetTID().enabled = true;
+            Sandbox.EditorCamera.enabled = true;
+            Sandbox.EditorCamera.GetComponent<AudioListener>().enabled = true;
         }
         
         private static void DisableEditorFunctionAndEnablePlayerFunction()
         {
             PlayerTouchController.playerTouchController.enabled = true;
             TouchController.GetTID().enabled = false;
+            Sandbox.EditorCamera.enabled = false;
+            Sandbox.EditorCamera.GetComponent<AudioListener>().enabled = false;
         }
     }
     

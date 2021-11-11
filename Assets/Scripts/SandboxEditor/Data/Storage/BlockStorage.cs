@@ -38,7 +38,6 @@ namespace SandboxEditor.Data.Storage
             Blocks.Remove(block);
         }
         
-
         public static void RenewBlockList()
         {
             _BlockStorage._blocks = new List<AbstractBlock>();

@@ -14,9 +14,7 @@ namespace Examples
         void Start()
         {
             
-            sandbox.SaveSandboxOnPC();
             
-            sandbox.ReloadToyAndUpdateToyIDPair();
         }
 
         // Update is called once per frame
