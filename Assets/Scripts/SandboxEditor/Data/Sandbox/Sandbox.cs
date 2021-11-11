@@ -4,7 +4,6 @@ using GameEditor.EventEditor.Controller;
 using SandboxEditor.Builder;
 using SandboxEditor.Data.Storage;
 using SandboxEditor.Data.Toy;
-using Tools;
 using UnityEngine;
 
 namespace SandboxEditor.Data.Sandbox
@@ -12,6 +11,8 @@ namespace SandboxEditor.Data.Sandbox
     public class Sandbox : MonoBehaviour
     {
         public SandboxData _sandboxData;
+        private static SandboxData SelectedSandboxData;
+        private static bool IsRunningPlayer = false;
         public static SandboxData SandboxData
         {
             get => _Sandbox._sandboxData;
@@ -53,36 +54,16 @@ namespace SandboxEditor.Data.Sandbox
 
         private void Start()
         {
-            if (EditorTestMode)
-            {
-                //LoadSandbox();
-                Debug.Log("EditorTestMode");
-                return;
-            }
-
-            ReadSandboxDataFromMainScene();
+            if (EditorTestMode) return;
+            LoadSandboxData();
             LoadSandbox();
-            if (WeStartPlayRightNow()) 
+            if (IsRunningPlayer) 
                 SandboxPhase.GameStart();
-
         }
 
-        private static void ReadSandboxDataFromMainScene()
+        private static void LoadSandboxData()
         {
-            var newSandboxData = new SandboxData
-            {
-                id = PlayerPrefs.GetString("sandboxToRun"),
-                isLocalSandbox = PlayerPrefs.GetInt("isLocalSandbox") == 1? true : false,
-            };
-
-            Debug.Log("ID : "+newSandboxData.id+" "+newSandboxData.isLocalSandbox);
-            SandboxData =  SandboxSaveLoader.LoadSandboxData(newSandboxData.SandboxDataPath);
-        }
-
-        private static bool WeStartPlayRightNow()
-        {
-            Debug.Log(PlayerPrefs.GetInt("isRunningPlayer"));
-            return PlayerPrefs.GetInt("isRunningPlayer") == 1 ? true : false;
+            SandboxData =  SandboxSaveLoader.LoadSandboxData(SelectedSandboxData.SandboxDataPath);
         }
 
         private static void PauseSandbox()
@@ -159,20 +140,14 @@ namespace SandboxEditor.Data.Sandbox
             SandboxSaveLoader.LoadConnection(SandboxData, _ToyIDToyObjectPairs, _blockIDBlockObjectPairs);
         }
 
-        public string GetSandboxPath()
+        public static void SetSandboxDataToRun(string gameID, bool isLocal, bool isRunningPlayer)
         {
-            return SandboxChecker.GetSandboxPath(SandboxData);
+            SelectedSandboxData = new SandboxData()
+            {
+                id = gameID,
+                isLocalSandbox = isLocal
+            };
+            IsRunningPlayer = isRunningPlayer;
         }
-
-        public string MakeFullPath(string relativePath)
-        {
-            return SandboxChecker.MakeFullPath(SandboxData, relativePath);
-        }
-
-        public static void DeactiveGameObject(GameObject gameObject)
-        {
-            gameObject.SetActive(false);
-        }
-
     }
 }
