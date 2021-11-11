@@ -36,7 +36,7 @@ namespace GameEditor.EventEditor.Controller
 
         private void Awake()
         {
-            _ConnectionController ??= this;
+            _ConnectionController = this;
             _blockConnections = new HashSet<PortConnectionData>();
             portLineAndConnectionsPairs = new Dictionary<BlockPort, HashSet<PortConnectionData>>();
         }

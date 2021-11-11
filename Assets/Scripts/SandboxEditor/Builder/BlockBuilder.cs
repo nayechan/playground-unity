@@ -25,7 +25,7 @@ namespace SandboxEditor.Builder
         
         private void Awake()
         {
-            _BlockBuilder ??= this;
+            _BlockBuilder = this;
         }
 
         public static void SetBlockPrefab(GameObject blockPrefab)

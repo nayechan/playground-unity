@@ -17,7 +17,7 @@ namespace SandboxEditor.Builder
 
         private void Awake()
         {
-            _ObjectBuilder ??= this;
+            _ObjectBuilder = this;
         }
 
         public static void BuildAndPlaceToy(Vector3 cursorPosition)

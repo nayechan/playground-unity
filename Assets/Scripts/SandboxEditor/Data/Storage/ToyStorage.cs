@@ -14,13 +14,8 @@ namespace SandboxEditor.Data.Storage
 
         private void Awake()
         {
-            SetSingletonIfUnset();
+            _toyStorage = this;
             _toysData = new ToysData();
-        }
-
-        private void SetSingletonIfUnset()
-        {
-            _toyStorage ??= this;
         }
 
         private static ToyStorage GetSingleton()

@@ -15,7 +15,7 @@ namespace SandboxEditor.Data.Storage
 
         private void Awake()
         {
-            _BlockStorage ??= this;
+            _BlockStorage = this;
             _blocks = new List<AbstractBlock>();
         }
 

@@ -22,17 +22,9 @@ namespace SandboxEditor.Data.Storage
 
         private void Awake()
         {
-            SetSingletonIfUnset();
+            _imageStorage = this;
             _sprites = new Dictionary<string, Sprite>();
             _imagesData = new Dictionary<int, ImageData>();
-        }
-
-        private void SetSingletonIfUnset()
-        {
-            if(_imageStorage == null)
-            {
-                _imageStorage = this;
-            }
         }
 
         private static ImageStorage GetSingleton()
