@@ -5,7 +5,6 @@ using SandboxEditor.Data.Block.Register;
 using SandboxEditor.Data.Storage;
 using SandboxEditor.Data.Toy;
 using SandboxEditor.InputControl.InEditor.Sensor;
-using SandboxEditor.NewBlock;
 using UnityEngine;
 using static Tools.Misc;
 

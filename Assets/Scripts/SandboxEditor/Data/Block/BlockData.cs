@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using SandboxEditor.NewBlock;
+using SandboxEditor.Block;
 using UnityEngine;
 
 namespace SandboxEditor.Data.Block

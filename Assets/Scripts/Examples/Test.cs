@@ -1,35 +1,46 @@
-using System.Collections.Generic;
-using Tools;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class Test : MonoBehaviour
+namespace Examples
 {
-    public List<AudioClip> ac;
-    // Start is called before the first frame update
-    void Start()
+    public class Test : MonoBehaviour
     {
-        foreach(var clip in Resources.LoadAll<AudioClip>(File.BackgroundMusicPath))
-            ac.Add(clip);
-        foreach(var clip in Resources.LoadAll<AudioClip>(File.EffectSoundPath))
-            ac.Add(clip);
-    }
+        public int abc = 1;
+        public static int ABC = 1;
 
-    // Update is called once per frame
-    void Update()
-    {
+        public string toGo;
+        // Start is called before the first frame update
+        void Start()
+        {
+            Debug.Log($"Current ABC : {ABC}");
+        }
+
+
+        private void OnDisable()
+        {
+            Debug.Log("TestScene Call Disable");
+            abc += 1;
+            ABC += 1;
+        }
+
+        IEnumerator ComeBack()
+        {
+            yield return new WaitForSeconds(2);
+            SceneManager.LoadSceneAsync("TestScene");
+        }
+
+        public void ChangeScene()
+        {
+            SceneManager.LoadSceneAsync(toGo);
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
         
         
+        }
+
     }
-
 }
-
-public class GO
-{
-    public List<HAHA> list = new List<HAHA>();
-}
-
-public class HAHA
-{
-    public int a;
-}
-

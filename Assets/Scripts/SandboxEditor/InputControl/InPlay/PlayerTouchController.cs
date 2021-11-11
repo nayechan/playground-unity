@@ -23,7 +23,7 @@ namespace SandboxEditor.InputControl.InPlay
         public static Vector2 TouchToViewport()
         {
             if (Touches.Length == 0) return Vector2.zero;
-            Vector2 viewPort = Sandbox.Camera.ScreenToViewportPoint(Touches[0].position);
+            Vector2 viewPort = Sandbox.EditorCamera.ScreenToViewportPoint(Touches[0].position);
             viewPort -= new Vector2(0.5f, 0.5f);
             return viewPort;
         }

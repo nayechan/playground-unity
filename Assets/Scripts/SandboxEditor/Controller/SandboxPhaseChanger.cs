@@ -8,27 +8,33 @@ using static Tools.Misc;
 
 namespace GameEditor.EventEditor.Controller
 {
-    public class SandboxPhase : MonoBehaviour
+    public class SandboxPhaseChanger : MonoBehaviour
     {
         public GameObject editorInterface;
-        private static SandboxPhase sandboxPhase;
+        private static SandboxPhaseChanger _sandboxPhaseChanger;
         private ToyData _toyData;
+        private bool isGameStarted = false;
+        public static bool IsGameStarted
+        {
+            get => _sandboxPhaseChanger.isGameStarted;
+            private set => _sandboxPhaseChanger.isGameStarted = value;
+        }
         // private BlockData _blockData;
 
         private void Awake()
         {
-            sandboxPhase = this;
+            _sandboxPhaseChanger = this;
         }
 
         // UI가 모두 사라지고 게임이 시작된다. 호출시 샌드박스 저장없이 시작되므로 주의.
         public static void GameStart()
         {
-            sandboxPhase.HideEditorInterface();
+            _sandboxPhaseChanger.HideEditorInterface();
             DisableEditorFunctionAndEnablePlayerFunction();
             EnableChildrenRigidBody(Sandbox.RootOfToy); 
             BlockController.BlockActionWhenGameStart();
-            SandboxUpdateController.SetSignalTransferAndBlockActionOn();
             Sandbox.RootOfConnectionSpriteLine.SetActive(false);
+            IsGameStarted = true;
         }
 
 
@@ -90,4 +96,5 @@ namespace GameEditor.EventEditor.Controller
             TouchController.GetTID().enabled = false;
         }
     }
+    
 }

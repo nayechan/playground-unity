@@ -1,9 +1,8 @@
-﻿using System;
-using SandboxEditor.Data.Block;
+﻿using SandboxEditor.Data.Block;
 using SandboxEditor.Data.Storage;
 using UnityEngine;
 
-namespace SandboxEditor.NewBlock
+namespace SandboxEditor.Block
 {
     public abstract class AbstractBlock : MonoBehaviour
     {
@@ -12,6 +11,11 @@ namespace SandboxEditor.NewBlock
         public virtual void WhenGameStart()
         {
             DisableBlockRenderer();
+        }
+
+        public virtual void WhenBackToEditor()
+        {
+            
         }
         
         private void DisableBlockRenderer()

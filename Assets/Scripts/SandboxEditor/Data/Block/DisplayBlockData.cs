@@ -1,5 +1,5 @@
 ﻿using System;
-using SandboxEditor.NewBlock;
+using SandboxEditor.Block;
 
 namespace SandboxEditor.Data.Block
 {

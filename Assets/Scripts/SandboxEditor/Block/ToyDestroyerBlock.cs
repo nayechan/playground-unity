@@ -4,7 +4,7 @@ using SandboxEditor.Data.Block.Register;
 using SandboxEditor.InputControl.InEditor.Sensor;
 using UnityEngine;
 
-namespace SandboxEditor.NewBlock
+namespace SandboxEditor.Block
 {
     public class ToyDestroyerBlock : AbstractBlock
     {

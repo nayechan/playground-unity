@@ -4,7 +4,6 @@ using ExternalScript.WebGLFileUploader;
 using SandboxEditor.Data.Resource;
 using SandboxEditor.Data.Sandbox;
 using SandboxEditor.Data.Storage;
-using SandboxEditor.NewBlock;
 using UnityEngine;
 using UnityEngine.UI;
 
