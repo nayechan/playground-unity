@@ -43,7 +43,7 @@ namespace GameEditor.EventEditor.Controller
 
         public static void AddCollision2D(Collision2D collision2D)
         {
-            if(SandboxUpdateController.IsGameStarted)
+            if(SandboxPhaseChanger.IsGameStarted)
                 _CollisionInEveryFrame.collisions2D.Add(collision2D);
         }
 

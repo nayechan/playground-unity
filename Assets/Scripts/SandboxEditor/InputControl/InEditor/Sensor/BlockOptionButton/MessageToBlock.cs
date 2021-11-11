@@ -1,5 +1,5 @@
 using UnityEngine;
-using AbstractBlock = SandboxEditor.NewBlock.AbstractBlock;
+using AbstractBlock = SandboxEditor.Block.AbstractBlock;
 
 namespace SandboxEditor.InputControl.InEditor.Sensor.BlockOptionButton
 {

@@ -1,9 +1,8 @@
-﻿using System;
-using SandboxEditor.Data.Block;
+﻿using SandboxEditor.Data.Block;
 using SandboxEditor.Data.Sandbox;
 using UnityEngine;
 
-namespace SandboxEditor.NewBlock
+namespace SandboxEditor.Block
 {
     public class DisplayBlock : AbstractBlock
     {
@@ -23,15 +22,16 @@ namespace SandboxEditor.NewBlock
         public override void WhenGameStart()
         {
             base.WhenGameStart();
-            ChangeMainDisplay();
+            Sandbox.EditorCamera.enabled = false;
+            camera.enabled = true;
             audioListener.enabled = true;
         }
 
-        private void ChangeMainDisplay()
+        public override void WhenBackToEditor()
         {
-            Camera.main.gameObject.SetActive(false);
-            camera.gameObject.SetActive(true);
-            Sandbox.Camera = camera;
+            Sandbox.EditorCamera.enabled = true;
+            camera.enabled = false;
+            audioListener.enabled = false;
         }
 
         public override void MessageCallBack(string message)

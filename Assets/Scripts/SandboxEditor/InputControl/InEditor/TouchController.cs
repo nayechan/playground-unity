@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using GameEditor.EventEditor.Controller;
 using SandboxEditor.InputControl.InEditor.Sensor;
 using UnityEngine;
 using UnityEngine.Events;
@@ -18,14 +19,17 @@ namespace SandboxEditor.InputControl.InEditor
         private TouchMode _mode;
         public static TouchMode Mode {get => _tid._mode; set => _tid._mode = value; }
         private Touch[] touches;
-        void Start() {
+
+        private void Start() {
             _cam = Camera.main;
             _touchAlarms = new Dictionary<int, TouchEvent>();
             _tid = this;
             _mode = TouchMode.CamMove;
         }
 
-        void Update() {
+        private void Update()
+        {
+            if (SandboxPhaseChanger.IsGameStarted) return;
             touches = Input.touches;
             AlarmAll();
             ShotRays();

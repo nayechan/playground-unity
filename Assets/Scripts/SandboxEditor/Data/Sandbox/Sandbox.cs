@@ -30,11 +30,7 @@ namespace SandboxEditor.Data.Sandbox
         public static GameObject RootOfConnectionSpriteLine => _Sandbox.rootOfConnectionSpriteLine;
 
         public static ToyData selectedToyData;
-        public static Camera Camera
-        {
-            get => _Sandbox.camera;
-            set => _Sandbox.camera = value;
-        }
+        public static Camera EditorCamera => _Sandbox.camera;
 
         private Dictionary<int, GameObject> _blockIDBlockObjectPairs;
         private Dictionary<int, GameObject> _ToyIDToyObjectPairs;
@@ -43,27 +39,16 @@ namespace SandboxEditor.Data.Sandbox
         {
             _Sandbox = this;
             SandboxChecker.Initialize(Application.persistentDataPath);
-            SandboxInitialize();
-        }
-
-        private void SandboxInitialize()
-        {
-            PauseSandbox();
+            SandboxPhaseChanger.Pause();
         }
 
         private void Start()
         {
-            if (EditorTestMode)
-            {
-                //LoadSandbox();
-                return;
-            }
-
+            if (EditorTestMode) return;
             ReadSandboxDataFromMainScene();
             LoadSandbox();
             if (WeStartPlayRightNow()) 
-                SandboxPhase.GameStart();
-
+                SandboxPhaseChanger.GameStart();
         }
 
         private static void ReadSandboxDataFromMainScene()
@@ -80,48 +65,28 @@ namespace SandboxEditor.Data.Sandbox
         {
             return PlayerPrefs.GetInt("isRunningPlayer") == 1 ? true : false;
         }
-
-        private static void PauseSandbox()
-        {
-            SandboxPhase.Pause();
-        }
         
         public void SaveSandboxOnPC()
         {
-            UpdateToyRootData();
-            SandboxSaveLoader.SaveSandbox(SandboxData, rootOfToy, rootOfBlock);
-        }
-
-        
-        private void UpdateToyRootData()
-        {
             ToySaver.UpdateToysData(RootOfToy);
+            SandboxSaveLoader.SaveSandbox(SandboxData, rootOfToy, rootOfBlock);
         }
         
         public void LoadSandbox()
         {
-            LoadImageStorageData();
-            LoadToyStorageData();
+            SandboxSaveLoader.LoadImageStorageData(SandboxData);
+            SandboxSaveLoader.LoadToyStorageData(SandboxData);
             ReloadToyAndUpdateToyIDPair();
             ReloadBlockAndUpdateBlockIDPair();
             ReloadConnection(); 
         }
-
-        private void LoadImageStorageData()
-        {
-            SandboxSaveLoader.LoadImageStorageData(SandboxData);
-        }
-
-        private void LoadToyStorageData()
-        {
-            SandboxSaveLoader.LoadToyStorageData(SandboxData);
-        }
+        
         public void ReloadToyAndUpdateToyIDPair()
         {
             Destroy(rootOfToy);
             _Sandbox._ToyIDToyObjectPairs = new Dictionary<int, GameObject>();
             rootOfToy = SandboxSaveLoader.LoadToy(SandboxData, ref _Sandbox._ToyIDToyObjectPairs);
-            Tools.Misc.SetChildAndParent(rootOfToy, rootOfRoots);
+            Misc.SetChildAndParent(rootOfToy, rootOfRoots);
         }
 
         private void ReloadBlockAndUpdateBlockIDPair()
@@ -129,9 +94,23 @@ namespace SandboxEditor.Data.Sandbox
             BlockStorage.RenewBlockList();
             Destroy(rootOfBlock);
             (rootOfBlock, _blockIDBlockObjectPairs) = SandboxSaveLoader.LoadBlock(SandboxData);
-            Tools.Misc.SetChildAndParent(rootOfBlock, rootOfRoots);
+            Misc.SetChildAndParent(rootOfBlock, rootOfRoots);
         }
 
+        // ObjectPair 딕셔너리가 최신화된 상태에서 호출해야 정상동작합니다.
+        private void ReloadConnection()
+        {
+            Destroy(rootOfConnectionSpriteLine);
+            rootOfConnectionSpriteLine = new GameObject("SpriteLineRoot");
+            Misc.SetChildAndParent(rootOfConnectionSpriteLine, rootOfRoots);
+            SandboxSaveLoader.LoadConnection(SandboxData, _ToyIDToyObjectPairs, _blockIDBlockObjectPairs);
+        }
+        
+        public static GameObject BuildSelectedToyOnToyRoot()
+        {
+            return selectedToyData is null ? null : BuildToyOnToyRoot(selectedToyData);
+        }
+        
         private static GameObject BuildToyOnToyRoot(ToyData toyData)
         {
             if (toyData is null) return null;
@@ -141,34 +120,6 @@ namespace SandboxEditor.Data.Sandbox
             return newToy;
         }
 
-        public static GameObject BuildSelectedToyOnToyRoot()
-        {
-            return selectedToyData is null ? null : BuildToyOnToyRoot(selectedToyData);
-        }
-
-        // 두개의 딕셔너리가 최신화 되려면 토이, 블록을 먼저 불러와야 함.
-        private void ReloadConnection()
-        {
-            Destroy(rootOfConnectionSpriteLine);
-            rootOfConnectionSpriteLine = new GameObject("SpriteLineRoot");
-            Tools.Misc.SetChildAndParent(rootOfConnectionSpriteLine, rootOfRoots);
-            SandboxSaveLoader.LoadConnection(SandboxData, _ToyIDToyObjectPairs, _blockIDBlockObjectPairs);
-        }
-
-        public string GetSandboxPath()
-        {
-            return SandboxChecker.GetSandboxPath(SandboxData);
-        }
-
-        public string MakeFullPath(string relativePath)
-        {
-            return SandboxChecker.MakeFullPath(SandboxData, relativePath);
-        }
-
-        public static void DeactiveGameObject(GameObject gameObject)
-        {
-            gameObject.SetActive(false);
-        }
 
     }
 }
