@@ -41,7 +41,7 @@ namespace SandboxEditor.Data.Sandbox
 
         private void Awake()
         {
-            _Sandbox ??= this;
+            _Sandbox = this;
             SandboxChecker.Initialize(Application.persistentDataPath);
             SandboxInitialize();
         }
