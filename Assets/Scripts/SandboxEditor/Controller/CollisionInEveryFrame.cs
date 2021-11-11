@@ -14,7 +14,7 @@ namespace GameEditor.EventEditor.Controller
         static public Dictionary<GameObject, GameObject> HitToyAndOther => _CollisionInEveryFrame.hitToyAndOther;
         private void Awake()
         {
-            _CollisionInEveryFrame ??= this;
+            _CollisionInEveryFrame = this;
             collisions2D = new List<Collision2D>();
             hitToyAndOther = new Dictionary<GameObject, GameObject>();
         }

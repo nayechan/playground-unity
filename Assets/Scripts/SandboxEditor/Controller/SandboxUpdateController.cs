@@ -13,7 +13,7 @@ namespace GameEditor.EventEditor.Controller
 
         private void Awake()
         {
-            _sandboxUpdateController ??= this;
+            _sandboxUpdateController = this;
         }
 
         private void FixedUpdate()

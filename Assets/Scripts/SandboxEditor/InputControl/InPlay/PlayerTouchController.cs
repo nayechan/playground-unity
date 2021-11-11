@@ -12,7 +12,7 @@ namespace SandboxEditor.InputControl.InPlay
 
         private void Awake()
         {
-            playerTouchController ??= this;
+            playerTouchController = this;
         }
 
         private void Update()

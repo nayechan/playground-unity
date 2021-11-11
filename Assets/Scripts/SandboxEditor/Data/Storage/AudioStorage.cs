@@ -34,7 +34,7 @@ namespace SandboxEditor.Data.Storage
             LoadAudioClipResources(Resources.LoadAll<AudioClip>(File.EffectSoundPath), "EffectSound");
             _audioEditorController.RefreshUI(_audiosData.Values.ToList());
 
-            audioStorage ??= this;
+            audioStorage = this;
         }
 
         private void LoadAudioClipResources(IEnumerable<AudioClip> audiosData, string type)

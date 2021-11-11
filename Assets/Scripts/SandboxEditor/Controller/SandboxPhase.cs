@@ -17,7 +17,7 @@ namespace GameEditor.EventEditor.Controller
 
         private void Awake()
         {
-            sandboxPhase ??= this;
+            sandboxPhase = this;
         }
 
         // UI가 모두 사라지고 게임이 시작된다. 호출시 샌드박스 저장없이 시작되므로 주의.
