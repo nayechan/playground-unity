@@ -738,7 +738,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   option: {fileID: 4825948743647810784}
-  sceneMoverName: SceneLoadingWindow
   sceneToMoveOn: SandboxEditAndPlayer
 --- !u!1 &2980989769561589768
 GameObject:

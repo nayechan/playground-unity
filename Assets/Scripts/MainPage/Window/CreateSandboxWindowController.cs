@@ -35,7 +35,7 @@ namespace MainPage.Window
 
         public void OnSubmit()
         {
-            SandboxData sandboxData = new SandboxData();
+            var sandboxData = new SandboxData();
             sandboxData.title = titleText.text;
             sandboxData.description = contentText.text;
             sandboxData.id = SandboxChecker.CreateNonOverlappingLocalId();
@@ -45,7 +45,6 @@ namespace MainPage.Window
             if(sandboxData.description == ""){sandboxData.description = "No Description";}
             if(sandboxData.creatorName == ""){sandboxData.description = "Unknown Creator";}
 
-            // 기존 저장 함수를 삭제하고 이 함수로 대체해주세요.
             SandboxSaveLoader.InitializeLocalSandbox(sandboxData);
 
             libraryPanel.UpdateComponent();

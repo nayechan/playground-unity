@@ -4,7 +4,6 @@ using GameEditor.EventEditor.Controller;
 using SandboxEditor.Builder;
 using SandboxEditor.Data.Storage;
 using SandboxEditor.Data.Toy;
-using Tools;
 using UnityEngine;
 
 namespace SandboxEditor.Data.Sandbox
@@ -12,6 +11,8 @@ namespace SandboxEditor.Data.Sandbox
     public class Sandbox : MonoBehaviour
     {
         public SandboxData _sandboxData;
+        private static SandboxData SelectedSandboxData;
+        private static bool IsRunningPlayer = false;
         public static SandboxData SandboxData
         {
             get => _Sandbox._sandboxData;
@@ -45,25 +46,15 @@ namespace SandboxEditor.Data.Sandbox
         private void Start()
         {
             if (EditorTestMode) return;
-            ReadSandboxDataFromMainScene();
+            LoadSandboxData();
             LoadSandbox();
-            if (WeStartPlayRightNow()) 
-                SandboxPhaseChanger.GameStart();
+            if (IsRunningPlayer) 
+                SandboxPhase.GameStart();
         }
 
-        private static void ReadSandboxDataFromMainScene()
+        private static void LoadSandboxData()
         {
-            var newSandboxData = new SandboxData
-            {
-                id = PlayerPrefs.GetString("sandboxToRun"),
-                isLocalSandbox = PlayerPrefs.GetInt("isLocalSandbox") == 1? true : false,
-            };
-            SandboxData =  SandboxSaveLoader.LoadSandboxData(newSandboxData.SandboxDataPath);
-        }
-
-        private static bool WeStartPlayRightNow()
-        {
-            return PlayerPrefs.GetInt("isRunningPlayer") == 1 ? true : false;
+            SandboxData =  SandboxSaveLoader.LoadSandboxData(SelectedSandboxData.SandboxDataPath);
         }
         
         public void SaveSandboxOnPC()
@@ -120,6 +111,14 @@ namespace SandboxEditor.Data.Sandbox
             return newToy;
         }
 
-
+        public static void SetSandboxDataToRun(string gameID, bool isLocal, bool isRunningPlayer)
+        {
+            SelectedSandboxData = new SandboxData()
+            {
+                id = gameID,
+                isLocalSandbox = isLocal
+            };
+            IsRunningPlayer = isRunningPlayer;
+        }
     }
 }
