@@ -234,9 +234,9 @@ deploy_staging:
   script:
     - echo "username $DOCKER_USERNAME"
     - docker login -u $DOCKER_USERNAME -p $DOCKER_ACCOUNT_TOKEN docker.io
-    - docker build --tag $DOCKER_USERNAME/$DOCKER_REPOSITORY_NAME:0.0.2 --build-arg UNITY_DIR="$UNITY_DIR" --build-arg BUILD_NAME="$BUILD_NAME" .
-    - docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY_NAME:0.0.2
+    - docker build --tag $DOCKER_USERNAME/$DOCKER_REPOSITORY_NAME:$CI_COMMIT_TAG --build-arg UNITY_DIR="$UNITY_DIR" --build-arg BUILD_NAME="$BUILD_NAME" .
+    - docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY_NAME:$CI_COMMIT_TAG
 
-# workflow:
-#   rules:
-#     - if: $CI_COMMIT_TAG
+workflow:
+  rules:
+    - if: $CI_COMMIT_TAG
