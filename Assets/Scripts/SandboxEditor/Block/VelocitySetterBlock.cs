@@ -14,11 +14,6 @@ namespace SandboxEditor.Block
         public float XVelocity = 0f;
         public float YVelocity = 0f;
 
-        private void Awake()
-        {
-            InitializePortRegister();
-        }
-
         protected override void InitializePortRegister()
         {
             ToyToSetVelocity.register = new ToyRegister();

@@ -14,22 +14,26 @@ namespace SandboxEditor.Block
 
         protected override void InitializePortRegister() { }
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             ChangeSizeOfCameraAndGuideArea(camera.orthographicSize);
             camera.enabled = false;
         }
 
         public override void WhenGameStart()
         {
-            Debug.Log("DisPlay WhenGame~~ called");
             base.WhenGameStart();
+            Sandbox.EditorCamera.enabled = false;
+            Sandbox.EditorCamera.GetComponent<AudioListener>().enabled = false;
             camera.enabled = true;
             audioListener.enabled = true;
         }
 
         public override void WhenBackToEditor()
         {
+            Sandbox.EditorCamera.enabled = true;
+            Sandbox.EditorCamera.GetComponent<AudioListener>().enabled = true;
             camera.enabled = false;
             audioListener.enabled = false;
         }

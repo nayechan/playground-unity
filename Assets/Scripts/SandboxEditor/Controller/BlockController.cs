@@ -7,20 +7,19 @@ namespace GameEditor.EventEditor.Controller
     {
         public static BlockController _blockController;
         
-        public static void BlockAction()
+        public static void OnEveryFixedUpdateWhenPlaying()
         {
             foreach(var block in BlockStorage.Blocks)
                 block.OnEveryFixedUpdateWhenPlaying();
         }
 
-        public static void BlockActionWhenGameStart()
+        public static void WhenBegin()
         {
-            Debug.Log("BlockAction When Call~~");
             foreach(var block in BlockStorage.Blocks)
                 block.WhenGameStart();
         }
         
-        public static void BlockActionWhenBackToEditor()
+        public static void WhenBackToEditor()
         {
             foreach(var block in BlockStorage.Blocks)
                 block.WhenBackToEditor();

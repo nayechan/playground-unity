@@ -11,11 +11,6 @@ namespace SandboxEditor.Block
         public BlockPort touchXAxisOutput;
         public BlockPort touchYAxisOutput;
 
-        private void Awake()
-        {
-            InitializePortRegister();
-        }
-
         protected override void InitializePortRegister()
         {
             touchXAxisOutput.register = new VectorRegister();

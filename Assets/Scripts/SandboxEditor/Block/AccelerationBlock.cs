@@ -11,11 +11,6 @@ namespace SandboxEditor.Block
         public BlockPort xAxisInput;
         public BlockPort yAxisInput;
 
-        private void Awake()
-        {
-            InitializePortRegister();
-        }
-
         protected override void InitializePortRegister()
         {
             toyToAccelerate.register = new ToyRegister();

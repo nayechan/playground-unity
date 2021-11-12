@@ -13,11 +13,6 @@ namespace SandboxEditor.Block
         public BlockPort stopSignal;
         public string audioName;
 
-        private void Awake()
-        {
-            InitializePortRegister();
-        }
-
         protected override void InitializePortRegister()
         {
             playSignal.register = new BoolRegister();

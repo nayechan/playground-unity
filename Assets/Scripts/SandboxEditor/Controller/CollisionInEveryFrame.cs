@@ -5,11 +5,12 @@ using UnityEngine;
 
 namespace GameEditor.EventEditor.Controller
 {
-    public class CollisionInEveryFrame : MonoBehaviour
+    public class CollisionInEveryFrame : MonoBehaviour, PhaseChangeCallBackReceiver
     {
         private List<Collision2D> collisions2D;
-        private static CollisionInEveryFrame _CollisionInEveryFrame;
-        private bool _isGameStarted = false;
+        public static CollisionInEveryFrame _CollisionInEveryFrame { get; private set; }
+
+        private bool _isListeningCollision = false;
         private static IEnumerable<Collision2D> Collisions2D => _CollisionInEveryFrame.collisions2D;
         private Dictionary<GameObject, GameObject> hitToyAndOther;
         static public Dictionary<GameObject, GameObject> HitToyAndOther => _CollisionInEveryFrame.hitToyAndOther;
@@ -44,7 +45,7 @@ namespace GameEditor.EventEditor.Controller
 
         public static void AddCollision2D(Collision2D collision2D)
         {
-            if(_CollisionInEveryFrame._isGameStarted)
+            if(_CollisionInEveryFrame._isListeningCollision)
                 _CollisionInEveryFrame.collisions2D.Add(collision2D);
         }
 
@@ -54,9 +55,29 @@ namespace GameEditor.EventEditor.Controller
             _CollisionInEveryFrame.hitToyAndOther = new Dictionary<GameObject, GameObject>();
         }
 
-        public static void WhenGameStart()
+        public void WhenGameStart()
         {
-            _CollisionInEveryFrame._isGameStarted = true;
+            _CollisionInEveryFrame._isListeningCollision = true;
+        }
+
+        public void WhenTestStart()
+        {
+            _CollisionInEveryFrame._isListeningCollision = true;
+        }
+
+        public void WhenTestPause()
+        {
+            _CollisionInEveryFrame._isListeningCollision = false;
+        }
+
+        public void WhenTestResume()
+        {
+            _CollisionInEveryFrame._isListeningCollision = true;
+        }
+
+        public void WhenBackToEditor()
+        {
+            _CollisionInEveryFrame._isListeningCollision = false;
         }
     }
 }

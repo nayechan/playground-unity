@@ -8,7 +8,6 @@ namespace SandboxEditor.Block
 {
     public sealed class PortConnectionRenderer : MonoBehaviour
     {
-        private static PortConnectionRenderer _portConnectionRenderer;
         public PortConnectionData portConnectionData;
         public LineRenderer lineRenderer;
         private bool isConnectionSet = false;
@@ -20,16 +19,10 @@ namespace SandboxEditor.Block
 
         private void Update()
         {
-            if (_isGameStarted) return;
             if (isConnectionSet && AreBothPortInvisible())
                 ReRender();
             else
                 lineRenderer.enabled = false;
-        }
-
-        public static void WhenGameStart()
-        {
-            _portConnectionRenderer._isGameStarted = true;
         }
 
         public void SetConnection(PortConnectionData portConnectionData)
@@ -55,11 +48,6 @@ namespace SandboxEditor.Block
         {
             return (senderPortIsOnToy || senderPortBlockBody.gameObject.activeSelf) &&
                    (receiverPortIsOnToy || receiverPortBlockBody.gameObject.activeSelf);
-        }
-
-        private void Awake()
-        {
-            _portConnectionRenderer = this;
         }
 
     }

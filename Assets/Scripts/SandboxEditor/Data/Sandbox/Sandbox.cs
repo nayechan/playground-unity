@@ -1,8 +1,11 @@
 using System.Collections.Generic;
 using GameEditor.EventEditor.Controller;
 using SandboxEditor.Builder;
+using SandboxEditor.Controller;
+using SandboxEditor.Data.Block;
 using SandboxEditor.Data.Storage;
 using SandboxEditor.Data.Toy;
+using Tools;
 using UnityEngine;
 
 namespace SandboxEditor.Data.Sandbox
@@ -40,7 +43,6 @@ namespace SandboxEditor.Data.Sandbox
         {
             _Sandbox = this;
             SandboxChecker.Initialize(Application.persistentDataPath);
-            SandboxPhaseChanger.Pause();
         }
 
         private void Start()
@@ -48,8 +50,9 @@ namespace SandboxEditor.Data.Sandbox
             if (EditorTestMode) return;
             LoadSelectedSandboxData();
             LoadSandbox();
+            SandboxPhaseChanger.InitializePhaseReceiverList();
             if (IsRunningPlayer) 
-                SandboxPhaseChanger.GameStart();
+                SandboxPhaseChanger.StartGame();
         }
 
         private static void LoadSelectedSandboxData()
@@ -59,13 +62,13 @@ namespace SandboxEditor.Data.Sandbox
 
         public void LoadSandbox()
         {
-            ResetSandbox();
             SandboxSaveLoader.LoadImageStorageData(SandboxData);
             SandboxSaveLoader.LoadToyRecipeStorageData(SandboxData);
+            ResetObjectAndReference();
             LoadGameObjectAndAddIDReference();
         }
 
-        private static void ResetSandbox()
+        public static void ResetObjectAndReference()
         {
             ResetReference();
             ResetGameObject();
@@ -86,9 +89,14 @@ namespace SandboxEditor.Data.Sandbox
 
         private static void ResetGameObject()
         {
-            Destroy(_Sandbox._rootOfBlock);
-            Destroy(_Sandbox._rootOfToy);
-            Destroy(_Sandbox._rootOfConnectionSpriteLine);
+            Destroy(RootOfBlock);
+            Destroy(RootOfToy);
+            ResetConnection();
+        }
+
+        private static void ResetConnection()
+        {
+            Destroy(RootOfConnectionSpriteLine);
             _Sandbox._rootOfConnectionSpriteLine = new GameObject("RootOfConnection");
         }
         
@@ -97,6 +105,13 @@ namespace SandboxEditor.Data.Sandbox
             _Sandbox._rootOfToy = SandboxSaveLoader.LoadToyAndAddIDReference(SandboxData);
             _Sandbox._rootOfBlock = SandboxSaveLoader.LoadBlockAndAddIDReference(SandboxData);
             SandboxSaveLoader.LoadConnection(SandboxData, _ToyIDGameObjectPairs, _blockIDGameObjectPairs);
+        }
+        
+        public static void LoadGameObjectAndAddIDReference(ToyData toyData, BlocksData blocksData)
+        {
+            _Sandbox._rootOfToy = ToyLoader.BuildToys(toyData);
+            _Sandbox._rootOfBlock = BlockBuilder.CreateBlockRootAndAddConnectionReference(blocksData);
+            SandboxSaveLoader.LoadConnection(SandboxData, _Sandbox._ToyIDGameObjectPairs, _Sandbox._blockIDGameObjectPairs);
         }
         
         public static GameObject BuildSelectedToyOnToyRoot()

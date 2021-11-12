@@ -12,11 +12,6 @@ namespace SandboxEditor.Block
         public BlockPort collisionDetected;
         public BlockPort anotherToy;
 
-        private void Awake()
-        {
-            InitializePortRegister();
-        }
-
         protected override void InitializePortRegister()
         {
             toyToSense.register = new ToyRegister();

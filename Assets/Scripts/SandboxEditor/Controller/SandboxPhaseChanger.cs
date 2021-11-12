@@ -1,106 +1,164 @@
 using System;
-using SandboxEditor.Block;
+using System.Collections;
+using System.Collections.Generic;
+using GameEditor.EventEditor.Controller;
+using SandboxEditor.Data.Block;
 using SandboxEditor.Data.Sandbox;
+using SandboxEditor.Data.Storage;
 using SandboxEditor.Data.Toy;
 using SandboxEditor.InputControl.InEditor;
-using SandboxEditor.InputControl.InPlay;
 using SandboxEditor.UI;
 using Tools;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace GameEditor.EventEditor.Controller
+namespace SandboxEditor.Controller
 {
-    public class SandboxPhaseChanger : MonoBehaviour
+    public class SandboxPhaseChanger : MonoBehaviour, PhaseChangeCallBackReceiver
     {
         private static SandboxPhaseChanger _sandboxPhaseChanger;
         private ToyData _toyData;
+        private BlocksData _blocksData;
+        private BlockConnections _blockConnections;
+        private List<PhaseChangeCallBackReceiver> phaseChangeCallBackReceivers;
 
         private void Awake()
         {
             _sandboxPhaseChanger = this;
         }
 
-        // UI가 모두 사라지고 게임이 시작된다. 호출시 샌드박스 저장없이 시작되므로 주의.
-        public static void GameStart()
+        public static void InitializePhaseReceiverList()
+        {
+            _sandboxPhaseChanger.phaseChangeCallBackReceivers = new List<PhaseChangeCallBackReceiver>
+            {
+                UISwitch.uISwitch,
+                InGameUpdater.inGameUpdater,
+                CollisionInEveryFrame._CollisionInEveryFrame,
+                TouchInEditor._TouchInEditor
+            };
+        }
+
+        public void WhenGameStart()
         {
             GameStartCallBack();
-            DisableEditorFunctionAndEnablePlayerFunction();
-            Misc.EnableChildrenRigidBody(Sandbox.RootOfToy);
-            BlockController.BlockActionWhenGameStart();
-        }
-
-        private static void GameStartCallBack()
-        {
-            Debug.Log("StartCallBack Call");
-            UISwitch.WhenGameStart();
-            InGameUpdater.WhenGameStart();
-            CollisionInEveryFrame.WhenGameStart();
-            PortConnectionRenderer.WhenGameStart();
-            TouchInEditor.WhenGameStart();
+            BlockController.WhenBegin();
         }
         
-        private static void DisableEditorFunctionAndEnablePlayerFunction()
+        public void WhenTestStart()
         {
-            PlayerTouchController.playerTouchController.enabled = true;
-            TouchInEditor.GetTID().enabled = false;
-            Sandbox.EditorCamera.enabled = false;
-            Sandbox.EditorCamera.GetComponent<AudioListener>().enabled = false;
-        }
-
-        // 에디터 UI를 유지한 상태로 Toy Block을 동작시켜 시뮬레이션을 돌릴 수 있다.
-        // SandRewind 를 호출해 시뮬레이션 이전 상태로 돌아간다.
-        public static void TestStart()
-        {
+            TestStartCallBack();
             SaveTemporalSandboxData();
-            DisableEditorFunctionAndEnablePlayerFunction();
-            Resume();
+            ResumeTest();
+            BlockController.WhenBegin();
         }
 
         private static void SaveTemporalSandboxData()
         {
-            throw new NotImplementedException();
+            ToySaver.UpdateToysData(Sandbox.RootOfToy);
+            _sandboxPhaseChanger._toyData = Sandbox.RootOfToy.GetComponent<ToySaver>().GetToyData();
+            _sandboxPhaseChanger._blocksData = BlockStorage.GetLatestBlocksData(Sandbox.RootOfBlock);
+            _sandboxPhaseChanger._blockConnections = ConnectionController.GetBlockConnections();
         }
-
-        // Toy, Block 을 동작시킨다. 
-        private static void Resume()
+        public void WhenTestPause()
         {
-        }
-
-        // Run 페이즈에서 다시 Run 을 누르기 이전 상태로 되돌린다.
-        // 토이의 물리효과와 블럭의 효과는 다시 멈춤상태가 된다.
-        public static void BackToEditor()
-        {
-            EnableEditorFunction();
-            ReloadInstance();
-            Pause();
-        }
-
-        private static void ReloadInstance()
-        {
-            throw new NotImplementedException();
-        }
-
-
-        // Toy의 물리효과, Block의 효과를 멈춘다.
-        public static void Pause()
-        {
+            TestPauseCallBack();
             Misc.DisableChildrenRigidBody(Sandbox.RootOfToy);
             Misc.DisableChildrenBlock(Sandbox.RootOfBlock);
         }
 
-        private static void EnableEditorFunction()
+        public void WhenTestResume()
         {
-            PlayerTouchController.playerTouchController.enabled = false;
-            TouchInEditor.GetTID().enabled = true;
-            Sandbox.EditorCamera.enabled = true;
-            Sandbox.EditorCamera.GetComponent<AudioListener>().enabled = true;
+            TestResumeCallBack();
         }
 
+        public void WhenBackToEditor()
+        {
+            BackToEditorCallBack();
+            ReloadInstance();
+            PauseTest();
+        }
+
+        private static void ReloadInstance()
+        {
+            Sandbox.ResetObjectAndReference();
+            Sandbox.LoadGameObjectAndAddIDReference(_sandboxPhaseChanger._toyData, _sandboxPhaseChanger._blocksData);
+        }
+        
+        public static void StartGame()
+        {
+            _sandboxPhaseChanger.WhenGameStart();
+        }
+        
+        public static void StartTest()
+        {
+            _sandboxPhaseChanger.WhenTestStart();
+        }
+
+        public static void PauseTest()
+        {
+            _sandboxPhaseChanger.WhenTestPause();
+        }
+
+        private static void ResumeTest()
+        {
+            _sandboxPhaseChanger.WhenTestResume();
+        }
+        
+        public static void BackToEditor()
+        {
+            _sandboxPhaseChanger.WhenBackToEditor();
+        }
+        
+        
+        private static void GameStartCallBack()
+        {
+            foreach (var callBackReceiver in _sandboxPhaseChanger.phaseChangeCallBackReceivers)
+            {
+                Debug.Log(callBackReceiver.GetType());
+                callBackReceiver.WhenGameStart();
+            }
+        }
+        
+        private static void TestStartCallBack()
+        {
+            foreach (var callBackReceiver in _sandboxPhaseChanger.phaseChangeCallBackReceivers)
+            {
+                Debug.Log(callBackReceiver.GetType());
+                callBackReceiver.WhenTestStart();
+            }
+        }
+        private static void TestResumeCallBack()
+        {
+            foreach (var callBackReceiver in _sandboxPhaseChanger.phaseChangeCallBackReceivers)
+            {
+                Debug.Log(callBackReceiver.GetType());
+                callBackReceiver.WhenTestResume();
+            }
+        }
+        private static void TestPauseCallBack()
+        {
+            foreach (var callBackReceiver in _sandboxPhaseChanger.phaseChangeCallBackReceivers)
+            {
+                Debug.Log(callBackReceiver.GetType());
+                callBackReceiver.WhenTestPause();
+            }
+        }
+        
+        private static void BackToEditorCallBack()
+        {
+            foreach (var callBackReceiver in _sandboxPhaseChanger.phaseChangeCallBackReceivers)
+            {
+                Debug.Log(callBackReceiver.GetType());
+                callBackReceiver.WhenBackToEditor();
+            }
+        }
+        
         public void ChangeScene(string sceneName)
         {
             SceneManager.LoadSceneAsync(sceneName);
         }
+
     }
     
 }

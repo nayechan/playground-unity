@@ -1,11 +1,17 @@
-﻿using SandboxEditor.Data.Block;
+﻿using GameEditor.EventEditor.Controller;
+using SandboxEditor.Data.Block;
 using SandboxEditor.Data.Storage;
 using UnityEngine;
 
 namespace SandboxEditor.Block
 {
-    public abstract class AbstractBlock : MonoBehaviour
+    public abstract class AbstractBlock : MonoBehaviour, PhaseChangeCallBackReceiver
     {
+        protected virtual void Awake()
+        {
+            InitializePortRegister();
+        }
+
         protected abstract void InitializePortRegister();
 
         public virtual void WhenGameStart()
@@ -13,10 +19,18 @@ namespace SandboxEditor.Block
             DisableBlockRenderer();
         }
 
-        public virtual void WhenBackToEditor()
+        public virtual void WhenTestStart()
         {
-            
+            DisableBlockRenderer();
         }
+
+        public virtual void WhenTestPause() { }
+
+        public virtual void WhenTestResume() { }
+
+        public virtual void WhenBackToEditor() { }
+        
+        public virtual void OnEveryFixedUpdateWhenPlaying() {}
         
         private void DisableBlockRenderer()
         {
@@ -25,8 +39,6 @@ namespace SandboxEditor.Block
             foreach (var meshRenderer in GetComponentsInChildren<MeshRenderer>())
                 meshRenderer.enabled = false;
         }
-
-        public virtual void OnEveryFixedUpdateWhenPlaying() {}
         
         
         // 설정창이 있는 블럭에서 값을 조절하기 위해 사용.

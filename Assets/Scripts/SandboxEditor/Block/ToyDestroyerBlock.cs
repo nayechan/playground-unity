@@ -11,11 +11,6 @@ namespace SandboxEditor.Block
         public BlockPort destroySignal;
         public BlockPort toyToDestroy;
 
-        private void Awake()
-        {
-            InitializePortRegister();
-        }
-
         protected override void InitializePortRegister()
         {
             destroySignal.register = new BoolRegister();
