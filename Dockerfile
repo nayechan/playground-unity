@@ -1,4 +1,4 @@
-FROM nginx:1.21
+FROM nginx:1.21-alpine
 
 ARG BUILD_NAME
 ARG UNITY_DIR
