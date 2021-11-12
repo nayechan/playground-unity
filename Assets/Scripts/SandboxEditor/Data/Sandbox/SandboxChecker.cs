@@ -5,6 +5,7 @@ using Tools;
 using UnityEngine;
 using static Tools.Names;
 using File = Tools.File;
+using System.Linq;
 
 namespace SandboxEditor.Data.Sandbox
 {
@@ -154,6 +155,33 @@ namespace SandboxEditor.Data.Sandbox
         public static Dictionary<int, SandboxData> getRemoteSandboxList()
         {
             return _sandboxDatasOfRemote;
+        }
+
+        public static void RemoveLocalSandboxWithGameID(string gameID)
+        {
+            SandboxData foundData = null;
+            foundData = _sandboxDatasOfLocal.Values.ToList().Find(x => x.id == gameID);
+
+            Debug.Log(foundData);
+
+            if(foundData != null)
+            {
+                Directory.Delete(SandboxChecker.GetSandboxPath(foundData), true);
+                _sandboxDatasOfLocal.Remove(foundData.GetHashCode());
+            }
+        }
+        public static void RemoveRemoteSandboxWithGameID(string gameID)
+        {
+            SandboxData foundData = null;
+            foundData = _sandboxDatasOfRemote.Values.ToList().Find(x => x.id == gameID);
+
+            Debug.Log(foundData);
+
+            if(foundData != null)
+            {
+                Directory.Delete(SandboxChecker.GetSandboxPath(foundData), true);
+                _sandboxDatasOfRemote.Remove(foundData.GetHashCode());
+            }
         }
     }
 }

@@ -58,4 +58,7 @@ public class LibraryCardOptionController : MonoBehaviour
     {
         this.gameID = gameID; this.isLocal = isLocal;
     }
+
+    public string GetGameID(){return gameID;}
+    public bool GetIsLocal(){return isLocal;}
 }
