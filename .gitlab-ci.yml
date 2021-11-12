@@ -232,9 +232,9 @@ deploy_staging:
   dependencies:
     - build-WebGL
   script:
-    - docker login -u $DOCKER_LOGIN_ID $DOCKER_ACCESS_TOKEN docker.io
-    - docker build --tag $DOCKER_LOGIN_ID/$DOCKER_REPO_NAME:0.0.1 .
-    - docker push $DOCKER_LOGIN_ID/$DOCKER_REPO_NAME:0.0.1
+    - docker login -u $DOCKER_USERNAME $DOCKER_ACCOUNT_TOKEN docker.io
+    - docker build --tag $DOCKER_USERNAME/$DOCKER_REPOSITORY_NAME:0.0.1 .
+    - docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY_NAME:0.0.1
 
 # workflow:
 #   rules:
