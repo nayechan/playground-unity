@@ -7208,7 +7208,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &388371202
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8414,6 +8414,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 443030591}
   m_CullTransparentMesh: 1
+--- !u!1 &445919099
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 445919100}
+  - component: {fileID: 445919101}
+  m_Layer: 0
+  m_Name: UISwitch
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &445919100
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 445919099}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1749736037}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &445919101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 445919099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec4f90f4d9f04d3f9db6201c123f17b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  editorUIRoot: {fileID: 1284833428}
 --- !u!1 &460126776
 GameObject:
   m_ObjectHideFlags: 0
@@ -9147,7 +9191,6 @@ GameObject:
   - component: {fileID: 535713467}
   - component: {fileID: 535713466}
   - component: {fileID: 535713465}
-  - component: {fileID: 535713468}
   m_Layer: 5
   m_Name: ExitButton
   m_TagString: Untagged
@@ -9219,16 +9262,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 535713468}
-        m_TargetAssemblyTypeName: SandboxEditor.UI.ExitButtonController, Assembly-CSharp
-        m_MethodName: OnExitButtonClick
-        m_Mode: 1
+      - m_Target: {fileID: 1376830922}
+        m_TargetAssemblyTypeName: GameEditor.EventEditor.Controller.SandboxPhaseChanger,
+          Assembly-CSharp
+        m_MethodName: ChangeScene
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: MainPage
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &535713466
@@ -9269,19 +9313,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 535713463}
   m_CullTransparentMesh: 1
---- !u!114 &535713468
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 535713463}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59836d98871085240aaefffcd34fb933, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneName: MainPage
 --- !u!1 &554284573
 GameObject:
   m_ObjectHideFlags: 0
@@ -11450,7 +11481,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 676970035}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7f192587a3e64523a341d303c01f254f, type: 3}
   m_Name: 
@@ -12698,7 +12729,6 @@ GameObject:
   - component: {fileID: 752328495}
   - component: {fileID: 752328494}
   - component: {fileID: 752328493}
-  - component: {fileID: 752328496}
   m_Layer: 5
   m_Name: PlayButton
   m_TagString: Untagged
@@ -12769,18 +12799,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 752328496}
-        m_TargetAssemblyTypeName: SandboxEditor.UI.Panel.PanelSwitch, Assembly-CSharp
-        m_MethodName: Apply
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: DelTile
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1376830922}
         m_TargetAssemblyTypeName: GameEditor.EventEditor.Controller.SandboxPhase,
           Assembly-CSharp
@@ -12832,25 +12850,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 752328491}
   m_CullTransparentMesh: 1
---- !u!114 &752328496
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 752328491}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a7c7bbe857de6c4dacfed4cfda82b57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toActivate:
-  - {fileID: 2060321024}
-  toDeactivate:
-  - {fileID: 1118927121}
-  - {fileID: 1548159909}
-  - {fileID: 265717052}
-  - {fileID: 388371201}
 --- !u!1 &753044385
 GameObject:
   m_ObjectHideFlags: 0
@@ -15353,7 +15352,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 120, y: 0}
+  m_AnchoredPosition: {x: 80, y: 0}
   m_SizeDelta: {x: 96, y: 96}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &938956957
@@ -19452,7 +19451,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -120, y: 0}
+  m_AnchoredPosition: {x: -80, y: 0}
   m_SizeDelta: {x: 96, y: 96}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1217203170
@@ -21723,7 +21722,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 983aba908985469e89f4b8777030005d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  editorInterface: {fileID: 1852563823}
 --- !u!1 &1378837667
 GameObject:
   m_ObjectHideFlags: 0
@@ -25072,7 +25070,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1548159910
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25093,7 +25091,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -20}
-  m_SizeDelta: {x: 400, y: 120}
+  m_SizeDelta: {x: 300, y: 120}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1548159911
 MonoBehaviour:
@@ -28114,6 +28112,7 @@ Transform:
   - {fileID: 2082820784}
   - {fileID: 2069367056}
   - {fileID: 1512522601}
+  - {fileID: 445919100}
   m_Father: {fileID: 410378880}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -31180,13 +31179,14 @@ GameObject:
   - component: {fileID: 1923389271}
   - component: {fileID: 1923389270}
   - component: {fileID: 1923389269}
+  - component: {fileID: 1923389272}
   m_Layer: 5
   m_Name: RemoveBlockButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1923389268
 RectTransform:
   m_ObjectHideFlags: 0
@@ -31288,6 +31288,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1923389267}
   m_CullTransparentMesh: 1
+--- !u!114 &1923389272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1923389267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 039a07a659a944e4498bd0abbaad18bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  touchMode: 0
 --- !u!1 &1926621237
 GameObject:
   m_ObjectHideFlags: 0

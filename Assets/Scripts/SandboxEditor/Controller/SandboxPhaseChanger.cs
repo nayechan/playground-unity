@@ -1,25 +1,20 @@
 using System;
+using SandboxEditor.Block;
 using SandboxEditor.Data.Sandbox;
 using SandboxEditor.Data.Toy;
 using SandboxEditor.InputControl.InEditor;
 using SandboxEditor.InputControl.InPlay;
+using SandboxEditor.UI;
+using Tools;
 using UnityEngine;
-using static Tools.Misc;
+using UnityEngine.SceneManagement;
 
 namespace GameEditor.EventEditor.Controller
 {
     public class SandboxPhaseChanger : MonoBehaviour
     {
-        public GameObject editorInterface;
         private static SandboxPhaseChanger _sandboxPhaseChanger;
         private ToyData _toyData;
-        private bool isGameStarted = false;
-        public static bool IsGameStarted
-        {
-            get => _sandboxPhaseChanger.isGameStarted;
-            private set => _sandboxPhaseChanger.isGameStarted = value;
-        }
-        // private BlockData _blockData;
 
         private void Awake()
         {
@@ -29,18 +24,28 @@ namespace GameEditor.EventEditor.Controller
         // UI가 모두 사라지고 게임이 시작된다. 호출시 샌드박스 저장없이 시작되므로 주의.
         public static void GameStart()
         {
-            _sandboxPhaseChanger.HideEditorInterface();
+            GameStartCallBack();
             DisableEditorFunctionAndEnablePlayerFunction();
-            EnableChildrenRigidBody(Sandbox.RootOfToy); 
+            Misc.EnableChildrenRigidBody(Sandbox.RootOfToy);
             BlockController.BlockActionWhenGameStart();
-            Sandbox.RootOfConnectionSpriteLine.SetActive(false);
-            IsGameStarted = true;
         }
 
-
-        private void HideEditorInterface()
+        private static void GameStartCallBack()
         {
-            editorInterface.SetActive(false);
+            Debug.Log("StartCallBack Call");
+            UISwitch.WhenGameStart();
+            InGameUpdater.WhenGameStart();
+            CollisionInEveryFrame.WhenGameStart();
+            PortConnectionRenderer.WhenGameStart();
+            TouchInEditor.WhenGameStart();
+        }
+        
+        private static void DisableEditorFunctionAndEnablePlayerFunction()
+        {
+            PlayerTouchController.playerTouchController.enabled = true;
+            TouchInEditor.GetTID().enabled = false;
+            Sandbox.EditorCamera.enabled = false;
+            Sandbox.EditorCamera.GetComponent<AudioListener>().enabled = false;
         }
 
         // 에디터 UI를 유지한 상태로 Toy Block을 동작시켜 시뮬레이션을 돌릴 수 있다.
@@ -80,24 +85,21 @@ namespace GameEditor.EventEditor.Controller
         // Toy의 물리효과, Block의 효과를 멈춘다.
         public static void Pause()
         {
-            DisableChildrenRigidBody(Sandbox.RootOfToy);
-            DisableChildrenBlock(Sandbox.RootOfBlock);
+            Misc.DisableChildrenRigidBody(Sandbox.RootOfToy);
+            Misc.DisableChildrenBlock(Sandbox.RootOfBlock);
         }
 
         private static void EnableEditorFunction()
         {
             PlayerTouchController.playerTouchController.enabled = false;
-            TouchController.GetTID().enabled = true;
+            TouchInEditor.GetTID().enabled = true;
             Sandbox.EditorCamera.enabled = true;
             Sandbox.EditorCamera.GetComponent<AudioListener>().enabled = true;
         }
-        
-        private static void DisableEditorFunctionAndEnablePlayerFunction()
+
+        public void ChangeScene(string sceneName)
         {
-            PlayerTouchController.playerTouchController.enabled = true;
-            TouchController.GetTID().enabled = false;
-            Sandbox.EditorCamera.enabled = false;
-            Sandbox.EditorCamera.GetComponent<AudioListener>().enabled = false;
+            SceneManager.LoadSceneAsync(sceneName);
         }
     }
     

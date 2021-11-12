@@ -11,7 +11,7 @@ namespace SandboxEditor.Block
         public BlockPort xAxisInput;
         public BlockPort yAxisInput;
 
-        private void Start()
+        private void Awake()
         {
             InitializePortRegister();
         }

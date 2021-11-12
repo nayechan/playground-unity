@@ -12,7 +12,7 @@ namespace SandboxEditor.Block
         public BlockPort collisionDetected;
         public BlockPort anotherToy;
 
-        private void Start()
+        private void Awake()
         {
             InitializePortRegister();
         }

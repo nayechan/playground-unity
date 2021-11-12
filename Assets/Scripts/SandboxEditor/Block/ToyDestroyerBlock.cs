@@ -11,7 +11,7 @@ namespace SandboxEditor.Block
         public BlockPort destroySignal;
         public BlockPort toyToDestroy;
 
-        private void Start()
+        private void Awake()
         {
             InitializePortRegister();
         }

@@ -14,7 +14,7 @@ namespace SandboxEditor.Block
 
         protected override void InitializePortRegister() { }
 
-        private void Start()
+        private void Awake()
         {
             ChangeSizeOfCameraAndGuideArea(camera.orthographicSize);
             camera.enabled = false;
@@ -22,6 +22,7 @@ namespace SandboxEditor.Block
 
         public override void WhenGameStart()
         {
+            Debug.Log("DisPlay WhenGame~~ called");
             base.WhenGameStart();
             camera.enabled = true;
             audioListener.enabled = true;

@@ -8,22 +8,18 @@ namespace SandboxEditor.InputControl.InPlay
     {
         public static PlayerTouchController playerTouchController;
         private Touch[] touches;
-        public static Touch[] Touches => playerTouchController.touches;
+        private static Touch[] Touches => playerTouchController.touches;
 
         private void Awake()
         {
             playerTouchController = this;
         }
-
-        private void Update()
-        {
-            touches = Input.touches;
-        }
-
+        
         public static Vector2 TouchToViewport()
         {
-            if (Touches.Length == 0) return Vector2.zero;
-            Vector2 viewPort = Sandbox.EditorCamera.ScreenToViewportPoint(Touches[0].position);
+            var touches = Input.touches;
+            if (touches.Length == 0) return Vector2.zero;
+            Vector2 viewPort = Sandbox.EditorCamera.ScreenToViewportPoint(touches[0].position);
             viewPort -= new Vector2(0.5f, 0.5f);
             return viewPort;
         }

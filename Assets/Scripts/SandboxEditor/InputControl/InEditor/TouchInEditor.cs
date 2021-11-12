@@ -11,37 +11,43 @@ namespace SandboxEditor.InputControl.InEditor
     public class TouchEvent : UnityEvent<Touch>{
     }
 
-    public class TouchController : MonoBehaviour
+    public class TouchInEditor : MonoBehaviour
     {
-        private static TouchController _tid;
+        private static TouchInEditor _touchInEditor;
         private static Camera _cam;
         private Dictionary<int, TouchEvent> _touchAlarms; // 특정 fingerID의 터치 이벤트를 지속적으로 듣는 스크립트를 위한 이벤트.
         private TouchMode _mode;
-        public static TouchMode Mode {get => _tid._mode; set => _tid._mode = value; }
+        public static TouchMode Mode {get => _touchInEditor._mode; set => _touchInEditor._mode = value; }
         private Touch[] touches;
+        private bool _isGameStart = false;
 
         private void Start() {
             _cam = Camera.main;
             _touchAlarms = new Dictionary<int, TouchEvent>();
-            _tid = this;
+            _touchInEditor = this;
             _mode = TouchMode.CamMove;
         }
 
         private void Update()
         {
-            if (SandboxPhaseChanger.IsGameStarted) return;
+            if (_isGameStart) return;
             touches = Input.touches;
             AlarmAll();
             ShotRays();
             ResetOutdatedAlarm();
         }
 
-        public static TouchController GetTID(){
-            return _tid;
+        public static void WhenGameStart()
+        {
+            _touchInEditor._isGameStart = true;
+        }
+
+        public static TouchInEditor GetTID(){
+            return _touchInEditor;
         }
 
         private static void ShotRays(){
-            foreach(var touch in _tid.touches){
+            foreach(var touch in _touchInEditor.touches){
                 // 각 터치에 대해 하나의 Raycast를 진행. Collider를 가진 객체를 검출한다.
                 // 충돌한 객체를 가까운 거리순으로 정렬하고 TouchSensor 컴포넌트를 가지고 있는지 차례대로 확인한다.
                 // TouchSensor 컴포넌트를 가지고 있을 경우 해당 컴포넌트에 Hit 함수를 호출해 Touch 정보를 전달하고
@@ -95,7 +101,7 @@ namespace SandboxEditor.InputControl.InEditor
 
         public static void AlarmMe(int fingerID, AbstractSensor sensor)
         {
-            _tid._AlarmMe(fingerID, sensor);
+            _touchInEditor._AlarmMe(fingerID, sensor);
         }
         public void _AlarmMe(int fingerID, AbstractSensor sensor){
             // Debug.Log($"{Time.realtimeSinceStartup} Alarm begin : {fingerID}");

@@ -1,3 +1,4 @@
+using System;
 using GameEditor.EventEditor.Controller;
 using SandboxEditor.Data.Block;
 using SandboxEditor.InputControl.InEditor.Sensor;
@@ -5,8 +6,9 @@ using UnityEngine;
 
 namespace SandboxEditor.Block
 {
-    public sealed class PortConnection : MonoBehaviour
+    public sealed class PortConnectionRenderer : MonoBehaviour
     {
+        private static PortConnectionRenderer _portConnectionRenderer;
         public PortConnectionData portConnectionData;
         public LineRenderer lineRenderer;
         private bool isConnectionSet = false;
@@ -14,14 +16,20 @@ namespace SandboxEditor.Block
         private BlockBody receiverPortBlockBody;
         private bool senderPortIsOnToy = false;
         private bool receiverPortIsOnToy = false;
+        private bool _isGameStarted = false;
 
         private void Update()
         {
-            if (SandboxPhaseChanger.IsGameStarted) return;
+            if (_isGameStarted) return;
             if (isConnectionSet && AreBothPortInvisible())
                 ReRender();
             else
                 lineRenderer.enabled = false;
+        }
+
+        public static void WhenGameStart()
+        {
+            _portConnectionRenderer._isGameStarted = true;
         }
 
         public void SetConnection(PortConnectionData portConnectionData)
@@ -47,6 +55,11 @@ namespace SandboxEditor.Block
         {
             return (senderPortIsOnToy || senderPortBlockBody.gameObject.activeSelf) &&
                    (receiverPortIsOnToy || receiverPortBlockBody.gameObject.activeSelf);
+        }
+
+        private void Awake()
+        {
+            _portConnectionRenderer = this;
         }
 
     }

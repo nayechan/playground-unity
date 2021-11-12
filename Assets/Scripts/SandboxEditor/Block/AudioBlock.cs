@@ -13,7 +13,7 @@ namespace SandboxEditor.Block
         public BlockPort stopSignal;
         public string audioName;
 
-        private void Start()
+        private void Awake()
         {
             InitializePortRegister();
         }

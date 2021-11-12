@@ -9,6 +9,7 @@ namespace GameEditor.EventEditor.Controller
     {
         private List<Collision2D> collisions2D;
         private static CollisionInEveryFrame _CollisionInEveryFrame;
+        private bool _isGameStarted = false;
         private static IEnumerable<Collision2D> Collisions2D => _CollisionInEveryFrame.collisions2D;
         private Dictionary<GameObject, GameObject> hitToyAndOther;
         static public Dictionary<GameObject, GameObject> HitToyAndOther => _CollisionInEveryFrame.hitToyAndOther;
@@ -43,7 +44,7 @@ namespace GameEditor.EventEditor.Controller
 
         public static void AddCollision2D(Collision2D collision2D)
         {
-            if(SandboxPhaseChanger.IsGameStarted)
+            if(_CollisionInEveryFrame._isGameStarted)
                 _CollisionInEveryFrame.collisions2D.Add(collision2D);
         }
 
@@ -51,6 +52,11 @@ namespace GameEditor.EventEditor.Controller
         {
             _CollisionInEveryFrame.collisions2D = new List<Collision2D>();
             _CollisionInEveryFrame.hitToyAndOther = new Dictionary<GameObject, GameObject>();
+        }
+
+        public static void WhenGameStart()
+        {
+            _CollisionInEveryFrame._isGameStarted = true;
         }
     }
 }

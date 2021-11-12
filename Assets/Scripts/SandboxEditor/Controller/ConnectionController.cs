@@ -136,7 +136,7 @@ namespace GameEditor.EventEditor.Controller
         private static void CreateAndSetConnectionSpriteLine(PortConnectionData portConnectionData)
         {
             portConnectionData.spriteLine = Instantiate(SpriteLine);
-            portConnectionData.spriteLine.GetComponent<PortConnection>().SetConnection(portConnectionData);
+            portConnectionData.spriteLine.GetComponent<PortConnectionRenderer>().SetConnection(portConnectionData);
         }
 
         public static void DeleteConnections(BlockPort port)

@@ -11,7 +11,7 @@ namespace SandboxEditor.Block
         public BlockPort touchXAxisOutput;
         public BlockPort touchYAxisOutput;
 
-        private void Start()
+        private void Awake()
         {
             InitializePortRegister();
         }

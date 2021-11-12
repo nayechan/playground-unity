@@ -15,6 +15,7 @@ namespace GameEditor.EventEditor.Controller
 
         public static void BlockActionWhenGameStart()
         {
+            Debug.Log("BlockAction When Call~~");
             foreach(var block in BlockStorage.Blocks)
                 block.WhenGameStart();
         }
