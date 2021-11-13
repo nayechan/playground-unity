@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using SandboxEditor.Block;
 using SandboxEditor.Data.Block;
 using SandboxEditor.Data.Toy;
-using SandboxEditor.NewBlock;
 using UnityEngine;
 
 namespace SandboxEditor.Data.Storage
@@ -38,7 +38,6 @@ namespace SandboxEditor.Data.Storage
             Blocks.Remove(block);
         }
         
-
         public static void RenewBlockList()
         {
             _BlockStorage._blocks = new List<AbstractBlock>();

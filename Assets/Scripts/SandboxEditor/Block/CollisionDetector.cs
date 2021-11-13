@@ -1,23 +1,16 @@
-﻿using System;
-using System.Linq;
-using GameEditor.EventEditor.Controller;
+﻿using GameEditor.EventEditor.Controller;
 using SandboxEditor.Data.Block;
 using SandboxEditor.Data.Block.Register;
 using SandboxEditor.InputControl.InEditor.Sensor;
 using UnityEngine;
 
-namespace SandboxEditor.NewBlock
+namespace SandboxEditor.Block
 {
     public class CollisionDetector : AbstractBlock
     {
         public BlockPort toyToSense;
         public BlockPort collisionDetected;
         public BlockPort anotherToy;
-
-        private void Start()
-        {
-            InitializePortRegister();
-        }
 
         protected override void InitializePortRegister()
         {

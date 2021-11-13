@@ -4,17 +4,12 @@ using SandboxEditor.Data.Block.Register;
 using SandboxEditor.InputControl.InEditor.Sensor;
 using UnityEngine;
 
-namespace SandboxEditor.NewBlock
+namespace SandboxEditor.Block
 {
     public class ToyDestroyerBlock : AbstractBlock
     {
         public BlockPort destroySignal;
         public BlockPort toyToDestroy;
-
-        private void Start()
-        {
-            InitializePortRegister();
-        }
 
         protected override void InitializePortRegister()
         {

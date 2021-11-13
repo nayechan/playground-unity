@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using GameEditor.EventEditor.Line;
+using SandboxEditor.Block;
 using SandboxEditor.Data;
 using SandboxEditor.Data.Block;
 using SandboxEditor.Data.Sandbox;
@@ -136,7 +136,7 @@ namespace GameEditor.EventEditor.Controller
         private static void CreateAndSetConnectionSpriteLine(PortConnectionData portConnectionData)
         {
             portConnectionData.spriteLine = Instantiate(SpriteLine);
-            portConnectionData.spriteLine.GetComponent<PortConnection>().SetConnection(portConnectionData);
+            portConnectionData.spriteLine.GetComponent<PortConnectionRenderer>().SetConnection(portConnectionData);
         }
 
         public static void DeleteConnections(BlockPort port)
@@ -159,9 +159,8 @@ namespace GameEditor.EventEditor.Controller
             return new BlockConnections(BlockConnections.ToList());
         }
 
-        public static void CreateConnectionRootAndRenewConnections(BlockConnections blockConnectionsData, Dictionary<int, GameObject> toyIDPair, Dictionary<int, GameObject> blockIDPair)
+        public static void CreateConnectionAndAddConnectionReference(BlockConnections blockConnectionsData, Dictionary<int, GameObject> toyIDPair, Dictionary<int, GameObject> blockIDPair)
         {
-            RenewConnectionList();
             foreach (var blockConnectionData in blockConnectionsData.blockConnections)
                 CreateConnection(blockConnectionData, toyIDPair, blockIDPair);
         }
@@ -201,7 +200,7 @@ namespace GameEditor.EventEditor.Controller
             return matchedBlockPort;
         }
         // 연결정보 세이브 로드 구현.
-        private static void RenewConnectionList()
+        public static void RenewConnectionList()
         {
             _ConnectionController._blockConnections = new HashSet<PortConnectionData>();
         }

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace SandboxEditor.Data.Toy
 {
-    [System.Serializable]
+    [Serializable]
     public class ToyData
     {
         public ImageData imageData;
@@ -139,4 +139,5 @@ namespace SandboxEditor.Data.Toy
     {
         public ToyType toyType;
     }
+    
 }

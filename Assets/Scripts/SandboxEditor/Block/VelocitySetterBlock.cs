@@ -3,7 +3,7 @@ using SandboxEditor.Data.Block.Register;
 using SandboxEditor.InputControl.InEditor.Sensor;
 using UnityEngine;
 
-namespace SandboxEditor.NewBlock
+namespace SandboxEditor.Block
 {
     public class VelocitySetterBlock : AbstractBlock
     {
@@ -13,11 +13,6 @@ namespace SandboxEditor.NewBlock
         public BlockPort signalPort;
         public float XVelocity = 0f;
         public float YVelocity = 0f;
-
-        private void Start()
-        {
-            InitializePortRegister();
-        }
 
         protected override void InitializePortRegister()
         {

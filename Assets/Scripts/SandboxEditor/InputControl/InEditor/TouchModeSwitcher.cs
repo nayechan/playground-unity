@@ -8,8 +8,8 @@ namespace SandboxEditor.InputControl.InEditor
 
         public void SwitchMode()
         {
-            TouchController.Mode = touchMode;
-            Debug.Log(TouchController.Mode);
+            TouchInEditor.Mode = touchMode;
+            Debug.Log(TouchInEditor.Mode);
         }
     }
 }

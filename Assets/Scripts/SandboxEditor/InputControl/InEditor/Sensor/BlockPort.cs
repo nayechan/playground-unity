@@ -25,7 +25,7 @@ namespace SandboxEditor.InputControl.InEditor.Sensor
         public override void OnTouchBegan(Touch touch, out bool isRayBlock)
         {
             isRayBlock = false;
-            if (TouchController.Mode == TouchMode.CreateObject || TouchController.Mode == TouchMode.CreateBlock || TouchController.Mode == TouchMode.MoveObject) return;
+            if (TouchInEditor.Mode == TouchMode.CreateObject || TouchInEditor.Mode == TouchMode.CreateBlock || TouchInEditor.Mode == TouchMode.MoveObject) return;
             ConnectionController.WhenPortClicked(this);
             isRayBlock = true;
         }

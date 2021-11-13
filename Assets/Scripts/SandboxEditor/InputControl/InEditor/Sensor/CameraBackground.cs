@@ -20,10 +20,10 @@ namespace SandboxEditor.InputControl.InEditor.Sensor{
 
         public override void OnTouchBegan(Touch touch, out bool isRayBlock)
         {
-            var tc = TouchController.GetTID();
+            var tc = TouchInEditor.GetTID();
             Vector3 worldPos;
             _touchBeginPosition = touch.position;
-            switch (TouchController.Mode)
+            switch (TouchInEditor.Mode)
             {
                 case TouchMode.CamMove:
                     tc._AlarmMe(touch.fingerId, this);

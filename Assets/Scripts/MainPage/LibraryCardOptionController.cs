@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using SandboxEditor.Data.Sandbox;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -21,9 +22,7 @@ public class LibraryCardOptionController : MonoBehaviour
 
     public void OnClickPlay()
     {
-        PlayerPrefs.SetString("sandboxToRun",gameID);
-        PlayerPrefs.SetInt("isLocalSandbox", isLocal?1:0);
-        PlayerPrefs.SetInt("isRunningPlayer", 1);
+        Sandbox.SetSandboxDataToRun(gameID, isLocal, true);
 
         Debug.Log(string.Format("Game ID : {0}, isLocalSandbox : {1}, isRunningPlayer : {2}",gameID,isLocal,1));
 
@@ -32,9 +31,7 @@ public class LibraryCardOptionController : MonoBehaviour
 
     public void OnClickEdit()
     {
-        PlayerPrefs.SetString("sandboxToRun",gameID);
-        PlayerPrefs.SetInt("isLocalSandbox", isLocal?1:0);
-        PlayerPrefs.SetInt("isRunningPlayer", 0);
+        Sandbox.SetSandboxDataToRun(gameID, isLocal, false);
         Debug.Log(string.Format("Game ID : {0}, isLocalSandbox : {1}, isRunningPlayer : {2}",gameID,isLocal,0));
 
         SceneMover.getInstance().MoveScene(sceneToMoveOn);

@@ -1,13 +1,10 @@
-﻿using System;
-using SandboxEditor.Data.Block;
+﻿using SandboxEditor.Data.Block;
 using SandboxEditor.Data.Block.Register;
-using SandboxEditor.Data.Resource;
 using SandboxEditor.Data.Storage;
 using SandboxEditor.InputControl.InEditor.Sensor;
-using Tools;
 using UnityEngine;
 
-namespace SandboxEditor.NewBlock
+namespace SandboxEditor.Block
 {
     public class AudioBlock : AbstractBlock
     {
@@ -15,11 +12,6 @@ namespace SandboxEditor.NewBlock
         public BlockPort playSignal;
         public BlockPort stopSignal;
         public string audioName;
-
-        private void Start()
-        {
-            InitializePortRegister();
-        }
 
         protected override void InitializePortRegister()
         {

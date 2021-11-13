@@ -27,8 +27,8 @@ namespace SandboxEditor.InputControl.InEditor.Sensor
 
         public override void OnTouchBegan(Touch touch, out bool isRayBlock)
         {
-            var tc = TouchController.GetTID();
-            switch (TouchController.Mode)
+            var tc = TouchInEditor.GetTID();
+            switch (TouchInEditor.Mode)
             {
                 case TouchMode.DeleteObject:
                     DeleteSensorParent();
@@ -46,7 +46,7 @@ namespace SandboxEditor.InputControl.InEditor.Sensor
 
         public override void OnTouchMoved(Touch touch, out bool isRayBlock)
         {
-            if (TouchController.Mode == TouchMode.DeleteObject)
+            if (TouchInEditor.Mode == TouchMode.DeleteObject)
             {
                 isRayBlock = true;
                 DeleteSensorParent();

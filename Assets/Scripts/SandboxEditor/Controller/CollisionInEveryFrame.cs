@@ -5,10 +5,12 @@ using UnityEngine;
 
 namespace GameEditor.EventEditor.Controller
 {
-    public class CollisionInEveryFrame : MonoBehaviour
+    public class CollisionInEveryFrame : MonoBehaviour, PhaseChangeCallBackReceiver
     {
         private List<Collision2D> collisions2D;
-        private static CollisionInEveryFrame _CollisionInEveryFrame;
+        public static CollisionInEveryFrame _CollisionInEveryFrame { get; private set; }
+
+        private bool _isListeningCollision = false;
         private static IEnumerable<Collision2D> Collisions2D => _CollisionInEveryFrame.collisions2D;
         private Dictionary<GameObject, GameObject> hitToyAndOther;
         static public Dictionary<GameObject, GameObject> HitToyAndOther => _CollisionInEveryFrame.hitToyAndOther;
@@ -23,7 +25,7 @@ namespace GameEditor.EventEditor.Controller
         {
             foreach (var collision in Collisions2D)
             {
-                if (collision.gameObject == null) continue;
+                if (collision?.gameObject == null) continue;
                 var hitGameObject = collision.gameObject;
                 var hitPort = hitGameObject.GetComponentInChildren<BlockPort>();
                 var otherGameObject = collision.otherCollider.gameObject;
@@ -43,7 +45,7 @@ namespace GameEditor.EventEditor.Controller
 
         public static void AddCollision2D(Collision2D collision2D)
         {
-            if(SandboxUpdateController.IsGameStarted)
+            if(_CollisionInEveryFrame._isListeningCollision)
                 _CollisionInEveryFrame.collisions2D.Add(collision2D);
         }
 
@@ -51,6 +53,31 @@ namespace GameEditor.EventEditor.Controller
         {
             _CollisionInEveryFrame.collisions2D = new List<Collision2D>();
             _CollisionInEveryFrame.hitToyAndOther = new Dictionary<GameObject, GameObject>();
+        }
+
+        public void WhenGameStart()
+        {
+            _CollisionInEveryFrame._isListeningCollision = true;
+        }
+
+        public void WhenTestStart()
+        {
+            _CollisionInEveryFrame._isListeningCollision = true;
+        }
+
+        public void WhenTestPause()
+        {
+            _CollisionInEveryFrame._isListeningCollision = false;
+        }
+
+        public void WhenTestResume()
+        {
+            _CollisionInEveryFrame._isListeningCollision = true;
+        }
+
+        public void WhenBackToEditor()
+        {
+            _CollisionInEveryFrame._isListeningCollision = false;
         }
     }
 }

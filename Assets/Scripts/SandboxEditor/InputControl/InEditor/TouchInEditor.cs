@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using GameEditor.EventEditor.Controller;
 using SandboxEditor.InputControl.InEditor.Sensor;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,38 +11,42 @@ namespace SandboxEditor.InputControl.InEditor
     public class TouchEvent : UnityEvent<Touch>{
     }
 
-    public class TouchController : MonoBehaviour
+    public class TouchInEditor : MonoBehaviour, PhaseChangeCallBackReceiver
     {
-        private static TouchController _tid;
+        public static TouchInEditor _TouchInEditor { get; private set; }
         private static Camera _cam;
         private Dictionary<int, TouchEvent> _touchAlarms; // 특정 fingerID의 터치 이벤트를 지속적으로 듣는 스크립트를 위한 이벤트.
         private TouchMode _mode;
-        public static TouchMode Mode {get => _tid._mode; set => _tid._mode = value; }
+        public static TouchMode Mode {get => _TouchInEditor._mode; set => _TouchInEditor._mode = value; }
         private Touch[] touches;
-        void Start() {
+        private bool _isInGameMode = false;
+
+        private void Awake()
+        {
+            _TouchInEditor = this;
+        }
+
+        private void Start() {
             _cam = Camera.main;
             _touchAlarms = new Dictionary<int, TouchEvent>();
-            _tid = this;
             _mode = TouchMode.CamMove;
         }
 
-        void Update() {
+        private void Update()
+        {
+            if (_isInGameMode) return;
             touches = Input.touches;
             AlarmAll();
             ShotRays();
             ResetOutdatedAlarm();
         }
 
-        public static TouchController GetTID(){
-            return _tid;
+        public static TouchInEditor GetTID(){
+            return _TouchInEditor;
         }
 
         private static void ShotRays(){
-            foreach(var touch in _tid.touches){
-                // 각 터치에 대해 하나의 Raycast를 진행. Collider를 가진 객체를 검출한다.
-                // 충돌한 객체를 가까운 거리순으로 정렬하고 TouchSensor 컴포넌트를 가지고 있는지 차례대로 확인한다.
-                // TouchSensor 컴포넌트를 가지고 있을 경우 해당 컴포넌트에 Hit 함수를 호출해 Touch 정보를 전달하고
-                // 더 이상의 신호 전달을 막을 것인지 rayIsBlocked 로 응답한다. rayIsBlocked 가 true 일경우 해당 Raycast에 대한 신호전달을 멈춘다.
+            foreach(var touch in _TouchInEditor.touches){
                 if(IsOnGUI(touch.fingerId)) break;
                 var rayOrigin = _cam.ScreenToWorldPoint(touch.position);
                 var hits = Physics.RaycastAll(rayOrigin, _cam.transform.forward);
@@ -91,7 +96,7 @@ namespace SandboxEditor.InputControl.InEditor
 
         public static void AlarmMe(int fingerID, AbstractSensor sensor)
         {
-            _tid._AlarmMe(fingerID, sensor);
+            _TouchInEditor._AlarmMe(fingerID, sensor);
         }
         public void _AlarmMe(int fingerID, AbstractSensor sensor){
             // Debug.Log($"{Time.realtimeSinceStartup} Alarm begin : {fingerID}");
@@ -116,6 +121,25 @@ namespace SandboxEditor.InputControl.InEditor
                 _touchAlarms[touch.fingerId].RemoveAllListeners();
                 _touchAlarms.Remove(touch.fingerId);
             }
+        }
+
+        public void WhenGameStart()
+        {
+            _TouchInEditor._isInGameMode = true;
+        }
+
+        public void WhenTestStart()
+        {
+            _TouchInEditor._isInGameMode = true;
+        }
+
+        public void WhenTestPause() { }
+
+        public void WhenTestResume() { }
+
+        public void WhenBackToEditor()
+        {
+            _TouchInEditor._isInGameMode = false;
         }
     }
     

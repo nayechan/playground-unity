@@ -1,7 +1,7 @@
 ﻿using System;
+using SandboxEditor.Block;
 using SandboxEditor.Data.Toy;
 using SandboxEditor.InputControl.InEditor.Sensor;
-using SandboxEditor.NewBlock;
 
 namespace SandboxEditor.Data
 {

@@ -37,7 +37,7 @@ namespace SandboxEditor.UI.Panel.Toy
         
         private void BuildAndSetPositionOfToySample()
         {
-            foreach(var(toyData, i) in ToyStorage.ToysData.Select(((data, i) => (data, i))))
+            foreach(var(toyData, i) in ToyPrefabDataStorage.ToysData.Select(((data, i) => (data, i))))
             {
                 var toySample = Instantiate(toySamplePrefab, contentPanel);
                 toySample.GetComponent<RectTransform>().anchoredPosition = ImageSamplePanel.GetNthAnchoredPosition(i);
@@ -47,7 +47,7 @@ namespace SandboxEditor.UI.Panel.Toy
 
         private void SetPositionOfAddButton()
         {
-            addButton.GetComponent<RectTransform>().anchoredPosition = ImageSamplePanel.GetNthAnchoredPosition(ToyStorage.Count);
+            addButton.GetComponent<RectTransform>().anchoredPosition = ImageSamplePanel.GetNthAnchoredPosition(ToyPrefabDataStorage.Count);
         }
     }
 }

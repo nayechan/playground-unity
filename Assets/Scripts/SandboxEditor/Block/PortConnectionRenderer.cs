@@ -1,13 +1,12 @@
 using System;
 using GameEditor.EventEditor.Controller;
-using SandboxEditor.Data;
 using SandboxEditor.Data.Block;
 using SandboxEditor.InputControl.InEditor.Sensor;
 using UnityEngine;
 
-namespace GameEditor.EventEditor.Line
+namespace SandboxEditor.Block
 {
-    public sealed class PortConnection : MonoBehaviour
+    public sealed class PortConnectionRenderer : MonoBehaviour
     {
         public PortConnectionData portConnectionData;
         public LineRenderer lineRenderer;
@@ -16,10 +15,10 @@ namespace GameEditor.EventEditor.Line
         private BlockBody receiverPortBlockBody;
         private bool senderPortIsOnToy = false;
         private bool receiverPortIsOnToy = false;
+        private bool _isGameStarted = false;
 
         private void Update()
         {
-            if (SandboxUpdateController.IsGameStarted) return;
             if (isConnectionSet && AreBothPortInvisible())
                 ReRender();
             else

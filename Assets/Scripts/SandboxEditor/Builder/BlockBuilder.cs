@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using SandboxEditor.Block;
 using SandboxEditor.Data.Block;
 using SandboxEditor.Data.Sandbox;
 using SandboxEditor.Data.Storage;
-using SandboxEditor.NewBlock;
 using Tools;
 using UnityEngine;
 
@@ -59,18 +59,16 @@ namespace SandboxEditor.Builder
             blockGameObject.transform.position = position;
         }
 
-        public static (GameObject, Dictionary<int, GameObject>) CreateBlockRootAndUpdateBlockStorage(BlocksData blocksData)
+        public static GameObject CreateBlockRootAndAddConnectionReference(BlocksData blocksData)
         {
-            var blockIdAndGameObjectPair = new Dictionary<int, GameObject>();
             var blockRoot = new GameObject("BlockRoot");
             foreach (var block in blocksData.blocksData)
             {
                 var newBlock = CreateBlockAndAddOnStorage(block);
                 Misc.SetChildAndParent(newBlock, blockRoot);
-                blockIdAndGameObjectPair.Add(block.blockInstanceID, newBlock);
+                Sandbox.BlockIDGameObjectPair.Add(block.blockInstanceID, newBlock);
             }
-
-            return (blockRoot, blockIdAndGameObjectPair);
+            return blockRoot;
         }
 
         public static GameObject CreateBlockAndAddOnStorage(BlockData blockData)
