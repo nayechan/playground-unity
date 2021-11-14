@@ -203,6 +203,8 @@ namespace GameEditor.EventEditor.Controller
         public static void RenewConnectionList()
         {
             _ConnectionController._blockConnections = new HashSet<PortConnectionData>();
+            _ConnectionController.portLineAndConnectionsPairs =
+                new Dictionary<BlockPort, HashSet<PortConnectionData>>();
         }
 
         public static HashSet<PortConnectionData> GetConnections(BlockPort port)

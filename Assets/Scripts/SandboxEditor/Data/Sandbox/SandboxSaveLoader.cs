@@ -130,7 +130,7 @@ namespace SandboxEditor.Data.Sandbox
             return BlockBuilder.CreateBlockRootAndAddConnectionReference(blocksData);
         }
 
-        public static void LoadConnection(SandboxData _sandboxData, Dictionary<int, GameObject> toyIDPair, Dictionary<int, GameObject> blockIDPair )
+        public static void LoadConnectionFromLocalData(SandboxData _sandboxData, Dictionary<int, GameObject> toyIDPair, Dictionary<int, GameObject> blockIDPair )
         {
             var jsonConnectionDataPath = Path.Combine(SandboxChecker.GetSandboxPath(_sandboxData), JsonNameOfConnectionData);
             var jsonConnectionData = System.IO.File.ReadAllText(jsonConnectionDataPath);

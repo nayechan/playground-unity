@@ -9,7 +9,6 @@ using SandboxEditor.Data.Toy;
 using SandboxEditor.InputControl.InEditor;
 using SandboxEditor.UI;
 using Tools;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -77,12 +76,18 @@ namespace SandboxEditor.Controller
             BackToEditorCallBack();
             ReloadInstance();
             PauseTest();
+            BlockController.WhenBackToEditor();
         }
 
         private static void ReloadInstance()
         {
+            Debug.Log("ReLoad Start");
+            Debug.Log($"Toy Data {JsonUtility.ToJson(_sandboxPhaseChanger._toyData)}");
+            Debug.Log($"Block Data {JsonUtility.ToJson(_sandboxPhaseChanger._blocksData)}");
+            Debug.Log($"Connections Data {JsonUtility.ToJson(_sandboxPhaseChanger._blockConnections)}");
             Sandbox.ResetObjectAndReference();
-            Sandbox.LoadGameObjectAndAddIDReference(_sandboxPhaseChanger._toyData, _sandboxPhaseChanger._blocksData);
+            Sandbox.LoadGameObjectFromInstanceData
+                (_sandboxPhaseChanger._toyData, _sandboxPhaseChanger._blocksData, _sandboxPhaseChanger._blockConnections);
         }
         
         public static void StartGame()

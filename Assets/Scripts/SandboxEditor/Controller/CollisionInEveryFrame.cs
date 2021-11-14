@@ -17,8 +17,6 @@ namespace GameEditor.EventEditor.Controller
         private void Awake()
         {
             _CollisionInEveryFrame = this;
-            collisions2D = new List<Collision2D>();
-            hitToyAndOther = new Dictionary<GameObject, GameObject>();
         }
 
         public static void RecordeToyCollision()
@@ -57,11 +55,13 @@ namespace GameEditor.EventEditor.Controller
 
         public void WhenGameStart()
         {
+            RenewCollisions2D();
             _CollisionInEveryFrame._isListeningCollision = true;
         }
 
         public void WhenTestStart()
         {
+            RenewCollisions2D();
             _CollisionInEveryFrame._isListeningCollision = true;
         }
 
@@ -77,6 +77,7 @@ namespace GameEditor.EventEditor.Controller
 
         public void WhenBackToEditor()
         {
+            RenewCollisions2D();
             _CollisionInEveryFrame._isListeningCollision = false;
         }
     }
