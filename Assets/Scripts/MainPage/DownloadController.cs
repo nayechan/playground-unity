@@ -5,12 +5,14 @@ using UnityEngine.Networking;
 using System.Text;
 using System.IO;
 using MainPage.Panel;
+using UnityEngine.UI;
 using MainPage;
 using Network;
 
 public class DownloadController : MonoBehaviour
 {
     [SerializeField] string url;
+    [SerializeField] Text text;
     [SerializeField] DownloadPanelController downloadPanel;
     [SerializeField] SandboxInitializer sandboxInitializer;
     //[SerializeField] SandboxManager sandboxManager;
@@ -45,6 +47,7 @@ public class DownloadController : MonoBehaviour
     public void StartDownload()
     {
         string gameId = downloadPanel.GetCurrentResponseData().getGameID();
+        text.text = "받는 중...";
         StartCoroutine(SendRequest(gameId));
     }
     public void OnResponse(string resultStringData, string gameId)
@@ -68,14 +71,25 @@ public class DownloadController : MonoBehaviour
         uwr.downloadHandler = new DownloadHandlerFile(path);
         yield return uwr.SendWebRequest();
         if (uwr.result != UnityWebRequest.Result.Success)
+        {
+            text.text = "서버 오류";
             Debug.LogError(uwr.error);
+        }
         else
             Debug.Log("File successfully downloaded and saved to " + path);
 
-        Extractor.ExtractZip(path);
+        try
+        {
+            Extractor.ExtractZip(path);
 
-        File.Delete(path);
-        //StartCoroutine(sandboxManager.LoadSandboxFolders());
+            File.Delete(path);
+            //StartCoroutine(sandboxManager.LoadSandboxFolders());
+        }
+        catch
+        {
+            text.text = "프로그램 오류";
+        }
         sandboxInitializer.ReloadSandbox();
+        text.text = "다운로드";
     }
 }
