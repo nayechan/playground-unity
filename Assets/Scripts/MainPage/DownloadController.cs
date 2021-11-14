@@ -29,14 +29,14 @@ public class DownloadController : MonoBehaviour
             yield return www.SendWebRequest();
             if(www.result != UnityWebRequest.Result.Success)
             {
-                Debug.Log(www.result);
+                //Debug.Log(www.result);
             }
             else
             {
                 byte[] resultBinaryData = www.downloadHandler.data;
 
                 string resultStringData = Encoding.Default.GetString(resultBinaryData);
-                Debug.Log(resultStringData);
+                //Debug.Log(resultStringData);
 
                 OnResponse(resultStringData, gameID);
 
@@ -59,7 +59,7 @@ public class DownloadController : MonoBehaviour
     }
     IEnumerator ProcessDownload(string downloadPath, string gameId)
     {
-        Debug.Log(downloadPath);
+        //Debug.Log(downloadPath);
         var uwr = new UnityWebRequest(downloadPath, UnityWebRequest.kHttpVerbGET);
         string path = Path.Combine(
             Application.persistentDataPath,
@@ -67,16 +67,16 @@ public class DownloadController : MonoBehaviour
             gameId,
             gameId+".zip"
         );
-        Debug.Log(path);
+        //Debug.Log(path);
         uwr.downloadHandler = new DownloadHandlerFile(path);
         yield return uwr.SendWebRequest();
         if (uwr.result != UnityWebRequest.Result.Success)
         {
             text.text = "서버 오류";
-            Debug.LogError(uwr.error);
+            //Debug.LogError(uwr.error);
         }
         else
-            Debug.Log("File successfully downloaded and saved to " + path);
+            //Debug.Log("File successfully downloaded and saved to " + path);
 
         try
         {
