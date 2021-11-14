@@ -35,11 +35,9 @@ namespace SandboxEditor.Block
         {
             if (ToyToSetVelocity.RegisterValue == null) return;
             var toy = (GameObject) ToyToSetVelocity.RegisterValue;
-            Debug.Log($"Object Connected : {toy}");
             if ((bool)signalPort.RegisterValue == false) return;
             var rigidbody2D = toy.GetComponent<Rigidbody2D>();
             rigidbody2D.velocity = new Vector2(XVelocity, YVelocity);
-            Debug.Log($"signal On, set velocity of : {toy}");
         }
 
         public override void MessageCallBack(string message)

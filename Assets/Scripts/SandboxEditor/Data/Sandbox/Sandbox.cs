@@ -104,14 +104,15 @@ namespace SandboxEditor.Data.Sandbox
         {
             _Sandbox._rootOfToy = SandboxSaveLoader.LoadToyAndAddIDReference(SandboxData);
             _Sandbox._rootOfBlock = SandboxSaveLoader.LoadBlockAndAddIDReference(SandboxData);
-            SandboxSaveLoader.LoadConnection(SandboxData, _ToyIDGameObjectPairs, _blockIDGameObjectPairs);
+            SandboxSaveLoader.LoadConnectionFromLocalData(SandboxData, _ToyIDGameObjectPairs, _blockIDGameObjectPairs);
         }
         
-        public static void LoadGameObjectAndAddIDReference(ToyData toyData, BlocksData blocksData)
+        public static void LoadGameObjectFromInstanceData(ToyData toyData, BlocksData blocksData, BlockConnections blockConnections)
         {
             _Sandbox._rootOfToy = ToyLoader.BuildToys(toyData);
             _Sandbox._rootOfBlock = BlockBuilder.CreateBlockRootAndAddConnectionReference(blocksData);
-            SandboxSaveLoader.LoadConnection(SandboxData, _Sandbox._ToyIDGameObjectPairs, _Sandbox._blockIDGameObjectPairs);
+            ConnectionController.CreateConnectionAndAddConnectionReference
+                (blockConnections, _Sandbox._ToyIDGameObjectPairs,_Sandbox._blockIDGameObjectPairs);
         }
         
         public static GameObject BuildSelectedToyOnToyRoot()

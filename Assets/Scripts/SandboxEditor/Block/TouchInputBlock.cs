@@ -21,7 +21,6 @@ namespace SandboxEditor.Block
         {
             var inputViewPort = PlayerTouchController.TouchToViewport();
             (touchXAxisOutput.RegisterValue, touchYAxisOutput.RegisterValue) = (inputViewPort.x, inputViewPort.y);
-            Debug.Log($"value is {(float)touchXAxisOutput.RegisterValue}, {(float)touchYAxisOutput.RegisterValue}");
         }
 
         public override BlockData SaveBlockData()
