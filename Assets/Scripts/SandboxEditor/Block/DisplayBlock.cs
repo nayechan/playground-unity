@@ -17,7 +17,6 @@ namespace SandboxEditor.Block
         protected override void Awake()
         {
             base.Awake();
-            ChangeSizeOfCameraAndGuideArea(camera.orthographicSize);
             camera.enabled = false;
         }
 
@@ -60,6 +59,7 @@ namespace SandboxEditor.Block
         {
             base.LoadBlockData(blockData);
             camera.orthographicSize = ((DisplayBlockData) blockData).camSize;
+            ChangeSizeOfCameraAndGuideArea(((DisplayBlockData) blockData).camSize);
         }
     }
 }
