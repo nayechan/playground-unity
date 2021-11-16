@@ -74,7 +74,7 @@ namespace SandboxEditor.Data.Sandbox
             SaveJsonDataLocally(ConnectionController.GetBlockConnections(), _sandboxData.ConnectionDataPath);
         }
 
-        private void SaveJsonDataLocally(object data, string filePath)
+        public static void SaveJsonDataLocally(object data, string filePath)
         {
             var jsonData = JsonUtility.ToJson(data, true);
             System.IO.File.WriteAllText(filePath, jsonData);
@@ -86,7 +86,6 @@ namespace SandboxEditor.Data.Sandbox
             var sandboxData = JsonUtility.FromJson<SandboxData>(jsonSandboxData.ToString());
             return sandboxData;
         }
-
 
         public static void LoadImageStorageData(SandboxData sandboxData)
         {

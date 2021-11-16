@@ -8,6 +8,10 @@ using MainPage.Panel;
 using UnityEngine.UI;
 using MainPage;
 using Network;
+using Newtonsoft.Json.Linq;
+using SandboxEditor.Data.Sandbox;
+using Tools;
+using File = System.IO.File;
 
 public class DownloadController : MonoBehaviour
 {
@@ -47,7 +51,6 @@ public class DownloadController : MonoBehaviour
     public void StartDownload()
     {
         string gameId = downloadPanel.GetCurrentResponseData().getGameID();
-        text.text = "받는 중...";
         StartCoroutine(SendRequest(gameId));
     }
     public void OnResponse(string resultStringData, string gameId)
@@ -72,24 +75,29 @@ public class DownloadController : MonoBehaviour
         yield return uwr.SendWebRequest();
         if (uwr.result != UnityWebRequest.Result.Success)
         {
-            text.text = "서버 오류";
             //Debug.LogError(uwr.error);
         }
         else
             //Debug.Log("File successfully downloaded and saved to " + path);
-
-        try
         {
             Extractor.ExtractZip(path);
-
             File.Delete(path);
             //StartCoroutine(sandboxManager.LoadSandboxFolders());
-        }
-        catch
-        {
-            text.text = "프로그램 오류";
+            var sandboxDataPath = Path.Combine(SandboxChecker.RemotePath, gameId, Names.JsonNameOfSandboxData);
+            var jsonSandboxData= JObject.Parse(File.ReadAllText(sandboxDataPath));
+            var sandboxData = JsonUtility.FromJson<SandboxData>(jsonSandboxData.ToString());
+            Debug.Log(JsonUtility.ToJson(sandboxData));
+            UpdateRemoteSandboxData(sandboxData, gameId);
+            Debug.Log(JsonUtility.ToJson(sandboxData));
+            SandboxSaveLoader.SaveJsonDataLocally(sandboxData, sandboxData.SandboxDataPath);
+            Debug.Log(sandboxData.SandboxDataPath);
         }
         sandboxInitializer.ReloadSandbox();
-        text.text = "다운로드";
+    }
+    
+    private static void UpdateRemoteSandboxData(SandboxData oldSandboxData, string sandboxID)
+    {
+        oldSandboxData.id = sandboxID;
+        oldSandboxData.isLocalSandbox = false;
     }
 }
