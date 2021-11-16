@@ -225,10 +225,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6366077212999271820}
     m_Modifications:
+    - target: {fileID: 2292384667334246900, guid: 5fe92807b95b2c14f855c178db73a108, type: 3}
+      propertyPath: m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
     - target: {fileID: 6998470290077269454, guid: 5fe92807b95b2c14f855c178db73a108, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8208678239807943330, guid: 5fe92807b95b2c14f855c178db73a108, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
+    - target: {fileID: 8600904677291457680, guid: 5fe92807b95b2c14f855c178db73a108, type: 3}
+      propertyPath: m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
+    - target: {fileID: 8600904677291457681, guid: 5fe92807b95b2c14f855c178db73a108, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
     - target: {fileID: 8600904677983860801, guid: 5fe92807b95b2c14f855c178db73a108, type: 3}
       propertyPath: m_Name
       value: BlockBody
@@ -470,13 +486,33 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6312591616032077221}
     - target: {fileID: 436433267062488356, guid: ffa51f9fe276ded4cab304427073b354, type: 3}
+      propertyPath: m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
+    - target: {fileID: 436433267062488356, guid: ffa51f9fe276ded4cab304427073b354, type: 3}
       propertyPath: m_Text
       value: "\uC124\uC815"
       objectReference: {fileID: 0}
+    - target: {fileID: 1945180040211033911, guid: ffa51f9fe276ded4cab304427073b354, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
+    - target: {fileID: 2007675912719400302, guid: ffa51f9fe276ded4cab304427073b354, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
+    - target: {fileID: 3328458240233542849, guid: ffa51f9fe276ded4cab304427073b354, type: 3}
+      propertyPath: m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
     - target: {fileID: 3328458240233542849, guid: ffa51f9fe276ded4cab304427073b354, type: 3}
       propertyPath: m_Text
       value: "\uBC94\uC704 \uC904\uC774\uAE30"
       objectReference: {fileID: 0}
+    - target: {fileID: 3848172061057319545, guid: ffa51f9fe276ded4cab304427073b354, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
     - target: {fileID: 4445766459958629385, guid: ffa51f9fe276ded4cab304427073b354, type: 3}
       propertyPath: m_Name
       value: PropertySettings
@@ -541,6 +577,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.20024922
       objectReference: {fileID: 0}
+    - target: {fileID: 7921273460254050355, guid: ffa51f9fe276ded4cab304427073b354, type: 3}
+      propertyPath: m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
     - target: {fileID: 7921273460254050355, guid: ffa51f9fe276ded4cab304427073b354, type: 3}
       propertyPath: m_Text
       value: "\uBC94\uC704 \uB298\uB9AC\uAE30"
@@ -620,6 +660,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: NameBox
       objectReference: {fileID: 0}
+    - target: {fileID: 4506935368086948100, guid: 1ff125a2fff65934da822e8e7ad3e9b9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
+    - target: {fileID: 4506935368086948101, guid: 1ff125a2fff65934da822e8e7ad3e9b9, type: 3}
+      propertyPath: m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
     - target: {fileID: 4506935368086948101, guid: 1ff125a2fff65934da822e8e7ad3e9b9, type: 3}
       propertyPath: m_Text
       value: "\uCE74\uBA54\uB77C \uBE14\uB7ED"

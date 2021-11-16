@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6366077212999271820}
-  - component: {fileID: 8993863177847452236}
   m_Layer: 0
   m_Name: BlockPrefab
   m_TagString: Untagged
@@ -35,19 +34,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8993863177847452236
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6312591616032077221}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74c6ab41faa153b44a0c8ef66bec0f9d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _attachedObject: {fileID: 6312591616032077221}
 --- !u!1001 &1792291543493210207
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -394,6 +380,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: NameBox
       objectReference: {fileID: 0}
+    - target: {fileID: 4506935368086948100, guid: 1ff125a2fff65934da822e8e7ad3e9b9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
+    - target: {fileID: 4506935368086948101, guid: 1ff125a2fff65934da822e8e7ad3e9b9, type: 3}
+      propertyPath: m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ff125a2fff65934da822e8e7ad3e9b9, type: 3}
 --- !u!4 &7066353873684638211 stripped

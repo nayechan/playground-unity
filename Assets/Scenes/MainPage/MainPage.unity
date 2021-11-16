@@ -10151,6 +10151,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5473251380143467879, guid: 23e6e6ee7f44c7546bc6358e3a08524a, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
     - target: {fileID: 6092228203472350741, guid: 23e6e6ee7f44c7546bc6358e3a08524a, type: 3}
       propertyPath: libraryPanel
       value: 

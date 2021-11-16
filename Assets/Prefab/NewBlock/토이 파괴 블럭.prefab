@@ -47,9 +47,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffac077ce51f49ddbcef7091facd3676, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ports:
-  - {fileID: 2634808602383582761}
-  - {fileID: 3669155276256003832}
   destroySignal: {fileID: 2634808602383582761}
   toyToDestroy: {fileID: 3669155276256003832}
 --- !u!1001 &1792291543493210207
@@ -59,6 +56,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6366077212999271820}
     m_Modifications:
+    - target: {fileID: 2292384667334246900, guid: 5fe92807b95b2c14f855c178db73a108, type: 3}
+      propertyPath: m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
     - target: {fileID: 2292384667334246900, guid: 5fe92807b95b2c14f855c178db73a108, type: 3}
       propertyPath: m_Text
       value: "\uD30C\uAD34\uD560 \uD1A0\uC774"
@@ -95,10 +96,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\uD30C\uAD34\uD560 \uD1A0\uC774"
       objectReference: {fileID: 0}
+    - target: {fileID: 8208678239807943330, guid: 5fe92807b95b2c14f855c178db73a108, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
+    - target: {fileID: 8600904677291457680, guid: 5fe92807b95b2c14f855c178db73a108, type: 3}
+      propertyPath: m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
     - target: {fileID: 8600904677291457680, guid: 5fe92807b95b2c14f855c178db73a108, type: 3}
       propertyPath: m_Text
       value: "\uC2E0\uD638"
       objectReference: {fileID: 0}
+    - target: {fileID: 8600904677291457681, guid: 5fe92807b95b2c14f855c178db73a108, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
     - target: {fileID: 8600904677291457686, guid: 5fe92807b95b2c14f855c178db73a108, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.57
@@ -315,6 +328,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6366077212999271820}
     m_Modifications:
+    - target: {fileID: 436433267062488356, guid: ffa51f9fe276ded4cab304427073b354, type: 3}
+      propertyPath: m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
+    - target: {fileID: 1945180040211033911, guid: ffa51f9fe276ded4cab304427073b354, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
+    - target: {fileID: 2007675912719400302, guid: ffa51f9fe276ded4cab304427073b354, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
+    - target: {fileID: 3328458240233542849, guid: ffa51f9fe276ded4cab304427073b354, type: 3}
+      propertyPath: m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
+    - target: {fileID: 3848172061057319545, guid: ffa51f9fe276ded4cab304427073b354, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
     - target: {fileID: 4445766459958629385, guid: ffa51f9fe276ded4cab304427073b354, type: 3}
       propertyPath: m_Name
       value: PropertySettings
@@ -367,6 +400,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7921273460254050355, guid: ffa51f9fe276ded4cab304427073b354, type: 3}
+      propertyPath: m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffa51f9fe276ded4cab304427073b354, type: 3}
 --- !u!1 &8890544657018506803 stripped
@@ -434,6 +471,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: NameBox
       objectReference: {fileID: 0}
+    - target: {fileID: 4506935368086948100, guid: 1ff125a2fff65934da822e8e7ad3e9b9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
+    - target: {fileID: 4506935368086948101, guid: 1ff125a2fff65934da822e8e7ad3e9b9, type: 3}
+      propertyPath: m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
     - target: {fileID: 4506935368086948101, guid: 1ff125a2fff65934da822e8e7ad3e9b9, type: 3}
       propertyPath: m_Text
       value: "\uD1A0\uC774 \uD30C\uAD34 \uBE14\uB7ED"

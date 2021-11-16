@@ -53,7 +53,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 2100000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -93,7 +93,7 @@ TextMesh:
   m_FontSize: 0
   m_FontStyle: 0
   m_RichText: 1
-  m_Font: {fileID: 0}
+  m_Font: {fileID: 12800000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
@@ -294,6 +294,10 @@ PrefabInstance:
       value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2292384667334246900, guid: 5fe92807b95b2c14f855c178db73a108, type: 3}
+      propertyPath: m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
+    - target: {fileID: 2292384667334246900, guid: 5fe92807b95b2c14f855c178db73a108, type: 3}
       propertyPath: m_Text
       value: "Y\uCD95 \uC785\uB825"
       objectReference: {fileID: 0}
@@ -337,10 +341,22 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8208678239807943330, guid: 5fe92807b95b2c14f855c178db73a108, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
+    - target: {fileID: 8600904677291457680, guid: 5fe92807b95b2c14f855c178db73a108, type: 3}
+      propertyPath: m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
     - target: {fileID: 8600904677291457680, guid: 5fe92807b95b2c14f855c178db73a108, type: 3}
       propertyPath: m_Text
       value: "X\uCD95 \uC785\uB825"
       objectReference: {fileID: 0}
+    - target: {fileID: 8600904677291457681, guid: 5fe92807b95b2c14f855c178db73a108, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
     - target: {fileID: 8600904677291457686, guid: 5fe92807b95b2c14f855c178db73a108, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2
@@ -701,6 +717,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: NameBox
       objectReference: {fileID: 0}
+    - target: {fileID: 4506935368086948100, guid: 1ff125a2fff65934da822e8e7ad3e9b9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
+    - target: {fileID: 4506935368086948101, guid: 1ff125a2fff65934da822e8e7ad3e9b9, type: 3}
+      propertyPath: m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 79c1b700d30edb04a9b9552638dcf725, type: 3}
     - target: {fileID: 4506935368086948101, guid: 1ff125a2fff65934da822e8e7ad3e9b9, type: 3}
       propertyPath: m_Text
       value: "\uAC00\uC18D \uBE14\uB7ED"
