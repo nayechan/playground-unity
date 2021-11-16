@@ -40,6 +40,12 @@ namespace SandboxEditor.Data.Sandbox
             File.CreateDirectoryIfDoesntExist(RemotePath);
         }
 
+        public static void RefreshAllSandboxDataFromPC()
+        {
+            _sandboxDatasOfLocal = new Dictionary<int, SandboxData>();
+            _sandboxDatasOfRemote = new Dictionary<int, SandboxData>();
+            UpdateAllSandboxDataFromPC();
+        }
 
         public static void UpdateAllSandboxDataFromPC()
         {

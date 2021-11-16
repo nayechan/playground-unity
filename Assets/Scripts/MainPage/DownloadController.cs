@@ -82,15 +82,11 @@ public class DownloadController : MonoBehaviour
         {
             Extractor.ExtractZip(path);
             File.Delete(path);
-            //StartCoroutine(sandboxManager.LoadSandboxFolders());
             var sandboxDataPath = Path.Combine(SandboxChecker.RemotePath, gameId, Names.JsonNameOfSandboxData);
             var jsonSandboxData= JObject.Parse(File.ReadAllText(sandboxDataPath));
             var sandboxData = JsonUtility.FromJson<SandboxData>(jsonSandboxData.ToString());
-            Debug.Log(JsonUtility.ToJson(sandboxData));
             UpdateRemoteSandboxData(sandboxData, gameId);
-            Debug.Log(JsonUtility.ToJson(sandboxData));
             SandboxSaveLoader.SaveJsonDataLocally(sandboxData, sandboxData.SandboxDataPath);
-            Debug.Log(sandboxData.SandboxDataPath);
         }
         sandboxInitializer.ReloadSandbox();
     }
