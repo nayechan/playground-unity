@@ -39,7 +39,7 @@ namespace MainPage.Panel
                 Destroy(t.gameObject);
             }
 
-            SandboxChecker.UpdateAllSandboxDataFromPC();
+            SandboxChecker.RefreshAllSandboxDataFromPC();
 
             List<SandboxData> allSandboxData = new List<SandboxData>();
 
