@@ -74,7 +74,9 @@ namespace SandboxEditor.InputControl.InEditor
                         rayIsBlocked = TouchHandling(touch, sensor);
                         if(rayIsBlocked) break;
                     }
-                    if(rayIsBlocked) break;
+                    if (!rayIsBlocked) continue;
+                    _TouchInEditor.RewindTimer();
+                    break;
                 }
             }
         }
@@ -90,7 +92,6 @@ namespace SandboxEditor.InputControl.InEditor
             switch(touch.phase){
                 case TouchPhase.Began:
                     if (_TouchInEditor._leftTouchCoolTime > 0f) break;
-                    _TouchInEditor.RewindTimer();
                     sensor.OnTouchBegan(touch, out rayIsBlocked);
                     break;
                 case TouchPhase.Moved:
