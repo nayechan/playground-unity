@@ -20,6 +20,10 @@ namespace SandboxEditor.InputControl.InEditor
         public static TouchMode Mode {get => _TouchInEditor._mode; set => _TouchInEditor._mode = value; }
         private Touch[] touches;
         private bool _isInGameMode = false;
+        
+        // 211117 WebGL 터치 여러번 입력되는 버그를 수정하기 위한 임시 멤버. 추후 구조 개선 필요
+        private float _leftTouchCoolTime = 0f;
+        private const float _touchCoolTime = 0.2f;
 
         private void Awake()
         {
@@ -36,9 +40,20 @@ namespace SandboxEditor.InputControl.InEditor
         {
             if (_isInGameMode) return;
             touches = Input.touches;
+            DecreaseLeftCoolTime();
             AlarmAll();
             ShotRays();
             ResetOutdatedAlarm();
+        }
+
+        private void DecreaseLeftCoolTime()
+        {
+            _leftTouchCoolTime -= Time.deltaTime;
+        }
+
+        private void RewindTimer()
+        {
+            _leftTouchCoolTime = _touchCoolTime;
         }
 
         public static TouchInEditor GetTID(){
@@ -74,6 +89,8 @@ namespace SandboxEditor.InputControl.InEditor
             var rayIsBlocked = false;
             switch(touch.phase){
                 case TouchPhase.Began:
+                    if (_TouchInEditor._leftTouchCoolTime > 0f) break;
+                    _TouchInEditor.RewindTimer();
                     sensor.OnTouchBegan(touch, out rayIsBlocked);
                     break;
                 case TouchPhase.Moved:
